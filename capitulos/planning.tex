@@ -1,0 +1,128 @@
+\chapter{Planning}
+
+%Planificación e presupostos: debe incluír a estimación do costo (presuposto) e dos 
+%recursos necesarios para efectuar a implantación do Traballo, xunto coa planificación 
+%temporal do mesmo e a división en fases e tarefas. Recoméndase diferenciar os costos relativos a persoal dos relativos a outros gastos como instalacións e equipos.
+
+
+
+
+
+
+
+
+%WBS==EDT (translation!)
+\section{Initial WBS}
+
+%\node[style1] {Improvements in IDS, adding functionality to Wazuh}
+%child {node[style2] (c1) {Project management}}
+%child {node[style2] (c2) {Increment 1: Rules/decoders for common attacks in Windows Server}}
+%child {node[style2] (c3) {Increment 2: Rules/decoders with data from Sysmon}}
+%child {node[style2] (c4) {Increment 3: Detection/action against ransomware}}
+%child {node[style2] (c5) {Increment 4: Adapt Wazuh configuration to typical requirements from enterprises}}
+%child {node[style2] (c6) {Increment 5: Explore solutions in problems with GPDR}}
+%child {node[style2] (c7) {Increment 6: Rules/decoders for GNU/Linux}}
+%child {node[style2] (c8) {Increment 7: VirusTotal integration}};
+
+%\begin{tikzpicture}[%
+    %grow=right,
+    %anchor=west,
+    %growth parent anchor=east,
+    %parent anchor=east,
+    %level 1/.style={sibling distance=4cm},
+    %level 2/.style={sibling distance=2.5em},
+    %level distance=1cm]
+
+%\node[root] (root) {Drawing diagrams}
+    %child {node[onode] (c1) {Defining node and arrow styles}
+        %child {node[tnode] (c11) {Setting shape}}
+        %child {node[tnode] (c12) {Choosing color}}
+        %child {node[tnode] (c13) {Adding shading}}
+    %}
+    %child {node[onode] (c2) {Positioning the nodes}
+        %child {node[tnode] (c21) {Using a Matrix}}
+        %child {node[tnode] (c22) {Relatively}}
+        %child {node[tnode] (c23) {Absolutely}}
+        %child {node[tnode] (c24) {Using overlays}}
+    %}
+    %child {node[onode] (c3) {Drawing arrows between nodes}
+        %child {node[tnode] (c31) {Default arrows}}
+        %child {node[tnode] (c32) {Arrow library}}
+        %child {node[tnode] (c33) {Resizing tips}}
+        %child {node[tnode] (c34) {Shortening}}
+        %child {node[tnode] (c35) {Bending}}
+%};
+%\end{tikzpicture}
+\newpage
+{\footnotesize
+\begin{forest} for tree={
+    grow=east,
+    growth parent anchor=east,
+    parent anchor=east,
+    child anchor=west,
+    edge path={\noexpand\path[\forestoption{edge},->, >={latex}] 
+         (!u.parent anchor) -- +(5pt,0pt) |- (.child anchor)
+         \forestoption{edge label};}
+}
+[Improvements in IDS: adding functionality to Wazuh, root
+    [Closing of the project, onode
+        [Project documentation, tnode]
+        [Pull request to the official ruleset repository, tnode]
+    ]
+    [Increment 7: VirusTotal integration, onode
+        [Improved integration with antivirus and website scanners, tnode]
+        %[Study of the present status, tnode]
+    ]
+    [Increment 6: Additional detection for GNU/Linux, onode
+        [Rules and decoders, tnode]
+        %[Analysis and writing of rules/decoders, tnode]
+        %[Study of the present status, tnode]
+    ]
+    [Increment 5: Explore solutions in problems with GPDR, onode
+        [Rules and decoders, tnode]
+        %[Analysis and writing of rules/decoders, tnode]
+        %[Study of GPDR issues, tnode]
+    ]
+    [Increment 4: Adapt Wazuh configuration to typical requirements from enterprises, onode
+        [Configuration changes, tnode]
+        %[Analysis of requirements, tnode]
+    ]
+    [Increment 3: Detection/action against ransomware, onode
+        [Rules and decoders, tnode]
+        %[Analysis and writing of rules/decoders and actions, tnode]
+        %[Study of ransomware attack patterns, tnode]
+    ]
+    [Increment 2: Use of data from Sysmon, onode
+        [Rules and decoders, tnode]
+        %[Analysis and writing of rules/decoders, tnode]
+        %[Study of Sysmon tools, tnode]
+    ]
+    [Increment 1: Common attacks in Windows Server, onode
+        [Rules and decoders, tnode]
+        %[Detailed study of each attack and patterns, tnode]
+    ]
+    [Beginning of the project, onode
+        [Setup of the work environment, tnode]
+        [Study of Wazuh documentation and related tools and technologies, tnode]
+    ]
+    [Project management, onode
+        [Cost management, tnode]
+        [Configuration management, tnode]
+        [Time management, tnode]
+        [Risk management, tnode]
+        [Requirement management, tnode]
+        [Scope management, tnode]
+    ]
+]
+\end{forest}
+}
+
+
+\section{Initial planning}
+
+
+
+
+
+
+\section{Final planning}

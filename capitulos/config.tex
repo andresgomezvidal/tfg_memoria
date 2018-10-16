@@ -1,0 +1,170 @@
+\newcommand\realnumberstyle[1]{}
+
+\makeatletter
+\newcommand{\zebra}[3]{%
+    {\realnumberstyle{#3}}%
+    \begingroup
+    \lst@basicstyle
+    \ifodd\value{lstnumber}%
+        \color{#1}%
+    \else
+        \color{#2}%
+    \fi
+        \rlap{\hspace*{\lst@numbersep}%
+        \color@block{\linewidth}{\ht\strutbox}{\dp\strutbox}%
+        }%
+    \endgroup
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%		MORE	ALIASES		%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\lineh}{\rule{\textwidth}{1pt}\hfill\break}
+\newcommand{\linej}{\hfill\break}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%		END BASIC CONF		%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%\definecolor{mygreen}{rgb}{0,0.6,0}
+%\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+
+
+%\renewcommand{\thesubsection}{\thesection.\alph{subsection}}		%change subsection style to letters
+
+
+
+%https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+
+%\lstdefinestyle{C} {
+%	language=C,		%for syntax highlighting
+%	basicstyle=\footnotesize\ttfamily,
+%	frame=tb,
+%	tabsize=4,
+%	columns=fixed,
+%	showstringspaces=false,
+%	showtabs=false,
+%	keepspaces,
+	%commentstyle=\color{gray},
+	%stringstyle=\color{brown},
+	%keywordstyle=\color{blue},
+	%directivestyle=\color{gray},			%preprocessor color
+	%emph={int,char,double,float,unsigned},
+	%emphstyle=\color{green},
+%}
+%\lstset{ language=C }	%		\begin{lstlisting}[style=C]		\lstinputlisting[style=C]{main.c}
+
+
+
+%\lstdefinestyle{sql} {
+%	language=sql,		%for syntax highlighting
+%	basicstyle=\footnotesize\ttfamily,
+%	frame=tb,
+%	tabsize=4,
+%	columns=fixed,
+%	showstringspaces=false,
+%	showtabs=false,
+%	keepspaces,
+%	commentstyle=\color{red},
+%	stringstyle=\color{orange},		%needs xcolor
+%	keywordstyle=\color{blue}
+%}
+%\lstset{ language=sql }		\begin{lstlisting}		\lstinputlisting[style=sql]{file.sql}
+
+
+
+
+%\lstdefinestyle{sh} {
+	%language=sh,		%for syntax highlighting
+	%basicstyle=\footnotesize\ttfamily,
+	%frame=tb,
+	%tabsize=4,
+	%columns=fixed,
+	%showstringspaces=false,
+	%showtabs=false,
+	%keepspaces,
+	%commentstyle=\color{gray},
+	%stringstyle=\color{brown},
+	%keywordstyle=\color{blue},
+	%directivestyle=\color{gray},			%shebang color
+	%emph={local, export },
+	%emphstyle=\color{green},
+%}
+%\lstset{ language=sh }			%\begin{lstlisting}		\lstinputlisting[style=sh]{script.sh}
+
+
+%\lstdefinestyle{python} {
+	%language=python,		%for syntax highlighting
+	%basicstyle=\footnotesize\ttfamily,
+	%frame=tb,
+	%tabsize=4,
+	%columns=fixed,
+	%showstringspaces=false,
+	%showtabs=false,
+	%keepspaces,
+	%commentstyle=\color{gray},
+	%stringstyle=\color{brown},
+	%keywordstyle=\color{blue},
+	%directivestyle=\color{gray},			%shebang color
+	%emphstyle=\color{green},
+%}
+%\lstset{ language=python }			%\begin{lstlisting}		\lstinputlisting[style=python]{script.py}
+
+
+
+%\lstdefinestyle{file} {
+	%basicstyle=\footnotesize\ttfamily,
+	%frame=tblr,
+	%tabsize=4,
+	%columns=fixed,
+	%showstringspaces=false,
+	%showtabs=false,
+	%keepspaces,
+	%title=\lstname
+%}
+
+
+%\lstset{		%basicstyle=\small\sffamily,
+	%basicstyle=\footnotesize\ttfamily,
+	%numbers=left,
+	%numberstyle=\tiny\zebra{green!10}{white},
+	%frame=tb,
+	%tabsize=4,
+	%columns=fixed,
+	%showstringspaces=false,
+	%showtabs=false,
+	%keepspaces,
+	%commentstyle=\color{red},
+	%stringstyle=\color{orange},
+	%extendedchars=true,
+	%literate={á}{{\'a}}1
+	%{é}{{\'e}}1
+	%%{í}{{\'{\i}}}1
+	%{í}{{\'i}}1
+	%{ó}{{\'o}}1
+	%{ú}{{\'u}}1
+	%{Á}{{\'A}}1
+	%{É}{{\'E}}1
+	%{Í}{{\'I}}1
+	%{Ó}{{\'O}}1
+	%{Ú}{{\'U}}1
+	%%{ü}{{\"u}}1
+	%%{Ü}{{\"U}}1
+	%{ñ}{{\~n}}1
+	%{Ñ}{{\~N}}1
+	%{¿}{{?``}}1
+	%{¡}{{!``}}1,
+	%keywordstyle=\color{blue}
+%}
+
+
+
+
+%atm general file listing with
+%\lstinputlisting[style=file]{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%		END CURRENT DOCUMENT CONF		%%%%%%%%%%%%%%%%%%%%%%%%%
+
