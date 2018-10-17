@@ -2,6 +2,47 @@
 
 \subsection{Risk metrics}
 
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{gray!30}
+		Chances of the risk happening & Probability \\ \hline
+		$\geq$80\% & \cellcolor{red!60}High\\ \hline
+		Between 30\% and 80\% & \cellcolor{yellow!40}Medium\\ \hline
+		$\leq$30\% & \cellcolor{green!60}Low\\ \hline
+	\end{tabular}
+	\caption{Probability classification of risks}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\rowcolor{gray!30}
+		Resource in Place / Effort / Cost & Impact \\ \hline
+		$\geq$20\% & \cellcolor{red!60}High\\ \hline
+		Between 10\% and 20\% & \cellcolor{yellow!40}Medium\\ \hline
+		$\leq$10\% & \cellcolor{green!60}Low\\ \hline
+	\end{tabular}
+	\caption{Impact classification of risks}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+	\hline
+		\multicolumn{2}{|c|}{\multirow{2}{*}{\large\textbf{Exposition}}} & \multicolumn{3}{c|}{Probability}\\
+		\multicolumn{2}{|c|}{} & \cellcolor{gray!15}\textbf{High} & \cellcolor{gray!15}\textbf{Medium} & \cellcolor{gray!15}\textbf{Low}\\ \hline %\cline{3-5}
+		\multirow{3}{*}{Impact} & \cellcolor{gray!15}\textbf{High} & \cellcolor{red!60}High & \cellcolor{red!60}High & \cellcolor{yellow!40}Medium\\
+		& \cellcolor{gray!15}\textbf{Medium} & \cellcolor{red!60}High & \cellcolor{yellow!40}Medium & \cellcolor{green!60}Low\\
+		& \cellcolor{gray!15}\textbf{Low} & \cellcolor{yellow!40}Medium & \cellcolor{green!60}Low & \cellcolor{green!60}Low\\ \hline
+	\end{tabular}
+	\caption{Method of calculation of Exposition based of Probability and Impact}
+\end{table}
+
 \subsection{Risk types}
 
 \subsection{Risk identification}
@@ -13,26 +54,26 @@
 		\rowcolor{gray!30}
 		Identifier & Name \\ \hline
 		%R-000 & The scope specified is too big\\ \hline
-		R-000 & Optimist planning, ``best case'' (instead of a realistic ``expected case'')\\ \hline
-		R-000 & Bad requirement specification\\ \hline
-		R-000 & Design errors\\ \hline
+		R-001 & Optimist planning, ``best case'' (instead of a realistic ``expected case'')\\ \hline
+		R-002 & Bad requirement specification\\ \hline
+		R-003 & Design errors\\ \hline
 
-		R-000 & Lack of key information from sources\\ \hline 		%articles, documentation, manuals
-		R-000 & Lack of feedback or support from the security consultants of Tarlogic\\ \hline 		%eg: holidays or sickness
-		R-000 & The learning curve of some technologies is larger than expected\\ \hline
-		R-000 & The unexplained parts of the project take more time than expected\\ \hline
+		R-004 & Lack of key information from sources\\ \hline 		%articles, documentation, manuals
+		R-005 & Lack of feedback or support from the security consultants of Tarlogic\\ \hline 		%eg: holidays or sickness
+		R-006 & The learning curve of some technologies is larger than expected\\ \hline
+		R-007 & The unexplained parts of the project take more time than expected\\ \hline
 
-		R-000 & Cannot access source material\\ \hline 		%is down, is too old
-		R-000 & Unexpected changes in any of the APIs used in the project\\ \hline
+		R-008 & Cannot access source material\\ \hline 		%is down, is too old
+		R-009 & Unexpected changes in any of the APIs used in the project\\ \hline
 
-		R-000 & Loss of work\\ \hline 	%use git, online repo, local backups for virtual machines?
-		R-000 & Wrong management of the project's configuration\\ \hline 	%wrong baseline, wrong identification of the configuration elements, it takes more time than expected, wrong use of the tools, too much time between commits
-		R-000 & A delay in one task leads to cascading delays in the dependent tasks\\ \hline
+		R-010 & Loss of work\\ \hline 	%use git, online repo, local backups for virtual machines?
+		R-011 & Wrong management of the project's configuration\\ \hline 	%wrong baseline, wrong identification of the configuration elements, it takes more time than expected, wrong use of the tools, too much time between commits
+		R-012 & A delay in one task leads to cascading delays in the dependent tasks\\ \hline
 
-		R-000 & Unnecesary work\\ \hline 		%
-		R-000 & The quality of the product is not enough\\ \hline 	%redo
-		R-000 & Sickness or overwork\\ \hline
-		R-000 & Performance issues\\ \hline 	%redo rules?, get a better machine?
+		R-013 & Unnecesary work\\ \hline 		%
+		R-014 & The quality of the product is not enough\\ \hline 	%redo
+		R-015 & Sickness or overwork\\ \hline
+		R-016 & Performance issues\\ \hline 	%redo rules?, get a better machine?
 	\end{tabularx}
 \end{table}
 
@@ -48,6 +89,7 @@
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-000} \\ \hline
+		Name & Bla \\ \hline
 		Description & Bla bla bla bla bla bla bla bla bla bla bla bla bla Bla bla bla bla bla bla bla bla bla bla bla bla bla Bla bla bla bla bla bla bla bla bla bla bla bla bla \\ \hline
 		Probability & Low , Medium , High \\ \hline
 		Impact & Low , Medium , High \\ \hline
@@ -61,6 +103,87 @@
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-001} \\ \hline
+		Name & Optimist planning, ``best case'' (instead of a realistic ``expected case'')\\ \hline
+		Description & An optimistict planning at the start of the project does not take into account problems or delays, and so it does not allocate time for them, leading to cascading delays if they happen. \\ \hline
+		Probability & Medium\\ \hline
+		Impact &  High\\ \hline
+		Exposition &  High\\ \hline
+		Indicator & There are 3 consecutive delays, after the beginning of the project.\\ \hline
+	\end{tabularx}
+\end{table}
+
+
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-002} \\ \hline
+		Name & Bad requirement specification\\ \hline
+		Description & The requirements specified at the beginning of the project are not specific enough, are not needed or there are new requirements after the beginning of the project. \\ \hline
+		Probability & High\\ \hline
+		Impact &  High\\ \hline
+		Exposition &  High\\ \hline
+		Indicator & There are 3 changes in the requirements specification.\\ \hline
+	\end{tabularx}
+\end{table}
+
+
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-003} \\ \hline
+		Name & Design errors\\ \hline
+		Description & A design is not enough or is incorrect, needing a re-design and probably changes in the next steps it was used. \\ \hline
+		Probability & Low\\ \hline
+		Impact &  Medium\\ \hline
+		Exposition & Medium\\ \hline
+		Indicator & There are 3 designs that need rework.\\ \hline
+	\end{tabularx}
+\end{table}
+
+
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-004} \\ \hline
+		Name & Lack of key information from sources\\ \hline
+		Description & Not having key information from articles, documentation or manuals can result in unexpected delays, added difficulty or the need to rework completely the functionality.\\ \hline
+		Probability & Medium\\ \hline
+		Impact &  High\\ \hline
+		Exposition &  High\\ \hline
+		Indicator & The duration of the study of the attack and the needed tools takes 50\% than expected. \\ \hline
+	\end{tabularx}
+\end{table}
+
+
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-001} \\ \hline
+		Name & \\ \hline
+		Description & \\ \hline
+		Probability & \\ \hline
+		Impact &  \\ \hline
+		Exposition &  \\ \hline
+		Indicator & \\ \hline
+	\end{tabularx}
+\end{table}
+
+
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-001} \\ \hline
+		Name & \\ \hline
 		Description & \\ \hline
 		Probability & \\ \hline
 		Impact &  \\ \hline
