@@ -120,6 +120,115 @@
 
 \section{Initial planning}
 
+From the draft proposal to the end of the project.
+
+
+\newcommand{\Plen}{22} %duration of the project in weeks
+
+%independent duration in days
+\newcommand{\Duno}{21}
+\newcommand{\Ddos}{7}
+\newcommand{\Dtres}{28}
+\newcommand{\Dcuatro}{7}
+\newcommand{\Dcinco}{21}
+\newcommand{\Dseis}{7}
+\newcommand{\Dsiete}{21}
+\newcommand{\Docho}{14}
+\newcommand{\Dnueve}{14}
+\newcommand{\Ddiez}{14}
+
+%dependent duration (ending time) in weeks
+\newcommand{\Funo}{\the\numexpr \Duno /7 \relax}
+\newcommand{\Fdos}{\the\numexpr \Funo + \Ddos/7 \relax}
+\newcommand{\Ftres}{\the\numexpr \Fdos + \Dtres/7 \relax}
+\newcommand{\Fcuatro}{\the\numexpr \Ftres + \Dcuatro/7 \relax}
+\newcommand{\Fcinco}{\the\numexpr \Fcuatro + \Dcinco/7 \relax}
+\newcommand{\Fseis}{\the\numexpr \Fcinco + \Dseis/7 \relax}
+\newcommand{\Fsiete}{\the\numexpr \Fseis + \Dsiete/7 \relax}
+\newcommand{\Focho}{\the\numexpr \Fsiete + \Docho/7 \relax}
+\newcommand{\Fnueve}{\the\numexpr \Focho + \Dnueve/7 \relax}
+\newcommand{\Fdiez}{\the\numexpr \Fnueve + \Ddiez/7 \relax}
+
+%dependent duration (ending time) in days
+\newcommand{\Frequirement}{2}
+
+
+
+\begin{figure}[h!bt]
+	\begin{center}
+	\begin{ganttchart}[
+	hgrid style/.style={draw=black, line width=.3pt},
+	vgrid={*1{draw=black!5, line width=.75pt}},
+	link/.style={-latex},
+	]{1}{\Plen}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitle{Planning of the project in weeks}{\Plen} \\
+		\gantttitlelist{1,...,\Plen}{1} \\
+
+		\ganttbar[name=Draft]{Draft proposal}{1}{\Funo} \\
+		\ganttbar[name=Beginning]{Beginning of the project}{\the\numexpr \Funo + 1 \relax}{\Fdos} \\
+		\ganttbar[name=Increment1]{Increment 1}{\the\numexpr \Fdos + 1 \relax}{\Ftres} \\
+		\ganttbar[name=Increment2]{Increment 2}{\the\numexpr \Ftres + 1 \relax}{\Fcuatro} \\
+		\ganttbar[name=Increment3]{Increment 3}{\the\numexpr \Fcuatro + 1 \relax}{\Fcinco} \\
+		\ganttbar[name=Increment4]{Increment 4}{\the\numexpr \Fcinco + 1 \relax}{\Fseis} \\
+		\ganttbar[name=Increment5]{Increment 5}{\the\numexpr \Fseis + 1 \relax}{\Fsiete} \\
+		\ganttbar[name=Increment6]{Increment 6}{\the\numexpr \Fsiete + 1 \relax}{\Focho} \\
+		\ganttbar[name=Increment7]{Increment 7}{\the\numexpr \Focho + 1 \relax}{\Fnueve} \\
+		\ganttbar[name=Closing]{Closing of the project}{\the\numexpr \Fnueve + 1 \relax}{\Fdiez} \\
+		\ganttbar[name=Management]{Project management}{1}{\Plen} \\
+
+		\ganttlink[link type=straight]{Draft}{Beginning}
+		\ganttlink[link type=straight]{Beginning}{Increment1}
+		\ganttlink[link type=straight]{Increment1}{Increment2}
+		\ganttlink[link type=straight]{Increment2}{Increment3}
+		\ganttlink[link type=straight]{Increment3}{Increment4}
+		\ganttlink[link type=straight]{Increment4}{Increment5}
+		\ganttlink[link type=straight]{Increment5}{Increment6}
+		\ganttlink[link type=straight]{Increment6}{Increment7}
+		\ganttlink[link type=straight]{Increment7}{Closing}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{Initial planning}
+\end{figure}
+
+
+
+
+%makes no sense by days
+%\begin{figure}[h!bt]
+%	\begin{center}
+%	\begin{ganttchart}[
+%	hgrid style/.style={draw=black, line width=.3pt},
+%	vgrid={*1{draw=black!5, line width=.75pt}},
+%	link/.style={-latex},
+%	]{1}{\Duno}
+%		\newganttlinktypealias{straight}{f-s}
+%		\setganttlinklabel{straight}{}
+%		\gantttitle{Planning in days}{\Duno} \\
+%		\gantttitlelist{1,...,\Duno}{1} \\
+%
+%		\ganttgroup[name=Management]{Project management}{1}{\Duno} \\
+%
+%		\ganttbar[name=Scope]{Scope management}{1}{1}
+%		\ganttbar[name=Requirement]{Requirement management}{1}{\Frequirement}
+%        \ganttbar[name=Risk]{Risk management}{\Frequirement}{15}
+%        \ganttbar[name=Time]{Time management}{\Frequirement}{\Duno}
+%        \ganttbar[name=Configuration]{Configuration management}{\Frequirement}{10}
+%        \ganttbar[name=Cost]{Cost management}{\Frequirement}{}
+%
+%		\ganttlink[link type=straight]{Scope}{Requirement}
+%		\ganttlink[link type=straight]{Requirement}{Risk}
+%		\ganttlink[link type=straight]{Requirement}{Time}
+%		\ganttlink[link type=straight]{Requirement}{Configuration}
+%		\ganttlink[link type=straight]{Requirement}{Cost}
+%
+%	\end{ganttchart}
+%	\end{center}
+%	\caption{Detailed planning of ``Project management''}
+%\end{figure}
+
 
 
 
