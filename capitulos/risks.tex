@@ -47,33 +47,52 @@
 
 \subsection{Risk identification}
 
+
+\newcommand{\Runo}{Optimist planning, ``best case'' (instead of a realistic ``expected case'')}
+\newcommand{\Rdos}{Bad requirement specification}
+\newcommand{\Rtres}{Design errors}
+\newcommand{\Rcuatro}{Lack of key information from sources}
+\newcommand{\Rcinco}{Lack of feedback or support from the security consultants of Tarlogic}
+\newcommand{\Rseis}{The learning curve of some technologies is larger than expected}
+\newcommand{\Rsiete}{The unexplained parts of the project take more time than expected}
+\newcommand{\Rocho}{Can not access source material}
+\newcommand{\Rnueve}{Unexpected changes to any of the software used in the project}
+\newcommand{\Rdiez}{Loss of work}
+\newcommand{\Ronce}{Wrong management of the project's configuration}
+\newcommand{\Rdoce}{A delay in one task leads to cascading delays in the dependent tasks}
+\newcommand{\Rtrece}{The student can not find a way to detect a certain occurrence}
+\newcommand{\Rcatorce}{The quality of the product is not enough}
+\newcommand{\Rquince}{Sickness or overwork}
+\newcommand{\Rdieciseis}{Performance issues}
+\newcommand{\Rdiecisiete}{Unnecessary work}
+\newcommand{\Rdieciocho}{Optional requirements increment the time need to complet the project}
+
+
 \begin{table}[H]
 	\caption{Project risks}
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & Name \\ \hline
-		%R-000 & The scope specified is too big\\ \hline
-		R-001 & Optimist planning, ``best case'' (instead of a realistic ``expected case'')\\ \hline
-		R-002 & Bad requirement specification\\ \hline
-		R-003 & Design errors\\ \hline
-
-		R-004 & Lack of key information from sources\\ \hline 		%articles, documentation, manuals
-		R-005 & Lack of feedback or support from the security consultants of Tarlogic\\ \hline 		%eg: holidays or sickness
-		R-006 & The learning curve of some technologies is larger than expected\\ \hline
-		R-007 & The unexplained parts of the project take more time than expected\\ \hline
-
-		R-008 & Cannot access source material\\ \hline 		%is down, is too old
-		R-009 & Unexpected changes to any of the APIs used in the project\\ \hline
-
-		R-010 & Loss of work\\ \hline 	%use git, online repo, local backups for virtual machines?
-		R-011 & Wrong management of the project's configuration\\ \hline 	%wrong baseline, wrong identification of the configuration elements, it takes more time than expected, wrong use of the tools, too much time between commits
-		R-012 & A delay in one task leads to cascading delays in the dependent tasks\\ \hline
-
-		R-013 & Unnecessary work\\ \hline 		%
-		R-014 & The quality of the product is not enough\\ \hline 	%redo
-		R-015 & Sickness or overwork\\ \hline
-		R-016 & Performance issues\\ \hline 	%redo rules?, get a better machine?
+		%R-00 & The scope specified is too big\\ \hline
+		R-01 & \Runo \\ \hline
+		R-02 & \Rdos \\ \hline
+		R-03 & \Rtres \\ \hline
+		R-04 & \Rcuatro \\ \hline
+		R-05 & \Rcinco \\ \hline
+		R-06 & \Rseis \\ \hline
+		R-07 & \Rsiete \\ \hline
+		R-08 & \Rocho \\ \hline
+		R-09 & \Rnueve \\ \hline
+		R-10 & \Rdiez \\ \hline
+		R-11 & \Ronce \\ \hline
+		R-12 & \Rdoce \\ \hline
+		R-13 & \Rtrece \\ \hline
+		R-14 & \Rcatorce \\ \hline
+		R-15 & \Rquince \\ \hline
+		R-16 & \Rdieciseis \\ \hline
+		R-17 & \Rdiecisiete \\ \hline
+		R-18 & \Rdieciocho \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -88,108 +107,101 @@
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-000} \\ \hline
-		Name & Bla \\ \hline
-		Description & Bla bla bla bla bla bla bla bla bla bla bla bla bla Bla bla bla bla bla bla bla bla bla bla bla bla bla Bla bla bla bla bla bla bla bla bla bla bla bla bla \\ \hline
-		Probability & Low , Medium , High \\ \hline
-		Impact & Low , Medium , High \\ \hline
-		Exposition & Low , Medium , High \\ \hline
-		Indicator & Bla bla bla bla bla bla bla bla bla bla bla bla bla \\ \hline
-	\end{tabularx}
-\end{table}
-
-\begin{table}[H]
-	\begin{tabularx}{\textwidth}{|l|X|}
-		\hline
-		\rowcolor{gray!30}
 		Identifier & \textbf{R-001} \\ \hline
-		Name & Optimist planning, ``best case'' (instead of a realistic ``expected case'')\\ \hline
-		Description & An optimistic planning at the start of the project does not take into account problems or delays, and so it does not allocate time for them, leading to cascading delays if they happen. \\ \hline
+		Name & \Runo \\ \hline
+		Description & An optimistic planning at the start of the project does not take into account problems or delays, and so it does not allocate time for them. \\ \hline
+		Negative effects
+			& Could mean the failure of the project if the objectives can not be accomplished in the time left. \\
+			& Rework the planning. \\
+			& Cascading delays.\\ \hline
 		Probability & Medium\\ \hline
 		Impact &  High\\ \hline
 		Exposition &  High\\ \hline
-		Indicator & There are 3 consecutive delays, after the beginning of the project.\\ \hline
 	\end{tabularx}
 \end{table}
-
-
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-002} \\ \hline
-		Name & Bad requirement specification\\ \hline
+		Name & \Rdos \\ \hline
 		Description & The requirements specified at the beginning of the project are not specific enough, are not needed or there are new requirements after the beginning of the project. \\ \hline
+		Negative effects
+			& Need to redo the analysis of specifications. \\
+			& Redo planning.  \\
+			& Rework of related requirements and work based on them, including the need to test the results. \\
+			& Possible failure of the project if the objectives can not be accomplished in the time left. \\ \hline
 		Probability & High\\ \hline
 		Impact &  High\\ \hline
 		Exposition &  High\\ \hline
-		Indicator & There are 3 changes in the requirements specification.\\ \hline
 	\end{tabularx}
 \end{table}
-
-
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-003} \\ \hline
-		Name & Design errors\\ \hline
-		Description & A design is not enough or is incorrect, needing a re-design and probably changes in the next steps it was used. \\ \hline
+		Name & \Rtres \\ \hline
+		Description
+			& A design is not enough or is incorrect. \\
+			& This can be found in later stages, when it is clear that the implementation based on the design would not satisfy the requirements. \\ \hline
+		Negative effects
+			& Having to redesign and maybe redo the work based on the design. \\
+			& Minor delays. \\ \hline
 		Probability & Low\\ \hline
 		Impact &  Medium\\ \hline
-		Exposition & Medium\\ \hline
-		Indicator & There are 3 designs that need rework.\\ \hline
+		Exposition & Low\\ \hline
 	\end{tabularx}
 \end{table}
-
-
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-004} \\ \hline
-		Name & Lack of key information from sources\\ \hline
-		Description & Not having key information from articles, documentation or manuals can result in unexpected delays, added difficulty or the need to rework completely the functionality.\\ \hline
+		Name & \Rcuatro \\ \hline
+		Description & Not having key information from articles, documentation or manuals.\\ \hline
+		Negative effects
+			& Minor delays. \\
+			& Added difficulty, increasing the resources needed. \\
+			& Need to rework and test the functionality, even completely, to follow the desired procedure.\\ \hline
 		Probability & Medium\\ \hline
-		Impact &  High\\ \hline
-		Exposition &  High\\ \hline
-		Indicator & The duration of the study of the attack and the needed tools takes 50\% than expected. \\ \hline
+		Impact &  Medium\\ \hline
+		Exposition &  Medium\\ \hline
 	\end{tabularx}
 \end{table}
-
-
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-005} \\ \hline
-		Name & Lack of feedback or support from the security consultants of Tarlogic\\ \hline
-		Description & Because I do not know enough of some technical aspects of cibersecurity to solve all the problems in this by myself in time, Tarlogic has promised to help (in a tutoring way) if a problem arises.
-		This help could be critical to solve or get around some of the most complex problems, which probably happen to be critical points, needing to be dealt with to continue working on that stage.\\ \hline
+		Name & \Rcinco \\ \hline
+		Description
+			& Because I do not know enough of some technical aspects of cibersecurity to solve all the problems in this by myself in time, Tarlogic has promised to help (in a tutoring way) if a problem arises. \\
+			& This help could be critical to solve or get around some of the most complex problems, which probably happen to be critical points, needing to be dealt with to continue working on that stage.\\ \hline
+		Negative effects
+			& Cascading delays. \\ \hline
 		Probability & Medium\\ \hline
-		Impact &  High\\ \hline
-		Exposition &  High\\ \hline
-		Indicator & A simple technical question takes more than 2 working days to be answered or a complex question takes more than 7 working days.\\ \hline
+		Impact &  Medium\\ \hline
+		Exposition &  Medium\\ \hline
 	\end{tabularx}
 \end{table}
-
-
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-006} \\ \hline
-		Name & The learning curve of some technologies is larger than expected\\ \hline
-		Description & This is a critical need because not having enough knowledge can result in unexpected delays, added difficulty or the need to rework completely the functionality.\\ \hline
+		Name & \Rseis \\ \hline
+		Description & This is a critical need because not having enough knowledge can result in an inefficient approach to accomplishing the objectives.\\ \hline
+		Negative effects
+			& The work is more complicated. \\ \hline
 		Probability & Medium\\ \hline
 		Impact &  Medium\\ \hline
 		Exposition &  Medium\\ \hline
-		Indicator & The duration of the study of the technologies takes 50\% than expected. \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -198,148 +210,471 @@
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-007} \\ \hline
-		Name & The unexplained parts of the project take more time than expected\\ \hline
-		Description & There is not enough specification on what a tasks implies or not enough planning. This means that a part of the project is not understood as it should, and the work done is not what was expected or is not enough, needing more time to finish. \\ \hline
+		Name & \Rsiete \\ \hline
+		Description
+			& There is not enough specification on what a tasks implies or not enough planning. \\
+			& This means that a part of the project is not understood as it should, and the work done is not what was expected or is not enough, needing more time to finish. \\ \hline
+		Negative effects
+			& Could mean the failure of the project if the objectives can not be accomplished in the time left. \\ \hline
 		Probability & Low\\ \hline
 		Impact &  High\\ \hline
 		Exposition &  Medium\\ \hline
-		Indicator & A task takes 15\% more time than expected and when the causes are investigated it is revealed that there were ambiguous descriptions or planning.\\ \hline
 	\end{tabularx}
 \end{table}
+
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-008} \\ \hline
-		Name & Cannot access source material\\ \hline
-		Description & All or part of the source material can not be accessed, probably because the only host of the resource is down. In some cases this could mean a delay in a critical task, cascading in other delays and delaying the project for a period unknown.\\ \hline
+		Name & \Rocho \\ \hline
+		Description
+			& All or part of the source material can not be accessed, probably because the only host of the resource is down. \\
+		Negative effects
+			& In some cases this could mean a delay in a critical task, delaying the whole project for an unknown period of time.\\ \hline
 		Probability & Low\\ \hline
-		Impact & High\\ \hline
-		Exposition & Medium\\ \hline
-		Indicator & There have been at least 10 failed attempts to download the source material, at least 5 with a computer A in a network X and at least 5 with a computer B in a network Y.\\ \hline
+		Impact & Medium\\ \hline
+		Exposition & Low\\ \hline
 	\end{tabularx}
 \end{table}
+
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-009} \\ \hline
-		Name & Unexpected changes to any of the APIs used in the project\\ \hline
-		Description & Changes to an API could affect this project directly or indirectly. Programs could fail or not work as expected.
-		In a project that does not work in a bleeding edge environment, like this, this should be very rare and even if it were to happen it would have to interfere with the part of the API this project uses, which (as this is not bleeding edge) normally would be backwards compatible.\\ \hline
+		Name & \Rnueve \\ \hline
+		Description
+			& Changes to base software could affect this project directly or indirectly: programs could fail or not work as expected. \\
+			& This could mean any software changes, from simple syntax to API changes. \\
+			& In a project that does not work in a bleeding edge environment, like this, this occurrence should be very rare and even if it were to happen it would have to interfere with the part of the software this project uses, which (as this is not bleeding edge) normally would be backwards compatible.\\ \hline
+		Negative effects
+			& Minor delays. \\ \hline
 		Probability & Low\\ \hline
 		Impact & Low \\ \hline
 		Exposition &  Low\\ \hline
-		Indicator & There are 3 failures due to changes in APIs.\\ \hline
 	\end{tabularx}
 \end{table}
+
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-010} \\ \hline
-		Name & Loss of work\\ \hline
+		Name & \Rdiez \\ \hline
 		Description & Due to a bad configuration management or something else, there is a loss of work related to this project.\\ \hline
+		Negative effects
+			& Need to do again the work already done but lost.\\
+			& Depending of the time needed to recover the work, there could be minor or very big delays, planning, changes to the scope of the project and even its failure.  \\ \hline
 		Probability & Low\\ \hline
 		Impact &  High\\ \hline
 		Exposition &  Medium\\ \hline
-		Indicator & The need to replicate already done work is greater than 30 minutes.\\ \hline
 	\end{tabularx}
 \end{table}
+
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-011} \\ \hline
-		Name & Wrong management of the project's configuration\\ \hline
-		Description & The project's configuration is inefficient or lacks work.
-		Some of the problems could be:
-		\vspace{-0.5em}
-		\begin{itemize}
-		\setlength\itemsep{0em}
-			\item Wrong baselines
-			\item Wrong identification of the configuration elements
-			\item It takes more time than expected to manage the project
-			\item Wrong use of the tools
-			\item Too much time between commits
-			\item Changes are unclear
-		\end{itemize}
-		\vspace{-0.5em}
-		This means the project suffer delays because the need to redo management work and/or planned tasks. \\ \hline
+		Name & \Ronce \\ \hline
+		Description
+			& The project's configuration is inefficient or lacks work. \\
+			& For example due to unclear changes or taking too long to commit changes. \\ \hline
+		Negative effects
+			& Wrong baselines or identification of the configuration elements. \\
+			& It takes more time than expected to manage the project. \\
+			& Maybe the failure of the project if the objectives can not be accomplished in the time left. \\
+			& This means the project suffer delays because the need to redo management work and/or planned tasks. \\ \hline
 		Probability & Medium\\ \hline
 		Impact &  High\\ \hline
 		Exposition &  High\\ \hline
-		Indicator & There are 3 delays because of the configuration of the project.\\ \hline
 	\end{tabularx}
 \end{table}
+
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-012} \\ \hline
-		Name & A delay in one task leads to cascading delays in the dependent tasks\\ \hline
+		Name & \Rdoce \\ \hline
 		Description & A task gets delayed and one or more tasks depends on its completion to start, so they get delayed too.\\ \hline
+		Negative effects
+			& Cascading delays. \\ \hline
 		Probability & Medium\\ \hline
 		Impact &  Medium\\ \hline
 		Exposition &  Medium\\ \hline
-		Indicator & At least 2 tasks are delayed, due to only one of them needing more time.\\ \hline
 	\end{tabularx}
 \end{table}
+
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-013} \\ \hline
-		Name & Unnecessary work\\ \hline
-		Description & Resources are wasted in work that latter is not used. This could happen because multiple reasons, like wrong assumptions or balancing of the remaining time of the project.\\ \hline
+		Name & \Rtrece \\ \hline
+		Description
+			& It could be that the knowledge of the student is too limited or the problem has too much logical or mathematical difficulty.\\
+			& It could be that there is impossible to detect the event with the current technologies, if so this impossibility could be hard to assure, due to the complexity of now a days technology.\\ \hline
+		Negative effects
+			& Cascading delays. \\ \hline
 		Probability & Low\\ \hline
 		Impact &  Low\\ \hline
 		Exposition &  Low\\ \hline
-		Indicator & At least 3 commits are reverted.\\ \hline
 	\end{tabularx}
 \end{table}
+
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-014} \\ \hline
-		Name & The quality of the product is not enough\\ \hline
-		Description & The final result is does not comply the quality standard set for this project. This could mean the need to redo work in a later stage or the incorporation to the official repository being rejected.\\ \hline
+		Name & \Rcatorce \\ \hline
+		Description
+			& The final result is does not comply the quality standard set for this project. \\ \hline
+		Negative effects
+			& The incorporation to the official repository gets rejected.\\
+			& Redo planning and possibly change the scope.  \\
+			& Analysis of the changes needed to improve the quality. \\ \hline
 		Probability & Low\\ \hline
 		Impact &  High\\ \hline
 		Exposition &  Medium\\ \hline
-		Indicator & Getting 10 suggestions to rework functionality.\\ \hline
 	\end{tabularx}
 \end{table}
+
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-015} \\ \hline
-		Name & Sickness or overwork\\ \hline
-		Description & The health of the student deteriorates to the point it affects the project, and it is caused by sickness or overwork.\\ \hline
+		Name & \Rquince \\ \hline
+		Description & The health of the student deteriorates to the point it affects the project.\\ \hline
+		Negative effects
+			& Probably the quality of the project drops. \\
+			& Possibly delays, that could be hard to specify their limit. \\
+			& Analysis of the changes needed to improve the quality. \\
+			& In the worst case scenario the project can not continue and fails. \\ \hline
 		Probability & Medium\\ \hline
-		Impact &  Medium\\ \hline
+		Impact &  High\\ \hline
 		Exposition &  Medium\\ \hline
-		Indicator & There is an unexpected delay because the functionality is not done but there has not been any important issues that could explain it. \\ \hline
 	\end{tabularx}
 \end{table}
+
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-016} \\ \hline
-		Name & Performance issues\\ \hline
+		Name & \Rdieciseis \\ \hline
 		Description & The program is too heavy for the environment and takes too much resources, because there are not good enough optimizations or the problems are poorly approached.\\ \hline
+		Negative effects
+			& Minor delays. \\
+			& Analysis of faster ways to solve the problem.\\
+			& The need to code and test a faster solution.\\ \hline
 		Probability & Low\\ \hline
 		Impact &  Low\\ \hline
 		Exposition &  Low\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-017} \\ \hline
+		Name & \Rdiecisiete \\ \hline
+		Description
+			& Resources are wasted in work that latter is not used. \\
+			& This could happen because multiple reasons, like wrong assumptions or balancing of the remaining time of the project.\\ \hline
+		Negative effects
+			& Minor delays. \\ \hline
+		Probability & Low\\ \hline
+		Impact &  Low\\ \hline
+		Exposition &  Low\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-018} \\ \hline
+		Name & \Rdieciocho \\ \hline
+		Description
+			& Optional requirements get too much time or are treated as vital. \\ \hline
+		Negative effects
+			& The task related to these requirements get too much resources.\\
+			& Vital requirements get less resources, making the project loss value.  \\ \hline
+		Probability & Low\\ \hline
+		Impact &  Low\\ \hline
+		Exposition &  Low\\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsection{Risk planning}
+\newcolumntype{y}{>{\hsize=.15\hsize}X}
+\newcolumntype{z}{>{\hsize=.85\hsize}X}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-001} \\ \hline
+		Name & \Runo \\ \hline
+		Indicator & There are 3 consecutive delays, after the beginning of the project.\\ \hline
+		Prevention: Avoid
+			& Allocate a bit more time than initially expected for each task, in case something goes wrong.\\ \hline
+		Correction: Mitigate
+			& Reduce the scope of the project, leaving out initially planned increments. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-002} \\ \hline
+		Name & \Rdos \\ \hline
+		Indicator & There are 3 changes in the requirements specification.\\ \hline
+		Prevention: Mitigate
+			& Confirm that all the requirements have been identified at the beginning of the project.\\
+			& Assure that there is no ambiguity in the requirement specification.\\ \hline
+		Correction: Mitigate
+			& Reduce the scope of the project.  \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-003} \\ \hline
+		Name & \Rtres \\ \hline
+		Indicator & There are 3 designs that need rework.\\ \hline
+		Prevention: Mitigate
+			& Use design patterns if needed (this project should have very simple designs, so it is possible that there is no need to use them). \\
+			& Make the design as simple and modular as possible. \\ \hline
+		Correction: Mitigate
+			& Redesign and probably change and test the work based on the design.\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-004} \\ \hline
+		Name & \Rcuatro \\ \hline
+		Indicator & The duration of the study of the attack and the related tools takes 50\% than expected. \\ \hline
+		Correction: Mitigate
+			& Ask the security consultants of Tarlogic for assistance. \\
+			& Maybe the need to rework completely some functionality. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-005} \\ \hline
+		Name & \Rcinco \\ \hline
+		Indicator & A simple technical question takes more than 2 working days to be answered or a complex question takes more than 7 working days.\\ \hline
+		Prevention: Mitigate & Ask in a clear way and with as many details as possible.\\ \hline
+		Correction: Mitigate
+			& Redo planning and possibly change the scope.  \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-006} \\ \hline
+		Name & \Rseis \\ \hline
+		Indicator & The duration of the study of the technologies takes 50\% than expected. \\ \hline
+		Correction: Mitigate
+			& Redo planning and possibly change the scope.  \\
+			& Maybe the need to rework completely some functionality. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-007} \\ \hline
+		Name & \Rsiete \\ \hline
+		Indicator & A task takes 15\% more time than expected and when the causes are investigated it is revealed that there were ambiguous descriptions or planning.\\ \hline
+		Prevention: Avoid & Try to detail every part enough, having no obvious ambiguity.\\ \hline
+		Correction: Mitigate
+			& Possible need to redo the specifications.  \\
+			& Redo planning and possibly change the scope.  \\
+			& Maybe having to redo related work.  \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-008} \\ \hline
+		Name & \Rocho \\ \hline
+		Indicator & There have been at least 10 failed attempts to download the source material, at least 5 with a computer A in a network X and at least 5 with a computer B in a network Y.\\ \hline
+		Prevention: Avoid & When possible choose the source with the best uptime.\\ \hline
+		Correction: Mitigate
+			& Redo planning and possibly change the scope. \\
+			& Possible need to cut out the part of the project that depends on this source. \\
+			& Maybe find another source or wait to the original source to be accessible again.\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-009} \\ \hline
+		Name & \Rnueve \\ \hline
+		Indicator & There are 3 failures due to a change in software version.\\ \hline
+		Prevention: Mitigate & When possible use software that follow good design guidelines and try to be backwards compatible.\\ \hline
+		Correction: Mitigate & Need to adapt the software to work as expected or remove the related functionalities. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-010} \\ \hline
+		Name & \Rdiez \\ \hline
+		Indicator & The need to replicate already done work is greater than 30 minutes.\\ \hline
+		Prevention: Mitigate & Automate backing up the data and store the copies both in a cloud storage service and in a local disk.\\ \hline
+		Correction: Mitigate
+			& Recover the last backup available of the work. \\
+			& If needed work even outside schedule and in holidays. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-011} \\ \hline
+		Name & \Ronce \\ \hline
+		Indicator & There are 3 delays because of the configuration of the project.\\ \hline
+		Prevention: Avoid
+			& The configuration of the project should be just complex enough (whithout ambiguity, to ensure a proper management), but not too much complex (which would be hard to follow). \\
+			& Use of familiar and standard tools, like Git.\\
+			& Study of the configuration management done in previous final degree projects, to get a proper idea of its scope and details.\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-012} \\ \hline
+		Name & \Rdoce \\ \hline
+		Indicator & At least 2 tasks are delayed, due to only one of them needing more time.\\ \hline
+		Prevention: Avoid
+			& When planning, avoid task dependencies whenever possible. \\
+			& Optionally use a lifecycle based on increments.\\ \hline
+		Correction: Mitigate & Redo planning and possibly change the scope. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-013} \\ \hline
+		Name & \Rtrece \\ \hline
+		Indicator & Writing code that detects the occurrence takes 30\% more time than planned.\\ \hline
+		Prevention: Mitigate
+			& Have as much information on the problem as possible. \\ \hline
+		Correction: Mitigate
+			& Ask the security consultants of Tarlogic for help. \\
+			& Demonstrate that it is possible to detect it. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-014} \\ \hline
+		Name & \Rcatorce \\ \hline
+		Indicator & Getting 10 suggestions to rework functionality.\\ \hline
+		Prevention: Avoid & Follow design patterns. Follow the design guidelines of the official repository when possible.\\ \hline
+		Correction: Mitigate
+			& Need to redo and test work. \\
+			& Optionally pass some kind of quality control. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-015} \\ \hline
+		Name & \Rquince \\ \hline
+		Indicator & There is an unexpected delay because the functionality is not done but there has not been any important issues that could explain it but there is a clear deterioration of the student health. \\ \hline
+		Prevention: Avoid
+			& Stay healthy by following a regular schedule for work and exercising, that includes multiple rest periods.\\
+			& Optionally maintain a diet.\\ \hline
+		Correction: Mitigate & Go to the doctor and follow any instructions to improve the recovery.\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-016} \\ \hline
+		Name & \Rdieciseis \\ \hline
 		Indicator & The program takes 30\% more resources that at the beginning of the project.\\ \hline
+		Prevention: Mitigate & If possible use efficient algorithms and check the efficiency after the testing is done for each increment.\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-017} \\ \hline
+		Name & \Rdiecisiete \\ \hline
+		Indicator & There is at least one functionality not necessary or useful for any requirement.\\ \hline
+		Prevention: Avoid & In the design stage make sure that everything is really needed.\\ \hline
+		Correction: Mitigate & Evaluate again if the work planned is really needed.\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-018} \\ \hline
+		Name & \Rdieciocho \\ \hline
+		Indicator & There is at least one functionality from an optional requirement, when the project is behind its schedule and there are vital requirements not yet accomplished.\\ \hline
+		Prevention: Avoid & The planning leaves the non-vital requirements for the end of the project.\\ \hline
+		Correction: Mitigate & Redo the planning.\\ \hline
 	\end{tabularx}
 \end{table}
 
 
-\subsection{Risk planning}
-
 
 \subsection{Risk supervision}
+
+
+%\begin{table}[H]
+%	\begin{tabularx}{\textwidth}{|l|X|}
+%		\hline
+%		\rowcolor{gray!30}
+%		Identifier & \textbf{R-001} \\ \hline
+%		Name & \Runo \\ \hline
+%		Date & TODO \\ \hline
+%		Actions & TODO \\ \hline
+%		New probability & TODO \\ \hline
+%		New impact &  TODO \\ \hline
+%		New exposition &  TODO \\ \hline
+%	\end{tabularx}
+%\end{table}
