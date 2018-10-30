@@ -13,46 +13,6 @@
 
 %WBS==EDT (translation!)
 \section{Initial WBS}
-
-%\node[style1] {Improvements in IDS, adding functionality to Wazuh}
-%child {node[style2] (c1) {Project management}}
-%child {node[style2] (c2) {Increment 1: Rules/decoders for common attacks in Windows Server}}
-%child {node[style2] (c3) {Increment 2: Rules/decoders with data from Sysmon}}
-%child {node[style2] (c4) {Increment 3: Detection/action against ransomware}}
-%child {node[style2] (c5) {Increment 4: Adapt Wazuh configuration to typical requirements from enterprises}}
-%child {node[style2] (c6) {Increment 5: Explore solutions in problems with GPDR}}
-%child {node[style2] (c7) {Increment 6: Rules/decoders for GNU/Linux}}
-%child {node[style2] (c8) {Increment 7: VirusTotal integration}};
-
-%\begin{tikzpicture}[%
-    %grow=right,
-    %anchor=west,
-    %growth parent anchor=east,
-    %parent anchor=east,
-    %level 1/.style={sibling distance=4cm},
-    %level 2/.style={sibling distance=2.5em},
-    %level distance=1cm]
-
-%\node[root] (root) {Drawing diagrams}
-    %child {node[onode] (c1) {Defining node and arrow styles}
-        %child {node[tnode] (c11) {Setting shape}}
-        %child {node[tnode] (c12) {Choosing color}}
-        %child {node[tnode] (c13) {Adding shading}}
-    %}
-    %child {node[onode] (c2) {Positioning the nodes}
-        %child {node[tnode] (c21) {Using a Matrix}}
-        %child {node[tnode] (c22) {Relatively}}
-        %child {node[tnode] (c23) {Absolutely}}
-        %child {node[tnode] (c24) {Using overlays}}
-    %}
-    %child {node[onode] (c3) {Drawing arrows between nodes}
-        %child {node[tnode] (c31) {Default arrows}}
-        %child {node[tnode] (c32) {Arrow library}}
-        %child {node[tnode] (c33) {Resizing tips}}
-        %child {node[tnode] (c34) {Shortening}}
-        %child {node[tnode] (c35) {Bending}}
-%};
-%\end{tikzpicture}
 \newpage
 {\footnotesize
 \begin{forest} for tree={
@@ -120,13 +80,21 @@
 
 \section{Initial planning}
 
-From the draft proposal to the end of the project.
+
+%TODO
+%holidays in gantt
+%marked in the calendar or adding more days manually
+	%https://tex.stackexchange.com/questions/106419/how-to-colour-the-pgfgantt-canvas-based-on-calendar-dates
+	%https://tex.stackexchange.com/questions/163482/pgfgantt-customization-of-canvas-to-mark-vacations/163521
 
 
-\newcommand{\Plen}{22} %duration of the project in weeks
+
+
+
 
 %independent duration in days
-\newcommand{\Duno}{21}
+%\newcommand{\Duno}{21} %draft
+\newcommand{\Duno}{0}
 \newcommand{\Ddos}{7}
 \newcommand{\Dtres}{28}
 \newcommand{\Dcuatro}{7}
@@ -152,33 +120,46 @@ From the draft proposal to the end of the project.
 %dependent duration (ending time) in days
 \newcommand{\Frequirement}{2}
 
+\newcommand{\Plen}{19} %duration of the project in weeks
+
+\newcommand{\Cimportant}{red!70}
+\newcommand{\Coptional}{cyan!30}
+
+
+The next Gantt diagram shows the initial planning, from the draft proposal (31/10/2018) to the end of the project (TODO/02/2019).
+\linej
+The tasks marked in \colorbox{\Cimportant}{red} are essential to the project, meanwhile the ones marked in \colorbox{\Coptional}{cyan} are considered optional and only will be done if there is enough time left.
+\linej
+Furthemore the last two weeks are marked with a grey overlay to mark that there are only about 17 weeks before the due date of this project (in February). This difference is because the estimation of the tasks was made by the student and so it is not reliable, which means that it could be optimistic or pessimist. Thus the need to either reduce tasks or have more that there were expected to fit.
 
 
 \begin{figure}[h!bt]
 	\begin{center}
 	\begin{ganttchart}[
-	hgrid style/.style={draw=black, line width=.3pt},
-	vgrid={*1{draw=black!5, line width=.75pt}},
-	link/.style={-latex},
+		vgrid
 	]{1}{\Plen}
 		\newganttlinktypealias{straight}{f-s}
 		\setganttlinklabel{straight}{}
 		\gantttitle{Planning of the project in weeks}{\Plen} \\
 		\gantttitlelist{1,...,\Plen}{1} \\
 
-		\ganttbar[name=Draft]{Draft proposal}{1}{\Funo} \\
-		\ganttbar[name=Beginning]{Beginning of the project}{\the\numexpr \Funo + 1 \relax}{\Fdos} \\
-		\ganttbar[name=Increment1]{Increment 1}{\the\numexpr \Fdos + 1 \relax}{\Ftres} \\
-		\ganttbar[name=Increment2]{Increment 2}{\the\numexpr \Ftres + 1 \relax}{\Fcuatro} \\
-		\ganttbar[name=Increment3]{Increment 3}{\the\numexpr \Fcuatro + 1 \relax}{\Fcinco} \\
-		\ganttbar[name=Increment4]{Increment 4}{\the\numexpr \Fcinco + 1 \relax}{\Fseis} \\
-		\ganttbar[name=Increment5]{Increment 5}{\the\numexpr \Fseis + 1 \relax}{\Fsiete} \\
-		\ganttbar[name=Increment6]{Increment 6}{\the\numexpr \Fsiete + 1 \relax}{\Focho} \\
-		\ganttbar[name=Increment7]{Increment 7}{\the\numexpr \Focho + 1 \relax}{\Fnueve} \\
-		\ganttbar[name=Closing]{Closing of the project}{\the\numexpr \Fnueve + 1 \relax}{\Fdiez} \\
-		\ganttbar[name=Management]{Project management}{1}{\Plen} \\
 
-		\ganttlink[link type=straight]{Draft}{Beginning}
+	\ganttbar[name=fuera-de-plazo-top,bar/.style={fill=none, draw=none}]{}{18}{\Plen} 			% top node
+
+
+		\ganttgroup{Project management}{1}{\Plen} \\
+		%\ganttbar[name=Draft]{Draft proposal}{1}{\Funo} \\
+		\ganttbar[name=Beginning,bar/.append style={fill=\Cimportant}]{Beginning of the project}{\the\numexpr \Funo + 1 \relax}{\Fdos} \\
+		\ganttbar[name=Increment1,bar/.append style={fill=\Cimportant}]{Increment 1}{\the\numexpr \Fdos + 1 \relax}{\Ftres} \\
+		\ganttbar[name=Increment2,bar/.append style={fill=\Cimportant}]{Increment 2}{\the\numexpr \Ftres + 1 \relax}{\Fcuatro} \\
+		\ganttbar[name=Increment3,bar/.append style={fill=\Cimportant}]{Increment 3}{\the\numexpr \Fcuatro + 1 \relax}{\Fcinco} \\
+		\ganttbar[name=Increment4,bar/.append style={fill=\Coptional}]{Increment 4}{\the\numexpr \Fcinco + 1 \relax}{\Fseis} \\
+		\ganttbar[name=Increment5,bar/.append style={fill=\Coptional}]{Increment 5}{\the\numexpr \Fseis + 1 \relax}{\Fsiete} \\
+		\ganttbar[name=Increment6,bar/.append style={fill=\Coptional}]{Increment 6}{\the\numexpr \Fsiete + 1 \relax}{\Focho} \\
+		\ganttbar[name=Increment7,bar/.append style={fill=\Coptional}]{Increment 7}{\the\numexpr \Focho + 1 \relax}{\Fnueve} \\
+		\ganttbar[name=Closing,bar/.append style={fill=\Cimportant}]{Closing of the project}{\the\numexpr \Fnueve + 1 \relax}{\Fdiez} \\
+
+		%\ganttlink[link type=straight]{Draft}{Beginning}
 		\ganttlink[link type=straight]{Beginning}{Increment1}
 		\ganttlink[link type=straight]{Increment1}{Increment2}
 		\ganttlink[link type=straight]{Increment2}{Increment3}
@@ -187,6 +168,12 @@ From the draft proposal to the end of the project.
 		\ganttlink[link type=straight]{Increment5}{Increment6}
 		\ganttlink[link type=straight]{Increment6}{Increment7}
 		\ganttlink[link type=straight]{Increment7}{Closing}
+
+
+	\ganttbar[name=fuera-de-plazo-bottom,bar/.style={fill=none, draw=none}]{}{18}{\Plen} 			% bottom node
+	\begin{scope}
+	\draw [opacity=0.2,line width=28] (fuera-de-plazo-top) -- ($(fuera-de-plazo-bottom)+(0,-15pt)$);
+	\end{scope}
 
 	\end{ganttchart}
 	\end{center}
