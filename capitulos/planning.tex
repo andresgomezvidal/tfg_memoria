@@ -6,8 +6,13 @@
 
 
 
-
-
+\newcommand{\IncrementoSiete}{VirusTotal integration}
+\newcommand{\IncrementoSeis}{Additional detection for GNU/Linux}
+\newcommand{\IncrementoCinco}{Explore solutions in problems with GPDR}
+\newcommand{\IncrementoCuatro}{Adapt Wazuh configuration to typical requirements from enterprises}
+\newcommand{\IncrementoTres}{Detection/action against ransomware}
+\newcommand{\IncrementoDos}{Use of data from Sysmon}
+\newcommand{\IncrementoUno}{Common attacks in Windows Server}
 
 
 
@@ -29,35 +34,35 @@
         [Project documentation, tnode]
         [Pull request to the official ruleset repository, tnode]
     ]
-    [Increment 7: VirusTotal integration, onode
+    [Increment 7: \IncrementoSiete, onode
         [Improved integration with antivirus and website scanners, tnode]
         %[Study of the present status, tnode]
     ]
-    [Increment 6: Additional detection for GNU/Linux, onode
+    [Increment 6: \IncrementoSeis, onode
         [Rules and decoders, tnode]
         %[Analysis and writing of rules/decoders, tnode]
         %[Study of the present status, tnode]
     ]
-    [Increment 5: Explore solutions in problems with GPDR, onode
+    [Increment 5: \IncrementoCinco, onode
         [Rules and decoders, tnode]
         %[Analysis and writing of rules/decoders, tnode]
         %[Study of GPDR issues, tnode]
     ]
-    [Increment 4: Adapt Wazuh configuration to typical requirements from enterprises, onode
+    [Increment 4: \IncrementoCuatro, onode
         [Configuration changes, tnode]
         %[Analysis of requirements, tnode]
     ]
-    [Increment 3: Detection/action against ransomware, onode
+    [Increment 3: \IncrementoTres, onode
         [Rules and decoders, tnode]
         %[Analysis and writing of rules/decoders and actions, tnode]
         %[Study of ransomware attack patterns, tnode]
     ]
-    [Increment 2: Use of data from Sysmon, onode
+    [Increment 2: \IncrementoDos, onode
         [Rules and decoders, tnode]
         %[Analysis and writing of rules/decoders, tnode]
         %[Study of Sysmon tools, tnode]
     ]
-    [Increment 1: Common attacks in Windows Server, onode
+    [Increment 1: \IncrementoUno, onode
         [Rules and decoders, tnode]
         %[Detailed study of each attack and patterns, tnode]
     ]
@@ -122,6 +127,8 @@
 
 \newcommand{\Plen}{19} %duration of the project in weeks
 
+\newcommand{\Dlen}{0} %variable used later
+
 \newcommand{\Cimportant}{red!70}
 \newcommand{\Coptional}{cyan!30}
 \newcommand{\Cnormal}{yellow!80}
@@ -129,12 +136,14 @@
 
 The next Gantt diagram shows the initial planning, from the draft proposal (31/10/2018) to the end of the project (TODO/02/2019).
 \linej
-The tasks marked in \colorbox{\Cimportant}{red} are essential to the project, meanwhile the ones marked in \colorbox{\Coptional}{cyan} are considered optional and only will be done if there is enough time left.
+\linej
+The tasks marked in \colorbox{\Cimportant}{red} are essential to the project, meanwhile the ones marked in \colorbox{\Coptional}{cyan} are considered optional and only will be done if there is enough time left. The tasks marked in \colorbox{\Cnormal}{yellow} are normal, and they are used when there is no need to distinguish between essential and optional.
+\linej
 \linej
 Furthemore the last two weeks are marked with a grey overlay to mark that there are only about 17 weeks before the due date of this project (in February). This difference is because the estimation of the tasks was made by the student and so it is not reliable, which means that it could be optimistic or pessimist. Thus the need to either reduce tasks or have more that there were expected to fit.
 
 
-\begin{figure}[h!bt]
+\begin{figure}[H]
 	\begin{center}
 	\begin{ganttchart}[
 		vgrid
@@ -183,32 +192,33 @@ Furthemore the last two weeks are marked with a grey overlay to mark that there 
 
 
 
-\begin{figure}[h!bt]
+\renewcommand{\Dlen}{\Ddos}
+\begin{figure}[H]
 	\begin{center}
 	\begin{ganttchart}[
 		x unit=0.8cm,
 		y unit title=1.0cm,
 		y unit chart=1.0cm,
 		vgrid
-	]{1}{\Ddos}
+	]{1}{\Dlen}
 		\newganttlinktypealias{straight}{f-s}
 		\setganttlinklabel{straight}{}
-		\gantttitlelist{1,...,\Ddos}{1} \\
-		\gantttitle{Days}{\Ddos} \\
+		\gantttitle{Planning in days}{\Dlen} \\
+		\gantttitlelist{1,...,\Dlen}{1} \\
 
 
-		\ganttgroup{Study and investigation}{1}{5} \\
-		\ganttbar[name=Wazuh,bar/.append style={fill=\Cnormal}]{Wazuh}{1}{3} \\
+		\ganttgroup[name=prel]{Preliminary study and investigation}{1}{5} \\
+		\ganttbar[name=Wazuh,bar/.append style={fill=\Cnormal}]{Wazuh documentation}{1}{3} \\
 		\ganttbar[name=Pentesting,bar/.append style={fill=\Cnormal}]{Pentesting tools}{4}{5} \\
 
-		\ganttgroup{Setting up the work environment}{6}{7} \\
+		\ganttgroup[name=workenv]{Work environment preparations}{6}{7} \\
 		\ganttbar[name=InstallVM,bar/.append style={fill=\Cnormal}]{Installing virtual machines}{6}{6} \\
 		\ganttbar[name=settingW,bar/.append style={fill=\Cnormal}]{Setting up Wazuh}{6}{7} \\
 		\ganttbar[name=settingO,bar/.append style={fill=\Cnormal}]{Setting up other tools}{7}{7} \\
 
-		\ganttmilestone[name=milestone]{Ready to start the first increment}{7} \\
+		\ganttmilestone[name=milestone]{Ready to start the first increment}{\Dlen} \\
 
-		\ganttlink{Wazuh}{settingW}
+		\ganttlink{prel}{workenv}
 		\ganttlink{InstallVM}{settingW}
 		\ganttlink{InstallVM}{settingO}
 		\ganttlink{settingW}{milestone}
@@ -219,6 +229,278 @@ Furthemore the last two weeks are marked with a grey overlay to mark that there 
 	\caption{``Beginning of the project'' planning}
 \end{figure}
 
+
+
+
+
+
+\renewcommand{\Dlen}{\Dtres}
+\begin{figure}[H]
+	\begin{center}
+	\begin{ganttchart}[
+		x unit=0.35cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		vgrid,
+		bar/.append style={fill=\Cnormal},
+		milestone label font=\itshape\footnotesize,
+		group label font=\bfseries\footnotesize,
+		bar label font=\footnotesize,
+		title label font=\footnotesize,
+	]{1}{\Dlen}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitle{Planning in days}{\Dlen} \\
+		\gantttitlelist{1,...,\Dlen}{1} \\
+
+	\newcommand{\Dstudy}{15}
+	\newcommand{\Daction}{\the\numexpr \Dstudy + 5 \relax}
+
+
+		\ganttgroup[name=pstudy]{Preliminary study and investigation}{1}{\Dstudy} \\
+		\ganttbar[name=list]{Identify the attacks to detect}{1}{1} \\
+		\ganttbar[name=attack]{Detailed study of each attack}{2}{9} \\
+		\ganttbar[name=tools]{Detailed study related tools}{2}{9} \\
+		\ganttbar[name=detection]{Exploration of detection options}{10}{\Dstudy} \\
+		\ganttbar[name=fdetection]{Discard undetectable attacks}{\Dstudy}{\Dstudy} \\
+
+		\ganttgroup[name=action]{Code the detection}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=RD]{Writing rules and decoders}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		%\ganttbar[name=additional,bar/.append style={fill=\Coptional}]{Possible additional study and investigation}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+
+		\ganttgroup[name=TF]{Testing and fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+		\ganttbar[name=test]{Testing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+		\ganttbar[name=fix]{Fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+
+		\ganttmilestone[name=milestone]{The attacks now can be detected}{\Dlen} \\
+
+		\ganttlink[link type=straight]{list}{attack}
+		\ganttlink{list}{tools}
+		\ganttlink{attack}{detection}
+		\ganttlink[link type=straight]{tools}{detection}
+		\ganttlink{detection}{fdetection}
+		\ganttlink{pstudy}{action}
+		\ganttlink{action}{TF}
+		\ganttlink{TF}{milestone}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{``Increment 1: \IncrementoUno'' planning}
+\end{figure}
+
+
+
+
+
+
+\renewcommand{\Dlen}{\Dcuatro}
+\begin{figure}[H]
+	\begin{center}
+	\begin{ganttchart}[
+		x unit=0.8cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		vgrid,
+		bar/.append style={fill=\Cnormal},
+	]{1}{\Dlen}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitle{Planning in days}{\Dlen} \\
+		\gantttitlelist{1,...,\Dlen}{1} \\
+
+	\newcommand{\Dstudy}{2}
+	\newcommand{\Daction}{\the\numexpr \Dstudy + 3 \relax}
+
+
+		\ganttgroup[name=pstudy]{Preliminary study and investigation}{1}{\Dstudy} \\
+		\ganttbar[name=ssysmon]{Detection advantages with Sysmon}{1}{2} \\
+		\ganttbar[name=listD]{Identify the detections to change}{2}{2} \\
+		\ganttbar[name=listA]{Identify the attacks that can be detected now}{2}{2} \\
+
+		\ganttgroup[name=action]{Code the detection}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=CRD]{Changing rules and decoders}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=ARD]{Adding rules and decoders}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+
+		\ganttgroup[name=TF]{Testing and fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+		\ganttbar[name=test]{Testing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+		\ganttbar[name=fix]{Fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+
+		\ganttmilestone[name=milestone]{Improved detection using data from Sysmon}{\Dlen} \\
+
+		\ganttlink[link type=straight]{ssysmon}{listD}
+		\ganttlink[link type=straight]{ssysmon}{listA}
+		\ganttlink{pstudy}{action}
+		\ganttlink{action}{TF}
+		\ganttlink{TF}{milestone}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{``Increment 2: \IncrementoDos'' planning}
+\end{figure}
+
+
+
+
+
+\renewcommand{\Dlen}{\Dcinco}
+\begin{figure}[H]
+	\begin{center}
+	\begin{ganttchart}[
+		x unit=0.35cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		vgrid,
+		bar/.append style={fill=\Cnormal},
+		milestone label font=\itshape\footnotesize,
+		group label font=\bfseries\footnotesize,
+		bar label font=\footnotesize,
+		title label font=\footnotesize,
+	]{1}{\Dlen}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitle{Planning in days}{\Dlen} \\
+		\gantttitlelist{1,...,\Dlen}{1} \\
+
+	\newcommand{\Dstudy}{10}
+	\newcommand{\Daction}{\the\numexpr \Dstudy + 3 \relax}
+
+
+		\ganttgroup[name=pstudy]{Preliminary study and investigation}{1}{\Dstudy} \\
+		\ganttbar[name=list]{Identify the attacks to detect}{1}{1} \\
+		\ganttbar[name=attack]{Detailed study of each attack}{2}{7} \\
+		\ganttbar[name=tools]{Detailed study related tools}{2}{7} \\
+		\ganttbar[name=detection]{Exploration of detection options}{8}{\Dstudy} \\
+		\ganttbar[name=fdetection]{Discard undetectable attacks}{\Dstudy}{\Dstudy} \\
+
+		\ganttgroup[name=action]{Code the detection}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=RD]{Writing rules and decoders}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+
+		\ganttgroup[name=TF]{Testing and fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+		\ganttbar[name=test]{Testing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+		\ganttbar[name=fix]{Fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+
+		\ganttmilestone[name=milestone]{Protection against certain ransomware attacks}{\Dlen} \\
+
+		\ganttlink[link type=straight]{list}{attack}
+		\ganttlink{list}{tools}
+		\ganttlink{attack}{detection}
+		\ganttlink[link type=straight]{tools}{detection}
+		\ganttlink{detection}{fdetection}
+		\ganttlink{pstudy}{action}
+		\ganttlink{action}{TF}
+		\ganttlink{TF}{milestone}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{``Increment 3: \IncrementoTres'' planning}
+\end{figure}
+
+
+
+
+
+
+
+\renewcommand{\Dlen}{\Dseis}
+\begin{figure}[H]
+	\begin{center}
+	\begin{ganttchart}[
+		x unit=0.8cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		vgrid,
+		bar/.append style={fill=\Cnormal},
+	]{1}{\Dlen}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitle{Planning in days}{\Dlen} \\
+		\gantttitlelist{1,...,\Dlen}{1} \\
+
+	\newcommand{\Dstudy}{2}
+	\newcommand{\Daction}{\the\numexpr \Dstudy + 3 \relax}
+
+
+		\ganttgroup[name=pstudy]{Preliminary study and investigation}{1}{\Dstudy} \\
+		\ganttbar[name=needs]{Find out common needs for enterprises}{1}{\Dstudy} \\
+		\ganttbar[name=list]{Identify reasonable configurations}{\Dstudy}{\Dstudy} \\
+
+		\ganttgroup[name=action]{Code the detection}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=RD]{Setting up each configuration}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+
+		\ganttgroup[name=TF]{Testing and fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+		\ganttbar[name=test]{Testing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+		\ganttbar[name=fix]{Fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+
+		\ganttmilestone[name=milestone]{Set of Wazuh configurations}{\Dlen} \\
+
+		\ganttlink[link type=straight]{needs}{list}
+		\ganttlink{pstudy}{action}
+		\ganttlink{action}{TF}
+		\ganttlink{TF}{milestone}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{``Increment 4: \IncrementoCuatro'' planning}
+\end{figure}
+
+
+
+
+
+\renewcommand{\Dlen}{\Dsiete}
+\begin{figure}[H]
+	\begin{center}
+	\begin{ganttchart}[
+		x unit=0.35cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		vgrid,
+		bar/.append style={fill=\Cnormal},
+		milestone label font=\itshape\footnotesize,
+		group label font=\bfseries\footnotesize,
+		bar label font=\footnotesize,
+		title label font=\footnotesize,
+	]{1}{\Dlen}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitle{Planning in days}{\Dlen} \\
+		\gantttitlelist{1,...,\Dlen}{1} \\
+
+	\newcommand{\Dstudy}{10}
+	\newcommand{\Daction}{\the\numexpr \Dstudy + 4 \relax}
+
+
+		\ganttgroup[name=pstudy]{Preliminary study and investigation}{1}{\Dstudy} \\
+		\ganttbar[name=list]{Identify the situations to detect}{1}{1} \\
+		\ganttbar[name=attack]{Detailed study of each case}{2}{5} \\
+		\ganttbar[name=tools]{Detailed study related tools}{2}{5} \\
+		\ganttbar[name=detection]{Exploration of detection options}{6}{\Dstudy} \\
+		\ganttbar[name=fdetection]{Discard undetectable cases}{\Dstudy}{\Dstudy} \\
+
+		\ganttgroup[name=action]{Code the detection}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=RD]{Writing rules and decoders}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+
+		\ganttgroup[name=TF]{Testing and fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+		\ganttbar[name=test]{Testing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+		\ganttbar[name=fix]{Fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
+
+		\ganttmilestone[name=milestone]{Protection for certain GPDR problems}{\Dlen} \\
+
+		\ganttlink[link type=straight]{list}{attack}
+		\ganttlink{list}{tools}
+		\ganttlink{attack}{detection}
+		\ganttlink[link type=straight]{tools}{detection}
+		\ganttlink{detection}{fdetection}
+		\ganttlink{pstudy}{action}
+		\ganttlink{action}{TF}
+		\ganttlink{TF}{milestone}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{``Increment 5: \IncrementoCinco'' planning}
+\end{figure}
 
 
 %makes no sense by days
