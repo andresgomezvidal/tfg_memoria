@@ -40,7 +40,7 @@
 		& \cellcolor{gray!15}\textbf{Medium} & \cellcolor{red!60}High & \cellcolor{yellow!40}Medium & \cellcolor{green!60}Low\\
 		& \cellcolor{gray!15}\textbf{Low} & \cellcolor{yellow!40}Medium & \cellcolor{green!60}Low & \cellcolor{green!60}Low\\ \hline
 	\end{tabular}
-	\caption{Method of calculation of Exposition based of Probability and Impact}
+	\caption{Method of calculation of Exposition based on Probability and Impact}
 \end{table}
 
 \subsection{Risk types}
@@ -65,11 +65,10 @@
 \newcommand{\Rquince}{Sickness or overwork}
 \newcommand{\Rdieciseis}{Performance issues}
 \newcommand{\Rdiecisiete}{Unnecessary work}
-\newcommand{\Rdieciocho}{Optional requirements increment the time need to complet the project}
+\newcommand{\Rdieciocho}{Optional requirements increment the time need to complete the project}
 
 
 \begin{table}[H]
-	\caption{Project risks}
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
@@ -94,6 +93,7 @@
 		R-17 & \Rdiecisiete \\ \hline
 		R-18 & \Rdieciocho \\ \hline
 	\end{tabularx}
+	\caption{List of the risks of the project}
 \end{table}
 
 
@@ -437,8 +437,8 @@
 		Name & \Rdos \\ \hline
 		Indicator & There are 3 changes in the requirements specification.\\ \hline
 		Prevention: Mitigate
-			& Confirm that all the requirements have been identified at the beginning of the project.\\
-			& Assure that there is no ambiguity in the requirement specification.\\ \hline
+			& Confirm that all the requirements have been identified at the beginning of the project.\linej
+			 Assure that there is no ambiguity in the requirement specification.\\ \hline
 		Correction: Mitigate
 			& Reduce the scope of the project.  \\ \hline
 	\end{tabularx}
@@ -452,8 +452,8 @@
 		Name & \Rtres \\ \hline
 		Indicator & There are 3 designs that need rework.\\ \hline
 		Prevention: Mitigate
-			& Use design patterns if needed (this project should have very simple designs, so it is possible that there is no need to use them). \\
-			& Make the design as simple and modular as possible. \\ \hline
+			& Use design patterns if needed (this project should have very simple designs, so it is possible that there is no need to use them). \linej
+			 Make the design as simple and modular as possible. \\ \hline
 		Correction: Mitigate
 			& Redesign and probably change and test the work based on the design.\\ \hline
 	\end{tabularx}
@@ -467,8 +467,8 @@
 		Name & \Rcuatro \\ \hline
 		Indicator & The duration of the study of the attack and the related tools takes 50\% than expected. \\ \hline
 		Correction: Mitigate
-			& Ask the security consultants of Tarlogic for assistance. \\
-			& Maybe the need to rework completely some functionality. \\ \hline
+			& Ask the security consultants of Tarlogic for assistance. \linej
+			 Maybe the need to rework completely some functionality. \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -479,7 +479,8 @@
 		Identifier & \textbf{R-005} \\ \hline
 		Name & \Rcinco \\ \hline
 		Indicator & A simple technical question takes more than 2 working days to be answered or a complex question takes more than 7 working days.\\ \hline
-		Prevention: Mitigate & Ask in a clear way and with as many details as possible.\\ \hline
+		Prevention: Mitigate
+			& Ask in a clear way and with as many details as possible.\\ \hline
 		Correction: Mitigate
 			& Redo planning and possibly change the scope.  \\ \hline
 	\end{tabularx}
@@ -493,8 +494,8 @@
 		Name & \Rseis \\ \hline
 		Indicator & The duration of the study of the technologies takes 50\% than expected. \\ \hline
 		Correction: Mitigate
-			& Redo planning and possibly change the scope.  \\
-			& Maybe the need to rework completely some functionality. \\ \hline
+			& Redo planning and possibly change the scope.  \linej
+			 Maybe the need to rework completely some functionality. \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -507,9 +508,9 @@
 		Indicator & A task takes 15\% more time than expected and when the causes are investigated it is revealed that there were ambiguous descriptions or planning.\\ \hline
 		Prevention: Avoid & Try to detail every part enough, having no obvious ambiguity.\\ \hline
 		Correction: Mitigate
-			& Possible need to redo the specifications.  \\
-			& Redo planning and possibly change the scope.  \\
-			& Maybe having to redo related work.  \\ \hline
+			& Possible need to redo the specifications.  \linej
+			 Redo planning and possibly change the scope.  \linej
+			 Maybe having to redo related work.  \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -522,9 +523,9 @@
 		Indicator & There have been at least 10 failed attempts to download the source material, at least 5 with a computer A in a network X and at least 5 with a computer B in a network Y.\\ \hline
 		Prevention: Avoid & When possible choose the source with the best uptime.\\ \hline
 		Correction: Mitigate
-			& Redo planning and possibly change the scope. \\
-			& Possible need to cut out the part of the project that depends on this source. \\
-			& Maybe find another source or wait to the original source to be accessible again.\\ \hline
+			& Redo planning and possibly change the scope. \linej
+			 Possible need to cut out the part of the project that depends on this source. \linej
+			 Maybe find another source or wait to the original source to be accessible again.\\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -535,8 +536,10 @@
 		Identifier & \textbf{R-009} \\ \hline
 		Name & \Rnueve \\ \hline
 		Indicator & There are 3 failures due to a change in software version.\\ \hline
-		Prevention: Mitigate & When possible use software that follow good design guidelines and try to be backwards compatible.\\ \hline
-		Correction: Mitigate & Need to adapt the software to work as expected or remove the related functionalities. \\ \hline
+		Prevention: Mitigate
+			& When possible use software that follow good design guidelines and try to be backwards compatible.\\ \hline
+		Correction: Mitigate
+			& Need to adapt the software to work as expected or remove the related functionalities. \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -548,11 +551,11 @@
 		Name & \Rdiez \\ \hline
 		Indicator & The need to replicate already done work is greater than 30 minutes.\\ \hline
 		Prevention: Mitigate
-			& Take snapshots of key status for each virtual machine.\\
-			& Automate backing up the data and store the copies both in a cloud storage service and in a local disk.\\ \hline
+			& Take snapshots of key status for each virtual machine. \linej
+			 Automate backing up the data and store the copies both in a cloud storage service and in a local disk.\\ \hline
 		Correction: Mitigate
-			& Recover the last backup available of the work. \\
-			& If needed work even outside schedule and in holidays. \\ \hline
+			& Recover the last backup available of the work. \linej
+			 If needed work even outside schedule and in holidays. \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -564,9 +567,9 @@
 		Name & \Ronce \\ \hline
 		Indicator & There are 3 delays because of the configuration of the project.\\ \hline
 		Prevention: Avoid
-			& The configuration of the project should be just complex enough (whithout ambiguity, to ensure a proper management), but not too much complex (which would be hard to follow). \\
-			& Use of familiar and standard tools, like Git.\\
-			& Study of the configuration management done in previous final degree projects, to get a proper idea of its scope and details.\\ \hline
+			& The configuration of the project should be just complex enough (whithout ambiguity, to ensure a proper management), but not too much complex (which would be hard to follow). \linej
+			 Use of familiar and standard tools, like Git. \linej
+			 Study of the configuration management done in previous final degree projects, to get a proper idea of its scope and details.\\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -578,9 +581,10 @@
 		Name & \Rdoce \\ \hline
 		Indicator & At least 2 tasks are delayed, due to only one of them needing more time.\\ \hline
 		Prevention: Avoid
-			& When planning, avoid task dependencies whenever possible. \\
-			& Optionally use a lifecycle based on increments.\\ \hline
-		Correction: Mitigate & Redo planning and possibly change the scope. \\ \hline
+			& When planning, avoid task dependencies whenever possible. \linej
+			 Optionally use a lifecycle based on increments.\\ \hline
+		Correction: Mitigate
+			& Redo planning and possibly change the scope. \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -590,12 +594,12 @@
 		\rowcolor{gray!30}
 		Identifier & \textbf{R-013} \\ \hline
 		Name & \Rtrece \\ \hline
-		Indicator & Writing code that detects the occurrence takes 30\% more time than planned.\\ \hline
+		Indicator & Finding a way to detect the occurrence takes 30\% more time than planned.\\ \hline % the code is done later!! first we THINK/DESIGN of a way to detect it
 		Prevention: Mitigate
-			& Have as much information on the problem as possible. \\ \hline
+			& Have as much information on the problem as possible, the more detailed the better. \\ \hline
 		Correction: Mitigate
-			& Ask the security consultants of Tarlogic for help. \\
-			& Demonstrate that it is possible to detect it. \\ \hline
+			& Ask the security consultants of Tarlogic for help. \linej
+			 Demonstrate that it is possible to detect it. \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -606,10 +610,12 @@
 		Identifier & \textbf{R-014} \\ \hline
 		Name & \Rcatorce \\ \hline
 		Indicator & Getting 10 suggestions to rework functionality.\\ \hline
-		Prevention: Avoid & Follow design patterns. Follow the design guidelines of the official repository when possible.\\ \hline
+		Prevention: Avoid
+			& Follow design patterns. \linej
+			 Follow the design guidelines of the official repository when possible.\\ \hline
 		Correction: Mitigate
-			& Need to redo and test work. \\
-			& Optionally pass some kind of quality control. \\ \hline
+			& Need to redo and test work. \linej
+			 Optionally pass some kind of quality control. \\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -621,9 +627,10 @@
 		Name & \Rquince \\ \hline
 		Indicator & There is an unexpected delay because the functionality is not done but there has not been any important issues that could explain it but there is a clear deterioration of the student health. \\ \hline
 		Prevention: Avoid
-			& Stay healthy by following a regular schedule for work and exercising, that includes multiple rest periods.\\
-			& Optionally maintain a diet.\\ \hline
-		Correction: Mitigate & Go to the doctor and follow any instructions to improve the recovery.\\ \hline
+			& Stay healthy by following a regular schedule for work and exercising, that includes multiple rest periods. \linej
+			 Optionally maintain a diet.\\ \hline
+		Correction: Mitigate
+			& Go to the doctor and follow any instructions to improve the recovery.\\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -634,7 +641,8 @@
 		Identifier & \textbf{R-016} \\ \hline
 		Name & \Rdieciseis \\ \hline
 		Indicator & The program takes 30\% more resources that at the beginning of the project.\\ \hline
-		Prevention: Mitigate & If possible use efficient algorithms and check the efficiency after the testing is done for each increment.\\ \hline
+		Prevention: Mitigate
+			& If possible use efficient algorithms and check the efficiency after the testing is done for each increment.\\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -645,8 +653,10 @@
 		Identifier & \textbf{R-017} \\ \hline
 		Name & \Rdiecisiete \\ \hline
 		Indicator & There is at least one functionality not necessary or useful for any requirement.\\ \hline
-		Prevention: Avoid & In the design stage make sure that everything is really needed.\\ \hline
-		Correction: Mitigate & Evaluate again if the work planned is really needed.\\ \hline
+		Prevention: Avoid
+			& In the design stage make sure that everything is really needed.\\ \hline
+		Correction: Mitigate
+			& Evaluate again if the work planned is really needed.\\ \hline
 	\end{tabularx}
 \end{table}
 
@@ -657,8 +667,10 @@
 		Identifier & \textbf{R-018} \\ \hline
 		Name & \Rdieciocho \\ \hline
 		Indicator & There is at least one functionality from an optional requirement, when the project is behind its schedule and there are vital requirements not yet accomplished.\\ \hline
-		Prevention: Avoid & The planning leaves the non-vital requirements for the end of the project.\\ \hline
-		Correction: Mitigate & Redo the planning.\\ \hline
+		Prevention: Avoid
+			& The planning leaves the non-vital requirements for the end of the project.\\ \hline
+		Correction: Mitigate
+			& Redo the planning.\\ \hline
 	\end{tabularx}
 \end{table}
 

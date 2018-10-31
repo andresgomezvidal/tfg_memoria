@@ -146,11 +146,10 @@
 \newcommand{\Cnormal}{yellow!80}
 
 
-The next Gantt diagram shows the initial planning, from the draft proposal (31/10/2018) to the end of the project (TODO/02/2019).
-\linej
-\linej
 The tasks marked in \colorbox{\Cimportant}{red} are essential to the project, meanwhile the ones marked in \colorbox{\Coptional}{cyan} are considered optional and only will be done if there is enough time left. The tasks marked in \colorbox{\Cnormal}{yellow} are normal, and they are used when there is no need to distinguish between essential and optional.
 \linej
+\linej
+The next Gantt diagram shows the initial planning, from the draft proposal (31/10/2018) to the end of the project (TODO/02/2019).
 \linej
 Furthermore the last two weeks are marked with a grey overlay to mark that there are only about 17 weeks before the due date of this project (in February). This difference is because the estimation of the tasks was made by the student and so it is not reliable, which means that it could be optimistic or pessimist. Thus the need to either reduce tasks or have more that there were expected to fit.
 
@@ -201,6 +200,17 @@ Furthermore the last two weeks are marked with a grey overlay to mark that there
 	\end{center}
 	\caption{Initial planning}
 \end{figure}
+
+
+\linej
+The rest of the Gantt diagrams are organized in days, for a more detailed planning.
+\linej
+It is important to note that these plannings could change during the project, either because controlled measures or any unexpected reason.
+\linej
+The order they are implemented could change too and that is the reason because these diagrams have not a set date for start and end, yet.
+\linej
+\linej
+In other words, they could be described as the models for the final Gantt diagrams.
 
 
 
@@ -658,7 +668,7 @@ Furthermore the last two weeks are marked with a grey overlay to mark that there
 		\gantttitlelist{1,...,\Dlen}{1} \\
 
 
-		\ganttgroup[name=repo]{Prepare the ruleset repository}{1}{3} \\
+		\ganttgroup[name=repo]{Ruleset repository}{1}{3} \\
 		\ganttbar[name=revision]{Revision of the guidelines of the official repository}{1}{3} \\
 		\ganttmilestone[name=rmilestone]{Pull request to the official repository}{3} \\
 
@@ -669,7 +679,7 @@ Furthermore the last two weeks are marked with a grey overlay to mark that there
 
 		\ganttlink{revision}{rmilestone}
 
-		\ganttlink{memory}{presentation}
+		\ganttlink{memory}{dmilestone}
 		\ganttlink{presentation}{dmilestone}
 
 	\end{ganttchart}

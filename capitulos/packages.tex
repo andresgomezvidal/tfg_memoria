@@ -1,0 +1,83 @@
+% pódense engadir todos os packages necesarios
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}	%Correct accented characters and copy paste them, also not unexpected results with some characters like pipe
+
+
+%				%es-noquotes]{babel}			si caracteres dan problemas
+%				%es-noshorthands]{babel}		si caracteres dan todavia problemas
+%				%es-noindentfirst]{babel}		para eliminar sangría
+%\usepackage[latin1]{inputenc}
+%\usepackage[galician]{babel}
+%\usepackage[spanish]{babel}
+%\usepackage[spanish, es-tabla,es-noindentfirst]{babel}		%http://www.tex-tipografia.com/spanishopt.html
+%\usepackage[spanish, es-tabla]{babel}		%http://www.tex-tipografia.com/spanishopt.html
+\usepackage[english]{babel}		%http://www.tex-tipografia.com/spanishopt.html
+\addto\captionsenglish{
+  \renewcommand{\contentsname}
+    {Index} % ToC will show "Index" instead of "Content"
+}
+
+%\usepackage[document]{ragged2e}	%centering
+
+\usepackage{graphicx}
+\usepackage[dvips]{epsfig}
+\usepackage{amssymb}
+\usepackage{eurosym}
+\usepackage{float}
+\usepackage{latexsym}
+\usepackage{a4}
+\usepackage{hyperref}
+
+%tables
+\usepackage{multirow}
+\usepackage{multicol}
+%\usepackage{changepage}		%margin, eg for tables before tabular \begin{adjustwidth}{-1.4cm}{}
+\usepackage{tabularx}
+
+%\usepackage{color}
+\usepackage[table,xcdraw,usenames,dvipsnames]{xcolor}
+
+
+%WBS
+\usepackage{forest}
+\usetikzlibrary{arrows.meta,shapes,positioning,shadows,trees}
+\tikzset{
+    basic/.style  = {draw, text width=2cm, drop shadow, font=\sffamily, rectangle},
+    root/.style   = {basic, rounded corners=2pt, thin, align=center,
+                     fill=green!30, text width=2cm,},
+    onode/.style = {basic, thin, rounded corners=2pt, align=left, fill=green!60,text width=6cm,},
+    tnode/.style = {basic, thin, align=left, fill=gray!30, text width=5cm},
+    edge from parent/.style={draw=black, edge from parent fork right}
+}
+
+
+\usepackage{pgfgantt}
+
+
+%%\usepackage{amsmath}		%https://www.sharelatex.com/learn/Aligning_equations_with_amsmath
+%%\usepackage{amsfonts}		%Extended set of fonts for use in mathematics
+%%\usepackage{afterpage}		%Commands specified in its argument are expanded after the current page is output. EG: \afterpage{\clearpage} and the current page will be filled up with text as usual, but then the \clearpage command will flush out all the floats before the next text page begins
+
+\usepackage{listings}
+%	\lstset{breaklines}			%line wrap for listings
+%	\newcommand{\lstlistinginput}{\lstinputlisting}		%alias
+
+
+\usepackage{courier}		%listings better font
+\usepackage[sorting=none]{biblatex} %use with \cite{} and \printbibliography[type=online,heading=subbibliography,title={Referencias web}]
+	\addbibresource{capitulos/bib.bib}
+
+
+
+%%\usepackage{microtype}		%Improves spacing (words and letters) and more stuff. Load after fonts, because is dependent on this font
+%%\usepackage{siunitx}		%SI units
+%%\usepackage{xspace}			%Decides whether to insert a space to replace one "eaten" by the command decoder
+%%\usepackage{todonotes}		%Mark things to do later
+%\usepackage{hyperref}		%\hyperref, \url and \href
+%%\usepackage[a4paper]{geometry}	%Margins without needing to remember the particular page dimensions commands. Eg [a4paper], [top=1in, bottom=1.25in, left=1.25in, right=1.25in]
+%%\usepackage{cleveref}		%LAST \usepackage in the preamble. If anything else modifies the referencing system (like amsmath) it all goes wrong
+%
+%%\DisableLigatures{encoding = *, family = *}		%https://en.wikibooks.org/wiki/LaTeX/Text_Formatting#Ligatures
+%%\def\spanishoperators{}		%stuff like sin traduced to sen, max to máx, etc
+
+
