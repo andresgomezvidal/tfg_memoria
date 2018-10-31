@@ -124,6 +124,7 @@
 
 \newcommand{\Cimportant}{red!70}
 \newcommand{\Coptional}{cyan!30}
+\newcommand{\Cnormal}{yellow!80}
 
 
 The next Gantt diagram shows the initial planning, from the draft proposal (31/10/2018) to the end of the project (TODO/02/2019).
@@ -180,6 +181,43 @@ Furthemore the last two weeks are marked with a grey overlay to mark that there 
 	\caption{Initial planning}
 \end{figure}
 
+
+
+\begin{figure}[h!bt]
+	\begin{center}
+	\begin{ganttchart}[
+		x unit=0.8cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		vgrid
+	]{1}{\Ddos}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitlelist{1,...,\Ddos}{1} \\
+		\gantttitle{Days}{\Ddos} \\
+
+
+		\ganttgroup{Study and investigation}{1}{5} \\
+		\ganttbar[name=Wazuh,bar/.append style={fill=\Cnormal}]{Wazuh}{1}{3} \\
+		\ganttbar[name=Pentesting,bar/.append style={fill=\Cnormal}]{Pentesting tools}{4}{5} \\
+
+		\ganttgroup{Setting up the work environment}{6}{7} \\
+		\ganttbar[name=InstallVM,bar/.append style={fill=\Cnormal}]{Installing virtual machines}{6}{6} \\
+		\ganttbar[name=settingW,bar/.append style={fill=\Cnormal}]{Setting up Wazuh}{6}{7} \\
+		\ganttbar[name=settingO,bar/.append style={fill=\Cnormal}]{Setting up other tools}{7}{7} \\
+
+		\ganttmilestone[name=milestone]{Ready to start the first increment}{7} \\
+
+		\ganttlink{Wazuh}{settingW}
+		\ganttlink{InstallVM}{settingW}
+		\ganttlink{InstallVM}{settingO}
+		\ganttlink{settingW}{milestone}
+		\ganttlink[link type=straight]{settingO}{milestone}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{``Beginning of the project'' planning}
+\end{figure}
 
 
 
