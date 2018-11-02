@@ -84,6 +84,65 @@
 
 
 
+\subsection{WBS dictionary}
+\begin{enumerate}
+	\item \textbf{Project management}
+	\begin{enumerate}[label=\alph*]
+		\item \textbf{Scope management}: Scope explanation, set the restrictions of the project and determine what is going to be turned in at the end of the project.
+		\item \textbf{Requirement management}: Analysis, requirement specification and probably a traceability matrix.
+		\item \textbf{Risk management}: Identification, analysis, classification, planning and supervision of risks.
+		\item \textbf{Time management}: Planning (initial and real), any planning changes and necessary measures.
+		\item \textbf{Configuration management}: Documentation on the management of changes and control version.
+		\item \textbf{Cost management}: Cost estimation (direct and indirect) of software, hardware and resources.
+	\end{enumerate}
+
+	\item \textbf{Beginning of the project}
+	\begin{enumerate}[label=\alph*]
+		\item \textbf{Study of Wazuh documentation and related tools and technologies}: Is the base for multiple aspects of the project and if it is done correctly it can mean less hours in related work.
+		\item \textbf{Setup of the work environment}: Installation and basic configuration of the virtual machines of the project, like having a functional Wazuh environment.
+	\end{enumerate}
+
+	\item \textbf{Increment 1}
+	\begin{enumerate}[label=\alph*]
+		\item \textbf{Rules and decoders}: The objective is to be able to detect common attacks in Windows Server (specifically 2016 and 2019), but it should be backwards compatible and depending on the difficulty it could be worth to ensure support for Windows 10 Pro too. This rules are the final product of this increment, which probably will need more time than any other increment, because its heavy study and testing.
+	\end{enumerate}
+
+	\item \textbf{Increment 2}
+	\begin{enumerate}[label=\alph*]
+		\item \textbf{Rules and decoders}: It will need a preliminary study of Sysmon and the ways to use its data to improve detection in certain situations. It is possible that this increment will modify rules and decoders of the previous one.
+	\end{enumerate}
+
+	\item \textbf{Increment 3}
+	\begin{enumerate}[label=\alph*]
+		\item \textbf{Rules and decoders}: This increment tries to produce rules and decoders to detect ransomware and launch alerts and maybe actions against the attack, like rollback to a previous backup or try to stop the attack from repeating in a short period of time.
+	\end{enumerate}
+
+	\item \textbf{Increment 4}
+	\begin{enumerate}[label=\alph*]
+		\item \textbf{Configuration changes}: Adapt Wazuh to the typical requirements from enterprises. This means that an enterprise could choose from a set of templates, with different security profiles.
+	\end{enumerate}
+
+	\item \textbf{Increment 5}
+	\begin{enumerate}[label=\alph*]
+		\item \textbf{Rules and decoders}: Most should be focused on detecting changes on the protected files. Part of this increment should be the investigation on normal problems of these technologies and recent innovations and solutions.
+	\end{enumerate}
+
+	\item \textbf{Increment 6}
+	\begin{enumerate}[label=\alph*]
+		\item \textbf{Rules and decoders}: There would be preliminary study to do, but the increment should be about expanding the already done work in the field, probably focusing in services and security technologies like SELinux or AppArmor.
+	\end{enumerate}
+
+	\item \textbf{Increment 7}
+	\begin{enumerate}[label=\alph*]
+		\item \textbf{Improved integration with antivirus and website scanners}: The idea is to improve the detection as much as possible with the help of VirusTotal malware scanners, which is updated consistently and so it would mean a consistently updated detection for a system with Wazuh without the need to write new rules and decoders. Obviously there is a difference in the scope and objectives of these technologies, which can be redundant, but this could be certainly interesting in some cases.
+	\end{enumerate}
+
+	\item \textbf{Closing of the project}
+	\begin{enumerate}[label=\alph*]
+		\item \textbf{Pull request to the official ruleset repository}: There is a fundamental need to investigate the correct way to organize the the forked repository for a pull request to an official repository like this. In any case the status of the fork should be checked before and there should be a high amount of commits and use a different branch for each functionality, allowing an easier way to select what to admit or not in the official repository.
+		\item \textbf{Project documentation}: The memory and presentation of the project and whatever other documentation if necessary.
+	\end{enumerate}
+\end{enumerate}
 
 
 
