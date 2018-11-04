@@ -351,9 +351,9 @@ In other words, they could be described as the models for the final Gantt diagra
 
 		\ganttgroup[name=action]{Code the detection}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
 		\ganttbar[name=RD]{Writing rules and decoders}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
-		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
-		\ganttbar[name=normalWindows, bar/.append style={fill=\Coptional},]{Support for Windows 10}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
-		%\ganttbar[name=additional,bar/.append style={fill=\Coptional}]{Possible additional study and investigation}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\Daction}{\Daction} \\
+		\ganttbar[name=normalWindows, bar/.append style={fill=\Coptional},]{Support for Windows 10}{\Daction}{\Daction} \\
+		%\ganttbar[name=additional,bar/.append style={fill=\Coptional}]{Possible additional study and investigation}{\Daction}{\Daction} \\
 
 		\ganttgroup[name=TF]{Testing and fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
 		\ganttbar[name=test]{Testing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
@@ -463,7 +463,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 		\ganttgroup[name=action]{Code the detection}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
 		\ganttbar[name=RD]{Writing rules and decoders}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
-		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\Daction}{\Daction} \\
 
 		\ganttgroup[name=TF]{Testing and fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
 		\ganttbar[name=test]{Testing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
@@ -571,7 +571,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 		\ganttgroup[name=action]{Code the detection}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
 		\ganttbar[name=RD]{Writing rules and decoders}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
-		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\Daction}{\Daction} \\
 
 		\ganttgroup[name=TF]{Testing and fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
 		\ganttbar[name=test]{Testing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
@@ -629,7 +629,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 		\ganttgroup[name=action]{Code the detection}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
 		\ganttbar[name=RD]{Writing rules and decoders}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
-		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\Daction}{\Daction} \\
 
 		\ganttgroup[name=TF]{Testing and fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
 		\ganttbar[name=test]{Testing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
@@ -686,7 +686,7 @@ In other words, they could be described as the models for the final Gantt diagra
 		\ganttgroup[name=action]{Modifications needed}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
 		\ganttbar[name=RD]{Changes in the configuration}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
 		\ganttbar[name=hacks]{Writing custom attacks}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
-		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\the\numexpr \Dstudy + 1 \relax}{\Daction} \\
+		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\Daction}{\Daction} \\
 
 		\ganttgroup[name=TF]{Testing and fixing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
 		\ganttbar[name=test]{Testing}{\the\numexpr \Daction + 1 \relax}{\Dlen} \\
@@ -733,6 +733,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 		\ganttgroup[name=documentation]{Documentation of the project}{1}{\Dlen} \\
 		\ganttbar[name=memory]{Project memory}{1}{12} \\
+		\ganttbar[name=other, bar/.append style={fill=\Coptional},]{Other documentation}{12}{12} \\
 		\ganttbar[name=presentation]{Project presentation}{13}{\Dlen} \\
 		\ganttmilestone[name=dmilestone]{Project documentation}{\Dlen} \\
 
