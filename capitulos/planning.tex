@@ -257,7 +257,7 @@ Furthermore the last two weeks are marked with a grey overlay to mark that there
 
 	\end{ganttchart}
 	\end{center}
-	\caption{Initial planning}
+	\caption{Planning simplification}
 \end{figure}
 
 
@@ -792,3 +792,113 @@ In other words, they could be described as the models for the final Gantt diagra
 
 
 \section{Final planning}
+
+\newcommand{\PStart}{2018-11-01}
+\newcommand{\FBeginning}{2018-11-07}
+\newcommand{\SIncrementoUnoDos}{2018-11-08}
+\newcommand{\FIncrementoUnoDos}{2018-12-12}
+%\newcommand{\FIncrementoTres}{}
+%\newcommand{\FIncrementoCuatro}{}
+%\newcommand{\FIncrementoCinco}{}
+%\newcommand{\FIncrementoSeis}{}
+%\newcommand{\FIncrementoSiete}{}
+\newcommand{\SClosing}{2019-02-02}
+\newcommand{\PClosing}{2019-02-20}
+
+
+\begin{figure}[H]
+	\begin{center}
+	\begin{ganttchart}[
+		time slot format=isodate,
+		time slot format/start date=\PStart,
+		x unit=0.10cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		bar/.append style={fill=\Cnormal},
+		milestone label font=\itshape\footnotesize,
+		group label font=\bfseries\footnotesize,
+		bar label font=\footnotesize,
+		title label font=\footnotesize,
+		title height=0.5,
+		title top shift=-.5,
+		%vgrid
+	]{\PStart}{\PClosing}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitlecalendar{year, month=name}
+
+		\ganttgroup{Project management}{\PStart}{\PClosing} \\
+		\ganttbar[name=Beginning]{Beginning of the project}{\PStart}{\FBeginning} \\
+		\ganttbar[name=Increment1]{Increment 1 and 2}{\SIncrementoUnoDos}{\FIncrementoUnoDos} \\
+		%\ganttbar[name=Increment3}]{Increment 3}{}{} \\
+		%\ganttbar[name=Increment4]{Increment 4}{}{} \\
+		%\ganttbar[name=Increment5]{Increment 5}{}{} \\
+		%\ganttbar[name=Increment6]{Increment 6}{}{} \\
+		%\ganttbar[name=Increment7]{Increment 7}{}{} \\
+		\ganttbar[name=Closing]{Closing of the project}{\SClosing}{\PClosing} \\
+
+		\ganttlink[link type=straight]{Beginning}{Increment1}
+		%\ganttlink[link type=straight]{Increment1}{Increment3}
+		%\ganttlink[link type=straight]{Increment3}{Increment4}
+		%\ganttlink[link type=straight]{Increment4}{Increment5}
+		%\ganttlink[link type=straight]{Increment5}{Increment6}
+		%\ganttlink[link type=straight]{Increment6}{Increment7}
+		%\ganttlink[link type=straight]{Increment7}{Closing}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{Planning simplification}
+\end{figure}
+
+
+
+\begin{figure}[H]
+	\begin{center}
+	\begin{ganttchart}[
+		time slot format=isodate,
+		time slot format/start date=\PStart,
+		x unit=0.80cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		bar/.append style={fill=\Cnormal},
+		milestone label font=\itshape\footnotesize,
+		group label font=\bfseries\footnotesize,
+		bar label font=\footnotesize,
+		title label font=\footnotesize,
+		title height=0.5,
+		title top shift=-.5,
+		vgrid
+		]{\PStart}{\FBeginning}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitlecalendar{month=name, week, day}
+
+
+		\ganttgroup[name=prel]{Preliminary study and investigation}{\PStart}{2018-11-05} \\
+		\ganttbar[name=Wazuh,bar/.append style={fill=\Cnormal}]{Wazuh documentation}{\PStart}{2018-11-02} \\
+		\ganttbar[name=Pentesting,bar/.append style={fill=\Cnormal}]{Pentesting tools}{\PStart}{2018-11-05} \\
+		\ganttmilestone[name=fmilestone]{Basic knowledge of the technologies}{2018-11-05} \\
+
+		\ganttgroup[name=workenv]{Work environment preparations}{2018-11-06}{2018-11-07} \\
+		\ganttbar[name=InstallVM,bar/.append style={fill=\Cnormal}]{Installing virtual machines}{2018-11-06}{2018-11-06} \\
+		\ganttbar[name=settingW,bar/.append style={fill=\Cnormal}]{Setting up Wazuh}{2018-11-06}{2018-11-07} \\
+		\ganttbar[name=settingO,bar/.append style={fill=\Cnormal}]{Setting up other tools}{2018-11-06}{2018-11-07} \\
+
+		\ganttmilestone[name=milestone]{Ready to start the first increment}{\FBeginning} \\
+
+		\ganttlink{prel}{workenv}
+		\ganttlink[link type=straight]{Wazuh}{fmilestone}
+		\ganttlink[link type=straight]{Pentesting}{fmilestone}
+		\ganttlink[link type=straight]{InstallVM}{settingW}
+		\ganttlink{InstallVM}{settingO}
+		\ganttlink{settingW}{milestone}
+		\ganttlink[link type=straight]{settingO}{milestone}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{``Beginning of the project'' planning}
+\end{figure}
+
+
+
+
