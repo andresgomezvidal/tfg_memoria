@@ -44,32 +44,52 @@
 \pagenumbering{arabic}
 \setcounter{page}{1}
 \pagestyle{headings}
-%\include{capitulos/introducion}
+\chapter{Introduction}
+\include{capitulos/introducion}
 
 \cleardoublepage
+\chapter{OSSEC and Wazuh}
+\include{capitulos/ossec-wazuh}
+
+\cleardoublepage
+\chapter{Requirements}
 \include{capitulos/requirements}
 
-%\cleardoublepage
-%\include{capitulos/design}
-
 \cleardoublepage
+\chapter{Project management}
+%\include{capitulos/scope}
+\input{capitulos/risks}
+%\include{capitulos/costs}
+%\include{capitulos/configuration}
 \include{capitulos/planning}
 
 \cleardoublepage
-\input{capitulos/risks.tex}
+\chapter{Technologies and tools}
+\include{capitulos/technologies-and-tools}
 
 %\cleardoublepage
+%\chapter{Design and Implementation}
+%\include{capitulos/design-and-implementation}
+
+%\cleardoublepage
+%\chapter{Testing}
+%\include{capitulos/testing}
+
+%\cleardoublepage
+%\chapter{Conclusions and additions}
 %\include{capitulos/conclusions}
 
 
 
-% AQUÍ EMPEZAN OS APÉNDICES
 %\appendix
 %\cleardoublepage
-%\include{capitulos/apendicea}
+%\include{capitulos/technical-manual}
 
 %\cleardoublepage
-%\include{capitulos/apendiceb}
+%\include{capitulos/user-manual}
+
+%\cleardoublepage
+%\include{capitulos/glossary}
 
 %\cleardoublepage
 %\include{capitulos/licenza}

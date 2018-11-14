@@ -1,6 +1,112 @@
-\chapter{Introdución}
-%\hyphenation{In-te-re-se}
 
 %Introdución: composta por Obxectivos Xerais, Relación da Documentación que conforma a Memoria, Descrición do Sistema, Información Adicional de Interese (métodos, técnicas ou arquitecturas utilizadas, xustificación da súa elección, etc.).
 
+
+This project was made in collaboration with the cybersecurity company Tarlogic SL, even though I am not a member of Tarlogic and have never worked with them in the past. It is key to note my lack of expierence in cybersecurity (on a professional level) because is the reason for the bad planning estimations and the limit of the scope.
+
+\section{Motivation}
+
+Cybersecurity nowadays is very complex and there are many subfields and expert tools, to the point it could be argued that is imposible to master. In this project we put ourselves in the shoes of an administrator of an enterprise system that wants to improve the security by detecting intrusions.
+\linej
+\linej
+Cybersecurity measures can be applied in multiple layers of the system, each with different tools, objectives, advantages and cost. In general the security of a system has the next parts:
+\begin{enumerate}
+	\item \textbf{Firewall}: Control the inbound/outbound connections, on the \textbf{network layer}. In our case its objective is to reduce the amount of inbound connections, reducing the chance of intrusion.
+	\item \textbf{IPS}: Intrusion Prevention System to minimize the chance of intrusions, on the \textbf{program layer}.
+	\item \textbf{IDS}: Intrusion Detection System to mitigate the damage of intrusions, on the \textbf{program layer}.
+\end{enumerate}
+
+\linej
+The next table shows a \textbf{simplified} flow on how the information is processed by the security layers and methods.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+		\textbf{Layer} & Network & \multicolumn{2}{c|}{Program}\\ \hline
+		\textbf{Method} & Firewall & IPS & IDS\\ \hline
+		\textbf{Measures} & Prevent & Prevent & Mitigate\\ \hline
+	\end{tabular}
+	%\caption{}
+\end{table}
+$\xrightarrow{\makebox[\textwidth]{Direction of the data flow}}$
+
+
+\linej
+\linej
+We focus on IDS because it is less explored than IPS or Firewall and due to the advance in gathering and processing of data in the last years IDS has become much more viable and reliable.
+
+\linej
+\linej
+IDSs are systems specialized in detection and are different from antivirus or antimalware because they usually focus on prevention, however prevention and detection are often meshed together because both are deeply related. There are some cases where a sytem specialized in detection offers some kind of mitigation functionality or a sytem specialized in prevention offers some kind of detection functionality.
+
+\linej
+\linej
+It is important to note that in cybersecurity the tendency is for the attack to be created first and later some kind of measures, not necessarily by the same teams as they tend to be specialized in each rol. Nowadays there are lots of different attacks, so many that their detection could be almost imposible one by one, but most of them can be detected because they share patterns. If we can determine the patterns of an attack and code a way to detect them we can detect the threat.
+\linej
+IDS work by analysing the key information available (programs, logs, network, etc) to determine if there has been an intrusion in the system. The details of the process vary with each IDS but in general they work like an expert system:
+\begin{itemize}
+	\item The source of the data is the system.
+	\item The alerts are set by certain rules when they match.
+	\item Rules do not need to throw an alert and there can be dependencies, allowing complex analysis without false positives.
+\end{itemize}
+\linej
+OSSEC is an HIDS (Host-based IDS) solution with detection based on rules and decoders. Both rules and decoders can be defined with numerous options and support dependencies and regular expressions.
+\begin{itemize}
+	\item The decoders format the data for the rules.
+	\item The rules determine there is a threat if the conditions are met.
+\end{itemize}
+
+\linej
+\textbf{OSSEC} stands for \textbf{O}pen \textbf{S}ource HIDS \textbf{SEC}urity and is interesting because the next qualities\cite{ossec}:
+\begin{itemize}
+	\item \textbf{Widely Used}: OSSEC is a growing project, with more than 5,000 downloads per month on average. It is being used by ISPs, universities, governments and even large corporate data centers as their main HIDS solution. In addition to being deployed as an HIDS, it is commonly used strictly as a log analysis tool, monitoring and analyzing firewalls, IDSs, web servers and authentication logs.
+	\item \textbf{Scalable}: Because it is an HIDS and it uses agents.
+	\item \textbf{Multi-platform}: GNU/Linux, Windows, Mac OS and Solaris. This is important because most professional services are on GNU/Linux or Windows, but it is important to note that rules can only work in one operating system.
+	\item \textbf{Free}: OSSEC is a free software and will remain so in the future; you can redistribute it and/or modify it under the terms of the GNU General Public License (version 2) as published by the FSF -- Free Software Foundation.
+	\item \textbf{Open source}: The code is open, so you can read and debug it all you want.
+\end{itemize}
+
+\linej
+Furthermore it offers functionality like\cite{wazuh_additional_functionality}:
+\begin{itemize}
+	\item \textbf{Rootkits detection}: This type of malware usually replaces or changes existing operating system components in order to alter the behavior of the system. Rootkits can hide other processes, files or network connections like itself.
+	\item \textbf{File integrity monitoring}: To detect access or changes to sensitive data.
+	\item \textbf{Agents}: Each monitored host can either install the agent or use an agentless agent\cite{agentless} (but still needs to install OSSEC, so it is a bit pointless).
+\end{itemize}
+
+\linej
+OSSEC is interesting for this project because it offers a reliable way to use an already done and thoroughly tested IDS and enhance it to our needs without much work. To even ease more this we will use Wazuh, a fork of OSSEC.
+
+
+%TODO alternatives
+
+
+
+
+
+\section{Objectives}
+The main objective is to improve intrusion detection in IDS. This can be accomplished in several ways:
+\begin{itemize}
+	\item Adding or changing functionality of an already existing technologie.
+		\subitem Coding on core or additions.
+		\subitem Configuration or input of the program.
+	\item Develop a new technologie or tools that result in a different detection system.
+\end{itemize}
+
+\linej
+As mentioned before in this project we will use OSSEC through Wazuh to code rules and decoders, without the need to change any code of the program itself, which means this project can focus directly on detection without the need to create a detection system. Of course if in later stages of the project it would to be found that is convenient to modify the detection system itself it could be considered depending on the importance, the progress and the remaining time of the project.
+
+
+\section{Structure of this document}
 %TODO
+This document has TODO chapters:
+\begin{itemize}
+	\item In \textbf{chapter 1} 
+	\item In \textbf{chapter 2} 
+	\item In \textbf{chapter 3} 
+	\item In \textbf{chapter 4} 
+	\item In \textbf{chapter 5} 
+	\item In \textbf{chapter 6} 
+	\item In \textbf{chapter 7} 
+\end{itemize}
