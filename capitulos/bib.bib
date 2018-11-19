@@ -1,3 +1,5 @@
+%awk -F '{' '/^@.*{..*,/ {gsub(",","",$2); print $2}' bib.bib |awk '{print $1}' |while read -r i; do if [[ -z "$(grep "cite{$i}" *.tex)" ]]; then  echo "NONE: $i" ; fi;  done
+
 
 @Book{pmbok,
 %address = {},
@@ -71,6 +73,27 @@ isbn = {9781628250091}
 	address = {Amsterdam, The Netherlands, The Netherlands},
 	keywords = {Fuzzy Logic, Intrusion detection, Machine learning, Performance comparison, Snort and Suricata, Support Vector Machine},
 }
+
+@article{snort_honeypot, 	%https://pdfs.semanticscholar.org/3397/163c7e89c2c039f5e207677c81df778b9984.pdf 			https://www.semanticscholar.org/paper/Combining-IDS-and-Honeynet-Methods-for-Improved-and-Riebach-T%C3%B6dtmann/3397163c7e89c2c039f5e207677c81df778b9984
+  title={Combining IDS and Honeynet Methods for Improved Detection and Automatic Isolation of Compromised Systems},
+  author={Stephan Riebach and Birger T{\"o}dtmann and Erwin P. Rathgeb},
+  year={2005}
+}
+
+@article{honeypot_ossec_trees, 	%http://www.ijcncs.org/published/volume2/issue1/p7_2-1.pdf 		http://www.ijcncs.org/published/volume2/issue1/index.php
+  title={Monitoring and Analyzing System Activities Using High Interaction Honeypot},
+  author={Dr.Najla B. Al-Dabagh and Mohammed A. Fakhri},
+  year={2014},
+  journal={International Journal of Computer Networks and Communications Security},
+}
+
+@article{honeypot_weka_learning, 	%https://www.researchgate.net/publication/306017096_A_machine_learning_based_approach_for_intrusion_prevention_using_honeypot_interaction_patterns_as_training_data
+  title={A machine learning based approach for intrusion prevention using honeypot interaction patterns as training data},
+  author={Daniel Zammit},
+  year={2016}
+} %Zammit, Daniel. (2016). A machine learning based approach for intrusion prevention using honeypot interaction patterns as training data. 10.13140/RG.2.1.1996.0561.
+
+
 
 
 @online{ossec,
@@ -181,16 +204,16 @@ isbn = {9781628250091}
 	url = {https://documentation.wazuh.com/current/user-manual/ruleset/custom.html},
 	urldate = {2018-11-15},
 }
-%@online{,
-%	title = {},
-%	url = {},
-%	urldate = {}
-%}
-%@online{,
-%	title = {},
-%	url = {},
-%	urldate = {}
-%}
+@online{pmi_project_management,
+	title = {What is Project Management?},
+	url = {https://www.pmi.org/about/learn-about-pmi/what-is-project-management},
+	urldate = {2018-11-17},
+}
+@online{virustotal_faq,
+	title = {VirusTotal FAQ},
+	url = {https://www.virustotal.com/en/faq/},
+	urldate = {2018-11-18},
+}
 %@online{,
 %	title = {},
 %	url = {},

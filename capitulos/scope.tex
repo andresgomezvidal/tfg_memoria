@@ -1,22 +1,80 @@
 \section{Scope management}
+The management of the scope of the project has the necessary processes to guarantee that the objectives are met.
+The scope management allows the project to start focused in what really matters, not losing time in irrelevant details or desirable additions that we can not implementent, by identifying and describing the necessary tasks.
 
-We had to leave behind some ideas because the kind of project this is.
+
+\subsection{Description of the scope}
+This project tries to improve the detection of intrusions on the already existing HIDS Wazuh. This kind of objective can be accomplished by very different approaches, because the software to work on can be used in many scenarios, is very related to other software and is in active development.
+%TODO
+\linej
+Though some increments can be considered difficult due to the amount of new technologies and tools there should be no problem to met the basic objectives because we have the freedom to adapt the scope at any time and there is more than enough time for the essential parts of the project.
+
+\subsection{Acceptation criteria}
+In order to the product to be accepted the essential requeriments need to have been accomplished before the time limit of the project.
+
+\subsection{Increments}
+The essential increments to the project are:
+\begin{itemize}
+	\item Increment 1: \IncrementoUno.
+	\item Increment 2: \IncrementoDos. By itself is not really a must have, but it could make a different for certain attacks and the more data the better.
+	\item Increment 3: \IncrementoTres.
+\end{itemize}
+\linej
+These were chosen because we think Wazuh needs tangible security measures against common threats more than anything else at the moment. In other words, we reckon these points are were Wazuh lacks the most right now.
+\linej
+\linej
+The rest of the increments are considered optional and can be removed if there is not enough time left. The order is based on the estimation of the relevance of the increment for Wazuh and our project. This means for example having in mind the time estimation for the increment without stretching.
+\begin{itemize}
+	\item Increment 4: \IncrementoCuatro. This is considered a very important increment because we think it could be a selling point for some enterprises, that probably do not want the same level of security for all their computers and the time to set it up (or at least from scratch). There is a chance that something like this already exists, in which case the investigation at the start of the increment should find it.
+	\item Increment 5: \IncrementoCinco. Tarlogic stated that they would like to have this increment specifically.
+	\item Increment 6: \IncrementoSeis. This could have more or less the same impact as increment 1 for some clients, but Tarlogic was more interested in Windows and Wazuh seems to be more oriented towards GNU/Linux.
+	\item Increment 7: \IncrementoSiete. The problem of this increment is that VirusTotal's public API key has more limited features and has a 4 requests/minute limitation\cite{virustotal_faq}. We asume the use of a public API key because it would fit the profile of a client using Wazuh, which has no charge. Also the exploration on this increment could not really be considered more than a patch to Wazuh, without really improving it, but still it would be an effective workaround for the problems we can not solve right now with only Wazuh.
+\end{itemize}
+
+
+\subsection{Products of the project}
+At the end of the project the next elements will be delivered:
+%TODO
+\begin{itemize}
+	\item 
+	\item 
+	\item 
+\end{itemize}
+
+
+
+\subsection{Exclusions} 	%necessary redundancy with introduction?
+As in any project of this kind we had to leave some ideas behind.
 
 \linej
 \linej
-Another interesting way to to take advantage from IDS is to set up a honeypot (a false server just to be compromised) and learn from the intrusions suffered, improving the defenses (firewall, IPS and IDS) for the real servers. There are some honeypot implementations that automate (for example with machine learning) the generation of rules for certain IDSs, but is not yet a trend because there are problems:
+For example an interesting way to to take advantage from IDS is to set up a honeypot (a false server just to be compromised) and learn from the intrusions suffered, improving the defenses (firewall, IPS and IDS) for the real servers. There are some honeypot implementations that automate (for example with machine learning) the generation of rules for certain IDSs, but is not yet a trend because there are problems\cite{snort_learning}\cite{honeypot_weka_learning}\cite{honeypot_ossec_trees}\cite{snort_honeypot}:
 \begin{itemize}
 	\item Experienced attackers have learned to avoid honeypots, because they are easy to identify due to the low security they have.
 	\item Is not trivial to automate correctly the defense based on the information of the system, because its state can be very complex (for example due to more than one attack at the same time).
 \end{itemize}
 \linej
-This automation would be a great solution to the need to update manually the rules and depending of the case could even protect against day-zero vulnerabilities. Despite being interesting this was not even included as a possible increment because the complexity of the task and if not it would probably not ended well because it is something that even experts in cybersecurity have some trouble with at the moment.
+This automation would be a great solution to the need to update manually the rules and depending of the case it could even protect against day-zero vulnerabilities. Despite being interesting this was not even included as a possible increment because the complexity of the task. If this were included probably it would not have ended well because is something that even experts in cybersecurity have some trouble with at the moment.
+
+\linej
+\linej
+There is always the risk of the intrusion disabling the security of the system. This is more or less the same problem that cybersecurity has in any scenario and there is no way to guarantee that it will not happen. In this case the attacker would have to somehow not be detected or cut the IDS before it sends the alert but in a way that is not suspicious (for example shutting it down completely would be obvious for a central manager). So our approach is to trust the IDS and work on improving the detection of known attacks instead of the worst case scenario. If there was enough time we could have considered finding a solution for this problem.
+
+\linej
+\linej
+Exploring a HIDS with behaviour analysis was also considered but rejected because it is more fit for a network approach. Still is a shame there is no enough time to explore IDS based on behavior analysis, because their protection against much zero-day attacks.
+
+\linej
+\linej
+We focus on a host approach, leaving aside most of the detection capabilities for the network. This means less detection, a lower detection rate, less options to improve the detection process and later and worse performance in the analysis of network traffic. Having chosen to focus on HIDS the best way to have also a good NIDS process would be the use of a NIDS along with our HIDS.
+\linej
+Wazuh offers this kind of integration with Bro and Suricata and probably it would be possible to extend it to other NIDSs like Snort, but yet again we had to choose and this was not a priority at the moment.
 
 
 
-\subsection{Metodology}
-
-
-
-
+\subsection{Restrictions}
+Leaving aside the time constraint of about 417 hours, the two main factors to decide what improvements to choose for this project are a student without experience in proffesional cybersecurity and that we want some kind of inmediate results from this project. This is why while we could just have a pure research project (for example machine learning with IDS) instead we opted for a more traditional and safe approach. This is the reason why most of the increments were optional (due to the high probability of initial scope being too ambitious) but the first increments are considered vital to the project.
+\linej
+\linej
+A minor restriction is to deliver correctly all the products of the project before the presentation date.
 

@@ -22,6 +22,14 @@
 \newcommand{\lineh}{\rule{\textwidth}{1pt}\hfill\break}
 \newcommand{\linej}{\hfill\break}
 
+\newcommand{\IncrementoSiete}{VirusTotal integration}
+\newcommand{\IncrementoSeis}{Additional detection for GNU/Linux}
+\newcommand{\IncrementoCinco}{Explore solutions in problems with GPDR}
+\newcommand{\IncrementoCuatro}{Adapt Wazuh configuration to typical requirements from enterprises}
+\newcommand{\IncrementoTres}{Detection/action against ransomware}
+\newcommand{\IncrementoDos}{Use of data from Sysmon}
+\newcommand{\IncrementoUno}{Common attacks in Windows Server}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%		END BASIC CONF		%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -125,6 +133,23 @@
 	%title=\lstname
 %}
 
+
+\lstdefinestyle{xml} {
+	language=XML,		%for syntax highlighting
+	basicstyle=\footnotesize\ttfamily,
+	numbers=left,
+	numberstyle=\tiny\zebra{green!10}{white},
+	frame=tb,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	tabsize=4,
+	columns=fixed,
+	showstringspaces=false,
+	showtabs=false,
+	keepspaces,
+	commentstyle=\color{red},
+	stringstyle=\color{orange},		%needs xcolor
+	keywordstyle=\color{blue}
+}
 
 %\lstset{		%basicstyle=\small\sffamily,
 	%basicstyle=\footnotesize\ttfamily,

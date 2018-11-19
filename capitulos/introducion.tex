@@ -47,10 +47,6 @@ It is important to note that in cybersecurity the trend is for the attack to be 
 \linej
 Nowadays there are lots of different attacks, so many that their detection could be almost impossible one by one, but most of them can be detected because they share patterns. If we can determine the patterns of an attack and code a way to detect them we can detect the threat. Due to all this some times is easier to detect the attack and take measures after the intrusion has taken place.
 \linej
-This raises another question: What if the intrusion disables the security of the system?
-\linej
-This is always a risk and is more or less the same problem that cybersecurity has in any scenario and there is no way to guarantee that it will not happen. In this case the attacker would have to somehow not be detected or cut the IDS before it sends the alert but in a way that is not suspicious (for example shutting it down completely would be obvious for a central manager). So our approach is to trust the IDS and work on improving the detection of known attacks instead of the worst case scenario. If there was enough time we could have considered finding a solution for this problem.
-\linej
 \linej
 IDS work by analysing the key information available (programs, logs, network, etc) to determine if there has been an intrusion in the system. The details of the process vary with each IDS but in general they work like an expert system:
 \begin{itemize}
@@ -65,7 +61,7 @@ There are two types of IDS depending of the detection mechanism:
 	\item Signature based: The IDS looks for specific data (signature), for example a string. This is often an efficient solution to known attacks, but is fundamentally useless against unknown attacks (attacks without a signature in the IDS database).
 	\item Behaviour analysis: After a training period the IDS can detect when an event is rare (by probability) and correlate these suspicious occurrences to an intrusion.
 \end{itemize}
-In our case we take interest in the signature approach because is much more used and behavior analysis is more fit for network than host. Still is a shame there is no enough time to explore IDS based on behavior analysis, because their protection against much zero-day attacks.
+In our case we take interest in the signature approach because is much more used and behavior analysis is more fit for network than host.
 
 \linej
 \linej
@@ -78,13 +74,12 @@ OSSEC is an HIDS (Host-based IDS) solution with detection based on rules and dec
 \textbf{OSSEC} stands for \textbf{O}pen \textbf{S}ource HIDS \textbf{SEC}urity and is interesting for this project because the next qualities\cite{ossec}\cite{wazuh_additional_functionality}:
 \begin{itemize}
 	\item \textbf{Widely Used}: OSSEC is a growing project, with more than 5,000 downloads per month on average. It is being used by ISPs, universities, governments and even large corporate data centers as their main HIDS solution. In addition to being deployed as an HIDS, it is commonly used strictly as a log analysis tool, monitoring and analyzing firewalls, IDSs, web servers and authentication logs.
-	\item \textbf{Scalable}: Because it is an HIDS and it uses agents.
+	\item \textbf{Scalable}: Because it is an HIDS and it uses \textbf{agents}. Each monitored host can either install the agent or use an agentless agent\cite{agentless}\cite{ossec_agent}. Agentless agents are processes initiated from the OSSEC manager, which gather information from remote systems, and use any RPC method (e.g. ssh, snmp rdp, wmi).
 	\item \textbf{Multi-platform}: GNU/Linux, Windows, Mac OS and Solaris. This is important because most professional services are on GNU/Linux or Windows, but it is important to note that rules can only work in one operating system.
 	\item \textbf{Free}: OSSEC is a free software and will remain so in the future; you can redistribute it and/or modify it under the terms of the GNU General Public License (version 2) as published by the FSF -- Free Software Foundation.
-	\item \textbf{Open source}: The code is open, so you can read and debug it all you want.
+	\item \textbf{Open source}: The code is open, so you can read, contribute and debug it all you want.
 	\item \textbf{Rootkits detection}: This type of malware usually replaces or changes existing operating system components in order to alter the behavior of the system. Rootkits can hide other processes, files or network connections like itself.
 	\item \textbf{File integrity monitoring}: To detect access or changes to sensitive data.
-	\item \textbf{Agents}: Each monitored host can either install the agent or use an agentless agent\cite{agentless} (but still needs to install OSSEC, so it is a bit pointless to have agentless agents).
 \end{itemize}
 \linej
 There are lots of alternatives to OSSEC for the scenario of a system administrator that wants to reinforce the security of the systems he is responsible for. There are free of charge and paid solutions and they do not need to be pure IDS as often they come in a full approach. For example the next table shows a comparison of the most important ICSs (Industrial Control Systems):
@@ -99,7 +94,7 @@ There are lots of alternatives to OSSEC for the scenario of a system administrat
 One of the problems of a comparison in a table like this is that it fails to show how much a tool excels or lacks in the features it shares with others, how easy it is to use and other factors that can decide the right tool. The most relevant alternative technologies to OSSEC for this project are\cite{comparison_tools}:
 \begin{itemize}
 	\item Bro: Is an open source Network Intrusion Detection System (NIDS), so it does not have any other functionality and supports only Linux, FreeBSD, and Mac OS.
-	\item Snort: Is the most popular open source IDS/IPS, but it is only for network and suffers from overload of signatures to scan, so monitoring can be very expensive in processing power.
+	\item Snort: Is the most popular open source IDS/IPS, but it is only for network and can be very expensive in processing power.
 	\item Suricata: Another open source network security monitor with IDS and IPS capabilities and it provides hardware acceleration and multi-threading to improve the scanning speed at the cost of resources.
 	\item Sagan: An open source HIDS, but only supports *nix operating systems (Linux, FreeBSD, OpenBSD, etc) and it lacks in features compared to OSSEC.
 	\item YARA: Is not an IDS or IPS, it is just a tool that does pattern/string/signature matching, but it excels at it in performance, results and easiness to write the rules. YARA is being used widely in cybersecurity, for example by Avast, Kaspersky Lab, VirusTotal and McAfee Advanced Threat Defense\cite{who_is_using_yara}. We could build a system to use YARA to scan files but always combined with at least another tool, but we prefer to stick to a tested IDS.
