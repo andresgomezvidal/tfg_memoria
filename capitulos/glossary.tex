@@ -1,4 +1,51 @@
 \chapter{Glossary}
+%TODO añadir terminos importantes o abstractos (no solamente siglas)
+%dar por hecho cosas como AES, TLS, PMBOK, PMI ?
+%quitar del texto normal las explicaciones ?
+	%done="$(awk -F '{' '/\\textbf\{/ {print $2}' glossary.tex  |cut -d '}' -f1 |tr '\n' '|')"; \grep -E '\b[[:upper:]][[:upper:]]+\b'  *.tex |cut -d ':' -f2  | \grep -v '^[[:space:]]*%' |\grep -Eo '\b[[:upper:]][[:upper:]]+\b' | sort -u |grep -vE "UNIVERSITY|SANTIAGO|COMPOSTELA|ESCOLA|TÉCNICA|SUPERIOR|DE|ENXEÑARÍA|TODO|LARGE|STATE|JSON|XML|FAQ|UDP|TCP|IP|ARD|CA|CRD|GNU|GPL|OF|PA|RD|SL|TF|SEC|WBS|${done:0:-1}"
 
-
-%TODO
+\textbf{API}: Application Program Interface. Is a set of subrutines, functions and procedures from a library to be used by other software.
+\linej
+\linej
+\textbf{AES}: Advanced Encryption Standard. Popular symmetric encryption algorithm with different key lenghts.
+\linej
+\linej
+\textbf{CDB}: Short for constant database. File format and library for item creation and reading in a database at fast speeds.
+\linej
+\linej
+\textbf{ELK}: Elasticsearch, Logstash and Kibana. Stack used for Wazuh to gather and transform data.
+\linej
+\linej
+\textbf{GPDR}: General Data Protection Regulation. Regulation in EU law on data protection and privacy for all individuals within the European Union and the European Economic Area. In practice in this project means law protected files against changes.
+\linej
+\linej
+\textbf{HIDS}: Host-based Intrusion Detection System.
+\linej
+\linej
+\textbf{ICS}: Industrial Control System. They are control systems for critical tasks. Normally they are used for industrial control, but in this project we consider any purpouse, like data analysis.
+\linej
+\linej
+\textbf{IDS}: Intrusion Detection System. Mitigates the damage of intrusions, providing passive protection by alerts.
+\linej
+\linej
+\textbf{IPS}: Intrusion Prevention System. Minimizes the chance of intrusions, providing active protection by actions.
+\linej
+\linej
+%\textbf{PMBOK}: Project Management Body of Knowledge. Is a set of standard terminology and guidelines for project management.
+%\linej
+%\linej
+%\textbf{PMI}: Project Management Institute. Nonprofit proffesional organization for project management.
+%\linej
+%\linej
+\textbf{NIDS}: Network-based Intrusion Detection System.
+\linej
+\linej
+\textbf{OSSEC}: \textbf{O}pen \textbf{S}ource HIDS \textbf{SEC}urity. Is an HIDS solution with detection based on rules and decoders.
+\linej
+\linej
+\textbf{TLS}: Transport Layer Security. Cryptographic protocol designed to provide communications security over a computer network with hybrid (symmetric and asymmetric) cryptography.
+\linej
+\linej
+\textbf{YARA}: Tool that does pattern/string/signature matching, with great in performance, results and easiness to write rules.
+\linej
+\linej
