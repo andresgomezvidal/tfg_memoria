@@ -207,7 +207,7 @@ The Work Breakdown Structure is a decomposition of the project into smaller comp
 The tasks marked in \colorbox{\Cimportant}{red} are essential to the project, meanwhile the ones marked in \colorbox{\Coptional}{cyan} are considered optional and only will be done if there is enough time left. The tasks marked in \colorbox{\Cnormal}{yellow} are normal, and they are used when there is no need to distinguish between essential and optional.
 \linej
 \linej
-The next Gantt diagram shows the initial planning, from the draft proposal (31/10/2018) to the end of the project (TODO/02/2019).
+The next Gantt diagram shows the initial planning, from the draft proposal (31/10/2018) to the end of the project (20/02/2019).
 \linej
 Furthermore the last two weeks are marked with a grey overlay to mark that there are only about 17 weeks before the due date of this project (in February). This difference is because the estimation of the tasks was made by the student and so it is not reliable, which means that it could be optimistic or pessimist. Thus the need to either reduce tasks or have more that there were expected to fit.
 
@@ -791,18 +791,22 @@ In other words, they could be described as the models for the final Gantt diagra
 
 
 \subsection{Real planning}
+Due to changes on the scope and a 3 month delay due to personal matters of the student there is a big difference with the initial planning.
 
 \newcommand{\PStart}{2018-11-01}
 \newcommand{\FBeginning}{2018-11-07}
-\newcommand{\SIncrementoUnoDos}{2018-11-08}
-\newcommand{\FIncrementoUnoDos}{2018-12-12}
+\newcommand{\SIncrementoUnoDosInicial}{2018-11-08}
+\newcommand{\FIncrementoUnoDosInicial}{2018-12-05}
+\newcommand{\FPause}{2019-03-01}
+\newcommand{\FComeback}{2019-03-03}
+\newcommand{\FIncrementoUnoDosFinal}{2019-04-15}
 %\newcommand{\FIncrementoTres}{}
 %\newcommand{\FIncrementoCuatro}{}
 %\newcommand{\FIncrementoCinco}{}
 %\newcommand{\FIncrementoSeis}{}
 %\newcommand{\FIncrementoSiete}{}
-\newcommand{\SClosing}{2019-02-02}
-\newcommand{\PClosing}{2019-02-20}
+\newcommand{\SClosing}{2019-06-29}
+\newcommand{\PClosing}{2019-07-17}
 
 
 \begin{figure}[H]
@@ -810,7 +814,7 @@ In other words, they could be described as the models for the final Gantt diagra
 	\begin{ganttchart}[
 		time slot format=isodate,
 		time slot format/start date=\PStart,
-		x unit=0.10cm,
+		x unit=0.05cm,
 		y unit title=1.0cm,
 		y unit chart=1.0cm,
 		bar/.append style={fill=\Cnormal},
@@ -825,10 +829,15 @@ In other words, they could be described as the models for the final Gantt diagra
 		\newganttlinktypealias{straight}{f-s}
 		\setganttlinklabel{straight}{}
 		\gantttitlecalendar{year, month=name}
+		
+		%\ganttbar[name=pause-background-top,bar/.style={fill=none, draw=none}]{}{\FIncrementoUnoDosInicial}{\FPause} 			% top node
 
 		\ganttgroup{Project management}{\PStart}{\PClosing} \\
 		\ganttbar[name=Beginning]{Beginning of the project}{\PStart}{\FBeginning} \\
-		\ganttbar[name=Increment1]{Increment 1 and 2}{\SIncrementoUnoDos}{\FIncrementoUnoDos} \\
+		\ganttbar[name=Increment12Start]{Increment 1 and 2}{\SIncrementoUnoDosInicial}{\FIncrementoUnoDosInicial} \\ %pausa 3 meses
+		\ganttbar[name=Pause, bar/.append style={fill=gray!80}]{Project on hold}{\FIncrementoUnoDosInicial}{\FPause} \\
+		\ganttbar[name=Comeback]{Updating tools of the project}{\FPause}{\FComeback} \\
+		\ganttbar[name=Increment12End]{Increment 1 and 2}{\FComeback}{\FIncrementoUnoDosFinal} \\
 		%\ganttbar[name=Increment3}]{Increment 3}{}{} \\
 		%\ganttbar[name=Increment4]{Increment 4}{}{} \\
 		%\ganttbar[name=Increment5]{Increment 5}{}{} \\
@@ -836,13 +845,21 @@ In other words, they could be described as the models for the final Gantt diagra
 		%\ganttbar[name=Increment7]{Increment 7}{}{} \\
 		\ganttbar[name=Closing]{Closing of the project}{\SClosing}{\PClosing} \\
 
-		\ganttlink[link type=straight]{Beginning}{Increment1}
+		\ganttlink[link type=straight]{Beginning}{Increment12Start}
+		\ganttlink[link type=straight]{Increment12Start}{Pause}
+		\ganttlink[link type=straight]{Pause}{Comeback}
+		\ganttlink[link type=straight]{Comeback}{Increment12End}
 		%\ganttlink[link type=straight]{Increment1}{Increment3}
 		%\ganttlink[link type=straight]{Increment3}{Increment4}
 		%\ganttlink[link type=straight]{Increment4}{Increment5}
 		%\ganttlink[link type=straight]{Increment5}{Increment6}
 		%\ganttlink[link type=straight]{Increment6}{Increment7}
 		%\ganttlink[link type=straight]{Increment7}{Closing}
+
+		%\ganttbar[name=pause-background-bottom,bar/.style={fill=none, draw=none}]{}{\FIncrementoUnoDosInicial}{\FPause} 			% bottom node
+		%\begin{scope}
+		%\draw [opacity=0.2,line width=122] (pause-background-top) -- ($(pause-background-bottom)+(0,-15pt)$);
+		%\end{scope}
 
 	\end{ganttchart}
 	\end{center}
@@ -896,6 +913,50 @@ In other words, they could be described as the models for the final Gantt diagra
 	\end{ganttchart}
 	\end{center}
 	\caption{``Beginning of the project'' planning}
+\end{figure}
+
+
+
+
+This was not planned beforehand but it seemed like a good idea to leave some time to investigate exactly what did change while the project was on hold. Also a new setup of critical installations, because the documentation of the process before was lacking in details.
+\begin{figure}[H]
+	\begin{center}
+	\begin{ganttchart}[
+		time slot format=isodate,
+		time slot format/start date=\FPause,
+		x unit=0.80cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		bar/.append style={fill=\Cnormal},
+		milestone label font=\itshape\footnotesize,
+		group label font=\bfseries\footnotesize,
+		bar label font=\footnotesize,
+		title label font=\footnotesize,
+		title height=0.5,
+		title top shift=-.5,
+		vgrid
+		]{\FPause}{\FComeback}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitlecalendar{month=name, week, day}
+
+
+		\ganttgroup[name=prel]{Check changes from last working setup}{\FPause}{2019-03-02} \\
+		\ganttbar[name=tools]{Wazuh documentation and tools used in the project}{\FPause}{2019-03-01} \\
+		\ganttbar[name=attacks]{Known and new attacks}{\FPause}{2019-03-02} \\
+		\ganttmilestone[name=fmilestone]{Basic knowledge of the changes}{2019-03-02} \\
+
+		\ganttbar[name=set]{Installing virtual machines and setting up tools}{2019-03-02}{\FComeback} \\
+		\ganttmilestone[name=milestone]{Ready to continue with the increments}{\FComeback} \\
+
+		\ganttlink{tools}{set}
+		\ganttlink[link type=straight]{tools}{fmilestone}
+		\ganttlink[link type=straight]{attacks}{fmilestone}
+		\ganttlink[link type=straight]{set}{milestone}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{``Updating tools of the project'' planning}
 \end{figure}
 
 

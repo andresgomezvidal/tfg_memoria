@@ -1,5 +1,7 @@
 \chapter{Glossary}
 %TODO añadir terminos importantes o abstractos (no solamente siglas)
+	%payload
+	%signature
 %dar por hecho cosas como AES, TLS, PMBOK, PMI ?
 %quitar del texto normal las explicaciones ?
 	%done="$(awk -F '{' '/\\textbf\{/ {print $2}' glossary.tex  |cut -d '}' -f1 |tr '\n' '|')"; \grep -E '\b[[:upper:]][[:upper:]]+\b'  *.tex |cut -d ':' -f2  | \grep -v '^[[:space:]]*%' |\grep -Eo '\b[[:upper:]][[:upper:]]+\b' | sort -u |grep -vE "UNIVERSITY|SANTIAGO|COMPOSTELA|ESCOLA|TÉCNICA|SUPERIOR|DE|ENXEÑARÍA|TODO|LARGE|STATE|JSON|XML|FAQ|UDP|TCP|IP|ARD|CA|CRD|GNU|GPL|OF|PA|RD|SL|TF|SEC|WBS|${done:0:-1}"

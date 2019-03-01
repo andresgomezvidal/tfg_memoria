@@ -66,6 +66,7 @@
 \newcommand{\Rdieciseis}{Performance issues}
 \newcommand{\Rdiecisiete}{Unnecessary work}
 \newcommand{\Rdieciocho}{Optional requirements delay the project}
+\newcommand{\Rdiecinueve}{Unexpected personal events delay the project}
 
 
 \begin{table}[H]
@@ -92,6 +93,7 @@
 		R-16 & \Rdieciseis \\ \hline
 		R-17 & \Rdiecisiete \\ \hline
 		R-18 & \Rdieciocho \\ \hline
+		R-19 & \Rdiecinueve \\ \hline
 	\end{tabularx}
 	\caption{List of the risks of the project}
 \end{table}
@@ -334,17 +336,20 @@
 		Description &
 			Changes to base software could affect this project directly or indirectly: programs could fail or not work as expected. \linej
 			This could mean any software changes, from simple syntax to API changes. \linej
+			Is possible that these changes would eliminate the need of planned or already done work. \linej
 			In a project that does not work in a bleeding edge environment, like this, this occurrence should be very rare and even if it were to happen it would have to interfere with the part of the software this project uses, which (as this is not bleeding edge) normally would be backwards compatible.
 		\\ \hline
 		Negative effects &
-			Minor delays.
+			Minor delays. \linej
+			Unnecessary work.
 		\\ \hline
 		Probability & Low\\ \hline
 		Impact & Low \\ \hline
 		Exposition &  Low\\ \hline
 		Indicator & The software is not working as expected due to a change in another software version.\\ \hline
 		Prevention: Mitigate &
-			When possible use software that follow good design guidelines and try to be backwards compatible.
+			When possible use software that follow good design guidelines and try to be backwards compatible. \linej
+			Be informed about the roadmap and future functionalities of these software projects.
 		\\ \hline
 		Correction: Mitigate &
 			Need to adapt the software to work as expected or remove the related functionalities.
@@ -510,7 +515,7 @@
 		\\ \hline
 		Probability & Medium\\ \hline
 		Impact &  High\\ \hline
-		Exposition &  Medium\\ \hline
+		Exposition &  High\\ \hline
 		Indicator & There is an unexpected delay because the functionality is not done but there has not been any important issues that could explain it but there is a clear deterioration of the student health. \\ \hline
 		Prevention: Avoid &
 			Stay healthy by following a regular schedule for work and exercising, that includes multiple rest periods. \linej
@@ -600,9 +605,34 @@
 	\end{tabularx}
 \end{table}
 
-
-
-
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|y|z|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-019} \\ \hline
+		Name & \Rdiecinueve \\ \hline
+		Description &
+			There are unplanned occurrences that need considerable time from the student, for example family matters.
+		\\ \hline
+		Negative effects &
+			Time loss, resulting in a quality drop and possibly in a smaller scope.\linej
+			It can be hard to specify when the event will end, resulting in uncertainty and the failure of the project in the worst case scenario. Even more if is about a chronical or serious sickness from a family member. \linej
+			Vital requirements get less resources, making the project loss value.
+		\\ \hline
+		Probability & Medium\\ \hline
+		Impact & High\\ \hline
+		Exposition & High\\ \hline
+		Indicator & The student stops to work on the project for more than 2 planned weeks, to attend personal matters.\\ \hline
+		Prevention: Avoid &
+			Always be organized and try to predict time consuming events.
+		\\ \hline
+		Correction: Mitigate &
+			Redo the planning. \linej
+			Use personal time like holidays and weekends to work on the project to compensate.
+			In extreme cases the project may be put on hold or even fail.
+		\\ \hline
+	\end{tabularx}
+\end{table}
 
 
 
@@ -619,10 +649,31 @@
 %		\rowcolor{gray!30}
 %		Identifier & \textbf{R-001} \\ \hline
 %		Name & \Runo \\ \hline
-%		Date & TODO \\ \hline
+%		Date of the beginning of the problem & TODO \\ \hline
+%		Date of the solution of the problem & TODO \\ \hline
 %		Actions & TODO \\ \hline
 %		New probability & TODO \\ \hline
 %		New impact &  TODO \\ \hline
 %		New exposition &  TODO \\ \hline
 %	\end{tabularx}
 %\end{table}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-019} \\ \hline
+		Name & \Rdiecinueve \\ \hline
+		Date of the beginning of the problem & 05/12/2018 \\ \hline
+		Date of the solution of the problem & 10/02/2019 \\ \hline
+		Actions & After a delay of 2 weeks it was clear that the student could not meet the original planning, or at least without rushing and suffering significant quality loss. \linej
+			The project was put on hold and the student notified the tutors, who agreed to the next deadline. \linej
+			The student kept working on the project (researching) from time to time. \\ \hline
+		New probability & Low (before was Medium) \\ \hline
+		New impact &  High (same as before) \\ \hline
+		New exposition & Medium (before was High) \\ \hline
+		New prevention: Avoid &
+			Another person takes responsibility of the family member, freeing the student.
+		\\ \hline
+	\end{tabularx}
+\end{table}
