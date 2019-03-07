@@ -304,7 +304,7 @@ In other words, they could be described as the models for the final Gantt diagra
 		\ganttlink[link type=straight]{Pentesting}{fmilestone}
 		\ganttlink{InstallVM}{settingW}
 		\ganttlink{InstallVM}{settingO}
-		\ganttlink{settingW}{milestone}
+		\ganttlink[link bulge=0.15]{settingW}{milestone}
 		\ganttlink[link type=straight]{settingO}{milestone}
 
 	\end{ganttchart}
@@ -319,7 +319,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 \renewcommand{\Dlen}{\Dtres}
 \begin{figure}[H]
-	\begin{center}
+	\advance\leftskip-1.0cm
 	\begin{ganttchart}[
 		x unit=0.30cm,
 		y unit title=1.0cm,
@@ -366,12 +366,11 @@ In other words, they could be described as the models for the final Gantt diagra
 		\ganttlink[link type=straight]{tools}{detection}
 		\ganttlink{detection}{fdetection}
 		\ganttlink{fdetection}{design}
-		\ganttlink{pstudy}{action}
+		\ganttlink[link bulge=3]{pstudy}{action}
 		\ganttlink{action}{TF}
 		\ganttlink{TF}{milestone}
 
 	\end{ganttchart}
-	\end{center}
 	\caption{``Increment 1: \IncrementoUno'' planning}
 \end{figure}
 
@@ -524,7 +523,7 @@ In other words, they could be described as the models for the final Gantt diagra
 		\ganttmilestone[name=milestone]{Set of Wazuh configurations}{\Dlen} \\
 
 		\ganttlink[link type=straight]{needs}{list}
-		\ganttlink{pstudy}{action}
+		\ganttlink[link bulge=0.2]{pstudy}{action}
 		\ganttlink{action}{TF}
 		\ganttlink{TF}{milestone}
 
@@ -798,8 +797,8 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 \newcommand{\SIncrementoUnoDosInicial}{2018-11-08}
 \newcommand{\FIncrementoUnoDosInicial}{2018-12-05}
 \newcommand{\FPause}{2019-03-01}
-\newcommand{\FComeback}{2019-03-03}
-\newcommand{\FIncrementoUnoDosFinal}{2019-04-15}
+\newcommand{\FComeback}{2019-03-04}
+\newcommand{\FIncrementoUnoDosFinal}{2019-05-05}
 %\newcommand{\FIncrementoTres}{}
 %\newcommand{\FIncrementoCuatro}{}
 %\newcommand{\FIncrementoCinco}{}
@@ -810,7 +809,7 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 
 
 \begin{figure}[H]
-	\begin{center}
+	\advance\leftskip-1.5cm
 	\begin{ganttchart}[
 		time slot format=isodate,
 		time slot format/start date=\PStart,
@@ -862,7 +861,6 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 		%\end{scope}
 
 	\end{ganttchart}
-	\end{center}
 	\caption{Planning simplification}
 \end{figure}
 
@@ -935,7 +933,7 @@ This was not planned beforehand but it seemed like a good idea to leave some tim
 		title height=0.5,
 		title top shift=-.5,
 		vgrid
-		]{\FPause}{\FComeback}
+		]{\FPause}{2019-03-03}
 		\newganttlinktypealias{straight}{f-s}
 		\setganttlinklabel{straight}{}
 		\gantttitlecalendar{month=name, week, day}
@@ -946,8 +944,8 @@ This was not planned beforehand but it seemed like a good idea to leave some tim
 		\ganttbar[name=attacks]{Known and new attacks}{\FPause}{2019-03-02} \\
 		\ganttmilestone[name=fmilestone]{Basic knowledge of the changes}{2019-03-02} \\
 
-		\ganttbar[name=set]{Installing virtual machines and setting up tools}{2019-03-02}{\FComeback} \\
-		\ganttmilestone[name=milestone]{Ready to continue with the increments}{\FComeback} \\
+		\ganttbar[name=set]{Installing virtual machines and setting up tools}{2019-03-02}{2019-03-03} \\
+		\ganttmilestone[name=milestone]{Ready to continue with the increments}{2019-03-03} \\
 
 		\ganttlink{tools}{set}
 		\ganttlink[link type=straight]{tools}{fmilestone}
@@ -961,4 +959,61 @@ This was not planned beforehand but it seemed like a good idea to leave some tim
 
 
 
+
+\begin{figure}[H]
+	\advance\leftskip-2cm
+	\begin{ganttchart}[
+		time slot format=isodate,
+		time slot format/start date=\PStart,
+		x unit=0.18cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		bar/.append style={fill=\Cnormal},
+		milestone label font=\itshape\footnotesize,
+		group label font=\bfseries\footnotesize,
+		bar label font=\footnotesize,
+		title label font=\footnotesize,
+		title height=0.5,
+		title top shift=-.5,
+		vgrid,
+		]{\FComeback}{\FIncrementoUnoDosFinal}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitlecalendar{month=name, week}
+
+
+	\newcommand{\Dstudy}{2019-04-01}
+	\newcommand{\Daction}{2019-04-12}
+
+
+		\ganttgroup[name=pstudy]{Preliminary study and investigation}{\FComeback}{\Dstudy} \\
+		\ganttbar[name=list]{Identify the attacks to detect}{\FComeback}{2019-03-04} \\
+		\ganttbar[name=attack]{Detailed study of each attack and tools}{2019-03-05}{2019-03-20} \\
+		\ganttbar[name=detection]{Exploration of detection options}{2019-03-14}{\Dstudy} \\
+		\ganttbar[name=fdetection]{Discard undetectable attacks}{\Dstudy}{\Dstudy} \\
+		\ganttbar[name=design]{Basic design of each attack}{\Dstudy}{\Dstudy} \\
+
+		\ganttgroup[name=action]{Code the detection}{2019-04-02}{\Daction} \\
+		\ganttbar[name=RD]{Writing rules and decoders}{2019-04-02}{\Daction} \\
+		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\Daction}{\Daction} \\
+		\ganttbar[name=normalWindows, bar/.append style={fill=\Coptional},]{Support for Windows 10}{\Daction}{\Daction} \\
+		%\ganttbar[name=additional,bar/.append style={fill=\Coptional}]{Possible additional study and investigation}{\Daction}{\Daction} \\
+
+		\ganttgroup[name=TF]{Testing and fixing}{2019-04-13}{\FIncrementoUnoDosFinal} \\
+		\ganttbar[name=test]{Testing}{2019-04-13}{\FIncrementoUnoDosFinal} \\
+		\ganttbar[name=fix]{Fixing}{2019-04-13}{\FIncrementoUnoDosFinal} \\
+
+		\ganttmilestone[name=milestone]{Certain attacks can be detected now}{\FIncrementoUnoDosFinal} \\
+
+		\ganttlink[link type=straight]{list}{attack}
+		%\ganttlink{attack}{detection}
+		\ganttlink[link type=straight]{detection}{fdetection}
+		\ganttlink[link type=straight]{fdetection}{design}
+		\ganttlink[link bulge=2]{pstudy}{action}
+		\ganttlink[link bulge=2]{action}{TF}
+		\ganttlink[link bulge=1]{TF}{milestone}
+
+	\end{ganttchart}
+	\caption{``Increment 1: \IncrementoUno'' planning}
+\end{figure}
 
