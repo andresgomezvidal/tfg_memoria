@@ -794,11 +794,11 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 
 \newcommand{\PStart}{2018-11-01}
 \newcommand{\FBeginning}{2018-11-07}
-\newcommand{\SIncrementoUnoDosInicial}{2018-11-08}
-\newcommand{\FIncrementoUnoDosInicial}{2018-12-05}
+\newcommand{\SIncrementoUnoInicial}{2018-11-08}
+\newcommand{\FIncrementoUnoInicial}{2018-12-05}
 \newcommand{\FPause}{2019-03-01}
 \newcommand{\FComeback}{2019-03-04}
-\newcommand{\FIncrementoUnoDosFinal}{2019-05-05}
+\newcommand{\FIncrementoUnoFinal}{2019-05-05}
 %\newcommand{\FIncrementoTres}{}
 %\newcommand{\FIncrementoCuatro}{}
 %\newcommand{\FIncrementoCinco}{}
@@ -829,14 +829,14 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 		\setganttlinklabel{straight}{}
 		\gantttitlecalendar{year, month=name}
 		
-		%\ganttbar[name=pause-background-top,bar/.style={fill=none, draw=none}]{}{\FIncrementoUnoDosInicial}{\FPause} 			% top node
+		%\ganttbar[name=pause-background-top,bar/.style={fill=none, draw=none}]{}{\FIncrementoUnoInicial}{\FPause} 			% top node
 
 		\ganttgroup{Project management}{\PStart}{\PClosing} \\
 		\ganttbar[name=Beginning]{Beginning of the project}{\PStart}{\FBeginning} \\
-		\ganttbar[name=Increment12Start]{Increment 1 and 2}{\SIncrementoUnoDosInicial}{\FIncrementoUnoDosInicial} \\ %pausa 3 meses
-		\ganttbar[name=Pause, bar/.append style={fill=gray!80}]{Project on hold}{\FIncrementoUnoDosInicial}{\FPause} \\
+		\ganttbar[name=Increment1Start]{Increment 1}{\SIncrementoUnoInicial}{\FIncrementoUnoInicial} \\ %pausa 3 meses
+		\ganttbar[name=Pause, bar/.append style={fill=gray!80}]{Project on hold}{\FIncrementoUnoInicial}{\FPause} \\
 		\ganttbar[name=Comeback]{Updating tools of the project}{\FPause}{\FComeback} \\
-		\ganttbar[name=Increment12End]{Increment 1 and 2}{\FComeback}{\FIncrementoUnoDosFinal} \\
+		\ganttbar[name=Increment1End]{Increment 1}{\FComeback}{\FIncrementoUnoFinal} \\
 		%\ganttbar[name=Increment3}]{Increment 3}{}{} \\
 		%\ganttbar[name=Increment4]{Increment 4}{}{} \\
 		%\ganttbar[name=Increment5]{Increment 5}{}{} \\
@@ -844,10 +844,10 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 		%\ganttbar[name=Increment7]{Increment 7}{}{} \\
 		\ganttbar[name=Closing]{Closing of the project}{\SClosing}{\PClosing} \\
 
-		\ganttlink[link type=straight]{Beginning}{Increment12Start}
-		\ganttlink[link type=straight]{Increment12Start}{Pause}
+		\ganttlink[link type=straight]{Beginning}{Increment1Start}
+		\ganttlink[link type=straight]{Increment1Start}{Pause}
 		\ganttlink[link type=straight]{Pause}{Comeback}
-		\ganttlink[link type=straight]{Comeback}{Increment12End}
+		\ganttlink[link type=straight]{Comeback}{Increment1End}
 		%\ganttlink[link type=straight]{Increment1}{Increment3}
 		%\ganttlink[link type=straight]{Increment3}{Increment4}
 		%\ganttlink[link type=straight]{Increment4}{Increment5}
@@ -855,7 +855,7 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 		%\ganttlink[link type=straight]{Increment6}{Increment7}
 		%\ganttlink[link type=straight]{Increment7}{Closing}
 
-		%\ganttbar[name=pause-background-bottom,bar/.style={fill=none, draw=none}]{}{\FIncrementoUnoDosInicial}{\FPause} 			% bottom node
+		%\ganttbar[name=pause-background-bottom,bar/.style={fill=none, draw=none}]{}{\FIncrementoUnoInicial}{\FPause} 			% bottom node
 		%\begin{scope}
 		%\draw [opacity=0.2,line width=122] (pause-background-top) -- ($(pause-background-bottom)+(0,-15pt)$);
 		%\end{scope}
@@ -976,7 +976,7 @@ This was not planned beforehand but it seemed like a good idea to leave some tim
 		title height=0.5,
 		title top shift=-.5,
 		vgrid,
-		]{\FComeback}{\FIncrementoUnoDosFinal}
+		]{\FComeback}{\FIncrementoUnoFinal}
 		\newganttlinktypealias{straight}{f-s}
 		\setganttlinklabel{straight}{}
 		\gantttitlecalendar{month=name, week}
@@ -999,11 +999,11 @@ This was not planned beforehand but it seemed like a good idea to leave some tim
 		\ganttbar[name=normalWindows, bar/.append style={fill=\Coptional},]{Support for Windows 10}{\Daction}{\Daction} \\
 		%\ganttbar[name=additional,bar/.append style={fill=\Coptional}]{Possible additional study and investigation}{\Daction}{\Daction} \\
 
-		\ganttgroup[name=TF]{Testing and fixing}{2019-04-13}{\FIncrementoUnoDosFinal} \\
-		\ganttbar[name=test]{Testing}{2019-04-13}{\FIncrementoUnoDosFinal} \\
-		\ganttbar[name=fix]{Fixing}{2019-04-13}{\FIncrementoUnoDosFinal} \\
+		\ganttgroup[name=TF]{Testing and fixing}{2019-04-13}{\FIncrementoUnoFinal} \\
+		\ganttbar[name=test]{Testing}{2019-04-13}{\FIncrementoUnoFinal} \\
+		\ganttbar[name=fix]{Fixing}{2019-04-13}{\FIncrementoUnoFinal} \\
 
-		\ganttmilestone[name=milestone]{Certain attacks can be detected now}{\FIncrementoUnoDosFinal} \\
+		\ganttmilestone[name=milestone]{Certain attacks can be detected now}{\FIncrementoUnoFinal} \\
 
 		\ganttlink[link type=straight]{list}{attack}
 		%\ganttlink{attack}{detection}
