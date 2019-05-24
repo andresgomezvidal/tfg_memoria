@@ -1,0 +1,34 @@
+<rule id="300301" level="1" >
+	<if_sid>61609</if_sid>
+	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\WinSCard.dll</field>
+	<description>Detected event 7 with C:\Windows\System32\WinSCard.dll</description>
+</rule>
+<rule id="300302" level="1" >
+	<if_sid>61609</if_sid>
+	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\cryptdll.dll</field>
+	<description>Detected event 7 with C:\Windows\System32\cryptdll.dll</description>
+</rule>
+<rule id="300303" level="1" >
+	<if_sid>61609</if_sid>
+	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\samlib.dll</field>
+	<description>Detected event 7 with C:\Windows\System32\samlib.dll</description>
+</rule>
+<rule id="300304" level="1" >
+	<if_sid>61609</if_sid>
+	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\hid.dll</field>
+	<description>Detected event 7 with C:\Windows\System32\hid.dll</description>
+</rule>
+<rule id="300305" level="1" >
+	<if_sid>61609</if_sid>
+	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\vaultcli.dll</field>
+	<description>Detected event 7 with C:\Windows\System32\vaultcli.dll</description>
+</rule>
+
+<rule id="300306" level="15" timeframe="10" frequency="2" >
+	<if_matched_sid>300301</if_matched_sid>
+	<if_matched_sid>300302</if_matched_sid>
+	<if_matched_sid>300303</if_matched_sid>
+	<if_matched_sid>300304</if_matched_sid>
+	<if_matched_sid>300305</if_matched_sid>
+	<description>Mimikatz: DLLs with EventID 7</description>
+</rule>

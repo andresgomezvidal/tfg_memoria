@@ -81,12 +81,7 @@ The Wazuh App runs inside Kibana constantly querying the RESTful API (port 55000
 	\caption{Communications and data flow}
 \end{figure}
 \linej
-Both alerts and non-alert events are stored in files on the Wazuh server in addition to being sent to Elasticsearch. These files can be written in JSON format and/or in plain text format (.log, with no decoded fields but more compact). These files are daily compressed and signed using MD5 and SHA1 checksums. The directory and filename structure is as follows:
-\begin{figure}[H]
-  \centering
-	\includegraphics[width=\textwidth]{figuras/directory-filename_structure.png}
-	\caption{Filename structure of a log directory}
-\end{figure}
+Both alerts and non-alert events are stored in files on the Wazuh server in addition to being sent to Elasticsearch. These files can be written in JSON format and/or in plain text format (.log, with no decoded fields but more compact). These files are daily compressed and signed using MD5 and SHA1 checksums.
 
 
 \section{Rules and decoders}
@@ -103,7 +98,7 @@ As mentioned before Wazuh adds its own ruleset over the one provided by the OSSE
 	\caption{Portion of the ruleset used by Wazuh\cite{wazuh_ossec_ruleset}}
 \end{figure}
 \linej
-Wazuh provides a way to manually test how an event is decoded and if an alert is generated with the tool \textit{/var/ossec/bin/ossec-logtest}\cite{wazuh_testing}, which is very useful for debugging. To use it you only need to introduce the data as it would be in the wild (in the logfile or command output). This command provides the option ``-v'' that shows which rules are tried and which trigger an alert.
+Wazuh provides a way to manually test how an event is decoded and if an alert is generated with the tool \textit{/var/ossec/bin/ossec-logtest}\cite{wazuh_testing}, which is very useful for debugging. To use it you only need to introduce the data as it would be in the wild (in the logfile or command output). This command provides the option ``-v'' that shows which rules are tried and which trigger an alert. This tools does not no need a restart of the wazuh-manager service whenever changes want to be tested because it reads the configuration directly. But is also worth to mention that some times it can be missleading because it does not work the exact same way as the manager, for example the logtest may show that the log matches a certain rule but actually it has matched a previous one silently.
 \linej
 \linej
 For example for this input:
@@ -117,7 +112,8 @@ We get the next output:
 	\caption{Example of output for ossec-logtest}
 \end{figure}
 \linej
-After version 3.0.0 (we are currently in 3.7) Wazuh incorporates an integrated decoder for JSON logs enabling the extraction of data from any source in this format. This can be very useful in many situations, for example trivializing the generation of alerts for Suricata (without the need for a decoder just for Suricata)\cite{wazuh_json}.
+%TODO cambiar currently in version
+After version 3.0.0 (we are currently in 3.9) Wazuh incorporates an integrated decoder for JSON logs enabling the extraction of data from any source in this format. This can be very useful in many situations, for example trivializing the generation of alerts for Suricata (without the need for a decoder just for Suricata)\cite{wazuh_json}.
 \linej
 \linej
 Another interesting feature is to check if a field extracted during the decoding phase is in a CDB list (constant database). The main use case of this feature is to create a white/black list of users, IPs or domain names.\cite{wazuh_cdb}.

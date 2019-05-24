@@ -27,7 +27,7 @@
 \newcommand{\IncrementoCinco}{Explore solutions in problems with GPDR}
 \newcommand{\IncrementoCuatro}{Adapt Wazuh configuration to typical requirements from enterprises}
 \newcommand{\IncrementoTres}{Detection/action against ransomware}
-\newcommand{\IncrementoDos}{Use of data from Sysmon}
+\newcommand{\IncrementoDos}{Use of more data sources}
 \newcommand{\IncrementoUno}{Common attacks in Windows Server}
 
 
@@ -42,9 +42,60 @@
 
 %\renewcommand{\thesubsection}{\thesection.\alph{subsection}}		%change subsection style to letters
 
-
-
 %https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+
+
+\input{config/latex-listings-powershell}
+\lstdefinestyle{PS}{
+	language=Powershell,		%for syntax highlighting
+	basicstyle=\footnotesize\ttfamily,
+	numbers=left,
+	numberstyle=\tiny\zebra{green!10}{white},
+	frame=tb,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	tabsize=2,
+	columns=fixed,
+	showstringspaces=false,
+	showtabs=false,
+	keepspaces,
+	commentstyle=\color{red},
+	stringstyle=\color{orange},		%needs xcolor
+	keywordstyle=\color{blue}
+}
+
+\lstdefinestyle{ruby} {
+	language=Ruby,		%for syntax highlighting
+	basicstyle=\footnotesize\ttfamily,
+	numbers=left,
+	numberstyle=\tiny\zebra{green!10}{white},
+	frame=tb,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	tabsize=4,
+	columns=fixed,
+	showstringspaces=false,
+	showtabs=false,
+	keepspaces,
+	commentstyle=\color{red},
+	stringstyle=\color{orange},		%needs xcolor
+	keywordstyle=\color{blue}
+}
+
+\lstdefinestyle{xml} {
+	language=XML,		%for syntax highlighting
+	basicstyle=\footnotesize\ttfamily,
+	numbers=left,
+	numberstyle=\tiny\zebra{green!10}{white},
+	frame=tb,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	tabsize=4,
+	columns=fixed,
+	showstringspaces=false,
+	showtabs=false,
+	keepspaces,
+	commentstyle=\color{red},
+	stringstyle=\color{gray},		%needs xcolor
+	keywordstyle=\color{blue}
+}
 
 %\lstdefinestyle{C} {
 %	language=C,		%for syntax highlighting
@@ -133,23 +184,6 @@
 	%title=\lstname
 %}
 
-
-\lstdefinestyle{xml} {
-	language=XML,		%for syntax highlighting
-	basicstyle=\footnotesize\ttfamily,
-	numbers=left,
-	numberstyle=\tiny\zebra{green!10}{white},
-	frame=tb,
-	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
-	tabsize=4,
-	columns=fixed,
-	showstringspaces=false,
-	showtabs=false,
-	keepspaces,
-	commentstyle=\color{red},
-	stringstyle=\color{orange},		%needs xcolor
-	keywordstyle=\color{blue}
-}
 
 %\lstset{		%basicstyle=\small\sffamily,
 	%basicstyle=\footnotesize\ttfamily,

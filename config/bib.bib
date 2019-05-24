@@ -1,0 +1,521 @@
+%detect unused items in this file
+%awk -F '{' '/^@.*{..*,/ {gsub(",","",$2); print $2}' bib.bib |awk '{print $1}' |while read -r i; do if [[ -z "$(grep "cite{$i}" ..capitulos/*.tex)" ]]; then  echo "NONE: $i" ; fi;  done
+
+
+@Book{pmbok,
+%address = {},
+%author = {Project Management Institute},
+title = {Guía de los Fundamentos para la Dirección de Proyectos (Guía del PMBOK) , 5 a edición},
+publisher = {Project Management Institute},
+year = {2013},
+isbn = {9781628250091}
+}
+
+%@Book{tanenbaum2008modern,
+%	author = {Tanenbaum, Andrew},
+%	title = {Modern operating systems},
+%	publisher = {Pearson Prentice Hall},
+%	year = {2008},
+%	address = {Upper Saddle River, N.J},
+%	isbn = {978-0136006633}
+%}
+
+
+
+
+
+
+%@online{AD_setting_up,
+%	title = {Setting up AD in Windows Server 2016},
+%	url = {https://blogs.technet.microsoft.com/canitpro/2017/02/22/step-by-step-setting-up-active-directory-in-windows-server-2016/},
+%	urldate = {}
+%}
+
+@article{use_case_definition,
+	author = {Larson, E. \& Larson, R. (2004)},
+	journal = {Paper presented at PMI\textregistered Global Congress 2004—North America, Anaheim, CA. Newtown Square, PA: Project Management Institute},
+	title = {Use cases: what every project manager should know},
+	%ams-subject = {},
+	%review = {},
+	%pages = {},
+	%volume = {},
+	%year = {},
+	%urldate = {2018-11-04},
+}
+
+@article{comparison_ics, 			%https://www.osti.gov/servlets/purl/1376870
+	title = {A Survey of Security Tools for the Industrial Control System Environment},
+	author = {Hurd, Carl M. and McCarty, Michael V.},
+	abstractNote = {This report details the results of a survey conducted by Idaho National Laboratory (INL) to identify existing tools which could be used to prevent, detect, mitigate, or investigate a cyber-attack in an industrial control system (ICS) environment. This report compiles a list of potentially applicable tools and shows the coverage of the tools in an ICS architecture.},
+	doi = {10.2172/1376870},
+	place = {United States},
+	year = {2017},
+	month = {6}
+	%journal = {},
+	%number = ,
+	%volume = ,
+}
+@article{snort_learning, 		%https://arxiv.org/pdf/1710.04843.pdf    https://arxiv.org/abs/1710.04843
+	author = {Shah, Syed Ali Raza and Issac, Biju},
+	title = {Performance Comparison of Intrusion Detection Systems and Application of Machine Learning to Snort System},
+	journal = {Future Gener. Comput. Syst.},
+	issue_date = {March 2018},
+	volume = {80},
+	number = {C},
+	month = mar,
+	year = {2018},
+	issn = {0167-739X},
+	pages = {157--170},
+	numpages = {14},
+	url = {https://doi.org/10.1016/j.future.2017.10.016},
+	doi = {10.1016/j.future.2017.10.016},
+	acmid = {3174633},
+	publisher = {Elsevier Science Publishers B. V.},
+	address = {Amsterdam, The Netherlands, The Netherlands},
+	keywords = {Fuzzy Logic, Intrusion detection, Machine learning, Performance comparison, Snort and Suricata, Support Vector Machine},
+}
+
+@article{snort_honeypot, 	%https://pdfs.semanticscholar.org/3397/163c7e89c2c039f5e207677c81df778b9984.pdf 			https://www.semanticscholar.org/paper/Combining-IDS-and-Honeynet-Methods-for-Improved-and-Riebach-T%C3%B6dtmann/3397163c7e89c2c039f5e207677c81df778b9984
+  title={Combining IDS and Honeynet Methods for Improved Detection and Automatic Isolation of Compromised Systems},
+  author={Stephan Riebach and Birger T{\"o}dtmann and Erwin P. Rathgeb},
+  year={2005}
+}
+
+@article{honeypot_ossec_trees, 	%http://www.ijcncs.org/published/volume2/issue1/p7_2-1.pdf 		http://www.ijcncs.org/published/volume2/issue1/index.php
+  title={Monitoring and Analyzing System Activities Using High Interaction Honeypot},
+  author={Dr.Najla B. Al-Dabagh and Mohammed A. Fakhri},
+  year={2014},
+  journal={International Journal of Computer Networks and Communications Security},
+}
+
+@article{honeypot_weka_learning, 	%https://www.researchgate.net/publication/306017096_A_machine_learning_based_approach_for_intrusion_prevention_using_honeypot_interaction_patterns_as_training_data
+  title={A machine learning based approach for intrusion prevention using honeypot interaction patterns as training data},
+  author={Daniel Zammit},
+  year={2016}
+} %Zammit, Daniel. (2016). A machine learning based approach for intrusion prevention using honeypot interaction patterns as training data. 10.13140/RG.2.1.1996.0561.
+
+@article{SANS_mimikatz, 	%https://daloo.de/testwebdavhere/mimikatz-overview-defenses-detection-36780.pdf
+  title={SANS Institute InfoSec Reading Room: Mimikatz Overview, Defenses and Detection},
+  author={James Mulder},
+  year={2016}
+} %SANS Institute InfoSec Reading Room: Mimikatz Overview, Defenses and Detection
+
+
+
+@online{ossec,
+	title = {About OSSEC},
+	url = {https://www.ossec.net/about.html},
+	urldate = {2018-11-11},
+}
+
+@online{wazuh_stack,
+	title = {Technologies that form Wazuh},
+	url = {https://wazuh.com/wp-content/uploads/2015/11/Jigsaw4.png},
+	urldate = {2018-11-11},
+}
+
+@online{ossec_agent,
+	title = {OSSEC Agents},
+	url = {https://www.ossec.net/docs/manual/agent/index.html},
+	urldate = {2018-11-11},
+}
+
+@online{wazuh_additional_functionality,
+	title = {Wazuh documentation: OSSEC and Wazuh additional functionality},
+	url = {https://documentation.wazuh.com/current/getting-started/use-cases.html},
+	urldate = {2018-11-11},
+}
+@online{wazuh_documentation2,
+	title = {Wazuh documentation},
+	url = {https://github.com/wazuh/wazuh-documentation},
+	urldate = {2018-11-11},
+}
+@online{wazuh_documentation,
+	title = {Wazuh documentation},
+	url = {https://documentation.wazuh.com},
+	urldate = {2018-11-11},
+}
+@online{wazuh_ruleset,
+	title = {Wazuh ruleset},
+	url = {https://github.com/wazuh/wazuh-ruleset},
+	urldate = {2018-11-11},
+}
+@online{wazuh,
+	title = {Wazuh: Github},
+	url = {https://github.com/wazuh/wazuh},
+	urldate = {2018-11-11},
+}
+@online{agentless,
+	title = {Agentless monitoring in OSSEC},
+	url = {https://www.ossec.net/docs/manual/agent/agentless-monitoring.html},
+	urldate = {2018-11-11},
+}
+@online{wazuh_architecture,
+	title = {Wazuh documentation: Installation guide},
+	url = {https://documentation.wazuh.com/current/installation-guide/index.html},
+	urldate = {2018-11-11},
+}
+@online{wazuh_architecture2,
+	title = {Wazuh documentation: Architecture},
+	url = {https://documentation.wazuh.com/current/getting-started/architecture.html},
+	urldate = {2018-11-15},
+}
+@online{firewall-ipds-ids_comparison,
+	title = {Difference between IDS and IPS and Firewall},
+	url = {https://security.stackexchange.com/questions/44931/difference-between-ids-and-ips-and-firewall},
+	urldate = {2018-11-15},
+}
+@online{comparison_tools,
+	title = {10 Top Intrusion Detection Tools for 2018},
+	url = {https://www.comparitech.com/net-admin/network-intrusion-detection-tools/},
+	urldate = {2018-11-15},
+}
+@online{who_is_using_yara,
+	title = {Who is using YARA},
+	url = {https://github.com/VirusTotal/yara},
+	urldate = {2018-11-15},
+}
+@online{wazuh_data_flow,
+	title = {Wazuh data flow},
+	url = {https://documentation.wazuh.com/current/_images/wazuh_data_flow1.png},
+	urldate = {2018-11-15},
+}
+@online{wazuh_index,
+	title = {Wazuh documentation: Welcome to Wazuh},
+	url = {https://documentation.wazuh.com/current/index.html},
+	urldate = {2018-11-15},
+}
+@online{wazuh_json,
+	title = {Wazuh documentation: JSON decoder},
+	url = {https://documentation.wazuh.com/current/user-manual/ruleset/json-decoder.html},
+	urldate = {2018-11-15},
+}
+@online{wazuh_cdb,
+	title = {Wazuh documentation: CDB lists},
+	url = {https://documentation.wazuh.com/current/user-manual/ruleset/cdb-list.html},
+	urldate = {2018-11-15},
+}
+@online{wazuh_ossec_ruleset,
+	title = {OSSEC-Wazuh Ruleset list},
+	url = {https://wazuh.com/resources/OSSEC_Ruleset.pdf},
+	urldate = {2018-11-15},
+}
+@online{wazuh_testing,
+	title = {Wazuh documentation: Testing decoders and rules},
+	url = {https://documentation.wazuh.com/current/user-manual/ruleset/testing.html},
+	urldate = {2018-11-15},
+}
+@online{wazuh_custom,
+	title = {Wazuh documentation: Custom rules and decoders},
+	url = {https://documentation.wazuh.com/current/user-manual/ruleset/custom.html},
+	urldate = {2018-11-15},
+}
+@online{pmi_project_management,
+	title = {What is Project Management?},
+	url = {https://www.pmi.org/about/learn-about-pmi/what-is-project-management},
+	urldate = {2018-11-17},
+}
+@online{virustotal_faq,
+	title = {VirusTotal FAQ},
+	url = {https://www.virustotal.com/en/faq/},
+	urldate = {2018-11-18},
+}
+@online{tarlogic_comprehension,
+	title = {Kerberos tickets: Comprehension and exploitation},
+	url = {https://www.tarlogic.com/en/blog/kerberos-tickets-comprehension-and-exploitation/},
+	urldate = {2019-05-20}
+}
+@online{tarlogic_theory,
+	title = {Kerberos (I): How does Kerberos work? - Theory},
+	url = {https://www.tarlogic.com/en/blog/how-kerberos-works/},
+	urldate = {2019-05-20}
+}
+@online{stealthbits,
+	title = {Complete domain compromise with golden tickets},
+	url = {https://blog.stealthbits.com/complete-domain-compromise-with-golden-tickets/},
+	urldate = {2019-05-20}
+}
+@online{lsadump_patch_inject,
+	title = {mimikatz: deep dive on lsadump::lsa /patch and /inject},
+	url = {https://blog.3or.de/mimikatz-deep-dive-on-lsadumplsa-patch-and-inject.html},
+	urldate = {2019-05-20}
+}
+@online{reset_script,
+	title = {Script to reset the krbtgt account password/keys},
+	url = {https://gallery.technet.microsoft.com/Reset-the-krbtgt-account-581a9e51},
+	urldate = {2019-05-20}
+}
+@online{adsecurity_483,
+	title = {Kerberos \& KRBTGT: Active Directory\textquotesingle s Domain Kerberos Service Account},
+	url = {https://adsecurity.org/?p=483},
+	urldate = {2019-05-20}
+}
+@online{dump_ways,
+	title = {How Attackers Dump Active Directory Database Credentials},
+	url = {https://adsecurity.org/?p=2398},
+	urldate = {2019-05-20}
+}
+@online{pentestlab, 	%alternativamente https://www.christophertruncer.com/golden-ticket-generation/
+	title = {Golden Ticket},
+	url = {https://pentestlab.blog/2018/04/09/golden-ticket/},
+	urldate = {2019-05-20}
+}
+@online{wikipedia_lsass,
+	title = {Wikipedia: Local Security Authority Subsystem Service},
+	url = {https://en.wikipedia.org/wiki/Local_Security_Authority_Subsystem_Service},
+	urldate = {2019-05-20}
+}
+@online{microsoft_mitigation,
+	title = {Mitigating Pass-the-Hash (PtH) Attacks and Other Credential Theft, Version 1 and 2},
+	url = {https://www.microsoft.com/en-us/download/details.aspx?id=36036},
+	urldate = {2019-05-20}
+}
+@online{mimikatz_details,
+	title = {Unofficial Guide to Mimikatz \& Command Reference},
+	url = {https://adsecurity.org/?page_id=1821},
+	urldate = {2019-05-20}
+}
+@online{mimikatz_github,
+	title = {Github: mimikatz},
+	url = {https://github.com/gentilkiwi/mimikatz},
+	urldate = {2019-05-20}
+}
+@online{choke,
+	title = {How Does a Golden Ticket Attack Work?},
+	url = {https://www.varonis.com/blog/kerberos-how-to-stop-golden-tickets/},
+	urldate = {2019-05-20}
+}
+@online{powersploit,
+	title = {Github: PowerSploit - A PowerShell Post-Exploitation Framework},
+	url = {https://github.com/phra/PowerSploit},
+	urldate = {2019-05-20}
+}
+@online{powersploit_2,
+	title = {Github: PowerSploit - A PowerShell Post-Exploitation Framework},
+	url = {https://github.com/PowerShellMafia/PowerSploit},
+	urldate = {2019-05-20}
+}
+@online{wazuh_remote_command,
+	title = {Scheduling remote commands for Wazuh agents},
+	url = {https://wazuh.com/blog/scheduling-remote-commands-for-wazuh-agents/},
+	urldate = {2019-05-20}
+}
+@online{windows_events,
+	title = {Windows Security Log Events},
+	url = {https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/Default.aspx},
+	urldate = {2019-05-20}
+}
+@online{dcsync_monitor,
+	title = {Github: Monitors for DCSYNC and DCSHADOW attacks and create custom Windows Events for these events.},
+	url = {https://github.com/shellster/DCSYNCMonitor},
+	urldate = {2019-05-20}
+}
+@online{AD_tier,
+	title = {Github: Create-Tiers in AD},
+	url = {https://github.com/davidprowe/AD_Sec_Tools},
+	urldate = {2019-05-20}
+}
+@online{reset_RODC,
+	title = {Reset The KrbTgt Account Password/Keys For RWDCs/RODCs},
+	url = {https://gallery.technet.microsoft.com/Reset-The-KrbTgt-Account-5f45a414},
+	urldate = {2019-05-20}
+}
+@online{hood,
+	title = {The Golden Ticket Attack - a Look Under the Hood},
+	url = {https://cybersecology.com/wp-content/uploads/2016/05/Golden_Ticket-v1.13-Final.pdf},
+	urldate = {2019-05-20}
+}
+@online{protect_NTDS,
+	title = {IT Admin Tips: Protecting Your Active Directory Database},
+	url = {http://www.cryptohax.com/2015/10/it-admin-tips-protecting-your-active.html},
+	urldate = {2019-05-20}
+}
+@online{AD_defense,
+	title = {Github: Attack and defend active directory using modern post exploitation adversary tradecraft activity},
+	url = {https://github.com/infosecn1nja/AD-Attack-Defense#defense--detection},
+	urldate = {2019-05-20}
+}
+@online{blog_events,
+	title = {How to collect Windows events with Wazuh},
+	url = {https://wazuh.com/blog/how-to-collect-windows-events-with-wazuh/},
+	urldate = {2019-05-21}
+}
+@online{integrator, %maybe
+	title = {How to integrate external software using Integrator},
+	url = {https://wazuh.com/blog/how-to-integrate-external-software-using-integrator/},
+	urldate = {2019-05-21}
+}
+@online{yara_module,
+	title = {Github: YARA module implementation},
+	url = {https://github.com/wazuh/wazuh/issues/3357},
+	urldate = {2019-05-21}
+}
+@online{mimikatz_yara_rules,
+	title = {Github: YARA rules to detect Mimikatz},
+	url = {https://github.com/gentilkiwi/mimikatz/blob/master/kiwi_passwords.yar},
+	urldate = {2019-05-21}
+}
+@online{meterpreter,
+	title = {The Secret Security Wiki: Meterpreter},
+	url = {https://doubleoctopus.com/security-wiki/threats-and-tools/meterpreter/},
+	urldate = {2019-05-21}
+}
+@online{ntdsutil_cyberis,
+	title = {Obtaining NTDS.dit Using In-Built Windows Commands},
+	url = {https://www.cyberis.co.uk/2014/02/obtaining-ntdsdit-using-in-built.html},
+	urldate = {2019-05-21}
+}
+@online{ntdsdit_tools, 		%https://github.com/csababarta/ntdsxtract con python
+	title = {Practice ntds.dit File Part 2: Extracting Hashes},
+	url = {https://blog.didierstevens.com/2016/07/13/practice-ntds-dit-file-part-2-extracting-hashes/},
+	urldate = {2019-05-21}
+}
+@online{ntds_powershell,
+	title = {Dumping the contents of ntds.dit files using PowerShell},
+	url = {https://www.dsinternals.com/en/dumping-ntds-dit-files-using-powershell/},
+	urldate = {2019-05-21}
+}
+@online{detect_metasploit_traffic,
+	title = {Detecting Network Traffic from Metasploit's Meterpreter Reverse HTTP Module},
+	url = {https://blog.didierstevens.com/2015/05/11/detecting-network-traffic-from-metasploits-meterpreter-reverse-http-module/},
+	urldate = {2019-05-21}
+}
+@online{extracting_ntds,
+	title = {Extracting password hashes from the ntds.dit file},
+	url = {https://blog.stealthbits.com/extracting-password-hashes-from-the-ntds-dit-file/},
+	urldate = {2019-05-21}
+}
+@online{pypykatz_server,
+	title = {Github: Pypykatz server},
+	url = {https://github.com/skelsec/pypykatz_server},
+	urldate = {2019-05-21}
+}
+@online{pypykatz_agent,
+	title = {Github: Pypykatz agent},
+	url = {https://github.com/skelsec/pypykatz_agent_dn/},
+	urldate = {2019-05-21}
+}
+@online{understanding_powersploit_mimikatz,
+	title = {Understanding Powersploit, Mimikatz and Defense},
+	url = {http://www.thesecurityblogger.com/understanding-powersploit-mimikatz-and-defense/},
+	urldate = {2019-05-21}
+}
+@online{honeyhashes,
+	title = {Detecting Mimikatz Use On Your Network},
+	url = {https://isc.sans.edu/diary/Detecting+Mimikatz+Use+On+Your+Network/19311},
+	urldate = {2019-05-21}
+}
+@online{events_1,
+	title = {Detecting Forged Kerberos Ticket (Golden Ticket \& Silver Ticket) Use in Active Directory},
+	url = {https://adsecurity.org/?p=1515},
+	urldate = {2019-05-22}
+}
+@online{sysmon,
+	title = {Microsoft docs: Sysmon v9.0},
+	url = {https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon},
+	urldate = {2019-05-22}
+}
+@online{sysmon_config,
+	title = {Github: sysmon-config | A Sysmon configuration file for everybody to fork},
+	url = {https://github.com/DefenceLogic/sysmon-config},
+	urldate = {2019-05-22}
+}
+@online{klist_script_idea,
+	title = {Kerberos Golden Ticket Check},
+	url = {https://gallery.technet.microsoft.com/scriptcenter/Kerberos-Golden-Ticket-b4814285},
+	urldate = {2019-05-22}
+}
+@online{decoy_AD,
+	title = {Github: Deploy-Deception},
+	url = {https://github.com/samratashok/Deploy-Deception/blob/master/README.md},
+	urldate = {2019-05-22}
+}
+@online{scom_GT,
+	title = {Using SCOM to Detect Golden Tickets},
+	url = {https://blogs.technet.microsoft.com/nathangau/2017/03/08/using-scom-to-detect-golden-tickets/},
+	urldate = {2019-05-22}
+}
+@online{sysmon_event_7_mimikatz,
+	title = {Chronicles of a Threat Hunter: Hunting for In-Memory Mimikatz with Sysmon and ELK - Part I (Event ID 7)},
+	url = {https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for.html},
+	urldate = {2019-05-22}
+}
+%@online{,
+%	title = {},
+%	url = {},
+%	urldate = {}
+%}
+%@online{,
+%	title = {},
+%	url = {},
+%	urldate = {}
+%}
+%@online{,
+%	title = {},
+%	url = {},
+%	urldate = {}
+%}
+%@online{,
+%	title = {},
+%	url = {},
+%	urldate = {}
+%}
+%@online{,
+%	title = {},
+%	url = {},
+%	urldate = {}
+%}
+%@online{,
+%	title = {},
+%	url = {},
+%	urldate = {}
+%}
+%@online{,
+%	title = {},
+%	url = {},
+%	urldate = {}
+%}
+%@online{,
+%	title = {},
+%	url = {},
+%	urldate = {}
+%}
+
+%@online{,
+%	author = {},
+%	title = {},
+%	year = ,
+%	url = {},
+%	urldate = {}
+%}
+
+%@online{webej,
+%	author = {MultiMedia LLC},
+%	title = {{MS Windows NT} Kernel Description},
+%	year = 1999,
+%	url = {http://web.archive.org/web/20080207010024/http://www.808multimedia.com/winnt/kernel.htm},
+%	urldate = {2010-09-30}
+%}
+
+%@article{,
+%	author = {},
+%	ams-subject = {},
+%	journal = {},
+%	review = {},
+%	pages = {},
+%	title = {},
+%	volume = {},
+%	year = {},
+%}
+
+%@article{Sh1,
+%	author = {Shelah, Saharon},
+%	ams-subject = {(02.50)},
+%	journal = {Israel Journal of Mathematics},
+%	review = {MR 40-7102},
+%	pages = {187--202},
+%	title = {{Stable theories}},
+%	volume = {7},
+%	year = {1969},
+%}
+

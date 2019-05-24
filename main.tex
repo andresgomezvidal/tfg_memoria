@@ -12,9 +12,9 @@
 \documentclass[12pt,twoside,a4paper]{book}
 %\documentclass[a4paper,10pt]{article}
 
-\input{capitulos/packages}
+\input{config/packages}
 
-\input{capitulos/config.tex}
+\input{config/config.tex}
 
 
 
@@ -68,9 +68,15 @@
 \chapter{Technologies and tools}
 \input{capitulos/technologies-and-tools}
 
+%no tiene sentido para un trabajo de investigación como este, en su lugar se explica la investigación
 %\cleardoublepage
 %\chapter{Design and Implementation}
 %\input{capitulos/design-and-implementation}
+
+%para no sobrecargar la jerarquía de la memoria en 3 niveles se usa un capítulo por incremento, estilo como Manuel Simón
+\cleardoublepage
+\chapter{Increment 1: \IncrementoUno}
+\input{capitulos/incremento-uno}
 
 %\cleardoublepage
 %\chapter{Testing}
