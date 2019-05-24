@@ -136,8 +136,8 @@ Again there is a migration to an administrator account of the AD. In this case a
 \end{figure}
 As before it is expected of the DCs to be more monitored. This means that the DCSync version is more interesting to an attacker because it has the same difficulty and beneficts at a lower risk.
 
-\subsubsection{Exploit 6: Retrieval of Ntdsutil}
-Another way to get the desired information is to copy the database of the AD Domain Services and conduct an offline password audit of the domain. This means once we have this data we can use a wide selection of tools to extract or crack the KRBTGT password.
+\subsubsection{Exploit 6: Retrieval of NTDS.DIT}
+Another way to get the desired information is to copy the database of the AD Domain Services (the NTDS.DIT file) and conduct an offline password audit of the domain. This means once we have this data we can use a wide selection of tools to extract or crack the KRBTGT password.
 Fortunately for the attacker there are builtin Microsoft commands to accomplish this without the need to use scripts, third-party tools or injection into running processes\cite{ntdsdit_tools}\cite{ntdsutil_cyberis}\cite{dump_ways}\cite{extracting_ntds}\cite{ntds_powershell}.
 \linej
 \linej
