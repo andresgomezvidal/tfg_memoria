@@ -25,6 +25,7 @@
 </rule>
 
 <rule id="300306" level="15" timeframe="10" frequency="2" >
+	<same_field>win.system.computer</same_field>
 	<if_matched_sid>300301</if_matched_sid>
 	<if_matched_sid>300302</if_matched_sid>
 	<if_matched_sid>300303</if_matched_sid>

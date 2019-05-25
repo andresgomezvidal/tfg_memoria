@@ -234,8 +234,12 @@ On the manager side the next rules are needed:
 \lstinputlisting[style=xml,caption=Rules for detecting Mimikatz as a group of events]{scripts/rules_event_7_mimikatz.xml}
 \linej
 The \textit{61609} rule is the parent of these rules because it marks the log as a Sysmon event of type 7. Each of the first five rules matches one of the suspicious DLLs and the last rule identifies the use of all the DLLs in a 10 seconds gap as the dump of credentials by Mimikatz.
+The \textit{same\_field} option means that every one of the matches must have the same value in the designed field, which in this case means that these events come from the same computer.
 \linej
-The \textit{frequency} option means that the rule has to be matched that number of times to trigger and is set to 2 because is the minimum value possible. This works because the manager receives 2 different log instances for every of this DLLs, at least in Wazuh 3.9 with Sysmon 9. If that were not the case then this could be accomplished in a similar approximation using 2 rules instead of 5, each with 2 or 3 of the DLLs separated by a logical or sign.
+The \textit{frequency} option means that the rule has to be matched that number of times to trigger and is set to 2 because is the minimum value possible. This works because the manager receives at least 2 different log instances for each DLL, at least with the latest versions of Wazuh, Sysmon, Mimikatz and Kiwi.
+If that were not the case then this could be accomplished in a similar approximation using less rules but that trigger more because they have a logical or match, as it can be shown in the next rules. It is important to note that while testing it was found that only one access to the DLLs is needed if one of the Mimikatz exploits was executed a short while before, probably because of some kind of cache.
+\linej
+\lstinputlisting[style=xml,caption=Rules for suspecting a Mimikatz execution as a group of events]{scripts/rules_event_7_mimikatz_alternative.xml}
 
 \begin{table}[H]
 	\centering
