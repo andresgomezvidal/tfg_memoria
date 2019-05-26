@@ -217,29 +217,33 @@ The most basic attempt to detect Mimikatz would be a rule which triggers if ther
 <match>pypy|mimi|katz|gentil|kiwi|Benjamin D|/rc4:|/user:Administrator|/ptt|/id:500|krbtgt|lsadump|kerberos::|privilege::</match>
 \end{lstlisting}
 \linej
-Detecting the use of every variant of Mimikatz is virtually impossible, not only because their sheer number due to its popularity but because anyone can compile their own. Therefore the logical way to detect Mimikatz would be to detect the basic step for every version: the interaction with the LSASS and process injection\cite{understanding_powersploit_mimikatz}.
+Each time a Mimikatz shell spawns certain DLLs are loaded. The technique to identify a sucession of events in a short time as another event is called grouping.
+Grouping is a very effective technique, but it may require a lot of work to identify its components. In some cases the attack may not produce enough noise or it may not be possible to tell it apart from the normal events of the system\cite{sysmon}\cite{sysmon_event_7_mimikatz}.
 \linej
 \linej
-Upon a very close study of how Mimikatz interacts with Windows is clear that the execution of certain close events mean the dumping of credentials for a Golden Ticket using Mimikatz. This is called grouping, and even though is a very effective technique it may require a lot of work and in some cases the attack does not produce enough noise or is not easy to tell it apart from the system.
-\linej
-In this case Sysmon is needed to provide insight on these processes. In particular they can be detected by the event 7 of Sysmon, which identifies the load of images (DLLs)\cite{sysmon}\cite{sysmon_event_7_mimikatz}.
-\linej
-\linej
-For this task is better to configure Sysmon in a whitelisting manner to avoid logging too much. Monitoring these 5 images is enough:
+ The load of a DLL can be detected by the event 7 of Sysmon and the grouping can be identified with Wazuh rules.
+ For this task is better to configure Sysmon in a whitelisting manner, to avoid logging too much. Monitoring these 5 images is enough:
 \linej
 \lstinputlisting[style=xml,caption=Sysmon monitoring of event 7]{scripts/sysmon_event_7.xml}
 \linej
 On the manager side the next rules are needed:
 \linej
-\lstinputlisting[style=xml,caption=Rules for detecting Mimikatz as a group of events]{scripts/rules_event_7_mimikatz.xml}
+\lstinputlisting[style=xml,caption=Rules for suspecting a Mimikatz execution as a group of events]{scripts/rules_event_7_mimikatz_alternative.xml}
+The \textit{61609} rule is the parent of these rules because it marks the log as a Sysmon event of type 7.
 \linej
-The \textit{61609} rule is the parent of these rules because it marks the log as a Sysmon event of type 7. Each of the first five rules matches one of the suspicious DLLs and the last rule identifies the use of all the DLLs in a 10 seconds gap as the dump of credentials by Mimikatz.
 The \textit{same\_field} option means that every one of the matches must have the same value in the designed field, which in this case means that these events come from the same computer.
 \linej
-The \textit{frequency} option means that the rule has to be matched that number of times to trigger and is set to 2 because is the minimum value possible. This works because the manager receives one of this events each time Mimikatz is executed and these scripts use Mimikatz twice.
-If that were not the case then this could be accomplished in a similar approximation using less rules but that trigger more because they have a logical or match, as it can be shown in the next rules.
+The \textit{frequency} option means that the rule has to be matched that number of times to trigger. Is set to 2 because is the minimum value possible.
 \linej
-\lstinputlisting[style=xml,caption=Rules for suspecting a Mimikatz execution as a group of events]{scripts/rules_event_7_mimikatz_alternative.xml}
+\linej
+Normally each of the suspicious DLLs would have its own rule, but it would not always identify Mimikatz because the frequency has to be at least 2. Therefore rules \textit{300301} and \textit{300302} identify 2 and 3 DLLs each (using a logical OR), making it possible to trigger the grouping rule.
+The last rule identifies the use of the DLLs in a 10 seconds gap as the execution of Mimikatz.
+\linej
+\linej
+The problem of these less precise rules is that it is possible to have false positives. None were seen during this project for this case.
+%\linej
+%Detecting the use of every variant of Mimikatz is virtually impossible, not only because their sheer number due to its popularity but because anyone can compile their own. Therefore the logical way to detect Mimikatz would be to detect the basic step for every version: the interaction with the LSASS and process injection.
+%TODO detect dump lsass
 
 \begin{table}[H]
 	\centering
@@ -251,11 +255,12 @@ If that were not the case then this could be accomplished in a similar approxima
 		Exploit 2: Mimikatz from memory in DC& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
 		Exploit 3: Mimikatz with DCSync& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
 		Exploit 4: DCSync with Kiwi& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		Exploit 5: Hashdump with Meterpreter& \cellcolor{red!60}No& \cellcolor{green!60}Yes\\ \hline
+		Exploit 5: Hashdump with Meterpreter& \cellcolor{red!60}Yes& \cellcolor{green!60}Yes\\ \hline
 	\end{tabular}
 	\caption{Exploit detection by grouping events}
 \end{table}
-This method detects the use of Mimikatz in all the ways implemented in this project. The hashdump is not detected because it does not use Mimikatz to get the credentials and Kiwi is used only to generate the Golden Ticket, not for data gathering.
+This method detects the use of Mimikatz in all the ways implemented in this project.
+The hashdump exploit is detected because Kiwi is used in the session in that machine to generate the Golden Ticket. A real attacker probably would generate the ticket outside of the network, avoiding being detected by this technique.
 
 \subsection{Detection of the use of the TGT with klist}
 We can not always detect when a forged TGT is generated, but the attacker still needs to use it to gain access to the active directory domain with the privileges set in the ticket. The first choice for this task would be to monitor the Kerberos log searching for unusual patterns, but it proved to be more hard than it should, so instead we use scan the cache of Kerberos tickets every few minutes.
@@ -286,6 +291,7 @@ Doing this with only powershell ensures it will work in any Windows system witho
 \linej
 \lstinputlisting[style=PS,caption=Script to scan and parse to JSON the tickets in the cache]{scripts/klist.ps1}
 \lstinputlisting[style=PS,caption=Way to get the MaxTicketAge from the Group Policy]{scripts/report.ps1}
+\linej
 Unfortunately the way to get the data in the last script does not work with remote commands because Windows remote commands only allow certain types of commands. In any case the \textit{MaxTicketAge} value is not normally changed and it requires AD administrator privileges to do it, so due to the time constrains of the project this automation was abandoned. There is also other ways to get the \textit{MaxTicketAge} value, but as mentioned this is not something that we should spend time on.
 \linej
 \linej
@@ -395,14 +401,14 @@ We could go on with more detail and increasing the mitigation\cite{AD_defense}, 
 We have seen how the data to generate Golden Tickets can be obtained in different ways and the difficulties for both the attacker and the defender roles.
 \linej
 \linej
-Relying on the klist detection means there is no real need to detect each of the different ways to generate the Golden Ticket because it may be impossible depending on the circumstances and more importantly the attacker still needs to present it to a DC to get the TGS to get any benefit from it.
+Relying on the klist detection means there is no real need to detect each of the different ways to generate the Golden Ticket because it may be impossible depending on the circumstances. More importantly the attacker still needs to present it to a DC to get the TGSs, to get any benefit from the Golden Ticket.
 \linej
-Detecting certain Sysmon events in a close time gap can guarantee the detection of Mimikatz dumping the needed credentials to generate a Golden Ticket, therefore detecting one of the most used ways to gather this data. Detecting certain strings for running commands, reads and accesses are a worthy way to detect the creation of a Golden Ticket, without spending much resources.
+Detecting certain Sysmon events in a close time gap can guarantee the detection of Mimikatz, therefore detecting one of the most used ways to gather this data. Detecting certain strings for running commands, reads and accesses are a worthy way to detect the creation of a Golden Ticket, without spending much resources.
 \linej
 These are good examples of how detecting common steps to multiple exploits is one of the strong points of an HIDS.
 \linej
 \linej
-Another way of detection is to use YARA to look for certain patterns in memory, just like we can search for strings in the events. In the case of events the data comes from the program, which is easy to modify with multiple techniques like substitution or obfuscation. The patterns in memory are much more harder to change because it involves changing the program logic. That means most attackers would just take the risk to be detected by this kind of technique.
+Another way of detection is to use YARA to look for certain patterns in memory, just like we can search for strings in the events. In the case of events the data comes from the program, which is easy to modify with multiple techniques like substitution or obfuscation. The patterns in memory are much more harder to change because it involves changing the logic of the program. That means most attackers would just take the risk to be detected by this kind of technique.
 \linej
 YARA is very interesting for this kind of project, but it belongs to the Virustotal pack of malware detection tools and so it could be used with Wazuh with a Virustotal API key. The free version only allows a few queries and we didn't consider the option of getting a premium key because there has been for months an open issue in the Github page of Wazuh for integrating it with YARA (as other IDSs have done before), which has recently evolved to an issue to integrate YARA into Wazuh as a module\cite{yara_module}.
 %Unfortunately this was not done before this part of the project as completed, so there was no time left to investigate more on it.

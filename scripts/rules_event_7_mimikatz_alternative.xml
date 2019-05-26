@@ -1,22 +1,22 @@
-<rule id="300310" level="0" >
+<rule id="300300" level="0" >
 	<if_sid>61609</if_sid>
 	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\</field>
 	<description>Detected event 7 with C:\Windows\System32\</description>
 </rule>
-<rule id="300311" level="1" >
-	<if_sid>300310</if_sid>
+<rule id="300301" level="1" >
+	<if_sid>300300</if_sid>
 	<field name="win.eventdata.imageLoaded">WinSCard.dll|cryptdll.dll</field>
 	<description>Detected event 7 with $(win.eventdata.imageLoaded)</description>
 </rule>
-<rule id="300312" level="1" >
-	<if_sid>300310</if_sid>
+<rule id="300302" level="1" >
+	<if_sid>300300</if_sid>
 	<field name="win.eventdata.imageLoaded">samlib.dll|hid.dll|vaultcli.dll</field>
 	<description>Detected event 7 with $(win.eventdata.imageLoaded)</description>
 </rule>
 
-<rule id="300313" level="3" timeframe="10" frequency="2" >
+<rule id="300303" level="12" timeframe="10" frequency="2" >
 	<same_field>win.system.computer</same_field>
-	<if_matched_sid>300311</if_matched_sid>
-	<if_matched_sid>300312</if_matched_sid>
+	<if_matched_sid>300301</if_matched_sid>
+	<if_matched_sid>300302</if_matched_sid>
 	<description>Maybe Mimikatz: DLLs with EventID 7</description>
 </rule>
