@@ -4,19 +4,20 @@ Windows domains are a very common way to manage network accounts in companies. T
 The KRBTGT account is the equivalent of a super-administrator account for Kerberos, and is used to encrypt and sign all Kerberos tickets within a domain, so DCs use the account password to decrypt Kerberos tickets for validation. By default this account password never changes and the account name is the same in every domain\cite{stealthbits}.
 \linej
 \linej
-The process to access a service is as follows\cite{tarlogic_theory}\cite{tarlogic_comprehension}:
+The process to access a service is as follows\cite{tarlogic_theory}\cite{tarlogic_comprehension}\cite{events_1}:
 \begin{enumerate}
 	\item The user request a Ticket Granting Ticket (TGT). This ticket is encrypted with the KDC key and is used for request to the KDC one or more Ticket Granting Service (TGS). This request is ciphered with the user hash.
 	\item The DC returns the requested TGT is everything is in order.
 	\item The user requests the TGS.
 	\item The DC returns the requested TGS is everything is in order.
 	\item The user sends a request to a computer running a service to make use of it. For this the TGS is sent.
-	\item Optionally the Privilege Attribute Certificate (PAC) can be sent to the DC to be verified. The PAC is an structure present in almost every ticket that contains the privileges of the user and it is signed with the KDC key. Nevertheless, the PAC verification consists of checking only its signature, without inspecting if privileges inside of PAC are correct. Furthermore, a client can avoid the inclusion of the PAC inside the ticket by specifying it in KERB-PA-PAC-REQUEST field of ticket request.
+	\item Optionally the Privilege Attribute Certificate (PAC) can be sent to the DC to be verified. The PAC is an structure present in almost every ticket that contains the privileges of the user and it is signed with the KDC key. Nevertheless, the PAC verification consists of checking only its signature, without inspecting if privileges inside of PAC are correct. Furthermore, a client can avoid the inclusion of the PAC inside the ticket by specifying it in KERB-PA-PAC-REQUEST field of ticket request. Unfortunately most services do not validate the PAC.
 	\item Optionally the DC returns the result to the computer that requested it, which should be running the service in question.
 	\item Optionally the user receives the response to his request to use the service.
 \end{enumerate}
 
 \begin{figure}[H]
+	\label{kerberos_exchange}
 	\centering
 	\includegraphics[width=.8\textwidth]{figuras/TGT_TGS_PAC.jpg}
 	\caption{Steps for Kerberos authentication}
@@ -57,11 +58,10 @@ The script uses Mimikatz to get the needed data to generate the Golden Ticket, s
 After injecting the ticket (with the \textit{/ptt} option) we have administrator privileges in the AD, so we can use any service in the AD in this powershell session, any command we type should be allowed. The id 500 is the normal id for the administrator account in the AD. Without the injection option Mimikatz would store the ticket in a file, which we can inject at any time with Mimikatz. This script can be executed in multiple ways, for example from a powershell interactive terminal run as an administrator.
 \linej
 \linej
-The password hash of the KRBTGT account is retrieved by Mimikatz interacting with the Local Security Authority (LSA) or Local Security Authority Subsystem Service (LSASS), which is run by the lsass.exe process\cite{wikipedia_lsass}\cite{pentestlab}\cite{lsadump_patch_inject}\cite{dump_ways}.
-\linej
+The password hash of the KRBTGT account is retrieved by Mimikatz interacting with the Local Security Authority (LSA) or Local Security Authority Subsystem Service (LSASS), which is run by the lsass.exe process.
 This process is the Windows service responsible for providing single sign-on functionality, so that users are not required to re-authenticate each time they access resources and it provides access not only to the authenticated user's credentials but every set of credentials used by every open session since the last boot.
 \linej
-Mimikatz exploits this cache of credentials and reports the results to the user in the various forms employed by LSASS\cite{SANS_mimikatz}.
+Mimikatz exploits this cache of credentials and reports the results to the user in the various forms employed by LSASS\cite{SANS_mimikatz}\cite{wikipedia_lsass}\cite{pentestlab}\cite{lsadump_patch_inject}\cite{dump_ways}.
 
 \subsubsection{Exploit 2: Mimikatz from memory in DC}
 This is similar to the previous example but instead of having a downloaded version of Mimikatz (stored in the disk) we download the program directly into the powershell session, so it is not saved to disk.
@@ -69,7 +69,7 @@ With slight changes this could work too in a computer that is not a DC if the at
 \linej
 \lstinputlisting[style=PS,caption=Script to run Mimikatz only in memory and inject a Golden Ticket in the local DC]{scripts/genticket.ps1}
 \linej
-The script downloads a version of Mimikatz from Github and creates a powershell object with its contents, with can be invoked at any time in this shell\cite{powersploit}\cite{powersploit_2}\cite{mimikatz_details}. Then as before it dumps the needed information to generate the Golden Ticket in a file, which is read and parsed to store the interesting parameters into variables.
+The script downloads a version of Mimikatz from Github and creates a powershell object with its contents, with can be invoked at any time in this shell\cite{powersploit}\cite{mimikatz_details}. Then as before it dumps the needed information to generate the Golden Ticket in a file, which is read and parsed to store the interesting parameters into variables.
 \linej
 I was having trouble trying to automate the last \textit{Invoke-Mimikatz} command to work with the parameters in the variables so as a workaround I write a new file that has the command with those parameters and then I run the file.
 \linej
@@ -138,7 +138,7 @@ As before it is expected of the DCs to be more monitored. This means that the DC
 
 \subsubsection{Exploit 6: Retrieval of NTDS.DIT}
 Another way to get the desired information is to copy the database of the AD Domain Services (the NTDS.DIT file) and conduct an offline password audit of the domain. This means once we have this data we can use a wide selection of tools to extract or crack the KRBTGT password.
-Fortunately for the attacker there are builtin Microsoft commands to accomplish this without the need to use scripts, third-party tools or injection into running processes\cite{ntdsdit_tools}\cite{ntdsutil_cyberis}\cite{dump_ways}\cite{extracting_ntds}\cite{ntds_powershell}.
+Fortunately for the attacker there are builtin Microsoft commands to accomplish this without the need to use scripts, third-party tools or injection into running processes\cite{dump_ways}\cite{ntdsdit_tools}\cite{ntdsutil_cyberis}\cite{extracting_ntds}\cite{ntds_powershell}.
 \linej
 \linej
 This case was not automated because is simpler than the rest and it was harder to do so because it uses its own type of shell: \textit{ntdsutil}.
@@ -204,7 +204,7 @@ There are public configs for Sysmon that attempt to provide a good insight of th
 With Wazuh we can set rules to filter for suspicious strings, just as many antivirus do, but it can be overcome easily by an attacker. This does not mean that is totally worthless, but that it is not something to focus on.
 
 \subsection{Detection of Mimikatz}
-Mimikatz is the tool of choice for this kind of attack for most attackers because it is very effective, easy to use and has multiple ways to be used in different attacks\cite{mimikatz_github}\cite{mimikatz_details}. This is a double edge sword for Mimikatz because it has become one of the programs to look for in antimalware detection programs. In this case we assume these programs have not detected Mimikatz and is up to Wazuh to do it. It is interesting to note that the author of Mimikatz provides ways to detect it, like the YARA rules he maintains\cite{mimikatz_yara_rules} or BusyLights\cite{understanding_powersploit_mimikatz}.
+Mimikatz is the tool of choice for this kind of attack for most attackers because it is very effective, easy to use and has multiple ways to be used in different attacks\cite{mimikatz_github}\cite{mimikatz_details}. This is a double edge sword for Mimikatz because it has become one of the programs to look for in antimalware detection programs. In this case we assume these programs have not detected Mimikatz and is up to Wazuh to do it. It is interesting to note that the author of Mimikatz provides ways to detect it, like the YARA rules he maintains\cite{mimikatz_github} or BusyLights\cite{understanding_powersploit_mimikatz}.
 \linej
 \linej
 Detecting Mimikatz is not a sign of a Golden Ticket attack (unless is clear in the way it is used), but still it is a big and dangerous threat to the system and worth checking out.
@@ -236,8 +236,8 @@ On the manager side the next rules are needed:
 The \textit{61609} rule is the parent of these rules because it marks the log as a Sysmon event of type 7. Each of the first five rules matches one of the suspicious DLLs and the last rule identifies the use of all the DLLs in a 10 seconds gap as the dump of credentials by Mimikatz.
 The \textit{same\_field} option means that every one of the matches must have the same value in the designed field, which in this case means that these events come from the same computer.
 \linej
-The \textit{frequency} option means that the rule has to be matched that number of times to trigger and is set to 2 because is the minimum value possible. This works because the manager receives at least 2 different log instances for each DLL, at least with the latest versions of Wazuh, Sysmon, Mimikatz and Kiwi.
-If that were not the case then this could be accomplished in a similar approximation using less rules but that trigger more because they have a logical or match, as it can be shown in the next rules. It is important to note that while testing it was found that only one access to the DLLs is needed if one of the Mimikatz exploits was executed a short while before, probably because of some kind of cache.
+The \textit{frequency} option means that the rule has to be matched that number of times to trigger and is set to 2 because is the minimum value possible. This works because the manager receives one of this events each time Mimikatz is executed and these scripts use Mimikatz twice.
+If that were not the case then this could be accomplished in a similar approximation using less rules but that trigger more because they have a logical or match, as it can be shown in the next rules.
 \linej
 \lstinputlisting[style=xml,caption=Rules for suspecting a Mimikatz execution as a group of events]{scripts/rules_event_7_mimikatz_alternative.xml}
 
@@ -255,7 +255,7 @@ If that were not the case then this could be accomplished in a similar approxima
 	\end{tabular}
 	\caption{Exploit detection by grouping events}
 \end{table}
-This method detects the use of Mimikatz in all the ways implemented in this project. The hashdump is not detected because it does not use Mimikatz at all and Kiwi is used only to generate the Golden Ticket, not for data gathering.
+This method detects the use of Mimikatz in all the ways implemented in this project. The hashdump is not detected because it does not use Mimikatz to get the credentials and Kiwi is used only to generate the Golden Ticket, not for data gathering.
 
 \subsection{Detection of the use of the TGT with klist}
 We can not always detect when a forged TGT is generated, but the attacker still needs to use it to gain access to the active directory domain with the privileges set in the ticket. The first choice for this task would be to monitor the Kerberos log searching for unusual patterns, but it proved to be more hard than it should, so instead we use scan the cache of Kerberos tickets every few minutes.
@@ -280,7 +280,7 @@ In order to do this we need to enable the execution of Wazuh's remote commands i
 </agent_config>
 \end{lstlisting}
 \linej
-In this case the command is a script to get all the tickets of all the sessions with \textit{klist}, compare the ticket value for the field \textit{TicketExpireHours} with the value of \textit{MaxTicketAge} of the Group Policy (putting the difference in a new field) and parse the output to JSON. Having the output in JSON makes it a bit easier to read from the logs (which is useful to fix any mistake in the script) and removes the need of a decoder in the manager. I got the idea from a very different klist script that only works interactively and reports in plain text\cite{klist_script_idea}.
+In this case the command is a script to get all the tickets of all the sessions with \textit{klist}, compare the ticket value for the field \textit{TicketExpireHours} with the value of \textit{MaxTicketAge} of the Group Policy (putting the difference in a new field) and parse the output to JSON. Having the output in JSON makes it a bit easier to read from the logs (which is useful to fix any mistake in the script) and removes the need of a decoder in the manager. This script needs to be run in every member of the network to ensure detection for every user. The idea came from a very different klist script that only works interactively and reports in plain text\cite{klist_script_idea}.
 \linej
 Doing this with only powershell ensures it will work in any Windows system without external programs. The downside of this parsing and my limited knowledge of powershell is that the script is a bit bulky and the dependency of the format of the output of klist.
 \linej
@@ -331,7 +331,41 @@ The testing of the script was satisfactory, the scripts that inject a TGT were d
 Of course if we chose to store the ticket in a file we could inject it in other moment or computer, but then it could be detected by this method.
 \linej
 \linej
-Additionally we could monitor looking for unusual usernames, but is not something that is bound to happen, because in most cases the attacker wants the administrator account.
+Additionally we could monitor looking for unusual usernames, because is possible to get a TGT with administrator privileges with non existent username to avoid the monitoring that administrator accounts are often under.
+
+\subsection{Silver Ticket}
+A Silver Ticket is very similar to a Golden Ticket, is a forged TGS instead of TGT. Therefore a Silver Ticket only grants access to a service in a computer. Is important to note that some services need the privileges of more services, therefore more than a Silver Ticket may be needed.
+\linej
+Steps 1 and 2 of a normal Kerberos authentication exchange are not needed (figure \ref{kerberos_exchange}) because they are only to get a TGT. Without a TGT a TGS can not be requested from the DC, so steps 2 and 3 are also not a part of the Silver Ticket attack.
+\linej
+There is no need to connect to a DC, only a connection to the computer hosting the service is needed (steps [5-8]). Unless PAC validation is required, the service accepts all data in the TGS ticket.
+\linej
+The TGS is cyphered with the password hash of the account running the service, making changes of the password an effective mitigation against Silver Tickets.
+To extract this data from memory the attacker has to have local administrator privileges\cite{events_1}\cite{silver_ticket}.
+\linej
+\linej
+To extract the data the attacker would need to run Mimikatz with:
+\begin{lstlisting}[style=PS,numbers=none]
+"privilege::debug" "sekurlsa::logonpasswords" exit
+\end{lstlisting}
+\linej
+For example in the next scenario:
+\begin{itemize}
+	\item The user to impersonate is the AD Administrator.
+	\item The computer is is \textit{WIN-GQR2EQ8M0TF}.
+	\item The domain is \textit{wazuh.local}.
+	\item The domain is identified as \textit{S-1-5-21-3307301586-4221688441-1196996515}.
+	\item The attacker wants access to the \textit{HOST} service.
+	\item The password hash of the account is \textit{68fbd238f574f7685beed96a2db15004}.
+\end{itemize}
+The Mimikatz command would be:
+\begin{lstlisting}[style=PS,numbers=none]
+"kerberos::golden /admin:Administrator /id:500 /sid:S-1-5-21-3307301586-4221688441-1196996515 /domain:wazuh.local /target:WIN-GQR2EQ8M0TF.wazuh.local /rc4:68fbd238f574f7685beed96a2db15004 /service:HOST /ptt" exit
+\end{lstlisting}
+Allowing the attacker to access the \textit{HOST} service on that computer with AD Administrator privileges.
+\linej
+\linej
+Silver Tickets get registered in the Kerberos' cache in the same way as the Golden Tickets, so they can be detected with the klist script. The execution of Mimikatz can be detected with grouping just as before.
 
 \subsection{Mitigation}
 These exploits take advantage of the inherent weaknesses of Kerberos, so there is no way to prevent them. Nevertheless, Microsoft provides a publicly available guide explaining how to mitigate this kind of attacks\cite{microsoft_mitigation}.
@@ -351,7 +385,7 @@ Also we always can take measures like:
 	\item Use Read Only Domain Controllers (RODCs): keep Read Write DCs segregated using network segregation and AD sites to force users to logon to RODCs, making breach detection easier. RODCs don't have any real user hashes (nor the hash of the KRBTGT account)\cite{reset_RODC}\cite{hood}.
 	\item Use honeypots: With populated the LSASS cache with false credentials\cite{SANS_mimikatz}\cite{honeyhashes} or with decoy AD objects\cite{decoy_AD}. Then we monitor the logs for attempts to use them. This can lead to detect attackers or to find vulnerabilities in the network.
 	\item Disable storage of clear text passwords in LSASS memory to limit the information provided by Mimikatz\cite{SANS_mimikatz}.
-	\item Run LSASS in protected mode (from Windows 8.1): calls to LSASS are only allowed by other protected-mode processes (Microsoft, 2014, Configuring Additional LSA Protection)\cite{SANS_mimikatz}\cite{understanding_powersploit_mimikatz}.
+	\item Run LSASS in protected mode (from Windows 8.1): calls to LSASS are only allowed by other protected-mode processes\cite{SANS_mimikatz}\cite{understanding_powersploit_mimikatz}.
 	\item Use choke points: Create a choke point for access to your DCs, adding another layer of protection. Create a Terminal Server that can only talk to the DCs. Configure the DCs to only accept administrative connections from that Terminal Server\cite{choke}.
 \end{itemize}
 \linej
