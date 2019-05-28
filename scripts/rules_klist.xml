@@ -1,0 +1,13 @@
+<rule id="300000" level="0">
+	<decoded_as>json</decoded_as>
+	<field name="MaxTicketAge">\.+</field>
+	<field name="TicketExpireHours">\.+</field>
+	<description>Klist monitor</description>
+</rule>
+
+<rule id="300001" level="3">
+	<if_sid>300000</if_sid>
+	<field name="TicketExpireHoursGap">^1\d*$|^2\d*$|^3\d*$|^4\d*$|^5\d*$|^6\d*$|^7\d*$|^8\d*$|^9\d*$</field>
+	<ignore>600</ignore>
+	<description>Klist: Potential golden ticket detected - $(TicketExpireHoursGap) hours over MaxTicketAge ($(MaxTicketAge))</description>
+</rule>

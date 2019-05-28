@@ -1,0 +1,25 @@
+<rule id="300101" level="0">
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.image">C:\\Windows\\system32\\reg.exe</field>
+	<description>Maybe a dump of credentials with reg.exe</description>
+</rule>
+<rule id="300102" level="1">
+	<if_sid>300101</if_sid>
+	<field name="win.eventdata.commandLine">save</field>
+	<description>Dump of credentials with reg.exe</description>
+</rule>
+<rule id="300103" level="3">
+	<if_sid>300102</if_sid>
+	<field name="win.eventdata.commandLine">sam</field>
+	<description>Dump of sam credentials with reg.exe</description>
+</rule>
+<rule id="300104" level="3">
+	<if_sid>300102</if_sid>
+	<field name="win.eventdata.commandLine">security</field>
+	<description>Dump of security credentials with reg.exe</description>
+</rule>
+<rule id="300105" level="3">
+	<if_sid>300102</if_sid>
+	<field name="win.eventdata.commandLine">system</field>
+	<description>Dump of system credentials with reg.exe</description>
+</rule>

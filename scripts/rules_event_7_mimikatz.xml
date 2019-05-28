@@ -24,7 +24,7 @@
 	<description>Detected event 7 with C:\Windows\System32\vaultcli.dll</description>
 </rule>
 
-<rule id="300306" level="15" timeframe="10" frequency="2" >
+<rule id="300306" level="3" timeframe="10" frequency="2" >
 	<same_field>win.system.computer</same_field>
 	<if_matched_sid>300301</if_matched_sid>
 	<if_matched_sid>300302</if_matched_sid>
