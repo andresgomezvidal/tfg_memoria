@@ -1,0 +1,6 @@
+<rule id="300350" level="3">
+	<if_group>sysmon_event9</if_group>
+	<field name="win.eventdata.image">powershell.exe</field>
+	<field name="win.eventdata.device">Device\\HarddiskVolume</field>
+	<description>Maybe NinjaCopy</description>
+</rule>

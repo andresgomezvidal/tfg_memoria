@@ -1,0 +1,28 @@
+<rule id="300010" level="0">
+	<if_group>windows</if_group>
+	<match>ntds</match>
+	<description>Potential access to ntds.dit</description>
+</rule>
+
+<rule id="300011" level="3">
+	<if_sid>300010</if_sid>
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.commandLine">\\Windows\\System32\\ntdsutil.exe</field>
+	<description>Use of ntdsutil</description>
+</rule>
+
+<rule id="300012" level="3">
+	<if_sid>300010</if_sid>
+	<match>The database engine detached a database</match>
+	<description>Potential access to ntds.dit</description>
+</rule>
+<rule id="300013" level="3">
+	<if_sid>300010</if_sid>
+	<match>The database engine created a new database</match>
+	<description>Potential access to ntds.dit</description>
+</rule>
+<rule id="300014" level="3">
+	<if_sid>300010</if_sid>
+	<match>The database engine attached a database</match>
+	<description>Potential access to ntds.dit</description>
+</rule>

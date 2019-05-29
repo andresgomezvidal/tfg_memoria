@@ -1,27 +1,27 @@
 <rule id="300301" level="1" >
 	<if_sid>61609</if_sid>
-	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\WinSCard.dll</field>
-	<description>Detected event 7 with C:\Windows\System32\WinSCard.dll</description>
+	<field name="win.eventdata.imageLoaded">\\Windows\\System32\\WinSCard.dll</field>
+	<description>Detected event 7 with \Windows\System32\WinSCard.dll</description>
 </rule>
 <rule id="300302" level="1" >
 	<if_sid>61609</if_sid>
-	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\cryptdll.dll</field>
-	<description>Detected event 7 with C:\Windows\System32\cryptdll.dll</description>
+	<field name="win.eventdata.imageLoaded">\\Windows\\System32\\cryptdll.dll</field>
+	<description>Detected event 7 with \Windows\System32\cryptdll.dll</description>
 </rule>
 <rule id="300303" level="1" >
 	<if_sid>61609</if_sid>
-	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\samlib.dll</field>
-	<description>Detected event 7 with C:\Windows\System32\samlib.dll</description>
+	<field name="win.eventdata.imageLoaded">\\Windows\\System32\\samlib.dll</field>
+	<description>Detected event 7 with \Windows\System32\samlib.dll</description>
 </rule>
 <rule id="300304" level="1" >
 	<if_sid>61609</if_sid>
-	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\hid.dll</field>
-	<description>Detected event 7 with C:\Windows\System32\hid.dll</description>
+	<field name="win.eventdata.imageLoaded">\\Windows\\System32\\hid.dll</field>
+	<description>Detected event 7 with \Windows\System32\hid.dll</description>
 </rule>
 <rule id="300305" level="1" >
 	<if_sid>61609</if_sid>
-	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\vaultcli.dll</field>
-	<description>Detected event 7 with C:\Windows\System32\vaultcli.dll</description>
+	<field name="win.eventdata.imageLoaded">\\Windows\\System32\\vaultcli.dll</field>
+	<description>Detected event 7 with \Windows\System32\vaultcli.dll</description>
 </rule>
 
 <rule id="300306" level="3" timeframe="10" frequency="2" >

@@ -1,7 +1,7 @@
 <rule id="300300" level="0" >
 	<if_group>sysmon_event7</if_group>
-	<field name="win.eventdata.imageLoaded">C:\\Windows\\System32\\</field>
-	<description>Detected event 7 with C:\Windows\System32</description>
+	<field name="win.eventdata.imageLoaded">\\Windows\\System32\\\.*.dll</field>
+	<description>Detected event 7 with \Windows\System32</description>
 </rule>
 <rule id="300301" level="1" >
 	<if_sid>300300</if_sid>

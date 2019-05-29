@@ -1,3 +1,6 @@
+\newcommand{\RNO}{\cellcolor{red!60}No}
+\newcommand{\RYES}{\cellcolor{green!60}Yes}
+
 \section{Golden Ticket}
 Windows domains are a very common way to manage network accounts in companies. The servers of this kind of domain are Domain Controllers and the program that handles the domain directory is the Active Directory. The Domain Controller (DC) runs the Key Distribution Center (KDC), which handles Kerberos ticket requests, which are used to authenticate users and allow access to services (for example login).
 \linej
@@ -138,8 +141,8 @@ As before it is expected of the DCs to be more monitored. This means that the DC
 
 
 
-\subsection{Detection of the attack with Windows events}
-In theory we can identify certain attacks with the security events of Windows. There are multiple websites in which this attack has been analyzed and its events identified\cite{events_1}.
+\subsection{Detection purely with Windows events}
+In theory we can identify certain attacks with the security events of Windows. There are multiple websites in which this attack has been analyzed and its events identified\cite{events_1}\cite{detection_events}.
 Unfortunately the events recorded did not really probe to be the same as the cited sources (probably because we tested on the new Windows Server version, 2019) and they are not enough to be distinguished of the regular activity (which is very bad when we remember we are using a lab environment, without real load). This could probably be improved if these events had more information (particularly those related to Kerberos), but they are very short and generic.
 \linej
 \linej
@@ -164,7 +167,7 @@ Sysmon can monitor each of the events either by whitelisting or blacklisting by 
 Also is important to note that Sysmon can be a bit tricky to balance the configuration to get as much suspicious events as possible, while not reporting so much it affects the performance of the network. This is responsibility of the administrators of the network, who also have to tune the configuration to their custom needs.
 There are public configs for Sysmon that attempt to provide a good insight of the system while not logging too much data\cite{sysmon_config}.
 \linej
-With Wazuh we can set rules to filter for suspicious strings, just as many antivirus do, but it can be overcome easily by an attacker. This does not mean that is totally worthless, but that it is not something to focus on.
+With Wazuh we can set rules to filter for suspicious signatures, just as many antivirus do, but it can be overcome easily by an attacker. This does not mean that is totally worthless, but that it is not something to focus on.
 
 \subsection{Detection of Mimikatz}
 Mimikatz is the tool of choice for this kind of attack for most attackers because it is very effective, easy to use and has multiple ways to be used in different attacks\cite{mimikatz_github}\cite{mimikatz_details}. This is a double edge sword for Mimikatz because it has become one of the programs to look for in antimalware detection programs. In this case we assume these programs have not detected Mimikatz and is up to Wazuh to do it. It is interesting to note that the author of Mimikatz provides ways to detect it, like the YARA rules he maintains\cite{mimikatz_github} or BusyLights\cite{understanding_powersploit_mimikatz}.
@@ -215,11 +218,11 @@ Detecting the use of every variant of Mimikatz is virtually impossible, not only
 		\hline
 		\rowcolor{gray!30}
 		Exploit & Detected \\ \hline
-		1: Local Mimikatz in DC& \cellcolor{green!60}Yes\\ \hline
-		2: Mimikatz from memory in DC& \cellcolor{green!60}Yes\\ \hline
-		3: Mimikatz with DCSync& \cellcolor{green!60}Yes\\ \hline
-		4: DCSync with Kiwi& \cellcolor{green!60}Yes\\ \hline
-		5: Hashdump with Meterpreter& \cellcolor{green!60}Yes\\ \hline
+		1: Local Mimikatz in DC& \RYES\\ \hline
+		2: Mimikatz from memory in DC& \RYES\\ \hline
+		3: Mimikatz with DCSync& \RYES\\ \hline
+		4: DCSync with Kiwi& \RYES\\ \hline
+		5: Hashdump with Meterpreter& \RYES\\ \hline
 	\end{tabular}
 	\caption{Exploit detection by grouping events}
 \end{table}
@@ -290,11 +293,11 @@ The testing of the script was satisfactory, the scripts that inject a TGT were d
 		\hline
 		\rowcolor{gray!30}
 		Exploit & Detected & As expected \\ \hline
-		1: Local Mimikatz in DC& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		2: Mimikatz from memory in DC& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		3: Mimikatz with DCSync& \cellcolor{green!60}Yes& \cellcolor{green!60}Yes\\ \hline
-		4: DCSync with Kiwi& \cellcolor{red!60}No& \cellcolor{green!60}Yes\\ \hline
-		5: Hashdump with Meterpreter& \cellcolor{red!60}No& \cellcolor{green!60}Yes\\ \hline
+		1: Local Mimikatz in DC& \RYES& \RYES\\ \hline
+		2: Mimikatz from memory in DC& \RYES& \RYES\\ \hline
+		3: Mimikatz with DCSync& \RYES& \RYES\\ \hline
+		4: DCSync with Kiwi& \RNO& \RYES\\ \hline
+		5: Hashdump with Meterpreter& \RNO& \RYES\\ \hline
 	\end{tabular}
 	\caption{Exploit detection by the klist script}
 \end{table}
@@ -367,7 +370,7 @@ We have seen how the data to generate Golden Tickets can be obtained in differen
 \linej
 Relying on the klist detection means there is no real need to detect each of the different ways to generate the Golden Ticket because it may be impossible depending on the circumstances. More importantly the attacker still needs to present it to a DC to get the TGSs, to get any benefit from the Golden Ticket.
 \linej
-Detecting certain Sysmon events in a close time gap can guarantee the detection of Mimikatz, therefore detecting one of the most used ways to gather this data. Detecting certain strings for running commands, reads and accesses are a worthy way to detect the creation of a Golden Ticket, without spending much resources.
+Detecting certain Sysmon events in a close time gap can guarantee the detection of Mimikatz, therefore detecting one of the most used ways to gather this data. Detecting certain signatures for running commands, reads and accesses are a worthy way to detect the creation of a Golden Ticket, without spending much resources.
 \linej
 These are good examples of how detecting common steps to multiple exploits is one of the strong points of an HIDS.
 \linej
@@ -388,12 +391,12 @@ The key points of access are the \textit{NTDS.DIT} file that is stored in disk a
 \subsection{Exploit methods}
 Because the database file of the AD accounts is locked from copying and reading, only Windows tools are allowed to. These tools are \cite{dump_ways}:
 \begin{itemize}
-	\item Reg: Allows to change or save registry entries, including those that contain credentials.
+	\item Reg: Allows to change or save registry hives, including those that contain credentials.
 	\item Ntdsutil: Provides management of this database, including creation of backups.
 	\item WMIC: Commands for the Windows Management Instrumentation. They allow all kinds of remote management, including copy of files using Shadow Copy.
 \end{itemize}
 Another way to extract these credentials is to dump them from memory using third party tools and scripts. This is saving part of the data of a process running in the system\cite{dump_ways}.
-There are multiple tools available for this, but in this project only these were used: Mimikatz, Hashdump, ProcDump, pd, Minidump and Invoke-NinjaCopy.
+There are multiple tools available for this, but in this project only these were used: Mimikatz, Hashdump, ProcDump, pd, Minidump and NinjaCopy.
 \linej
 Some of these tools have the option to retrieve the password or hashes history, meaning that the attacker could gain valuable insight on the password policy of the target.
 \linej
@@ -420,13 +423,23 @@ create full C:\temp\ntdsutil
 There are other ways to use ntdsutil in ways harder to detect\cite{more_dumps}, but this is enough for gathering events for analysis.
 \linej
 \linej
-In our case the easiest measure is to set a rule that is triggered by the existence of a suspicious string related to the \textit{ntdsutil} command:
-\begin{lstlisting}[style=xml,numbers=none]
-<match>GLOBALROOT\\Device\\HarddiskVolumeShadowCopy1\\Windows\\NTDS|c:\\windows\\ntds|ntds.dit</match>
+The execution of ntdsutil can be reported by Sysmon:
+\begin{lstlisting}[style=xml]
+<ProcessCreate onmatch="include">
+	<Image condition="contains">ntdsutil.exe</Image>
+</ProcessCreate>
 \end{lstlisting}
-But of course this is not very efficient and it may be useless.
+\linej
+And alerts set with Wazuh:
+\lstinputlisting[style=xml]{scripts/rules_ntds.xml}
+\linej
+The first rule is the parent, it filters windows events with the \textit{ntds} string.
+\linej
+The second rule detects the ntdsutil executable. This signature is more useful than normal because it is a builtin tool.
+\linej
+The rest are for detecting suspicious database events.
 
-\subsubsection{Exploit 7: Storing registry entries with Reg}
+\subsubsection{Exploit 7: Storing registry hives with Reg}
 These commands produce the different save files, each of a different group of credentials, that can be later extracted offline with certain tools\cite{more_dumps}:
 \begin{lstlisting}[style=PS]
 reg.exe save hklm\sam c:\temp\sam.save
@@ -476,15 +489,35 @@ Import-Module c:\users\administrator\downloads\PowerSploit-master\Exfiltration\O
 Get-Process lsass | Out-Minidump -DumpFilePath c:\temp
 \end{lstlisting}
 
-\subsubsection{Exploit 11: Dump of LSASS with Invoke-NinjaCopy}
+\subsubsection{Exploit 11: Dump of LSASS with NinjaCopy}
 %%fixes needed
 %%	%https://github.com/PowerShellMafia/PowerSploit/commit/bd6fe64316afe293d6b4cdf095ed3cfb64b6ab25
 %%	%https://github.com/PowerShellMafia/PowerSploit/issues/293
-Another PowerSploit module that can be used to dump LSASS into a file is \textit{Invoke-NinjaCopy}:
+Another PowerSploit module that can be used to dump LSASS into a file is \textit{NinjaCopy}:
 \begin{lstlisting}[style=PS]
 Import-Module C:\Users\Administrator\Downloads\PowerSploit-master\Exfiltration\Invoke-NinjaCopy.ps1
 Invoke-NinjaCopy -Path "c:\windows\ntds\ntds.dit"  -LocalDestination "c:\temp\ntds.dit"
 \end{lstlisting}
+\linej
+This module allows any file, even if it is locked, to be copied without starting suspicious services or injecting in to processes. This is because it can copy files from a NTFS volume, by opening a read handle to the entire volume, therefore bypassing the following protections\cite{dump_ways}:
+\begin{itemize}
+	\item Files which are opened by a process and cannot be opened by other processes, such as the NTDS.dit file or SYSTEM registry hives. This is known as locking the file.
+	\item Flags set on a file to alert when the file is opened. Windows can not set a flag because NinjaCopy does not use a Win32 API to open the file.
+\end{itemize}
+\linej
+The direct read of the device can be detected with Sysmon:
+\begin{lstlisting}[style=xml]
+<RawAccessRead onmatch="include">
+		<Image condition="contains">powershell.exe</Image>
+</RawAccessRead>
+\end{lstlisting}
+\linej
+Unfortunately it does not report enough to ensure this event comes from the execution of NinjaCopy. The next rule detects the read of the device by a program spawn from powershell, which until now has always worked and never reported a false positive:
+\lstinputlisting[style=xml]{scripts/rules_ninjacopy.xml}
+\linej
+The next detection attempt was to use a grouping technique for the DLLs the program uses. All of them were monitored with the event 7 of Sysmon. The most frecuent were: advapi32, kernel32, kernelbase, msvcrt and ntdll.
+\linej
+These DLLs are used very often in any healthy system. The script did not increase their use too much, therefore false positives were produced during normal execution, discarding this method of detection.
 
 \subsection{Detection of process accessing LSASS} \label{detect_lsass}
 This event 10 of Sysmon reports when a process access another process, possibly detecting hacking tools that read the memory contents of processes\cite{sysmon}.
@@ -530,8 +563,8 @@ All the exploits used until this point were tested, resulting in half producing 
 		4: DCSync with Kiwi& \cellcolor{red!60}\\ \hline
 		5: Hashdump with Meterpreter& \cellcolor{green!60}0x1f3fff\\ \hline
 		6: Retrieval of NTDS.DIT with ntdsutil& \cellcolor{red!60}\\ \hline
-		7: Storing registry entries with Reg& \cellcolor{red!60}\\ \hline
-		8: Dump of LSASS with ProcDump& \cellcolor{green!60}3 times 0x1fffff\\ \hline
+		7: Storing registry hives with Reg& \cellcolor{red!60}\\ \hline
+		8: Dump of LSASS with ProcDump& \cellcolor{green!60}3 events with 0x1fffff\\ \hline
 		9: Dump of LSASS with pd& \cellcolor{green!60}
 			0x1f3fff \linej
 			0x1452 followed by 0x1410, this pair repeated 28 times \linej

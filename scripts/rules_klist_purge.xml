@@ -1,0 +1,6 @@
+<rule id="300002" level="3">
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.image">\\Windows\\System32\\klist.exe</field>
+	<field name="win.eventdata.commandLine">purge</field>
+	<description>Klist: tickets purged</description>
+</rule>

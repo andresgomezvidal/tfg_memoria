@@ -1,7 +1,7 @@
 <rule id="300310" level="0" >
 	<if_group>sysmon_event_10</if_group>
-	<field name="win.eventdata.targetImage">C:\\Windows\\system32\\lsass.exe</field>
-	<description>Detected event 10 with C:\Windows\system32\lsass.exe</description>
+	<field name="win.eventdata.targetImage">\\Windows\\system32\\lsass.exe</field>
+	<description>Detected event 10 with \Windows\system32\lsass.exe</description>
 </rule>
 <rule id="300311" level="3" >
 	<if_sid>300310</if_sid>
@@ -16,7 +16,7 @@
 <rule id="300313" level="0" >
 	<if_sid>300310</if_sid>
 	<field name="win.eventdata.grantedAccess">^0x1000$</field>
-	<field name="win.eventdata.sourceImage">C:\\Windows\\system32\\svchost.exe</field>
+	<field name="win.eventdata.sourceImage">\\Windows\\system32\\svchost.exe</field>
 	<description>Normal access of LSASS</description>
 </rule>
 <rule id="300314" level="3" >

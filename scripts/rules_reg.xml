@@ -1,6 +1,6 @@
 <rule id="300101" level="0">
 	<if_group>sysmon_event1</if_group>
-	<field name="win.eventdata.image">C:\\Windows\\system32\\reg.exe</field>
+	<field name="win.eventdata.image">\\Windows\\system32\\reg.exe</field>
 	<description>Maybe a dump of credentials with reg.exe</description>
 </rule>
 <rule id="300102" level="1">
