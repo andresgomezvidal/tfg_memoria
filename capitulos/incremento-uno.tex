@@ -97,7 +97,7 @@ The DCSync is a Mimikatz feature which will try to impersonate a DC and request 
 \lstinputlisting[style=PS,caption=Script to run Mimikatz with DCSync from a no DC computer in the AD network,captionpos=b]{scripts/genticket_dcsync_mimikatz.ps1}
 \linej
 This follows the same structure as the previous cases, but this time with the dcsync option.
-The disadvantage in this case is that there needs to be a connection to a running DC that is not being monitored for the requests Mimikatz sends. There are open source tools available for this kind of monitoring\cite{dcsync_monitor}.
+The disadvantage in this case is that there needs to be a connection to a running DC that is not being monitored for the requests Mimikatz sends. There are open source tools available for this kind of monitoring\cite{dcsync_monitor} and it can also be detected by monitoring the network\cite{dcsync_monitor_network}.
 
 \subsubsection{Exploit 4: DCSync with Kiwi}
 In this case the access to the no-DC computer in the targeted network is done through Metasploit and its own version of Mimikatz called Kiwi\cite{pentestlab}. We use the Kali virtual machine to execute Metasploit outside the AD, but we could have used a Windows machine running in the AD to do the same.
@@ -164,6 +164,8 @@ Signature matching of data coming from Windows events and default logs from Wind
 This does not mean that signature matching is totally worthless, but that it is not something to focus on. In this project we avoid relying in signatures as much as possible.
 Useful signatures to match not only amount to third-party tools. It is easy to monitor extensions, directories, certain files, command line options, usernames, etc.
 \linej
+Obviously matching some signatures is more valuable than matching others. For example finding \textit{Mimikatz.exe} is easier to implement and less valuable than \textit{krbtgt}, \textit{lsadump}, \textit{kerberos::} or \textit{privilege::}.
+\linej
 \linej
 As we know the techniques to detect or avoid detection evolve with each other over time.
 Any way we manage to detect programs like Mimikatz may be overcome in the future.
@@ -216,11 +218,6 @@ Detecting Mimikatz is not a sign of a Golden Ticket attack (unless is clear in t
 \linej
 Unfortunately as seen in the exploits before there are multiple ways to execute Mimikatz, in an attempt not to be discovered by known techniques.
 \linej
-\linej
-The most basic attempt to detect Mimikatz would be a rule which triggers if there is a match of just one suspicious string related to Mimikatz:
-\begin{lstlisting}[style=xml,numbers=none]
-<match>pypy|mimi|katz|gentil|kiwi|Benjamin D|/rc4:|/user:Administrator|/ptt|/id:500|krbtgt|lsadump|kerberos::|privilege::</match>
-\end{lstlisting}
 \linej
 Each time a Mimikatz shell spawns certain DLLs are loaded. The technique to identify a sucession of events in a short time as another event is called grouping.
 Grouping is a very effective technique, but it may require a lot of work to identify its components. In some cases the attack may not produce enough noise or it may not be possible to tell it apart from the normal events of the system\cite{sysmon}\cite{sysmon_event_7_mimikatz}.
@@ -349,6 +346,17 @@ Of course if we chose to store the ticket in a file we could inject it in other 
 \linej
 \linej
 Additionally we could monitor looking for unusual usernames, because is possible to get a TGT with administrator privileges with non existent username to avoid the monitoring that administrator accounts are often under.
+\linej
+\linej
+It can be worth checking if the attacker is using klist to clean the cache of injected tickets, to cover any tracks. This can be easily accomplished monitoring the execution of klist with the event 1 of Sysmon:
+\begin{lstlisting}[style=xml]
+<ProcessCreate onmatch="include">
+	<Image condition="contains">klist</Image>
+</ProcessCreate>
+\end{lstlisting}
+\linej
+And checking with Wazuh if the option \textit{purge} was used:
+\lstinputlisting[style=xml]{scripts/rules_klist_purge.xml}
 
 \subsection{Silver Ticket}
 A Silver Ticket is very similar to a Golden Ticket, is a forged TGS instead of TGT. Therefore a Silver Ticket only grants access to a service in a computer. Is important to note that some services need the privileges of more services, therefore more than a Silver Ticket may be needed.
@@ -509,6 +517,24 @@ The rest of the rules detect the registry strings for credentials.
 \linej
 \linej
 This also could be detected using the event 7, but it would interfere with grouping detection. Of course it is possible that these rules do not cover all the extraction uses of Reg. Is worth noting that this is a signature base detection, therefore it could be overcome with certain third-party programs.
+\linej
+\linej
+Additionally a detection for the DLLs it uses could be implemented. They were found by making Sysmon report every DLL and filtering the events from Reg. They were later included in the configuration:
+\begin{lstlisting}[style=xml]
+<ImageLoad onmatch="include">
+	<ImageLoaded condition="contains">rpcrt4.dll</ImageLoaded>
+	<ImageLoaded condition="contains">kernel32.dll</ImageLoaded>
+	<ImageLoaded condition="contains">ws2_32.dll</ImageLoaded>
+	<ImageLoaded condition="contains">kernelbase.dll</ImageLoaded>
+	<ImageLoaded condition="contains">msvcrt.dll</ImageLoaded>
+	<ImageLoaded condition="contains">ntdll.dll</ImageLoaded>
+	<ImageLoaded condition="contains">sechost.dll</ImageLoaded>
+	<ImageLoaded condition="contains">advapi32.dll</ImageLoaded>
+</ImageLoad>
+\end{lstlisting}
+\linej
+In the case tested each DLL was loaded once by each of the 3 Reg commands. Of course an attacker could only use one of them, therefore there is one rule for each pair of DLLs:
+\lstinputlisting[style=xml]{scripts/rules_reg_grouping.xml}
 
 \subsubsection{Exploit 8: Dump of LSASS with ProcDump}
 ProcDump\cite{procdump} is a command-line utility whose primary purpose is monitoring an application for CPU spikes and generating crash dumps during a spike. This program can be used to create a dump file of the running \textit{lsass.exe} process:
@@ -541,23 +567,41 @@ Import-Module C:\Users\Administrator\Downloads\PowerSploit-master\Exfiltration\I
 Invoke-NinjaCopy -Path "c:\windows\ntds\ntds.dit"  -LocalDestination "c:\temp\ntds.dit"
 \end{lstlisting}
 \linej
-This module allows any file, even if it is locked, to be copied without starting suspicious services or injecting in to processes. This is because it can copy files from a NTFS volume, by opening a read handle to the entire volume, therefore bypassing the following protections\cite{dump_ways}:
+Or to copy the NTDS.DIT of the DC in this laboratory to a no-DC computer:
+\begin{lstlisting}[style=PS]
+Import-Module C:\Users\Administrator\Downloads\PowerSploit-master\Exfiltration\Invoke-NinjaCopy.ps1
+Invoke-NinjaCopy -Path "c:\windows\ntds\ntds.dit"  -LocalDestination "c:\temp\ntds.dit" -ComputerName "WIN-25U0PFAB511"
+\end{lstlisting}
+\linej
+This module allows any file, even if it is locked, to be copied without starting suspicious services or injecting in to processes. This is because it can copy \textbf{any file} from a NTFS volume, by opening a read handle to the entire volume, therefore bypassing the following protections\cite{dump_ways}:
 \begin{itemize}
 	\item Files which are opened by a process and cannot be opened by other processes, such as the NTDS.dit file or SYSTEM registry hives. This is known as locking the file.
 	\item Flags set on a file to alert when the file is opened. Windows can not set a flag because NinjaCopy does not use a Win32 API to open the file.
 \end{itemize}
 \linej
-The direct read of the device can be reported with the event 9 of Sysmon:
+The direct read of the device can be reported with the event 9 of Sysmon, but event 1 can be useful to make sure in the remote case. This needs to be in the configuration file of Sysmon in the DC:
 \begin{lstlisting}[style=xml]
+<ProcessCreate onmatch="include">
+	<Image condition="contains">wsmprovhost.exe</Image>
+</ProcessCreate>
 <RawAccessRead onmatch="include">
-		<Image condition="contains">powershell.exe</Image>
+	<Image condition="contains">powershell.exe</Image>
+	<Image condition="contains">wsmprovhost.exe</Image>
 </RawAccessRead>
 \end{lstlisting}
 \linej
-Unfortunately it does not report enough to ensure this event comes from the execution of NinjaCopy. The next rule detects the read of the device by a program spawn from powershell, which until now has always worked and never reported a false positive:
-\lstinputlisting[style=xml]{scripts/rules_ninjacopy.xml}
+\lstinputlisting[style=xml,caption=Rules for detecting NinjaCopy,captionpos=b]{scripts/rules_ninjacopy.xml}
 \linej
-This rule can be much more useful if the NTDS.DIT file is in a different volume than normal.
+The local case only generates an event of type 9 and its only signatures are \textit{powershell} and \textit{Device{\textbackslash}HarddiskVolume}. It does not even record the name of the file because the handle is for the volume. This can not really ensure this event comes from the execution of NinjaCopy, but until now has always worked and never reported a false positive. This rule could be much more useful if the NTDS.DIT file were in a different volume than normal.
+\linej
+\linej
+The remote case is much more easier to detect. In the tests it spawned at least 4 events of each type in about 12 seconds, all from the DC.
+The bigger the NTDS.DIT file and the slower the connection the more events are produced.
+\linej
+The remote command is executed by the \textit{wsmprovhost} program, which stands for Windows Remote Powershell Session.
+The contents of the logs of the event type 1 are easy to distinguish from normal, due to the constant value of the \textit{commandLine} and \textit{parentCommandLine} fields.
+\linej
+The second and third rules detect the events of type 1 and 9 for the remote execution, and the last rule is a grouping rule of these two. This ensures there are no false positives, but the second rule matches the exploit so well that it could be left out and probably would never cause false positives.
 \linej
 \linej
 The next detection attempt was to use a grouping technique for the DLLs the program uses. All of them were monitored with the event 7 of Sysmon. The most frecuent were: advapi32, kernel32, kernelbase, msvcrt and ntdll.

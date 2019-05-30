@@ -4,3 +4,22 @@
 	<field name="win.eventdata.device">Device\\HarddiskVolume</field>
 	<description>Maybe NinjaCopy</description>
 </rule>
+
+<rule id="300351" level="1">
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.commandLine">wsmprovhost.exe -Embedding</field>
+	<field name="win.eventdata.parentCommandLine">svchost.exe -k DcomLaunch -p</field>
+	<description>Maybe Remote NinjaCopy into the DC</description>
+</rule>
+<rule id="300352" level="1">
+	<if_group>sysmon_event9</if_group>
+	<field name="win.eventdata.image">wsmprovhost.exe</field>
+	<field name="win.eventdata.device">Device\\HarddiskVolume</field>
+	<description>Maybe Remote NinjaCopy into the DC</description>
+</rule>
+<rule id="300353" level="3" timeframe="15" frequency="3" >
+	<same_field>win.system.computer</same_field>
+	<if_matched_sid>300351</if_matched_sid>
+	<if_matched_sid>300352</if_matched_sid>
+	<description>Remote NinjaCopy into the DC</description>
+</rule>
