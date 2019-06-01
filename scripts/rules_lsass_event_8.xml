@@ -1,0 +1,5 @@
+<rule id="300320" level="3" >
+	<if_group>sysmon_event8</if_group>
+	<field name="win.eventdata.targetImage">\\Windows\\system32\\lsass.exe</field>
+	<description>Suspicius access of LSASS with thread</description>
+</rule>

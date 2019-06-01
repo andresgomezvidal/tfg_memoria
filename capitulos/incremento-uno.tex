@@ -95,6 +95,7 @@ On the other hand powershell can be monitored for downloading commands, particul
 The DCSync is a Mimikatz feature which will try to impersonate a DC and request account password information from the targeted DC. This technique is less noisy as it does not require direct access to a DC (which are often heavily monitored)\cite{dump_ways}\cite{pentestlab}. To run Mimikatz we still need local administrator privileges in the computer.
 \linej
 \lstinputlisting[style=PS,caption=Script to run Mimikatz with DCSync from a no DC computer in the AD network,captionpos=b]{scripts/genticket_dcsync_mimikatz.ps1}
+%some times the dcsync Mimikatz command does not work and needs to restart the no DC computer
 \linej
 This follows the same structure as the previous cases, but this time with the dcsync option.
 The disadvantage in this case is that there needs to be a connection to a running DC that is not being monitored for the requests Mimikatz sends. There are open source tools available for this kind of monitoring\cite{dcsync_monitor} and it can also be detected by monitoring the network\cite{dcsync_monitor_network}.
@@ -221,6 +222,8 @@ Unfortunately as seen in the exploits before there are multiple ways to execute 
 \linej
 Each time a Mimikatz shell spawns certain DLLs are loaded. The technique to identify a sucession of events in a short time as another event is called grouping.
 Grouping is a very effective technique, but it may require a lot of work to identify its components. In some cases the attack may not produce enough noise or it may not be possible to tell it apart from the normal events of the system\cite{sysmon}\cite{sysmon_event_7_mimikatz}.
+\linej
+Fortunately Mimikatz needs a fair amount of DLLs to work and some of them are not very usual. This makes the execution of Mimikatz noticeable.
 \linej
 \linej
  The load of a DLL can be detected by the event 7 of Sysmon and the grouping can be identified with Wazuh rules. It also can be detected by the event 10 of Sysmon, for inter-process access, but a greater cost of bandwith.
@@ -460,13 +463,12 @@ All the extraction programs were executed with local administrator privileges in
 Another way to get the desired information is to copy the database of the AD Domain Services (the NTDS.DIT file) and conduct an offline password audit of the domain. This means once we have this data we can use a wide selection of tools to crack it\cite{ntdsdit_tools}\cite{extracting_ntds}\cite{ntds_powershell}.
 \linej
 \linej
-The attacker has to open a shell as administrator in a DC and introduce the next input to create the backup:
+The attacker has to open a shell as administrator in a DC to create the backup:
 \begin{lstlisting}[style=PS,frame=none]
-ntdsutil
-activate instance ntds
-ifm
-create full C:\temp\ntdsutil
+ntdsutil "activate instance ntds" ifm "create full C:\temp\ntdsutil" quit quit
 \end{lstlisting}
+\linej
+This command creates a ntdsutil shell and activates the instance to later create a backup in a temporary directory (inside the ifm subshell).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figuras/ntdsutil.png}
@@ -475,7 +477,7 @@ create full C:\temp\ntdsutil
 There are other ways to use ntdsutil in ways harder to detect\cite{more_dumps}, but this is enough for gathering events for analysis.
 \linej
 \linej
-The execution of ntdsutil can be reported by Sysmon:
+The creation of processes related to ntds can be reported by Sysmon:
 \begin{lstlisting}[style=xml]
 <ProcessCreate onmatch="include">
 	<Image condition="contains">ntdsutil.exe</Image>
@@ -487,9 +489,12 @@ And alerts set with Wazuh:
 \linej
 The first rule is the parent, it filters windows events with the \textit{ntds} string.
 \linej
-The second rule detects the ntdsutil executable. This signature is more useful than normal because it is a builtin tool.
+The second rule detects the ntdsutil executable. This signature is more useful than normal because it is a builtin tool. The third matches \textit{ntds} for the command line, which is not really reliable.
 \linej
-The rest are for detecting suspicious database events from Windows events. These database events ensure the detection of ntdsutil even if it were to be executed without using a known string for its executable.
+The rest are for detecting suspicious database events from Windows events. These database events ensure the detection of ntdsutil even if it were to be executed without using known signatures.
+\linej
+\linej
+There is also the remote version of Reg: WinReg. But there was no time to investigate on it. Is likely that it can be detected with network monitoring, as other remote tools.
 
 \subsubsection{Exploit 7: Storing registry hives with Reg}
 These commands produce the different save files, each of a different group of credentials, that can be later extracted offline with certain tools\cite{more_dumps}:
@@ -519,22 +524,7 @@ The rest of the rules detect the registry strings for credentials.
 This also could be detected using the event 7, but it would interfere with grouping detection. Of course it is possible that these rules do not cover all the extraction uses of Reg. Is worth noting that this is a signature base detection, therefore it could be overcome with certain third-party programs.
 \linej
 \linej
-Additionally a detection for the DLLs it uses could be implemented. They were found by making Sysmon report every DLL and filtering the events from Reg. They were later included in the configuration:
-\begin{lstlisting}[style=xml]
-<ImageLoad onmatch="include">
-	<ImageLoaded condition="contains">rpcrt4.dll</ImageLoaded>
-	<ImageLoaded condition="contains">kernel32.dll</ImageLoaded>
-	<ImageLoaded condition="contains">ws2_32.dll</ImageLoaded>
-	<ImageLoaded condition="contains">kernelbase.dll</ImageLoaded>
-	<ImageLoaded condition="contains">msvcrt.dll</ImageLoaded>
-	<ImageLoaded condition="contains">ntdll.dll</ImageLoaded>
-	<ImageLoaded condition="contains">sechost.dll</ImageLoaded>
-	<ImageLoaded condition="contains">advapi32.dll</ImageLoaded>
-</ImageLoad>
-\end{lstlisting}
-\linej
-In the case tested each DLL was loaded once by each of the 3 Reg commands. Of course an attacker could only use one of them, therefore there is one rule for each pair of DLLs:
-\lstinputlisting[style=xml]{scripts/rules_reg_grouping.xml}
+Additionally a grouping detection for the DLLs Reg uses was tested. It detected Reg events every time without relying on the \textit{reg.exe} signature, but there were false positives, particularly during boot.
 
 \subsubsection{Exploit 8: Dump of LSASS with ProcDump}
 ProcDump\cite{procdump} is a command-line utility whose primary purpose is monitoring an application for CPU spikes and generating crash dumps during a spike. This program can be used to create a dump file of the running \textit{lsass.exe} process:
@@ -579,6 +569,8 @@ This module allows any file, even if it is locked, to be copied without starting
 	\item Flags set on a file to alert when the file is opened. Windows can not set a flag because NinjaCopy does not use a Win32 API to open the file.
 \end{itemize}
 \linej
+The code to parse NTFS is loaded with a reflective DLL, making it harder to detect because it does not use the Windows loader nor a DLL file.
+\linej
 The direct read of the device can be reported with the event 9 of Sysmon, but event 1 can be useful to make sure in the remote case. This needs to be in the configuration file of Sysmon in the DC:
 \begin{lstlisting}[style=xml]
 <ProcessCreate onmatch="include">
@@ -603,16 +595,29 @@ The contents of the logs of the event type 1 are easy to distinguish from normal
 \linej
 The second and third rules detect the events of type 1 and 9 for the remote execution, and the last rule is a grouping rule of these two. This ensures there are no false positives, but the second rule matches the exploit so well that it could be left out and probably would never cause false positives.
 \linej
+If the remote command is executed from DC and set to copy from the same computer it still triggers the remote alert.
 \linej
-The next detection attempt was to use a grouping technique for the DLLs the program uses. All of them were monitored with the event 7 of Sysmon. The most frecuent were: advapi32, kernel32, kernelbase, msvcrt and ntdll.
 \linej
-These DLLs are used very often in any healthy system. The script did not increase their use too much, therefore false positives were produced during normal execution, discarding this method of detection.
+Grouping the DLLs loaded by the \textit{Import-Module} command probed to be effective. As with Mimikatz, this loads the DLLs needed for NinjaCopy to work, which can be registered by the event 7 of Sysmon:
+\lstinputlisting[style=xml]{scripts/sysmon_event_7_ninjacopy_import.xml}
+\linej
+These 8 DLLs are detected by 4 rules to reach the minimum frequency:
+\lstinputlisting[style=xml]{scripts/rules_ninjacopy_import.xml}
+\linej
+No false positives were found, but they may appear in a real environment. This technique depends too much on the time frame and can be avoided changing the code. It works with both local and remote cases the same.
+%\linej
+%\linej
+%The next detection attempt was to use a grouping technique for the DLLs the program uses during the copy process. All of them were monitored with the event 7 of Sysmon. The most frecuent were: advapi32, kernel32, kernelbase, msvcrt and ntdll.
+%\linej
+%These DLLs are used very often in any healthy system. The script did not increase their use too much, therefore false positives were produced during normal execution, discarding this method of detection.
 
 \subsection{Detection of process accessing LSASS} \label{detect_lsass}
 The event 10 of Sysmon reports when a process access another process, possibly detecting hacking tools that read the memory contents of processes\cite{sysmon}.
 This event can be used to detect LSASS dumps, at least in some cases\cite{sysmon_event_10_lsass}.
 \linej
 The downside is it can generate significant amounts of logging, therefore it was configured to log only the LSASS process and exclude the instances from the OSSEC agent and the Virtual Box service.
+%This exclude seems to affect other events of type 7 too, even though it should not.
+\linej
 \begin{lstlisting}[style=xml,caption=Sysmon monitoring with event 10 for lsass reads,captionpos=b]
 <ProcessAccess onmatch="include">
 	<TargetImage condition="contains">C:\Windows\System32\lsass.exe</TargetImage>
@@ -629,7 +634,7 @@ After some analysis of these events it was clear that normal accesses could be i
 \linej
 The first identifies events of type 10 for the LSASS process.
 \linej
-The second rule triggers if the string \textit{UNKNOWN} is in the field \textit{callTrace}. This occurrence was found during testing of the exploits 4 and 5, that use a reverse TCP shell to connect to their target. But it is possible that it would cause false positives on a real network, even though none were found during this project.
+The second rule triggers if the string \textit{UNKNOWN} is in the field \textit{callTrace}. This occurrence was found during testing of the exploits 4 and 5, that use a reverse TCP shell to connect to their target. This rule causes false positives with the Minidump command and is possible that it would cause false positives on a real network.
 \linej
 The third and fourth match the normal cases, excluding them from the detection of the last rule.
 \linej
@@ -663,6 +668,18 @@ All the exploits used until this point were tested, resulting in half producing 
 	\end{tabularx}
 	\caption{Exploit detection of unusual grantedAccess values}
 \end{table}
+\linej
+Another way to detect unusual access to LSASS is with the event 8 of Sysmon\cite{detection_events}, that reports when a process creates a thread in another process:
+\begin{lstlisting}[style=xml]
+<CreateRemoteThread onmatch="include">
+	<TargetImage condition="image">lsass.exe</TargetImage>
+</CreateRemoteThread>
+\end{lstlisting}
+\linej
+As for Wazuh just a rule to detect the event of type 8 and the LSASS executable are enough:
+\lstinputlisting[style=xml]{scripts/rules_lsass_event_8.xml}
+\linej
+Only exploits 1, 2 and 5 were detected with this rule.
 
 \subsection{Mitigation}
 Some of the measures for the Golden Ticket attack can be used for this, particularly those about protecting LSASS.

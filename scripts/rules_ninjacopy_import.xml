@@ -1,0 +1,37 @@
+<rule id="300330" level="0" >
+	<if_group>sysmon_event7</if_group>
+	<field name="win.eventdata.imageLoaded">\\Windows\\system32\\</field>
+	<field name="win.eventdata.image">powershell.exe</field>
+	<description>Detected one of two suspicius DLLs</description>
+</rule>
+
+<rule id="300331" level="1" >
+	<if_sid>300330</if_sid>
+	<field name="win.eventdata.imageLoaded">msisip.dll|wshext.dll</field>
+	<description>Detected one of two suspicius DLLs</description>
+</rule>
+<rule id="300332" level="1" >
+	<if_sid>300330</if_sid>
+	<field name="win.eventdata.imageLoaded">AppxSip.dll|OpcServices.dll</field>
+	<description>Detected one of two suspicius DLLs</description>
+</rule>
+<rule id="300333" level="1" >
+	<if_sid>300330</if_sid>
+	<field name="win.eventdata.imageLoaded">mintdh.dll|WindowsPowerShell\\v1.0\\pwrshsip.dll</field>
+	<description>Detected one of two suspicius DLLs</description>
+</rule>
+<rule id="300334" level="1" >
+	<if_sid>300330</if_sid>
+	<field name="win.eventdata.imageLoaded">tdh.dll|xmllite.dll</field>
+	<description>Detected one of two suspicius DLLs</description>
+</rule>
+
+<rule id="300340" level="3" timeframe="3" frequency="2" >
+	<same_field>win.system.computer</same_field>
+	<if_matched_sid>300331</if_matched_sid>
+	<if_matched_sid>300332</if_matched_sid>
+	<if_matched_sid>300333</if_matched_sid>
+	<if_matched_sid>300334</if_matched_sid>
+	<description>Maybe NinjaCopy: DLLs with EventID 7</description>
+</rule>
+

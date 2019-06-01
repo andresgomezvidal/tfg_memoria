@@ -1,0 +1,10 @@
+<ImageLoad onmatch="include">
+	<ImageLoaded condition="contains">mintdh.dll</ImageLoaded>
+	<ImageLoaded condition="contains">wshext.dll</ImageLoaded>
+	<ImageLoaded condition="contains">msisip.dll</ImageLoaded>
+	<ImageLoaded condition="contains">pwrshsip.dll</ImageLoaded>
+	<ImageLoaded condition="contains">OpcServices.dll</ImageLoaded>
+	<ImageLoaded condition="contains">AppxSip.dll</ImageLoaded>
+	<ImageLoaded condition="contains">tdh.dll</ImageLoaded>
+	<ImageLoaded condition="contains">xmllite.dll</ImageLoaded>
+</ImageLoad>
