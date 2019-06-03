@@ -29,7 +29,7 @@ The process to access a service is as follows\cite{tarlogic_theory}\cite{tarlogi
 \linej
 The Golden Ticket attack depends on obtaining the password information of the KRBTGT account to generate a forged TGT. It can provide the attacker with the desired privileges in the AD (like administrator).
 \linej
-This means we can generate TGTs to access every account within the AD. This forged TGT is what we call Golden Ticket.
+This means TGTs can be generated to access every account within the AD. This forged TGT is known as Golden Ticket.
 The Golden Ticket does not depend at all of the administrator password of the AD, which means that changing this password does not invalidate a Golden Ticket in anyway.
 \linej
 \linej
@@ -47,66 +47,66 @@ It follows that this attack can only be detected either during the steps needed 
 By default Mimikatz sets the forged ticket age to 10 years, which is useful to some attackers because they would need only one attack to compromise the entire network for that time.
 
 \subsection{Exploit methods}
-To keep this simple we are only explaining the basics of the techniques used in some of the exploits that can be used for a Golden Ticket attack. Because some of the exploits are similar we number them for easier identification. The scripts in the next exploits were used to understand the different ways to perform Golden Ticket attacks and during the tests to try to detect them. Of course there are more ways to generate a Golden Ticket, and some are much more harder to detect, but there is no time to examine them all. Also it is possible to combine several of the next exploits or change some of their steps.
+To keep this simple only the basics are explained about the techniques used in the examples for a Golden Ticket attack. Because some of the exploits are similar they are numbered for easier identification. The scripts in the next exploits were used to understand the different ways to perform Golden Ticket attacks and during the tests to try to detect them. Of course there are more ways to generate a Golden Ticket, and some are much more harder to detect, but there is no time to examine them all. Also it is possible to combine several of the next exploits or change some of their steps.
 \linej
 For example there is a sever-agent version of Mimikatz called Pypykatz\cite{pypykatz_agent}\cite{pypykatz_server} that is very new and should be a bit harder to detect that the exploits showed here. Unfortunately the student could not make it retrieve the KRBTGT hash.
 \linej
 \linej
-These scripts try to automate as much of the process as possible, which is normally done in an interactive way. This automation helps to ensure that the results are the same each time and reduces the time for each test. All the tests in this project were executed at least twice. Tests were repeated if there were changes that could affect their results.
+These scripts try to automate as much of the process as possible, which is normally done in an interactive way. This automation helps to assure that the results are the same each time and reduces the time for each test. All the tests in this project were executed at least twice. Tests were repeated if there were changes that could affect their results.
 
 \subsubsection{Exploit 1: Local Mimikatz in DC}
-This requires local administrator privileges in the DC and also and an already downloaded version of Mimikatz in the DC, which the attacker can easily get after gaining privileges. If we were to use this example as it is it will probably be detected by the antivirus and Windows Defender, but again they can be disabled by a local administrator and there are techniques to avoid being detected by them.
+This requires local administrator privileges in the DC and also and an already downloaded version of Mimikatz in the DC, which the attacker can easily get after gaining privileges. If this example were to be used as it is it will probably be detected by the antivirus and Windows Defender, but again they can be disabled by a local administrator and there are techniques to avoid being detected by them.
 \linej
-\lstinputlisting[style=PS,caption=Script to generate and inject a Golden Ticket in the local DC,captionpos=b]{scripts/genticket.ps1}
+\lstinputlisting[style=PS,caption=Script to generate and inject a Golden Ticket,captionpos=b]{src/genticket.ps1}
 \linej
 The script uses Mimikatz to get the needed data to generate the Golden Ticket, saving it to a file for convenience. Then the data is split in variables, each being a piece for generating the forged ticket. The \textit{exit} parameter is to exit the Mimikatz shell after executing the command.
 \linej
-After injecting the ticket (with the \textit{/ptt} option) we have administrator privileges in the AD, so we can use any service in the AD in this powershell session, any command we type should be allowed. Without the injection option Mimikatz would store the ticket in a file, which we can inject at any time with Mimikatz.
+After injecting the ticket (with the \textit{/ptt} option) the session haves administrator privileges in the AD, so any service in the AD can be used in this powershell session, any command should be allowed. Without the injection option Mimikatz would store the ticket in a file, which can be injected at any time with Mimikatz.
 The id 500 is the normal id for the administrator account in the AD.
 This script can be executed in multiple ways, for example from a powershell interactive terminal run as an administrator.
 \linej
-\lstinputlisting[style=txt,caption=Example of the contents of the output file,captionpos=b]{scripts/output.txt}
+\lstinputlisting[style=txt,caption=Example of the contents of the output file,captionpos=b]{src/output.txt}
 \linej
 The password hash of the KRBTGT account is retrieved by Mimikatz interacting with the Local Security Authority (LSA) or Local Security Authority Subsystem Service (LSASS), which is run by the lsass.exe process.
 \linej
 This process is the Windows service responsible for providing single sign-on functionality.
 With it users are not required to re-authenticate each time they access resources.
-It provides access not only to the authenticated user's credentials, but every set of credentials used by every open session since the last boot.
+It provides access not only to the authenticated user's credentials, but every set of credentials used by every open session since the last boot\cite{wikipedia_lsass}\cite{dump_ways}.
 \linej
-Mimikatz exploits this cache of credentials and reports the results to the user in the various forms employed by LSASS\cite{SANS_mimikatz}\cite{wikipedia_lsass}\cite{pentestlab}\cite{lsadump_patch_inject}\cite{dump_ways}.
+Mimikatz exploits this cache of credentials and reports the results to the user in the various forms employed by LSASS\cite{SANS_mimikatz}\cite{pentestlab}.
 
 \subsubsection{Exploit 2: Mimikatz from memory in DC}
-This is similar to the previous example but instead of having a downloaded version of Mimikatz (stored in the disk) we download the program directly into the powershell session, so Mimikatz is never stored in disk.
+This is similar to the previous example but instead of having a downloaded version of Mimikatz (stored in the disk) the program is downloaded directly into the powershell session, so Mimikatz is never stored in disk.
 The clear advantage over the previous one is that it should be harder to detect.
 \linej
 With slight changes this could work in a computer that is not a DC, if the attacker compromised a workstation a domain admin logged onto\cite{dump_ways}.
 \linej
-\lstinputlisting[style=PS,caption=Script to run Mimikatz only in memory and inject a Golden Ticket in the local DC,captionpos=b]{scripts/genticket_mem.ps1}
+\lstinputlisting[style=PS,caption=Script to run Mimikatz only in memory and inject a Golden Ticket,captionpos=b]{src/genticket_mem.ps1}
 \linej
 The script downloads a version of Mimikatz from Github and creates a powershell object with its contents, that can be invoked at any time in this shell\cite{powersploit}\cite{mimikatz_details}. Then as before it dumps the needed information to generate the Golden Ticket in a file, which is read and parsed to store the interesting parameters into variables.
 \linej
-I was having trouble trying to automate the last \textit{Mimikatz} command to work with the parameters in the variables so as a workaround I write a new file that has the command with those parameters and then I run the file.
+Due to difficulties with the last \textit{Mimikatz} command to work with the parameters in the variables a workaround was used. This is writing a new file that has the command with those parameters, and then execute the file.
 \linej
 \linej
 On the one hand it can be harder to detect with obfuscation, renaming and not using such an obvious url.
 On the other hand powershell can be monitored for downloading commands, particularly those with objects.
 
 \subsubsection{Exploit 3: Mimikatz with DCSync}
-The DCSync is a Mimikatz feature which will try to impersonate a DC and request account password information from the targeted DC. This technique is less noisy as it does not require direct access to a DC (which are often heavily monitored)\cite{dump_ways}\cite{pentestlab}. To run Mimikatz we still need local administrator privileges in the computer.
+The DCSync is a Mimikatz feature in which a no-DC attempts to impersonate a DC and request account information from a real DC. This technique is less noisy because it does not require direct access to a DC (which are often heavily monitored)\cite{dump_ways}\cite{pentestlab}. To run Mimikatz we still need local administrator privileges in the computer.
 \linej
-\lstinputlisting[style=PS,caption=Script to run Mimikatz with DCSync from a no DC computer in the AD network,captionpos=b]{scripts/genticket_dcsync_mimikatz.ps1}
+\lstinputlisting[style=PS,caption=Script to run Mimikatz with DCSync,captionpos=b]{src/genticket_dcsync_mimikatz.ps1}
 %some times the dcsync Mimikatz command does not work and needs to restart the no DC computer
 \linej
 This follows the same structure as the previous cases, but this time with the dcsync option.
 The disadvantage in this case is that there needs to be a connection to a running DC that is not being monitored for the requests Mimikatz sends. There are open source tools available for this kind of monitoring\cite{dcsync_monitor} and it can also be detected by monitoring the network\cite{dcsync_monitor_network}.
 
 \subsubsection{Exploit 4: DCSync with Kiwi}
-In this case the access to the no-DC computer in the targeted network is done through Metasploit and its own version of Mimikatz called Kiwi\cite{pentestlab}. We use the Kali virtual machine to execute Metasploit outside the AD, but we could have used a Windows machine running in the AD to do the same.
+In this case the access to the no-DC computer in the targeted network is done through Metasploit and its own version of Mimikatz called Kiwi\cite{pentestlab}. The Kali virtual machine is for running Metasploit outside the AD, but a Windows machine running in the AD could have been used as well.
 \linej
 We need to know the password of the account we want to access remotely and the targeted computer needs to have a SMB share.
 In this case the variable \textit{SMBPass} stores the password, which is \textit{Passw0rd}.
 \linej
-\lstinputlisting[style=ruby,caption=Part 1 of the remote DCSync exploit automation,captionpos=b]{scripts/metasploit_p1_kiwi.rc}
+\lstinputlisting[style=ruby,caption=Part 1 of the remote DCSync exploit automation,captionpos=b]{src/metasploit_p1_kiwi.rc}
 \linej
 This runs a remote process, exploiting the SMB capabilities to run commands to spawn a Meterpreter shell\cite{meterpreter} with administrator privileges. There is a chance that the \textit{run} command fails to provide a Meterpreter shell at this stage, but trying again always ends working because the session is not getting created even though the exploit is working.
 \linej
@@ -131,13 +131,13 @@ The command in this case retrieves the information of the KRBTGT account needed 
 \linej
 In this case the generation of the ticket is not using the data in an automated way, because there was no real need since is the same every time and the time needed to do this with Ruby felt like a waste. In this case the ticket is saved to the \textit{/tmp/golden.tck} file in the Kali machine.
 \linej
-\lstinputlisting[style=ruby,caption=Part 2 of the remote DCSync exploit automation,captionpos=b]{scripts/metasploit_p2_kiwi.rc}
+\lstinputlisting[style=ruby,caption=Part 2 of the remote DCSync exploit automation,captionpos=b]{src/metasploit_p2_kiwi.rc}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figuras/kiwi_p2.png}
-	\caption{Retrieval of KRBTGT data and generation of the Golden Ticket with DCSync}
+	\caption{Retrieval of KRBTGT data and generation of the Golden Ticket with Kiwi}
 \end{figure}
-The obvious downside of this method for the attacker is that Metasploit is very widely used and known, therefore there could be security monitoring for it\cite{detect_metasploit_traffic}. But again we are using a technique that does not need to control a DC and does not need to store anything in the disk of the targeted system, making it much harder to detect in that regard.
+The obvious downside of this method for the attacker is that Metasploit is very widely used and known, therefore there could be security monitoring for it\cite{detect_metasploit_traffic}. But again the attacker is using a technique that does not need to control a DC and does not need to store anything in the disk of the targeted system, making it much harder to detect in that regard.
 \linej
 \linej
 Of course there is no real need to use Metasploit to get a remote shell to run Mimikatz. The attacker could use ssh, run remote commands with \textit{psexec} or use the Windows Remote Shell. But some of these need to be enabled and they would not be much different of the previous examples.
@@ -145,11 +145,11 @@ Of course there is no real need to use Metasploit to get a remote shell to run M
 \subsubsection{Exploit 5: Hashdump with Meterpreter}
 Using a reverse TCP exploit the attacker access the targeted DC with a Meterpreter shell. This is similar to the previous case but using the Meterpreter command \textit{hashdump} instead of the DCSync retrieval of Kiwi\cite{pentestlab}. This stills uses Kiwi to generate the Golden Ticket.
 \linej
-\lstinputlisting[style=ruby,caption=Part 1 of the remote Hashdump exploit automation,captionpos=b]{scripts/metasploit_p1_hashdump.rc}
+\lstinputlisting[style=ruby,caption=Part 1 of the remote Hashdump exploit automation,captionpos=b]{src/metasploit_p1_hashdump.rc}
 \linej
 Again there is a migration to an administrator account of the AD. In this case another command to get the SID of the network would be needed if we did not know it already, for example a simple \textit{whoami /user} would suffice.
 \linej
-\lstinputlisting[style=ruby,caption=Part 2 of the remote Hashdump exploit automation,captionpos=b]{scripts/metasploit_p2_hashdump.rc}
+\lstinputlisting[style=ruby,caption=Part 2 of the remote Hashdump exploit automation,captionpos=b]{src/metasploit_p2_hashdump.rc}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figuras/hashdump.png}
@@ -162,7 +162,7 @@ Searching for suspicious strings can be used to trigger alerts with Wazuh.
 Signature matching of data coming from Windows events and default logs from Windows systems is not much different from what any antivirus do. It follows that it would be as easy to evade as them. For example with substitution of suspicious strings from the source code and recompilation\cite{understanding_powersploit_mimikatz}.
 \linej
 \linej
-This does not mean that signature matching is totally worthless, but that it is not something to focus on. In this project we avoid relying in signatures as much as possible.
+This does not mean that signature matching is totally worthless, but that it is not something to focus on. In this project relying in signatures was avoided as much as possible.
 Useful signatures to match not only amount to third-party tools. It is easy to monitor extensions, directories, certain files, command line options, usernames, etc.
 \linej
 Obviously matching some signatures is more valuable than matching others. For example finding \textit{Mimikatz.exe} is easier to implement and less valuable than \textit{krbtgt}, \textit{lsadump}, \textit{kerberos::} or \textit{privilege::}.
@@ -177,9 +177,9 @@ Many attackers know how hard it can be to overcome detection techniques.
 It is also important to remember these scenarios are continously changing, with new techniques to avoid detection and the creation of new tools.
 
 \subsection{Detection purely with Windows events}
-In theory we can identify certain attacks with the security events of Windows. There are multiple websites in which this attack has been analyzed and its events identified\cite{events_1}\cite{detection_events}.
+In theory we can identify certain attacks only with the security events of Windows. There are multiple websites in which this attack has been analyzed and its events identified\cite{events_1}\cite{detection_events}.
 \linej
-Unfortunately the events recorded did not always probe to be the same as the cited sources (probably because we tested on the new Windows Server version, 2019).
+Unfortunately the events recorded did not always probe to be the same as the cited sources (probably because it was tested on the new Windows Server version, 2019).
 In most cases their frequency is not enough to be distinguished of the regular activity, even when using a lab environment without work load.
 This could probably be improved if these events had more information (particularly those as critical as Kerberos'), but they are very short and generic.
 \linej
@@ -229,11 +229,11 @@ Fortunately Mimikatz needs a fair amount of DLLs to work and some of them are no
  The load of a DLL can be detected by the event 7 of Sysmon and the grouping can be identified with Wazuh rules. It also can be detected by the event 10 of Sysmon, for inter-process access, but a greater cost of bandwith.
 For this task is better to configure Sysmon to monitor these 5 images, to avoid logging too much:
 \linej
-\lstinputlisting[style=xml,caption=Sysmon monitoring with event 7 for certain DLLs,captionpos=b]{scripts/sysmon_event_7.xml}
+\lstinputlisting[style=xml,caption=Sysmon monitoring with event 7 for certain DLLs,captionpos=b]{src/sysmon_event_7.xml}
 \linej
 On the manager side the next rules are needed:
 \linej
-\lstinputlisting[style=xml,caption=Rules for suspecting a Mimikatz execution as a group of events,captionpos=b]{scripts/rules_event_7_mimikatz_alternative.xml}
+\lstinputlisting[style=xml,caption=Rules for suspecting a Mimikatz execution as a group of events,captionpos=b]{src/rules_event_7_mimikatz_alternative.xml}
 The \textit{sysmon\_event7} means that another rule has marked the log as a Sysmon event of type 7.
 \linej
 The \textit{same\_field} option means that every one of the matches must have the same value in the designed field, which in this case means that these events come from the same computer.
@@ -269,8 +269,8 @@ Detecting the use of every variant of Mimikatz is virtually impossible, not only
 This method detects the use of Mimikatz in all the ways implemented in this project.
 The hashdump exploit is detected because Kiwi is used in the session in that machine to generate the Golden Ticket. A real attacker probably would generate the ticket outside of the network, avoiding being detected by this technique.
 
-\subsection{Detection of the use of the TGT with klist}
-We can not always detect when a forged TGT is generated, but the attacker still needs to use it to gain access to the active directory domain with the privileges set in the ticket. The first choice for this task would be to monitor the Kerberos log searching for unusual patterns, but it proved to be more hard than it should, so instead we use scan the cache of Kerberos tickets every few minutes.
+\subsection{Detection of the use of the TGT with klist} \label{klist_detection}
+We can not always detect when a forged TGT is generated, but the attacker still needs to use it to gain access to the active directory domain with the privileges set in the ticket. The first choice for this task would be to monitor the Kerberos log searching for unusual patterns, but it proved to be more hard than it should, so instead a scan the cache of Kerberos tickets every few minutes was implemented.
 \linej
 The program to examine the contents of the cache is \textbf{klist}.
 \linej
@@ -295,15 +295,15 @@ In order to do this we need to enable the execution of Wazuh's remote commands i
 In this case the command is a script to get all the tickets of all the sessions with klist, compare the ticket value for the field \textit{TicketExpireHours} with the value of \textit{MaxTicketAge} of the Group Policy (putting the difference in a new field) and parse the output to JSON. Having the output in JSON makes it a bit easier to read from the logs (which is useful to fix any mistake in the script) and removes the need of a decoder in the manager.
 The idea came from a very different klist script that only works interactively and reports in plain text\cite{klist_script_idea}.
 \linej
-This script needs to be run in every member of the network to ensure detection for every user.
+This script needs to be run in every member of the network to guarantee detection for every user.
 \linej
-Doing this with only powershell ensures it will work in any Windows system without external programs. The downside of this parsing and my limited knowledge of powershell is that the script is a bit bulky and the dependency on the format of the output of klist.
+Doing this with only powershell assures it will work in any Windows system without external programs. The downside of this parsing and my limited knowledge of powershell is that the script is a bit bulky and the dependency on the format of the output of klist.
 \linej
-\lstinputlisting[style=PS,caption=Script to scan and parse to JSON the tickets in the cache,captionpos=b]{scripts/klist.ps1}
-\lstinputlisting[style=PS,caption=Way to get the MaxTicketAge from the Group Policy,captionpos=b]{scripts/report.ps1}
+\lstinputlisting[style=PS,caption=Script to scan and parse to JSON the tickets in the cache,captionpos=b]{src/klist.ps1}
+\lstinputlisting[style=PS,caption=Way to get the MaxTicketAge from the Group Policy,captionpos=b]{src/report.ps1}
 \linej
 Unfortunately that way to get the \textit{MaxTicketAge} from the Group Policy in the last script does not work by default with remote commands because Windows remote commands only allow certain types of commands.
-In any case the \textit{MaxTicketAge} value is not normally changed and it requires AD administrator privileges to do it, so due to the time constrains of the project this automation was abandoned. There are other ways to get the \textit{MaxTicketAge} value, but as mentioned is not something that we should spend time on.
+In any case the \textit{MaxTicketAge} value is not normally changed and it requires AD administrator privileges to do it, so due to the time constrains of the project this automation was abandoned. There are other ways to get the \textit{MaxTicketAge} value, but as mentioned is not something to spend time on.
 \linej
 \linej
 Next there is an example of the difference between the normal output of klist and the string stored in an alert in the manager.
@@ -321,7 +321,7 @@ Next there is an example of the difference between the normal output of klist an
 \linej
 The time difference mentioned before is a very easy way to detect a forged ticket. With a simple subtraction in the powershell script only a rule that makes a number comparison in the manager is needed to launch the alert.
 \linej
-\lstinputlisting[style=xml,caption=Rules to detect a suspicious expiration age from the report of the klist script,captionpos=b]{scripts/rules_klist.xml}
+\lstinputlisting[style=xml,caption=Rules to detect a suspicious expiration age from the report of the klist script,captionpos=b]{src/rules_klist.xml}
 \linej
 The purpose of the first rule is to identify any log in JSON with \textit{MaxTicketAge} and \textit{TicketExpireHours} fields. The second rule is used to examine the contents of the \textit{TicketExpireHoursGap} field of the logs that the first rule has identified. If the value of the \textit{TicketExpireHoursGap} field starts with a digit different than 0 then it means that \textit{MaxTicketAge} $>$ \textit{TicketExpireHours}, therefore the expiration age is greater that it should, triggering an alert.
 Additionally it can only trigger once each 600 seconds, to avoid flooding of alerts.
@@ -330,7 +330,7 @@ Additionally it can only trigger once each 600 seconds, to avoid flooding of ale
 This attack is often used because it may grant the highest privileges in the domain, is hard to detect and is very persistent because it does not care for the password changes in the active directory. That is why is very attractive for domains in which the attacker may decide to come back later, maybe even years later. That means is very unlikely for a forged ticket to not have a very big expiration age, because is one of its most appealing beneficts; but again it would be possible to an attacker to keep generating forged tickets with a valid expiration age forever, at a greater risk of being detected in other ways.
 \linej
 \linej
-The testing of the script was satisfactory, the scripts that inject a TGT were detected and there were no false positives:
+The testing of the script was satisfactory, the cases that inject a TGT were detected and there were no false positives:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|l|l|l|}
@@ -348,7 +348,7 @@ The testing of the script was satisfactory, the scripts that inject a TGT were d
 Of course if we chose to store the ticket in a file we could inject it in other moment or computer, but then it could be detected by this method.
 \linej
 \linej
-Additionally we could monitor looking for unusual usernames, because is possible to get a TGT with administrator privileges with non existent username to avoid the monitoring that administrator accounts are often under.
+Additionally there could be monitoring for unusual usernames, because is possible to get a TGT with administrator privileges with non existent username to avoid the monitoring that administrator accounts are often under.
 \linej
 \linej
 It can be worth checking if the attacker is using klist to clean the cache of injected tickets, to cover any tracks. This can be easily accomplished monitoring the execution of klist with the event 1 of Sysmon:
@@ -359,7 +359,7 @@ It can be worth checking if the attacker is using klist to clean the cache of in
 \end{lstlisting}
 \linej
 And checking with Wazuh if the option \textit{purge} was used:
-\lstinputlisting[style=xml]{scripts/rules_klist_purge.xml}
+\lstinputlisting[style=xml]{src/rules_klist_purge.xml}
 
 \subsection{Silver Ticket}
 A Silver Ticket is very similar to a Golden Ticket, is a forged TGS instead of TGT. Therefore a Silver Ticket only grants access to a service in a computer. Is important to note that some services need the privileges of more services, therefore more than a Silver Ticket may be needed.
@@ -402,7 +402,7 @@ The easiest way to mitigate this attack is to change the password of the KRBTGT 
 The recommendation from Microsoft is to regularly reset the password\cite{tarlogic_comprehension}\cite{adsecurity_483}, which can be done with their official script\cite{reset_script}. This could be also triggered by alerts that we are confident detect Golden Tickets, but as mentioned this could affect other functionality and so the decision is for the network administrators to make. Any TGT that is not valid produces an error in a TGS request, which can be used for exposing an attacker\cite{scom_GT}.
 \linej
 \linej
-Also we always can take measures like:
+Also there are other measures like:
 \begin{itemize}
 	\item Have administrative passwords longer than 25 characters to avoid brute force cracking and make them unique for each system.
 	\item Enforce a least privilege model.
@@ -411,7 +411,7 @@ Also we always can take measures like:
 	\item Isolate administrator accounts: Use administrator accounts only for administrator duties.
 	\item Isolate AD accounts: Create tiered groups with very granular permissions on the domain and create Access Control List permissions on the Organization Units of the AD\cite{AD_tier}.
 	\item Use Read Only Domain Controllers (RODCs): keep Read Write DCs segregated using network segregation and AD sites to force users to logon to RODCs, making breach detection easier. RODCs don't have any real user hashes (nor the hash of the KRBTGT account)\cite{hood}\cite{reset_RODC}.
-	\item Use honeypots: With populated the LSASS cache with false credentials\cite{SANS_mimikatz}\cite{honeyhashes} or with decoy AD objects\cite{decoy_AD}. Then we monitor the logs for attempts to use them. This can lead to detect attackers or to find vulnerabilities in the network.
+	\item Use honeypots: With populated the LSASS cache with false credentials\cite{SANS_mimikatz}\cite{honeyhashes} or with decoy AD objects\cite{decoy_AD}. And then monitor the logs for attempts to use them. This can lead to detect attackers or to find vulnerabilities in the network.
 	\item Disable storage of clear text passwords in LSASS memory to limit the information provided by Mimikatz\cite{SANS_mimikatz}.
 	\item Run LSASS in protected mode (from Windows 8.1): calls to LSASS are only allowed by other protected-mode processes\cite{SANS_mimikatz}\cite{understanding_powersploit_mimikatz}.
 	\item Use choke points: Create a choke point for access to your DCs, adding another layer of protection. Create a Terminal Server that can only talk to the DCs. Configure the DCs to only accept administrative connections from that Terminal Server\cite{choke}.
@@ -432,7 +432,7 @@ These are good examples of how detecting common steps to multiple exploits is on
 \linej
 Another way of detection is to use YARA to look for certain patterns in memory, just like we can search for strings in the events. In the case of events the data comes from the program, which is easy to modify with multiple techniques like substitution or obfuscation. The patterns in memory are much more harder to change because it involves changing the logic of the program. That means most attackers would just take the risk to be detected by this kind of technique.
 \linej
-YARA is very interesting for this kind of project, but it belongs to the Virustotal pack of malware detection tools and so it could be used with Wazuh with a Virustotal API key. The free version only allows a few queries and we didn't consider the option of getting a premium key because there has been for months an open issue in the Github page of Wazuh for integrating it with YARA (as other IDSs have done before), which has recently evolved to an issue to integrate YARA into Wazuh as a module\cite{yara_module}.
+YARA is very interesting for this kind of project, but it belongs to the Virustotal pack of malware detection tools and so it could be used with Wazuh with a Virustotal API key. The free version only allows a few queries and the option of getting a premium key was not considered. There has been for months an open issue in the Github page of Wazuh for integrating it with YARA (as other IDSs have done before), which has recently evolved to an issue to integrate YARA into Wazuh as a module\cite{yara_module}.
 %Unfortunately this was not done before this part of the project as completed, so there was no time left to investigate more on it.
 %TODO revisar estado issue en el futuro
 
@@ -463,7 +463,7 @@ All the extraction programs were executed with local administrator privileges in
 Another way to get the desired information is to copy the database of the AD Domain Services (the NTDS.DIT file) and conduct an offline password audit of the domain. This means once we have this data we can use a wide selection of tools to crack it\cite{ntdsdit_tools}\cite{extracting_ntds}\cite{ntds_powershell}.
 \linej
 \linej
-The attacker has to open a shell as administrator in a DC to create the backup:
+The attacker has to open a shell as administrator in a DC to create the backup. Multiple commands or an one-liner can be used:
 \begin{lstlisting}[style=PS,frame=none]
 ntdsutil "activate instance ntds" ifm "create full C:\temp\ntdsutil" quit quit
 \end{lstlisting}
@@ -485,13 +485,13 @@ The creation of processes related to ntds can be reported by Sysmon:
 \end{lstlisting}
 \linej
 And alerts set with Wazuh:
-\lstinputlisting[style=xml]{scripts/rules_ntds.xml}
+\lstinputlisting[style=xml]{src/rules_ntds.xml}
 \linej
 The first rule is the parent, it filters windows events with the \textit{ntds} string.
 \linej
 The second rule detects the ntdsutil executable. This signature is more useful than normal because it is a builtin tool. The third matches \textit{ntds} for the command line, which is not really reliable.
 \linej
-The rest are for detecting suspicious database events from Windows events. These database events ensure the detection of ntdsutil even if it were to be executed without using known signatures.
+The rest are for detecting suspicious database events from Windows events. These database events assure the detection of ntdsutil even if it were to be executed without using known signatures.
 \linej
 \linej
 There is also the remote version of Reg: WinReg. But there was no time to investigate on it. Is likely that it can be detected with network monitoring, as other remote tools.
@@ -504,7 +504,7 @@ reg.exe save hklm\security c:\temp\security.save
 reg.exe save hklm\system c:\temp\system.save
 \end{lstlisting}
 \linej
-Reg is not detected as malware because it is a builtin tool in Windows. But we can detect it with Sysmon and Wazuh. With Sysmon we report the execution of Reg with the event 1, reporting the creation of a process:
+Reg is not detected as malware because it is a builtin tool in Windows. With Sysmon we can report the execution of Reg with the event 1, reporting the creation of a process:
 \begin{lstlisting}[style=xml]
 <ProcessCreate onmatch="include">
 	<Image condition="contains">reg.exe</Image>
@@ -512,7 +512,7 @@ Reg is not detected as malware because it is a builtin tool in Windows. But we c
 \end{lstlisting}
 \linej
 And Wazuh to trigger an alert:
-\lstinputlisting[style=xml]{scripts/rules_reg.xml}
+\lstinputlisting[style=xml]{src/rules_reg.xml}
 \linej
 The parent rule matches the creation of Reg from the report of Sysmon.
 \linej
@@ -582,9 +582,9 @@ The direct read of the device can be reported with the event 9 of Sysmon, but ev
 </RawAccessRead>
 \end{lstlisting}
 \linej
-\lstinputlisting[style=xml,caption=Rules for detecting NinjaCopy,captionpos=b]{scripts/rules_ninjacopy.xml}
+\lstinputlisting[style=xml,caption=Rules for detecting NinjaCopy,captionpos=b]{src/rules_ninjacopy.xml}
 \linej
-The local case only generates an event of type 9 and its only signatures are \textit{powershell} and \textit{Device{\textbackslash}HarddiskVolume}. It does not even record the name of the file because the handle is for the volume. This can not really ensure this event comes from the execution of NinjaCopy, but until now has always worked and never reported a false positive. This rule could be much more useful if the NTDS.DIT file were in a different volume than normal.
+The local case only generates an event of type 9 and its only signatures are \textit{powershell} and \textit{Device{\textbackslash}HarddiskVolume}. It does not even record the name of the file because the handle is for the volume. This can not really guarantee this event comes from the execution of NinjaCopy, but until now has always worked and never reported a false positive. This rule could be much more useful if the NTDS.DIT file were in a different volume than normal.
 \linej
 \linej
 The remote case is much more easier to detect. In the tests it spawned at least 4 events of each type in about 12 seconds, all from the DC.
@@ -593,16 +593,16 @@ The bigger the NTDS.DIT file and the slower the connection the more events are p
 The remote command is executed by the \textit{wsmprovhost} program, which stands for Windows Remote Powershell Session.
 The contents of the logs of the event type 1 are easy to distinguish from normal, due to the constant value of the \textit{commandLine} and \textit{parentCommandLine} fields.
 \linej
-The second and third rules detect the events of type 1 and 9 for the remote execution, and the last rule is a grouping rule of these two. This ensures there are no false positives, but the second rule matches the exploit so well that it could be left out and probably would never cause false positives.
+The second and third rules detect the events of type 1 and 9 for the remote execution, and the last rule is a grouping rule of these two. This assures there are no false positives, but the second rule matches the exploit so well that it could be left out and probably would never cause false positives.
 \linej
 If the remote command is executed from DC and set to copy from the same computer it still triggers the remote alert.
 \linej
 \linej
 Grouping the DLLs loaded by the \textit{Import-Module} command probed to be effective. As with Mimikatz, this loads the DLLs needed for NinjaCopy to work, which can be registered by the event 7 of Sysmon:
-\lstinputlisting[style=xml]{scripts/sysmon_event_7_ninjacopy_import.xml}
+\lstinputlisting[style=xml]{src/sysmon_event_7_ninjacopy_import.xml}
 \linej
 These 8 DLLs are detected by 4 rules to reach the minimum frequency:
-\lstinputlisting[style=xml]{scripts/rules_ninjacopy_import.xml}
+\lstinputlisting[style=xml]{src/rules_ninjacopy_import.xml}
 \linej
 No false positives were found, but they may appear in a real environment. This technique depends too much on the time frame and can be avoided changing the code. It works with both local and remote cases the same.
 %\linej
@@ -618,7 +618,7 @@ This event can be used to detect LSASS dumps, at least in some cases\cite{sysmon
 The downside is it can generate significant amounts of logging, therefore it was configured to log only the LSASS process and exclude the instances from the OSSEC agent and the Virtual Box service.
 %This exclude seems to affect other events of type 7 too, even though it should not.
 \linej
-\begin{lstlisting}[style=xml,caption=Sysmon monitoring with event 10 for lsass reads,captionpos=b]
+\begin{lstlisting}[style=xml,caption=Sysmon monitoring with event 10 for LSASS reads,captionpos=b]
 <ProcessAccess onmatch="include">
 	<TargetImage condition="contains">C:\Windows\System32\lsass.exe</TargetImage>
 </ProcessAccess>
@@ -630,7 +630,7 @@ The downside is it can generate significant amounts of logging, therefore it was
 \linej
 After some analysis of these events it was clear that normal accesses could be identified by the \textit{grantedAccess} field. They had a value of \textit{0x3000} (even though these do not happen often) or \textit{0x1000} if the process is \textit{svchost.exe}. The detected malicius programs produced at least one event with a different value on this field.
 \linej
-\lstinputlisting[style=xml,caption=Rules to detect unusual values of grantedAccess,captionpos=b]{scripts/rules_lsass.xml}
+\lstinputlisting[style=xml,caption=Rules to detect unusual values of grantedAccess,captionpos=b]{src/rules_lsass.xml}
 \linej
 The first identifies events of type 10 for the LSASS process.
 \linej
@@ -677,7 +677,7 @@ Another way to detect unusual access to LSASS is with the event 8 of Sysmon\cite
 \end{lstlisting}
 \linej
 As for Wazuh just a rule to detect the event of type 8 and the LSASS executable are enough:
-\lstinputlisting[style=xml]{scripts/rules_lsass_event_8.xml}
+\lstinputlisting[style=xml]{src/rules_lsass_event_8.xml}
 \linej
 Only exploits 1, 2 and 5 were detected with this rule.
 
@@ -695,4 +695,8 @@ There are multiple ways to protect the NTDS.DIT file\cite{protect_NTDS}\cite{hoo
 \end{itemize}
 
 \subsection{Conclusion}
-%TODO
+We have seen more ways to adquire credentials and how to detect them with Sysmon and Wazuh. The detection of the dump of LSASS was particularly interesting because its relevance and scope.
+\linej
+Other detection techniques for these exploits could be implemented with network tools and remote commands.
+More ways to detect the cases from the previous section were shown.
+There are more tools and techniques to obtain authentication data that were not studied or tested, but probably some of them can be found using some of the detection methods in this section.

@@ -796,8 +796,8 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 \newcommand{\FBeginning}{2018-11-07}
 \newcommand{\SIncrementoUnoInicial}{2018-11-08}
 \newcommand{\FIncrementoUnoInicial}{2018-12-05}
-\newcommand{\FPause}{2019-03-01}
-\newcommand{\FComeback}{2019-03-04}
+\newcommand{\FPause}{2019-02-25}
+\newcommand{\FComeback}{2019-02-28}
 \newcommand{\FIncrementoUnoFinal}{2019-05-05}
 %\newcommand{\FIncrementoTres}{}
 %\newcommand{\FIncrementoCuatro}{}
@@ -916,7 +916,11 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 
 
 
-This was not planned beforehand but it seemed like a good idea to leave some time to investigate exactly what did change while the project was on hold. Also a new setup of critical installations, because the documentation of the process before was lacking in details.
+This was not planned beforehand but it seemed like a good idea to leave some time to investigate exactly what did change while the project was on hold.
+Also a new setup of critical installations, because the documentation of the process before was lacking in details slightly.
+\linej
+The Kibana plugin for Wazuh stopped working because there was a version mismatch with the installed version of Wazuh. Even though it was not critical it was fixed as soon as it was noticed.
+
 \begin{figure}[H]
 	\begin{center}
 	\begin{ganttchart}[
@@ -933,19 +937,19 @@ This was not planned beforehand but it seemed like a good idea to leave some tim
 		title height=0.5,
 		title top shift=-.5,
 		vgrid
-		]{\FPause}{2019-03-03}
+		]{\FPause}{\FComeback}
 		\newganttlinktypealias{straight}{f-s}
 		\setganttlinklabel{straight}{}
 		\gantttitlecalendar{month=name, week, day}
 
 
-		\ganttgroup[name=prel]{Check changes from last working setup}{\FPause}{2019-03-02} \\
-		\ganttbar[name=tools]{Wazuh documentation and tools used in the project}{\FPause}{2019-03-01} \\
-		\ganttbar[name=attacks]{Known and new attacks}{\FPause}{2019-03-02} \\
-		\ganttmilestone[name=fmilestone]{Basic knowledge of the changes}{2019-03-02} \\
+		\ganttgroup[name=prel]{Check changes from last working setup}{\FPause}{2019-02-27} \\
+		\ganttbar[name=tools]{Wazuh documentation and tools used in the project}{\FPause}{2019-02-25} \\
+		\ganttbar[name=attacks]{Known and new attacks}{2019-02-26}{2019-02-27} \\
+		\ganttmilestone[name=fmilestone]{Basic knowledge of the changes}{2019-02-27} \\
 
-		\ganttbar[name=set]{Installing virtual machines and setting up tools}{2019-03-02}{2019-03-03} \\
-		\ganttmilestone[name=milestone]{Ready to continue with the increments}{2019-03-03} \\
+		\ganttbar[name=set]{Installing virtual machines and setting up tools}{2019-02-26}{\FComeback} \\
+		\ganttmilestone[name=milestone]{Ready to continue with the increments}{\FComeback} \\
 
 		\ganttlink{tools}{set}
 		\ganttlink[link type=straight]{tools}{fmilestone}
@@ -976,7 +980,7 @@ This was not planned beforehand but it seemed like a good idea to leave some tim
 		title height=0.5,
 		title top shift=-.5,
 		vgrid,
-		]{\FComeback}{\FIncrementoUnoFinal}
+		]{2019-03-01}{\FIncrementoUnoFinal}
 		\newganttlinktypealias{straight}{f-s}
 		\setganttlinklabel{straight}{}
 		\gantttitlecalendar{month=name, week}
@@ -986,9 +990,9 @@ This was not planned beforehand but it seemed like a good idea to leave some tim
 	\newcommand{\Daction}{2019-04-12}
 
 
-		\ganttgroup[name=pstudy]{Preliminary study and investigation}{\FComeback}{\Dstudy} \\
-		\ganttbar[name=list]{Identify the attacks to detect}{\FComeback}{2019-03-04} \\
-		\ganttbar[name=attack]{Detailed study of each attack and tools}{2019-03-05}{2019-03-20} \\
+		\ganttgroup[name=pstudy]{Preliminary study and investigation}{2019-03-01}{\Dstudy} \\
+		\ganttbar[name=list]{Identify the attacks to detect}{2019-03-01}{2019-03-01} \\
+		\ganttbar[name=attack]{Detailed study of each attack and tools}{2019-03-01}{2019-03-20} \\
 		\ganttbar[name=detection]{Exploration of detection options}{2019-03-14}{\Dstudy} \\
 		\ganttbar[name=fdetection]{Discard undetectable attacks}{\Dstudy}{\Dstudy} \\
 		\ganttbar[name=design]{Basic design of each attack}{\Dstudy}{\Dstudy} \\

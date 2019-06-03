@@ -1,49 +1,259 @@
-
 %Especificación de requisitos: debe indicarse, polo miúdo, a especificación do 
 %Sistema, xunto coa información que este debe almacenar e as interfaces con outros 
 %Sistemas, sexan hardware ou software, e outros requisitos (rendemento, seguridade, 
 %etc).
 
-
 The requirement specification is a full description of the software the project is to develop.
 \linej
 PMBOK\cite{pmbok} states that requirements are conditions or capabilities that a product must meet to satisfy the contract.
 The requirements expose the needs of the client, which have to be accomplished to finish the project successfully.
-In this project the requirements will be fullfilled in multiple stages along the project.
-\linej
 Note that the client in this case is Tarlogic even if the product is a contribution to an open source project.
+\linej
+Depending of their type they can describe features, data, relations, properties or any details necessary to explain the system without ambiguity, in a way it can be easily understood.
+\linej
+\linej
+In this project the requirements will be fullfilled in multiple stages along the project, with increments.
+
+\section{Limitations}
+This project is not about software development, it is about cybersecurity research and auditing.
+\linej
+Even though there is some basic creation of rules and scripts they can not be seriously considered as software development.
+All these cases are very straightforward and they have one or two actors at most.
+Most of them are so simple that there are basically no other ways to write them.
+\linej
+\linej
+The only script that could be argued to be complex enough to need a traditional development approach is \textit{klist.ps1}\cite{memoria_github}, explained in page \pageref{klist_detection}. Is a bit over 100 lines script that parses the output of a few commands line by line in a classic for-loop fashion and adds a field with the value from a subtraction operation.
+\linej
+This script is the biggest and most complex software made in this project, and yet almost no knowledge of powershell was needed and was made in a couple of hours.
+Its logic is basically the same in all the script: if the line has this field then extract this part.
+\linej
+It seems a bit like an stretch to suddenly change a $\sim$400 hours project to a development approach because of an unplanned $\sim$2 hours script.
+\linej
+\linej
+Therefore it makes sense to limit the resources for the requirement specification. These resources can be spend elsewhere in the project, instead of being wasted in something that would not bring significant quality to the project.
+\linej
+It would be a different matter if there were some kind of development for adding functionality or integration of tools to Wazuh. In that case the project should have a proper full requirement specification, at least for them.
 
 \linej
 \linej
-This specification contains:
+The requirement specification is simplified:
 \begin{itemize}
-	\item \textbf{Use cases}: Functionalities that the software will provide.
-	\item \textbf{Requirements}: Depending of their type they can describe features, data, relations, properties or any details necessary to explain the system without ambiguity, in a way it can be easily understood.
+	\item \textbf{Use cases}: A use case is a description of all the ways an end-user wants to ``use'' a system. These ``uses'' are like requests of the system, and use cases describe what that system does in response to such requests. In other words, use cases describe the conversation between a system and its user(s), known as actors. Although the system is usually automated (such as an Order system), use cases also apply to equipment, devices, or business processes\cite{use_case_definition}. It does not make sense to have them for this project because the software is too straightforward to have different ways to be used.
+	\item \textbf{Actors}: There is no need due to the software being just an one way automated interaction.
+	\item \textbf{Functional requirements}: They describe the specifics about the functionality the system needs to have. There could be functional requirements, but in most cases they would be almost the same as the rules or scripts they try to describe, making them pointless.
+%The functional requirements can be considered a redundant version of the use cases, because both describe the same functionalities.
+	\item \textbf{Traceability matrix}: Shows the relationship between use cases and functional requirements, therefore if there are none of either type there is no meaning to having this matrix.
+	\item \textbf{Non-functional requirements}: They describe requirements that the system needs, but that are not functional requirements. They can help in this project precisely because it is not about functionality development. These are the requirements this project has.
 \end{itemize}
 
-In this project the functional requirements are not included because they can be considered a redundant version of the use cases, because both describe the same functionalities.
-Uses cases were chosen over functional requirements because they were considered to be easier to understand and have greater detail. If this project had the need of a very complex requirement specification it would be interesting to have both, as each could help to understand the other better, but in this project the specification should be quite simple.
+\section{Non-functional requirements}
+There was a meeting with Tarlogic before the beginning of the project were the requirements were set.
+The requirements were classified by priority into these categories:
+\begin{itemize}
+	\item Essential: Those that are mandatory for the project to be considered sucessful.
+	\item Desired: They would be completed if there are enough resources.
+	\item Optional: A level of priority under desired, meaning that they would be worked on after them.
+\end{itemize}
+\linej
+Later the student grouped them into increments, some of which are essential.
+\linej
+\linej
+These requirements could be expanded and more could be added during the project if it were to be needed, which did not happen.
 
+\subsection{Identification of non-functional requirements}
+\newcommand{\RNFuno}{Detection of the Golden Ticket attack}
+\newcommand{\RNFdos}{Detection of memory dumps for lsass.exe}
+\newcommand{\RNFtres}{Detection of distributed brute forze login attempts}
+\newcommand{\RNFcuatro}{Detection of reverse brute forze login attempts}
+\newcommand{\RNFcinco}{Detection of login outside of usual times}
+\newcommand{\RNFseis}{Monitoring of trap files in a file server}
+\newcommand{\RNFsiete}{Detection of backdoors}
+\newcommand{\RNFocho}{Use Sysmon to gather system's data in real time}
+\newcommand{\RNFnueve}{Detection of cryptolocker}
+\newcommand{\RNFdiez}{Configuration profiles}
+\newcommand{\RNFonce}{Use of honeypots with Wazuh}
+\newcommand{\RNFdoce}{Explore solutions with GPDR}
+\newcommand{\RNFtrece}{Modification of key files in Linux}
+\newcommand{\RNFcatorce}{Integration of Wazuh with other programs}
 
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & Name \\ \hline
+		RNF-01 & \RNFuno \\ \hline
+		RNF-02 & \RNFdos \\ \hline
+		RNF-03 & \RNFtres \\ \hline
+		RNF-04 & \RNFcuatro \\ \hline
+		RNF-05 & \RNFcinco \\ \hline
+		RNF-06 & \RNFseis \\ \hline
+		RNF-07 & \RNFsiete \\ \hline
+		RNF-08 & \RNFocho \\ \hline
+		RNF-09 & \RNFnueve \\ \hline
+		RNF-10 & \RNFdiez \\ \hline
+		RNF-11 & \RNFonce \\ \hline
+		RNF-12 & \RNFdoce \\ \hline
+		RNF-13 & \RNFtrece \\ \hline
+		RNF-14 & \RNFcatorce \\ \hline
+	\end{tabularx}
+	\caption{List of the non-functional requirements of the project}
+\end{table}
 
-
-
-
-\section{Use cases}
-A use case is a description of all the ways an end-user wants to ``use'' a system. These ``uses'' are like requests of the system, and use cases describe what that system does in response to such requests. In other words, use cases describe the conversation between a system and its user(s), known as actors. Although the system is usually automated (such as an Order system), use cases also apply to equipment, devices, or business processes.\cite{use_case_definition}
-
-
-\subsection{Use cases actors}
-The actors are entities external to the system that interact with it. They can be other systems, persons or even time.
-
-%\subsection{Use cases description}
-\subsection{Use cases list}
-
-\section{Requirements analysis}
-
-\subsection{Non functional requirements}
-
-\subsection{Functional requirements}
-As mentioned before these are omited because of the redundancy with use cases.
-
-\subsection{Domain requirements}
+\subsection{Description of non-functional requirements}
+%TODO en la descripcion poner el incremento
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-01} \\ \hline
+		Name & \RNFuno \\ \hline
+		Description & Study of the Golden Ticket attack in Windows. Coding of different ways to do the attack and close examination of the data received by Wazuh. Research about ways to identify the attack and each of its forms. Coding and testing of detection techniques. \\ \hline
+		Priority & Essential \\ \hline
+		Validation & Every variant of the Golden Ticket attack in the project is identified as such by a rule \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-02} \\ \hline
+		Name & \RNFdos \\ \hline
+		Description & Study of the different ways to extract credentials related to this process. Coding of different approaches to reproduce it and comparison of the received events. Find ways to assure their detection with Wazuh and test them properly. \\ \hline
+		Priority & Essential \\ \hline
+		Validation & All the examples presented of ways to dump the memory of lsass.exe get detected with at least one of the methods \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-03} \\ \hline
+		Name & \RNFtres \\ \hline
+		Description & The idea is to identify from Windows security events when a network if being attacked by an attacker with login attempts, but changing his ip every few seconds (to avoid being banned). For example an alert would trigger with at least 5 attempts in 5 minutes, 20 attempts in 30 minutes or 200 attempts in 180 minutes. \\ \hline
+		Priority & Essential \\ \hline
+		Validation & Every one of the scripts for this attack are detected, triggering alerts. \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-04} \\ \hline
+		Name & \RNFcuatro \\ \hline
+		Description & Multiple login attempts are made from the same ip to different accounts. For example it would be noticed with at least 3 attempts in 10 seconds, 12 attempts in 1 minute or 120 attempts in 1 hour. The data source for Wazuh would be Windows security events. \\ \hline
+		Priority & Essential \\ \hline
+		Validation & Any of the scripts used to reproce the attack trigger an alert. \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-05} \\ \hline
+		Name & \RNFcinco \\ \hline
+		Description & The first step would be to specify the Organization Units and their login time ranges. Then set rules in Wazuh to guarantee any logging outside of them would trigger an alert and personal messages to the person in charge of the unit, or any other required action. \linej This and the previous requirements are part of the first increment.  \\ \hline
+		Priority & Essential \\ \hline
+		Validation & Any logins outside the allowed times trigger alerts, sending a message to the Organization Unit coordinator  \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-06} \\ \hline
+		Name & \RNFseis \\ \hline
+		Description & Certain files are monitored in a Windows file server, for example in a hidden folder, in an attempt to detect attackers interested in them. This is a honeypot like method but only with files. This could fit in several increments as a bonus to improve other requirements.  \\ \hline
+		%TODO no hay ninuno donde meterlo, cambiar planning?
+		Priority & Desired \\ \hline
+		Validation & The attempts to access the files are detected, triggering alerts \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-07} \\ \hline
+		Name & \RNFsiete \\ \hline
+	%(ejemplo eventos WMI)
+		Description & A backdoor is a change or a program in the system to allow easy access to an attacker. The fist step would be to research about techniques to set backdoors in Windows Server and how to detect them. Later a testing stage has to assure they are actually noticed by our rules in Wazuh. This could turn to be a very big and time consuming requirement to implement, therefore it is not essential. It is very related to the attacks in the first increment, so it makes sense for it to be there too.  \\ \hline
+		Priority & Desired \\ \hline
+		Validation & The studied exploits for setting backdoors are detected and stopped (if possible) by Wazuh  \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-08} \\ \hline
+		Name & \RNFocho \\ \hline
+		Description & A brief research on Sysmon would be followed by its implementation and testing. This is the most part of the increment two. \\ \hline
+		Priority & Essential \\ \hline
+		Validation & Sysmon events are created when expected and they reach Wazuh in a reliable manner \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-09} \\ \hline
+		Name & \RNFnueve \\ \hline
+		Description & Research about ransomware and reproducing it in a local environment are key to guarantee its detection. This would be particularly interesting in the file server, a more likely target for this kind of attack. It is yet to be decided if stopping this kind of attack would take priority over anything else, for example shutting down the computer or disconnecting it from the network temporarily if there were no other choices. This requirement is covered in the third increment. \\ \hline
+		Priority & Essential \\ \hline
+		Validation & Studied cryptolocker tools get detected and stopped (if possible) by Wazuh  \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-10} \\ \hline
+		Name & \RNFdiez \\ \hline
+		Description & Sets of configuration for Wazuh and related tools like Sysmon are created for different enterprise profiles, aiming to offer out of the box threat detection in different degrees. One of the keys would be to identify the security priorities of enterprises. This requirement constitutes the whole increment four. \\ \hline
+		Priority & Desired \\ \hline
+		Validation & Each of the profiles works as expected \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-11} \\ \hline
+		Name & \RNFonce \\ \hline
+		Description & A server is set as a honeypot, making it easier for the attacker to access it and obtain data. This should not take much time and could be part of any increment. \\ \hline
+		Priority & Desired \\ \hline
+		Validation & The access to the honeypot is identified by direct or indirect monitoring (data only in the honeypot is used elsewhere) \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-12} \\ \hline
+		Name & \RNFdoce \\ \hline
+		Description & The GPDR is a regulation on data protection and privacy. The functionality in Wazuh to assure the GPDR would be the core to this fith increment. The expected difficulty would come from the need to guarantee fully it with a large and significant amount of tests.  \\ \hline
+		Priority & Desired \\ \hline
+		Validation & Any modification or not allowed access of the monitored files gets detected by the agent, triggering the corresponding alert \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-13} \\ \hline
+		Name & \RNFtrece \\ \hline
+		Description & Wazuh has a method which compares the hash of the file with the value it should have, that could be used for this case. The monitored files would probably need administrator privileges, making it easier for detection. This is the core of the sixth increment.  \\ \hline
+		Priority & Desired \\ \hline
+		Validation & Any modification of the monitored files gets detected by the agent, triggering the corresponding alert \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{RNF-14} \\ \hline
+		Name & \RNFcatorce \\ \hline
+		Description & There needs to be at least development if this integration is not transparent at that time in the project. The testing period would probably be a bit longer than usual because it would envolve new programs. The seventh requirement is based on this. \\ \hline
+		Priority & Optional \\ \hline
+		Validation & Assure the data from the integrated program reaches Wazuh and the alerts only get triggered when they should \\ \hline
+	\end{tabularx}
+\end{table}

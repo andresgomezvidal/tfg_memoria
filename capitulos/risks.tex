@@ -1,6 +1,24 @@
 \section{Risk management}
+Risk management can be summarized as a group of processes which objective is to avoid undesirable or unexpected situations for the duration of the project.
+\linej
+\linej
+The management of the risks of the project has the next steps:
+\begin{itemize}
+	\item \textbf{Risk metrics}: A short clarification of how to estimate the probability, impact and exposition of risks.
+	\item \textbf{Risk identification}: Analysis to identify the risks that can affect the project. This was performed by brainstorming and reviewing the list of identified risks.
+	\item \textbf{Risk analysis and planning}: All the risks are analized, setting their properties (probability, impact, indicator, etc). Also prevention and/or correction measures for each risk are planned in case they take place. Prevention are optional and deployed before the risk happens, while correction measures are mandatory and used after a risk triggers. There are three types of measures:
+		\begin{itemize}
+			\item \textit{Avoid}: They attempt to negate the occurrence or progression of the risk. It only makes sense for them to be in prevention.
+			\item \textit{Mitigation}: The impact is reduced. They can be for either prevention or correction. In the case of correction mitigation they are known as contingency too.
+			\item \textit{Transference}: Another entity takes care of the problem. In this project this almost never applies because there are no third-party involved to rely responsability on, except in very specific cases.
+		\end{itemize}
+	\item \textbf{Risk supervision}: Is the process of tracking every risk and applying their measures if they come to be.
+\end{itemize}
 
 \subsection{Risk metrics}
+The values of probability and impact are estimations made by the student, based on his current experience (without any further study or references).
+\linej
+To ease their management they are classified into Low, Medium or High, depending on their values as the next two tables show:
 
 \begin{table}[H]
 	\centering
@@ -15,7 +33,6 @@
 	\caption{Probability classification of risks}
 \end{table}
 
-
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|l|l|}
@@ -29,7 +46,8 @@
 	\caption{Impact classification of risks}
 \end{table}
 
-
+\linej
+The calculation of the exposition is made just by the next table, based on the values of probability and impact:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|c|c|c|c|c|}
@@ -43,12 +61,10 @@
 	\caption{Method of calculation of exposition based on probability and impact}
 \end{table}
 
-\subsection{Risk types}
-
 \subsection{Risk identification}
+The next table shows the final list of identified risks of the project.
 
-
-\newcommand{\Runo}{Optimist planning, ``best case'' (instead of a realistic ``expected case'')}
+\newcommand{\Runo}{Optimist planning, ``best case'', instead of a realistic ``expected case''}
 \newcommand{\Rdos}{Bad requirement specification}
 \newcommand{\Rtres}{Design errors}
 \newcommand{\Rcuatro}{Lack of key information from sources}
@@ -67,7 +83,6 @@
 \newcommand{\Rdiecisiete}{Unnecessary work}
 \newcommand{\Rdieciocho}{Optional requirements delay the project}
 \newcommand{\Rdiecinueve}{Unexpected personal events delay the project}
-
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
@@ -98,20 +113,16 @@
 	\caption{List of the risks of the project}
 \end{table}
 
-
-
-
-
 \newcolumntype{y}{>{\hsize=.15\hsize}X}
 \newcolumntype{z}{>{\hsize=.85\hsize}X}
 \subsection{Risk analysis and planning}
-
+An analysis on the risks identified previously was made by the student. The next tables list the risks with their basic data, estimations, contingency and prevention measures when possible.
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-001} \\ \hline
+		Identifier & \textbf{R-01} \\ \hline
 		Name & \Runo \\ \hline
 		Description &
 			An optimistic planning at the start of the project does not take into account problems or delays, and so it does not allocate time for them.
@@ -138,10 +149,10 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-002} \\ \hline
+		Identifier & \textbf{R-02} \\ \hline
 		Name & \Rdos \\ \hline
 		Description &
-			The requirements specified at the beginning of the project are not specific enough, are not needed or there are new requirements after the beginning of the project.
+			The requirements specified at the beginning of the project are not enough detailed, are not needed or there are new requirements after the beginning of the project.
 		\\ \hline
 		Negative effects &
 			Possible failure of the project if the objectives can not be accomplished in the time left. \linej
@@ -168,7 +179,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-003} \\ \hline
+		Identifier & \textbf{R-03} \\ \hline
 		Name & \Rtres \\ \hline
 		Description &
 			A design is not enough or is incorrect. \linej
@@ -196,7 +207,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-004} \\ \hline
+		Identifier & \textbf{R-04} \\ \hline
 		Name & \Rcuatro \\ \hline
 		Description &
 			Not having key information from articles, documentation or manuals.
@@ -210,7 +221,7 @@
 		Probability & Medium\\ \hline
 		Impact &  Medium\\ \hline
 		Exposition &  Medium\\ \hline
-		Indicator & The duration of the study of the attack and the related tools takes 50\% than expected. \\ \hline
+		Indicator & The duration of the study of the attack and the related tools ends being 50\% longer than expected. \\ \hline
 		Correction: Mitigate &
 			Ask the security consultants of Tarlogic for specific information. \linej
 			Possibly the need to rework completely some functionality.
@@ -222,7 +233,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-005} \\ \hline
+		Identifier & \textbf{R-05} \\ \hline
 		Name & \Rcinco \\ \hline
 		Description &
 			Because I do not know enough of some technical aspects of cibersecurity to solve all the problems in this by myself in time, Tarlogic has promised to help (in a tutoring way) if a problem arises. \linej
@@ -249,7 +260,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-006} \\ \hline
+		Identifier & \textbf{R-06} \\ \hline
 		Name & \Rseis \\ \hline
 		Description &
 			This is a critical need because not having enough knowledge can result in an inefficient approach to accomplishing the objectives.
@@ -261,7 +272,7 @@
 		Probability & Medium\\ \hline
 		Impact &  Medium\\ \hline
 		Exposition &  Medium\\ \hline
-		Indicator & The duration of the study of the technologies takes 50\% than expected. \\ \hline
+		Indicator & The duration of the study of the technologies ends being 50\% longer than expected. \\ \hline
 		Correction: Mitigate &
 			Redo planning and possibly change the scope.  \linej
 			Ask the security consultants of Tarlogic for specific help. \linej
@@ -274,7 +285,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-007} \\ \hline
+		Identifier & \textbf{R-07} \\ \hline
 		Name & \Rsiete \\ \hline
 		Description &
 			There is not enough specification on what a tasks implies or not enough planning. \linej
@@ -304,7 +315,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-008} \\ \hline
+		Identifier & \textbf{R-08} \\ \hline
 		Name & \Rocho \\ \hline
 		Description &
 			All or part of the source material can not be accessed, probably because the only host of the resource is down.
@@ -331,7 +342,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-009} \\ \hline
+		Identifier & \textbf{R-09} \\ \hline
 		Name & \Rnueve \\ \hline
 		Description &
 			Changes to base software could affect this project directly or indirectly: programs could fail or not work as expected. \linej
@@ -361,7 +372,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-010} \\ \hline
+		Identifier & \textbf{R-10} \\ \hline
 		Name & \Rdiez \\ \hline
 		Description &
 			Due to a bad configuration management or something else, there is a loss of work related to this project.
@@ -389,7 +400,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-011} \\ \hline
+		Identifier & \textbf{R-11} \\ \hline
 		Name & \Ronce \\ \hline
 		Description &
 			The project's configuration is inefficient or lacks work. \linej
@@ -418,7 +429,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-012} \\ \hline
+		Identifier & \textbf{R-12} \\ \hline
 		Name & \Rdoce \\ \hline
 		Description &
 			A task gets delayed and one or more tasks depends on its completion to start, so they get delayed too.
@@ -444,7 +455,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-013} \\ \hline
+		Identifier & \textbf{R-13} \\ \hline
 		Name & \Rtrece \\ \hline
 		Description &
 			It could be that the knowledge of the student is too limited or the problem has too much logical or mathematical difficulty.\linej
@@ -473,7 +484,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-014} \\ \hline
+		Identifier & \textbf{R-14} \\ \hline
 		Name & \Rcatorce \\ \hline
 		Description &
 			The final result is does not comply the quality standard set for this project.
@@ -502,7 +513,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-015} \\ \hline
+		Identifier & \textbf{R-15} \\ \hline
 		Name & \Rquince \\ \hline
 		Description &
 			The health of the student deteriorates to the point it affects the project.
@@ -531,7 +542,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-016} \\ \hline
+		Identifier & \textbf{R-16} \\ \hline
 		Name & \Rdieciseis \\ \hline
 		Description &
 			The program is too heavy for the environment and takes too much resources, because there are not good enough optimizations or the problems are poorly approached.
@@ -557,7 +568,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-017} \\ \hline
+		Identifier & \textbf{R-17} \\ \hline
 		Name & \Rdiecisiete \\ \hline
 		Description &
 			Resources are wasted in work that latter is not used. \linej
@@ -583,7 +594,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-018} \\ \hline
+		Identifier & \textbf{R-18} \\ \hline
 		Name & \Rdieciocho \\ \hline
 		Description &
 			Optional requirements get too much time or are treated as vital.
@@ -609,7 +620,7 @@
 	\begin{tabularx}{\textwidth}{|y|z|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-019} \\ \hline
+		Identifier & \textbf{R-19} \\ \hline
 		Name & \Rdiecinueve \\ \hline
 		Description &
 			There are unplanned occurrences that need considerable time from the student, for example family matters.
@@ -634,27 +645,21 @@
 	\end{tabularx}
 \end{table}
 
-
-
-
-
-
-
 \subsection{Risk supervision}
-
-
+Next are the risks triggered during the duration of the project and how they were dealt with, ordered by their start date.
+The \textit{New} probability, impact, exposition or measures always are be different from their previous values, else they are omited.
 %\begin{table}[H]
 %	\begin{tabularx}{\textwidth}{|l|X|}
 %		\hline
 %		\rowcolor{gray!30}
-%		Identifier & \textbf{R-001} \\ \hline
-%		Name & \Runo \\ \hline
-%		Date of the beginning of the problem & TODO \\ \hline
-%		Date of the solution of the problem & TODO \\ \hline
-%		Actions & TODO \\ \hline
-%		New probability & TODO \\ \hline
-%		New impact &  TODO \\ \hline
-%		New exposition &  TODO \\ \hline
+%		Identifier & \textbf{R-} \\ \hline
+%		Name &  \\ \hline
+%		Date of the beginning of the problem & \\ \hline
+%		Date of the solution of the problem & \\ \hline
+%		Actions & \\ \hline
+%		New probability & \\ \hline
+%		New impact &   \\ \hline
+%		New exposition &  \\ \hline
 %	\end{tabularx}
 %\end{table}
 
@@ -662,7 +667,7 @@
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
-		Identifier & \textbf{R-019} \\ \hline
+		Identifier & \textbf{R-19} \\ \hline
 		Name & \Rdiecinueve \\ \hline
 		Date of the beginning of the problem & 05/12/2018 \\ \hline
 		Date of the solution of the problem & 10/02/2019 \\ \hline
@@ -670,10 +675,55 @@
 			The project was put on hold and the student notified the tutors, who agreed to the next deadline. \linej
 			The student kept working on the project (researching) from time to time. \\ \hline
 		New probability & Low (before was Medium) \\ \hline
-		New impact &  High (same as before) \\ \hline
 		New exposition & Medium (before was High) \\ \hline
-		New prevention: Avoid &
-			Another person took charge of the problem, freeing the student.
+		New correction: Transference &
+			Another person took charge of the problem until it dissapeared, freeing the student.
 		\\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-10} \\ \hline
+		Name & \Rdiez \\ \hline
+		Date of the beginning of the problem & 26/02/2019 \\ \hline
+		Date of the solution of the problem & 26/02/2019 \\ \hline
+		Actions & A general power failure in Santiago caused a sudden shutdown of the computer the student was working on. \linej
+		Fortunately the only work lost was upgrading the software on the virtual machine hosting the Wazuh server.\\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-09} \\ \hline
+		Name & \Rnueve \\ \hline
+		Date of the beginning of the problem & 01/03/2019 \\ \hline
+		Date of the solution of the problem & 01/03/2019 \\ \hline
+		Actions & The Kibana plugin and Wazuh had a mismatch for their versions, resulting in the plugin not working. \linej
+		The plugin and Wazuh were upgraded to their latest versions. \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-19} \\ \hline
+		Name & \Rdiecinueve \\ \hline
+		Date of the beginning of the problem & 05/05/2019 \\ \hline
+		Date of the solution of the problem & 19/05/2019 \\ \hline
+		Actions & The project was put on hold for 2 weeks while the student was taking care of a family member. \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-04} \\ \hline
+		Name & \Rcuatro \\ \hline
+		Date of the beginning of the problem & 30/05/2019 \\ \hline
+		Date of the solution of the problem & 03/06/2019 \\ \hline
+		Actions & The members of Tarlogic involved with the project were asked about details on dumping the memory of the process \textit{lsass.exe}. \\ \hline
 	\end{tabularx}
 \end{table}

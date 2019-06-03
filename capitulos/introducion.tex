@@ -1,8 +1,8 @@
-
 %Introdución: composta por Obxectivos Xerais, Relación da Documentación que conforma a Memoria, Descrición do Sistema, Información Adicional de Interese (métodos, técnicas ou arquitecturas utilizadas, xustificación da súa elección, etc.).
 
-
-This project was made in collaboration with the cybersecurity company Tarlogic SL, even though I am not a member of Tarlogic and have never worked with them in the past. It is key to note my lack of experience in cybersecurity (on a professional level) because is the reason for the bad planning estimations and the limit of the scope. Furthermore in this project there are no absolute constraints or objectives, as it was suggested as a case between investigation (with some coding) and cybersecurity auditing, so the scope can be reduced if the time remaining is too short.
+This project was made in collaboration with the cybersecurity company Tarlogic SL, even though I am not a member of Tarlogic and have never worked with them in the past.
+Due to my lack of professional experience in cybersecurity and the need to research in this project, the scope and planning of the work had to be rescheduled.
+Furthermore in this project there are no absolute constraints or objectives, as it was suggested as a case between investigation (with some coding) and cybersecurity auditing, so the scope can be reduced if the time remaining is too short.
 
 \section{Motivation}
 
@@ -32,10 +32,9 @@ The next table shows a \textbf{simplified} flow on how the information is proces
 \end{table}
 $\xrightarrow{\makebox[\textwidth]{Direction of the data flow}}$
 
-
 \linej
 \linej
-We focus on IDS because we are more interested about host detection. Also IDS is less explored than IPS or Firewall and due to the advance in gathering and processing of data in the last years IDS has become much more viable and reliable.
+We focus on IDS because we are more interested about detection at host level, rather than network. Also IDS is less explored than IPS or Firewall and due to the advance in gathering and processing of data in the last years IDS has become much more viable and reliable.
 
 \linej
 \linej
@@ -45,10 +44,10 @@ IDSs are different from antivirus or antimalware because the first are systems \
 \linej
 It is important to note that in cybersecurity the trend is for the attack to be created first and later some kind of measures, not necessarily by the same teams as they usually are specialized in each role. This means that defensive security that requires manual intervention often lags behind.
 \linej
-Nowadays there are lots of different attacks, so many that their detection could be almost impossible one by one, but most of them can be detected because they share patterns. If we can determine the patterns of an attack and code a way to detect them we can detect the threat. Due to all this some times is easier to detect the attack and take measures after the intrusion has taken place.
+Nowadays there are lots of different attacks, so many that their detection could be almost impossible one by one, but most of them can be detected because they share patterns. If we can determine the patterns of an attack and code a way to detect them we can detect the threat. Some times is easier to detect the attack and take measures after the intrusion has taken place.
 \linej
 \linej
-IDS work by analysing the key information available (programs, logs, network information, etc) to determine if there has been an intrusion in the system. The details of the process vary with each IDS but in general they work like an expert system:
+IDSs work by analysing the key information available (programs, logs, network information, etc) to determine if there has been an intrusion in the system. The details of the process vary with each IDS but in general they work like an expert system:
 \begin{itemize}
 	\item The source of the data is the system.
 	\item The alerts are set by certain rules when they match.
@@ -56,7 +55,7 @@ IDS work by analysing the key information available (programs, logs, network inf
 \end{itemize}
 
 \linej
-There are two types of IDS depending of the detection mechanism:
+There are two types of IDS, based on the detection mechanism:
 \begin{itemize}
 	\item Signature based: The IDS looks for specific data (signature), for example a string. This is often an efficient solution to known attacks, but is fundamentally useless against unknown attacks (attacks without a signature in the IDS database).
 	\item Behaviour analysis: After a training period the IDS can detect when an event is rare (by probability) and correlate these suspicious occurrences to an intrusion.
@@ -68,10 +67,10 @@ In our case we take interest in the signature approach because is much more used
 OSSEC is an HIDS (Host-based IDS) solution with detection based on rules and decoders. Both rules and decoders can be defined with numerous options and support dependencies and regular expressions.
 \begin{itemize}
 	\item The decoders format the data for the rules.
-	\item The rules determine there is a threat if the conditions are met.
+	\item There is a threat if the conditions of the rule are met.
 \end{itemize}
 \linej
-\textbf{OSSEC} stands for \textbf{O}pen \textbf{S}ource HIDS \textbf{SEC}urity and is interesting for this project because the next qualities\cite{ossec}\cite{wazuh_additional_functionality}:
+\textbf{OSSEC} stands for \textbf{O}pen \textbf{S}ource HIDS \textbf{SEC}urity and is interesting for this project because\cite{ossec}\cite{wazuh_additional_functionality}:
 \begin{itemize}
 	\item \textbf{Widely Used}: OSSEC is a growing project, used by many different entities (ISPs, universities, governments, large corporate data centers) as their main HIDS solution. In addition to being deployed as an HIDS, it is commonly used strictly as a log analysis tool, monitoring and analyzing firewalls, IDSs, web servers and authentication logs.
 	\item \textbf{Scalable}: Because it is an HIDS and it uses \textbf{agents}. Each monitored host can either install the agent or use an agentless agent\cite{agentless}\cite{ossec_agent}. Agentless agents are processes initiated from the OSSEC manager, which gather information from remote systems, and use any RPC method (e.g. ssh, snmp rdp, wmi).
@@ -82,7 +81,7 @@ OSSEC is an HIDS (Host-based IDS) solution with detection based on rules and dec
 	\item \textbf{File integrity monitoring}: To detect access or changes to sensitive data.
 \end{itemize}
 \linej
-There are lots of alternatives to OSSEC for the scenario of a system administrator that wants to reinforce the security of the systems he is responsible for. There are free of charge and paid solutions and they do not need to be pure IDS as often they come in a full approach. For example the next table shows a comparison of the most important ICSs (Industrial Control Systems):
+There are lots of alternatives to OSSEC for the scenario of a system administrator that wants to reinforce the security of the systems he is responsible for. There are free of charge and paid solutions. Not all are pure IDSs and often they specialize in a field. For example the next table shows a comparison of the most important ICSs (Industrial Control Systems):
 \begin{figure}[H]
   \centering
 	\includegraphics[width=\textwidth]{figuras/comparison_ics.png}
@@ -94,7 +93,7 @@ There are lots of alternatives to OSSEC for the scenario of a system administrat
 One of the problems of a comparison in a table like this is that it fails to show how much a tool excels or lacks in the features it shares with others, how easy it is to use and other factors that can decide the right tool. The most relevant alternative technologies to OSSEC for this project are\cite{comparison_tools}:
 \begin{itemize}
 	\item Sagan: An open source HIDS, but only supports *nix operating systems (Linux, FreeBSD, OpenBSD, etc) and it lacks in features compared to OSSEC.
-	\item YARA: Is not an IDS or IPS, it is just a tool that does pattern/string/signature matching, but it excels at it in performance, results and easiness to write the rules. YARA is being used widely in cybersecurity, for example by Avast, Kaspersky Lab, VirusTotal and McAfee Advanced Threat Defense\cite{who_is_using_yara}. We could build a system to use YARA to scan files but always combined with at least another tool, but we prefer to stick to a tested IDS.
+	\item YARA: Is not an IDS or IPS, it is just a tool that does pattern/string/signature matching, but it excels at it in performance, results and easiness to write the rules. It can be used to scan the \textbf{memory} for known patterns. YARA is being used widely in cybersecurity, for example by Avast, Kaspersky Lab, VirusTotal and McAfee Advanced Threat Defense\cite{who_is_using_yara}. We could build a system to use YARA to scan files but always combined with at least another tool, but we prefer to stick to a tested IDS.
 \end{itemize}
 \linej
 Due to their popularity is worth mentioning the next tools, even though they are only for network:
@@ -104,25 +103,33 @@ Due to their popularity is worth mentioning the next tools, even though they are
 	\item Suricata: Another open source IDS/IPS solution. It provides hardware acceleration and multi-threading to improve the scanning speed.
 \end{itemize}
 \linej
-In our case most of the attributes in the previous comparison do not matter and we chose OSSEC because the problems found on the alternatives and that OSSEC offers a reliable way to use an already done and thoroughly tested IDS and enhance it to our needs without much work. To even ease more this we will use Wazuh, a fork of OSSEC.
-
-
-
-
+Most of the attributes in the previous comparison do not matter to us.
+We chose OSSEC because the problems found on the alternatives.
+Also OSSEC offers a reliable way to use an already done and thoroughly tested IDS, which we can enhance to our needs without much work.
+To even ease more this we will use Wazuh, a fork of OSSEC.
 
 \section{Objectives}
-%TODO
+Quality is valued more than quantity in this project. Therefore anything will be reworked or discarded if it does not fully satisfy the student, Tarlogic or the proffesor.
+\linej
+\linej
 The main objective is to improve intrusion detection in IDS. This can be accomplished in several ways:
 \begin{itemize}
 	\item Adding or changing functionality of an already existing technology.
 		\subitem Coding on core or additions.
 		\subitem Configuration or input of the program.
-	\item Develop a new technology or tools that result in a different detection system.
 \end{itemize}
-
 \linej
-We will use OSSEC through Wazuh to code rules and decoders, without the need to change any code of the program itself, which means this project can focus directly on detection without the need to create a detection system. Of course if in later stages of the project it would to be found that is convenient to modify the detection system itself it could be considered depending on the importance, the progress and the remaining time of the project.
-
+In this project the focus is on the configuration, particularly of rules to detect certain attacks. Is necessary to fully understand the attacks first to code its detection, therefore they also will need a fair amount of time.
+It is important to explain the attacks and their detection clearly, in order to make this work useful for anyone else and ease any changes.
+\linej
+\linej
+We will use OSSEC through Wazuh to code rules and decoders, without the need to change any code of the program itself.
+This means this project can focus directly on detection without the need to create a full system from scratch.
+If it were to be convenient to modify the detection system itself it would be considered, depending on the importance, the progress and the remaining time of the project.
+\linej
+\linej
+The rest of the objectives can be met with each of the increments, that may or may not be done in this project (depending on the progress).
+Because this project does not have a set of must have objectives they were planned in a modular fashion. Still some of them were marked as essential and if they were not to be met it would mean the failure of the project. More on its section on page \pageref{increments}.
 
 \section{Structure of this document}
 %TODO
