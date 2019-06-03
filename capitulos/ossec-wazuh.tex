@@ -10,14 +10,14 @@ Wazuh is a fork of OSSEC. It adds a RESTFul API, has a more updated ruleset and 
 \linej
 The most interesting qualities of Wazuh for this project are\cite{wazuh_index}\cite{wazuh_documentation}: %necessary redundancy
 \begin{itemize}
-	\item \textbf{Rootkits detection}: Rootkits are commonly used after an attack has suceeded to use the computer of the victim leaving no traces.
+	\item \textbf{Rootkits detection}: Rootkits are commonly used after an attack has succeeded to use the computer of the victim leaving no traces.
 	\item \textbf{File integrity monitoring}: It can provide detection of intrusions by identifying changes in content, permissions, ownership, and attributes on the monitored files. It can be used to comply with GDPR (General Data Protection Regulation).
 	\item \textbf{Scalability and multi-platform}: This means that the work on this project could really be used in real work environments.
-	\item \textbf{Configuration management}: The configuration is managed by the Wazuh server (Wazuh manager) and the agents can be grouped, allowing custom, grupal or global gathering and detection for each agent.
+	\item \textbf{Configuration management}: The configuration is managed by the Wazuh server (Wazuh manager) and the agents can be grouped, allowing custom, group or global gathering and detection for each agent.
 	\item \textbf{Multiple sources of data}: The scanned data can be from logs, output of commands or databases. %TODO more?
 	\item \textbf{Active response}: Automated remediation to security violations and threats, to mitigate more the possible damage. For example to stop the Internet connection to isolate a compromised system.
 	\item \textbf{Improved ruleset}: It is the combination of rules and decoders. Having this ruleset out of the box reduces the workload of this project. It can also serve as reference and complement some of the rules and decoders that this project intends to work on.
-	\item \textbf{Open source, free and easy to contribute to}: This is optional but nice, as it offers a chance to an unexperienced student to contribute in a real and useful project. The project is hosted on Github and Google Groups. In this project the contribution would be to the ruleset\cite{wazuh_ruleset} and not to the core of Wazuh\cite{wazuh} or the documentation\cite{wazuh_documentation2}.
+	\item \textbf{Open source, free and easy to contribute to}: This is optional but nice, as it offers a chance to an inexperienced student to contribute in a real and useful project. The project is hosted on Github and Google Groups. In this project the contribution would be to the ruleset\cite{wazuh_ruleset} and not to the core of Wazuh\cite{wazuh} or the documentation\cite{wazuh_documentation2}.
 \end{itemize}
 \linej
 The RESTFul API interacts using OSSEC commands and would be interesting if this project were related to a tool issuing queries to Wazuh, but this is not the case. Anyway it is still something valuable to have as these kind of tools are very common nowadays.
@@ -52,11 +52,11 @@ The main difference with the architecture of OSSEC is the ELK stack, because OSS
 	\item Kibana: Shows the data in a web browser, with graphs and options like grouping and time interval. This is often easier than to write commands to scan the OSSEC log in the Wazuh server, as the data of interest tends to stay the same.
 \end{itemize}
 \linej
-There are two possible architectures for this setup: having the ELK stack in the same machine that the Wazuh server (singlehost) or in a separated one (distributed). Each has advantages and disadvantages and in this project we will use the singlehost because in our case there are no constraints and is easier to set up and is more efficient.
+There are two possible architectures for this setup: having the ELK stack in the same machine that the Wazuh server (single host) or in a separated one (distributed). Each has advantages and disadvantages and in this project we will use the single host because in our case there are no constraints and is easier to set up and is more efficient.
 \begin{figure}[H]
   \centering
 	\includegraphics[width=\textwidth]{figuras/wazuh_singlehost.png}
-	\caption{Singlehost architecture}
+	\caption{Single host architecture}
 \end{figure}
 
 \begin{figure}[H]
@@ -103,7 +103,7 @@ To use it you only need to introduce the data as it would be received by the Waz
 Is possible to show which rules are tried and which trigger an alert for each event.
 This tools does not need a restart of the wazuh-manager service whenever changes want to be tested because it reads the configuration directly.
 \linej
-But is also worth to mention that some times it can be missleading because it does not work in the same way as the manager.
+But is also worth to mention that some times it can be misleading because it does not work in the same way as the manager.
 For example the logtest may show that the log matches a certain rule but actually it has matched a previous one silently.
 \linej
 \linej

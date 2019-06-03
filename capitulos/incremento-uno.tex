@@ -155,7 +155,7 @@ Again there is a migration to an administrator account of the AD. In this case a
 	\includegraphics[width=\textwidth]{figuras/hashdump.png}
 	\caption{Retrieval of KRBTGT data with hashdump}
 \end{figure}
-As before it is expected of the DCs to be more monitored. This means that the DCSync version is more interesting to an attacker because it has the same difficulty and beneficts at a lower risk.
+As before it is expected of the DCs to be more monitored. This means that the DCSync version is more interesting to an attacker because it has the same difficulty and benefits at a lower risk.
 
 \subsection{Detection purely with signatures}
 Searching for suspicious strings can be used to trigger alerts with Wazuh.
@@ -174,7 +174,7 @@ Any way we manage to detect programs like Mimikatz may be overcome in the future
 That does not mean that detection techniques are bound to fail or that there is no point to them.
 Many attackers know how hard it can be to overcome detection techniques.
 \linej
-It is also important to remember these scenarios are continously changing, with new techniques to avoid detection and the creation of new tools.
+It is also important to remember these scenarios are continuously changing, with new techniques to avoid detection and the creation of new tools.
 
 \subsection{Detection purely with Windows events}
 In theory we can identify certain attacks only with the security events of Windows. There are multiple websites in which this attack has been analyzed and its events identified\cite{events_1}\cite{detection_events}.
@@ -220,13 +220,13 @@ Detecting Mimikatz is not a sign of a Golden Ticket attack (unless is clear in t
 Unfortunately as seen in the exploits before there are multiple ways to execute Mimikatz, in an attempt not to be discovered by known techniques.
 \linej
 \linej
-Each time a Mimikatz shell spawns certain DLLs are loaded. The technique to identify a sucession of events in a short time as another event is called grouping.
+Each time a Mimikatz shell spawns certain DLLs are loaded. The technique to identify a succession of events in a short time as another event is called grouping.
 Grouping is a very effective technique, but it may require a lot of work to identify its components. In some cases the attack may not produce enough noise or it may not be possible to tell it apart from the normal events of the system\cite{sysmon}\cite{sysmon_event_7_mimikatz}.
 \linej
 Fortunately Mimikatz needs a fair amount of DLLs to work and some of them are not very usual. This makes the execution of Mimikatz noticeable.
 \linej
 \linej
- The load of a DLL can be detected by the event 7 of Sysmon and the grouping can be identified with Wazuh rules. It also can be detected by the event 10 of Sysmon, for inter-process access, but a greater cost of bandwith.
+ The load of a DLL can be detected by the event 7 of Sysmon and the grouping can be identified with Wazuh rules. It also can be detected by the event 10 of Sysmon, for inter-process access, but a greater cost of bandwidth.
 For this task is better to configure Sysmon to monitor these 5 images, to avoid logging too much:
 \linej
 \lstinputlisting[style=xml,caption=Sysmon monitoring with event 7 for certain DLLs,captionpos=b]{src/sysmon_event_7.xml}
@@ -327,7 +327,7 @@ The purpose of the first rule is to identify any log in JSON with \textit{MaxTic
 Additionally it can only trigger once each 600 seconds, to avoid flooding of alerts.
 \linej
 \linej
-This attack is often used because it may grant the highest privileges in the domain, is hard to detect and is very persistent because it does not care for the password changes in the active directory. That is why is very attractive for domains in which the attacker may decide to come back later, maybe even years later. That means is very unlikely for a forged ticket to not have a very big expiration age, because is one of its most appealing beneficts; but again it would be possible to an attacker to keep generating forged tickets with a valid expiration age forever, at a greater risk of being detected in other ways.
+This attack is often used because it may grant the highest privileges in the domain, is hard to detect and is very persistent because it does not care for the password changes in the active directory. That is why is very attractive for domains in which the attacker may decide to come back later, maybe even years later. That means is very unlikely for a forged ticket to not have a very big expiration age, because is one of its most appealing benefits; but again it would be possible to an attacker to keep generating forged tickets with a valid expiration age forever, at a greater risk of being detected in other ways.
 \linej
 \linej
 The testing of the script was satisfactory, the cases that inject a TGT were detected and there were no false positives:
@@ -368,7 +368,7 @@ Steps 1 and 2 of a normal Kerberos authentication exchange are not needed (figur
 \linej
 There is no need to connect to a DC, only a connection to the computer hosting the service is needed (steps [5-8]). Unless PAC validation is required, the service accepts all data in the TGS ticket.
 \linej
-The TGS is cyphered with the password hash of the account running the service, making changes of the password an effective mitigation against Silver Tickets.
+The TGS is ciphered with the password hash of the account running the service, making changes of the password an effective mitigation against Silver Tickets.
 To extract this data from memory the attacker has to have local administrator privileges\cite{events_1}\cite{silver_ticket}.
 \linej
 \linej
@@ -628,7 +628,7 @@ The downside is it can generate significant amounts of logging, therefore it was
 </ProcessAccess>
 \end{lstlisting}
 \linej
-After some analysis of these events it was clear that normal accesses could be identified by the \textit{grantedAccess} field. They had a value of \textit{0x3000} (even though these do not happen often) or \textit{0x1000} if the process is \textit{svchost.exe}. The detected malicius programs produced at least one event with a different value on this field.
+After some analysis of these events it was clear that normal accesses could be identified by the \textit{grantedAccess} field. They had a value of \textit{0x3000} (even though these do not happen often) or \textit{0x1000} if the process is \textit{svchost.exe}. The detected malicious programs produced at least one event with a different value on this field.
 \linej
 \lstinputlisting[style=xml,caption=Rules to detect unusual values of grantedAccess,captionpos=b]{src/rules_lsass.xml}
 \linej
@@ -695,7 +695,7 @@ There are multiple ways to protect the NTDS.DIT file\cite{protect_NTDS}\cite{hoo
 \end{itemize}
 
 \subsection{Conclusion}
-We have seen more ways to adquire credentials and how to detect them with Sysmon and Wazuh. The detection of the dump of LSASS was particularly interesting because its relevance and scope.
+We have seen more ways to acquire credentials and how to detect them with Sysmon and Wazuh. The detection of the dump of LSASS was particularly interesting because its relevance and scope.
 \linej
 Other detection techniques for these exploits could be implemented with network tools and remote commands.
 More ways to detect the cases from the previous section were shown.

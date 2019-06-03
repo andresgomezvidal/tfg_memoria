@@ -12,7 +12,7 @@ Note that the client in this case is Tarlogic even if the product is a contribut
 Depending of their type they can describe features, data, relations, properties or any details necessary to explain the system without ambiguity, in a way it can be easily understood.
 \linej
 \linej
-In this project the requirements will be fullfilled in multiple stages along the project, with increments.
+In this project the requirements will be fulfilled in multiple stages along the project, with increments.
 
 \section{Limitations}
 This project is not about software development, it is about cybersecurity research and auditing.
@@ -50,7 +50,7 @@ The requirement specification is simplified:
 There was a meeting with Tarlogic before the beginning of the project were the requirements were set.
 The requirements were classified by priority into these categories:
 \begin{itemize}
-	\item Essential: Those that are mandatory for the project to be considered sucessful.
+	\item Essential: Those that are mandatory for the project to be considered successful.
 	\item Desired: They would be completed if there are enough resources.
 	\item Optional: A level of priority under desired, meaning that they would be worked on after them.
 \end{itemize}
@@ -63,8 +63,8 @@ These requirements could be expanded and more could be added during the project 
 \subsection{Identification of non-functional requirements}
 \newcommand{\RNFuno}{Detection of the Golden Ticket attack}
 \newcommand{\RNFdos}{Detection of memory dumps for lsass.exe}
-\newcommand{\RNFtres}{Detection of distributed brute forze login attempts}
-\newcommand{\RNFcuatro}{Detection of reverse brute forze login attempts}
+\newcommand{\RNFtres}{Detection of distributed brute force login attempts}
+\newcommand{\RNFcuatro}{Detection of reverse brute force login attempts}
 \newcommand{\RNFcinco}{Detection of login outside of usual times}
 \newcommand{\RNFseis}{Monitoring of trap files in a file server}
 \newcommand{\RNFsiete}{Detection of backdoors}
@@ -142,7 +142,7 @@ These requirements could be expanded and more could be added during the project 
 		Name & \RNFcuatro \\ \hline
 		Description & Multiple login attempts are made from the same ip to different accounts. For example it would be noticed with at least 3 attempts in 10 seconds, 12 attempts in 1 minute or 120 attempts in 1 hour. The data source for Wazuh would be Windows security events. \\ \hline
 		Priority & Essential \\ \hline
-		Validation & Any of the scripts used to reproce the attack trigger an alert. \\ \hline
+		Validation & Any of the scripts used to reproduce the attack trigger an alert. \\ \hline
 	\end{tabularx}
 \end{table}
 \begin{table}[H]
@@ -230,7 +230,7 @@ These requirements could be expanded and more could be added during the project 
 		\rowcolor{gray!30}
 		Identifier & \textbf{RNF-12} \\ \hline
 		Name & \RNFdoce \\ \hline
-		Description & The GPDR is a regulation on data protection and privacy. The functionality in Wazuh to assure the GPDR would be the core to this fith increment. The expected difficulty would come from the need to guarantee fully it with a large and significant amount of tests.  \\ \hline
+		Description & The GPDR is a regulation on data protection and privacy. The functionality in Wazuh to assure the GPDR would be the core to this fifth increment. The expected difficulty would come from the need to guarantee fully it with a large and significant amount of tests.  \\ \hline
 		Priority & Desired \\ \hline
 		Validation & Any modification or not allowed access of the monitored files gets detected by the agent, triggering the corresponding alert \\ \hline
 	\end{tabularx}
@@ -252,7 +252,7 @@ These requirements could be expanded and more could be added during the project 
 		\rowcolor{gray!30}
 		Identifier & \textbf{RNF-14} \\ \hline
 		Name & \RNFcatorce \\ \hline
-		Description & There needs to be at least development if this integration is not transparent at that time in the project. The testing period would probably be a bit longer than usual because it would envolve new programs. The seventh requirement is based on this. \\ \hline
+		Description & There needs to be at least development if this integration is not transparent at that time in the project. The testing period would probably be a bit longer than usual because it would involve new programs. The seventh requirement is based on this. \\ \hline
 		Priority & Optional \\ \hline
 		Validation & Assure the data from the integrated program reaches Wazuh and the alerts only get triggered when they should \\ \hline
 	\end{tabularx}
