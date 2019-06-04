@@ -101,7 +101,7 @@ This follows the same structure as the previous cases, but this time with the dc
 The disadvantage in this case is that there needs to be a connection to a running DC that is not being monitored for the requests Mimikatz sends. There are open source tools available for this kind of monitoring\cite{dcsync_monitor} and it can also be detected by monitoring the network\cite{dcsync_monitor_network}.
 
 \subsubsection{Exploit 4: DCSync with Kiwi}
-In this case the access to the no-DC computer in the targeted network is done through Metasploit and its own version of Mimikatz called Kiwi\cite{pentestlab}. The Kali virtual machine is for running Metasploit outside the AD, but a Windows machine running in the AD could have been used as well.
+In this case the access to the no-DC computer in the targeted network is done through Metasploit\cite{metasploit} and its own version of Mimikatz called Kiwi\cite{pentestlab}. The Kali virtual machine is for running Metasploit outside the AD, but a Windows machine running in the AD could have been used as well.
 \linej
 We need to know the password of the account we want to access remotely and the targeted computer needs to have a SMB share.
 In this case the variable \textit{SMBPass} stores the password, which is \textit{Passw0rd}.

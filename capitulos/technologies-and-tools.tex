@@ -1,9 +1,37 @@
 %TODO
-\section{Development technologies and tools}
-\section{Pentesting technologies and tools}
-powershell, metasploit, mimikatz
-\section{Documentation technologies and tools}
-git, vim, latex, simplescreenrecorder, youtube, draw.io
-awk para gestionar la memoria
-aspell para las faltas
+\section{For development and configuration}
+\begin{itemize}
+	\item Wazuh: Wazuh\cite{wazuh} is the core of this project and some of the configuration of the system had to be done with it. In this project ruleset files were created to detect the targeted threats.
+	\item Sysmon: Sysmon\cite{sysmon} reports events based on its configuration, which in most cases give more insight of the status of the system than normal Windows events.
+	\item Powershell: Some basic scripting\cite{memoria_github} was done in powershell to mimic attacks and to perform a particular detection with a remote command.
+\end{itemize}
+
+\section{For pentesting}
+\begin{itemize}
+	\item Powershell scripts: Third-party tools writen in powershell were used to mimic attacks.
+	\item Powershell and Windows builtins: Some harmless powershell commands were used in combination with Windows builtins in order to extract useful data for an attacker.
+	\item Bash and shell programs in GNU/Linux: They were used in order to fully understand how some of the security was implemented in the Windows systems. For example their network share was first tested with the Samba command \textit{smbclient}.
+	\item Metasploit: It was used as framework\cite{metasploit} for getting information and to exploit security vulnerabilities, mimicking an attacker.
+	\item Mimikatz: Mimikatz\cite{mimikatz_github} was one of the most used tools for extracting data and gaining privileges.
+\end{itemize}
+%TODO more programs
+
+\section{For processing logs}
+\begin{itemize}
+	\item The Kibana plugin for Wazuh: It provides an easy and fashionable way to show the triggered alerts with a web browser. It was only used at first, before it felt too slow and shallow.
+	\item Bash and shell programs in GNU/Linux: The most used were Grep, AWK and Tmux. They were used to process the logs of Wazuh for most of the project. These logs include the received events and the triggered alerts. They were a good fit because they are easy to write commands on, they are fast and the queries needed for this project were quite simple. Grep was used for finding events with certain patterns. AWK to parse logs for easier comprehension. Tmux is a terminal multiplexer, which is basically a program that controls a bunch of terminals, and was used to manage the shells and to find and copy strings in them.
+	\item The Windows Event Viewer: To troubleshoot inspecting the logs generated from Sysmon. Some times under heavy load (particularly after booting) the agent could not send the data to the manager without a significant delay of a couple of minutes. From the manager it made it seem like none of the exepect events were generated.
+\end{itemize}
+
+\section{For the documentation}
+\begin{itemize}
+	\item Git: Was used to store the memory and manage its changes, through a Github repository\cite{memoria_github}.
+	\item Vim + \LaTeX + Latexmk: Vim was used as the text editor to write all the documentation and most of the ruleset and scripts. This was easier for me than using other editos because I have a fair amount of customization for Vim, in my general purpose dotfiles\cite{andresgomezvidal_gitlab}. \LaTeX was the medium the memory was writen in, with Latexmk for its compilation.
+	\item Draw.io: A web application for general purpose drawing\cite{drawio}. It was used for making diagrams in this project. If these diagrams were to be more complex this probably would have been replaced by other tool (at least for those cases).
+	\item Simplescreenrecorder: Is a GNU/Linux program. It was used to record videos during critical tasks using the virtual machines. These serve just as a way to assure the student these tasks were done exactly as he remembers them, or how to reproduce them.
+	%TODO comentar valores calidad y que una hora son $\sim$110MB
+	\item AWK: Some simple commands to make sure no minor elements are forgotten. For example that all references and images are used, and that any relevant acronym are explained in the glossary.
+	\item Aspell: Is a spell checker\cite{aspell}, this is a program for reviewing that words are writen correctly in the specified language. This program has a mode for \LaTeX that ignores its commands without the need of a special dictionary.
+\end{itemize}
+
 \section{Other technologies and tools}
