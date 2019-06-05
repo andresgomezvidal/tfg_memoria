@@ -386,8 +386,8 @@ An analysis on the risks identified previously was made by the student. The next
 		Exposition &  Medium\\ \hline
 		Indicator & The need to replicate already done work is greater than 30 minutes.\\ \hline
 		Prevention: Mitigate &
-			Take snapshots of key status for each virtual machine. \linej
-			Automate backing up the data and store the copies both in a cloud storage service and in a local disk.
+			Take snapshots of the relevant virtual machines when significant changes are made and copy them to an external disk. \linej
+			Backup in some way (automated or manual) the configuration elements, including pushing commits to the Github repository.
 		\\ \hline
 		Correction: Mitigate &
 			Recover the last backup available of the work. \linej
@@ -690,7 +690,7 @@ The \textit{New} probability, impact, exposition or measures always are be diffe
 		Date of the beginning of the problem & 26/02/2019 \\ \hline
 		Date of the solution of the problem & 26/02/2019 \\ \hline
 		Actions & A general power failure in Santiago caused a sudden shutdown of the computer the student was working on. \linej
-		Fortunately the only work lost was upgrading the software on the virtual machine hosting the Wazuh server.\\ \hline
+		Fortunately the only work lost was upgrading the software on the virtual machine hosting the Wazuh server, which was reproduced by restoring the last snapshot and repeating the process.\\ \hline
 	\end{tabularx}
 \end{table}
 \begin{table}[H]

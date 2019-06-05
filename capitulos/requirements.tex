@@ -22,6 +22,11 @@ All these cases are very straightforward and they have one or two actors at most
 Most of them are so simple that there are basically no other ways to write them.
 \linej
 \linej
+In this project there are no tests in the way a traditional project for software development would have.
+The closest thing are the Wazuh rules, being their trigger considered a success and either the opposite or any false positives considered a failure.
+This is actually pretty simple and effective, when we can assure the events generated from an attack.
+\linej
+\linej
 The only script that could be argued to be complex enough to need a traditional development approach is \textit{klist.ps1}\cite{memoria_github}, explained in page \pageref{klist_detection}. Is a bit over 100 lines script that parses the output of a few commands line by line in a classic for-loop fashion and adds a field with the value from a subtraction operation.
 \linej
 This script is the biggest and most complex software made in this project, and yet almost no knowledge of powershell was needed and was made in a couple of hours.

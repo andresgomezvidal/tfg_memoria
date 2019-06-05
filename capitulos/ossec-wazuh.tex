@@ -52,6 +52,7 @@ The main difference with the architecture of OSSEC is the ELK stack, because OSS
 	\item Kibana: Shows the data in a web browser, with graphs and options like grouping and time interval. This is often easier than to write commands to scan the OSSEC log in the Wazuh server, as the data of interest tends to stay the same.
 \end{itemize}
 \linej
+\label{singlehost}
 There are two possible architectures for this setup: having the ELK stack in the same machine that the Wazuh server (single host) or in a separated one (distributed). Each has advantages and disadvantages and in this project we will use the single host because in our case there are no constraints and is easier to set up and is more efficient.
 \begin{figure}[H]
   \centering
@@ -86,6 +87,12 @@ Both alerts and non-alert events are stored in files on the Wazuh server in addi
 \section{Rules and decoders}
 They constitute the main part of this project and they can be used to detect application or system errors, misconfigurations, attempted and/or successful malicious activities, policy violations and a variety of other security and operational issues\cite{wazuh_index}. Wazuh is quite helpful with the features and documentation of the ruleset and in this project the already existing rules and decoders were a great help as examples.
 \linej
+\linej
+Most of the time we only take interest in them, forgetting about the details of the rest of the previous figure:
+\begin{figure}[H]
+  \centering
+	\includegraphics[width=.4\textwidth]{figuras/wazuh_data_flow1_zoom.png}
+\end{figure}
 \linej
 Rules can be added in \textit{/var/ossec/etc/rules/} and decoders in \textit{/var/ossec/etc/decoders/} without any issue, but to change the already existing ones in \textit{/var/ossec/ruleset/rules/} or \textit{/var/ossec/ruleset/decoders/} is a bad idea because the next changes in those files from updates would overwrite them.
 %The solution is to copy the code (actually only the id is needed) of the existing item to the folder where we can add new ones, make the desired changes add \textit{overwrite=``yes''}\cite{wazuh_custom}.
