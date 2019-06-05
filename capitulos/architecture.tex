@@ -1,10 +1,12 @@
-Usually this chapter would be ''Design and Implementation``, but it was not needed because there was no serious software development during this project, as explained before.
+Usually this chapter would be ``Design and Implementation'', but it was not needed because there was no serious software development during this project, as explained before.
 Still a description of the components and their communication in the system is needed to fully understand it.
-
 \linej
 \linej
 This project was run under a GNU/Linux distribution in one of the personal computers of the student.
 Said computer has 20GB of RAM, an \textit{i5-2500k} processor and about 500GB of free disk storage for this project.
+\linej
+\linej
+Hosting services were considered but discarded, because their biggest advantage would be to be able to work on this project anywhere (since the only user is the student). This is something that can be achieved in a home computer with port redirection and either knowing the external ip of the router or using a naming service. There was no need to connect from the outside because the student had no more classes after december. When outside, time was better spent on research or on this document.
 
 \section{Virtual machines}
 VirtualBox was chosen as the host program of the virtual machines because it was the one the student had the most experience with.
@@ -19,7 +21,6 @@ This laboratory consist of multiple virtual machines, that represent:
 		\end{itemize}
 	\item The Wazuh server: A CentOS 7. As mentioned before\ref{singlehost}, we are using a single server to host both the Wazuh manager and the ELK stack.
 	\item An offensive security box: In this case with Kali Linux. This is used to access the Windows boxes in some of the attacks.
-		%TODO version Kali
 \end{itemize}
 
 \begin{figure}[H]
@@ -35,4 +36,7 @@ All the ruleset changes and log processing was done directly on the CentOS machi
 \linej
 Most of the time only the DC and the CentOS machine were powered on, but when all of them were being used at the same time they consumed about 12GB of RAM. Leavin aside booting, they did not affect performance in a perceptible way, either one to each other or to the host.
 \linej
-Snapshots were taken when significant changes were made, like relevant installation or configuration. Then the virtual machines with their snapshots were copied to a couple of external disks as backup.
+\linej
+Snapshots were taken when significant changes were made, like relevant installation or configuration. Then the virtual machines with their snapshots were copied to a couple of external disks as backup. At the end of the project near 60 snapshots were taken and the virtual machines with their snapshots were using about 160GB of disk space.
+
+
