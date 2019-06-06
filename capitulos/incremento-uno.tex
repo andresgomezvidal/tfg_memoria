@@ -614,7 +614,7 @@ No false positives were found, but they may appear in a real environment. This t
 
 \subsection{Detection of process accessing LSASS} \label{detect_lsass}
 The event 10 of Sysmon reports when a process access another process, possibly detecting hacking tools that read the memory contents of processes\cite{sysmon}.
-This event can be used to detect LSASS dumps, at least in some cases\cite{sysmon_event_10_lsass}.
+This event can be used to detect LSASS dumps\cite{sysmon_event_10_lsass}.
 \linej
 The downside is it can generate significant amounts of logging, therefore it was configured to log only the LSASS process and exclude the instances from the OSSEC agent and the Virtual Box service.
 %This exclude seems to affect other events of type 7 too, even though it should not.
@@ -629,7 +629,9 @@ The downside is it can generate significant amounts of logging, therefore it was
 </ProcessAccess>
 \end{lstlisting}
 \linej
-After some analysis of these events it was clear that normal accesses could be identified by the \textit{grantedAccess} field. They had a value of \textit{0x3000} (even though these do not happen often) or \textit{0x1000} if the process is \textit{svchost.exe}. The detected malicious programs produced at least one event with a different value on this field.
+After some analysis of these events it was clear that normal accesses could be identified by the \textit{grantedAccess} field. Its value is a mask, that indicates the type of privileges the process is accessed with.
+\linej
+They had a value of \textit{0x3000} (even though these do not happen often) or \textit{0x1000} if the process is \textit{svchost.exe}. The detected malicious programs produced at least one event with a different value on this field.
 \linej
 \lstinputlisting[style=xml,caption=Rules to detect unusual values of grantedAccess,captionpos=b]{src/rules_lsass.xml}
 \linej
@@ -691,7 +693,7 @@ There are multiple ways to protect the NTDS.DIT file\cite{protect_NTDS}\cite{hoo
 	\item Monitor or restrict the ntdsutil command.
 	\item Backup and disk encryption.
 	\item Restrict access to DCs and AD administrators.
-	\item Remove the ability to start/stop the Volume Shadow Copy service from ALL users on the system.
+	\item Remove the ability to start/stop the Volume Shadow Copy service from all users on the system.
 	\item Remove the ability to modify the security settings of the Volume Shadow Copy service from all users except for SYSTEM.
 \end{itemize}
 

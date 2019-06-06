@@ -4,7 +4,8 @@
 	%signature
 %dar por hecho cosas como AES, TLS, PMBOK, PMI ?
 %quitar del texto normal las explicaciones ?
-	%done="$(awk -F '{' '/\\textbf\{/ {print $2}' glossary.tex  |cut -d '}' -f1 |tr '\n' '|')"; \grep -E '\b[[:upper:]][[:upper:]]+\b'  *.tex |cut -d ':' -f2  | \grep -v '^[[:space:]]*%' |\grep -Eo '\b[[:upper:]][[:upper:]]+\b' | sort -u |grep -vE "UNIVERSITY|SANTIAGO|COMPOSTELA|ESCOLA|TÉCNICA|SUPERIOR|DE|ENXEÑARÍA|TODO|LARGE|STATE|JSON|XML|FAQ|UDP|TCP|IP|ARD|CA|CRD|GNU|GPL|OF|PA|RD|SL|TF|SEC|WBS|KERB|REQUEST|${done:0:-1}"
+	%done="$(awk -F '{' '/\\textbf\{/ {print $2}' glossary.tex  |cut -d '}' -f1 |tr '\n' '|')"; \grep -E '\b[[:upper:]][[:upper:]]+\b'  *.tex |cut -d ':' -f2  | \grep -v '^[[:space:]]*%' |\grep -Eo '\b[[:upper:]][[:upper:]]+\b' | sort -u |grep -vE "UNIVERSITY|SANTIAGO|COMPOSTELA|ESCOLA|TÉCNICA|SUPERIOR|DE|ENXEÑARÍA|TODO|LARGE|STATE|JSON|XML|FAQ|UDP|TCP|IP|ARD|CA|CRD|GNU|GPL|OF|PA|RD|SL|TF|SEC|WBS|KERB|REQUEST|CPU|DIT|HOST|NTDS|OR|PS|RAM|RNF|RNO|RYES|SYSTEM|UNKNOWN|WIN|WMIC|${done:0:-1}"
+
 
 \textbf{AD}: Active Directory. The directory domain of Windows systems, thought it can be also used by GNU/Linux with Samba.
 \linej
@@ -91,6 +92,9 @@
 \linej
 \linej
 \textbf{Shadow Copy}: Windows technology for copying files or volumes when they are in use.
+\linej
+\linej
+\textbf{SID}: Security Identifier. Unique value used to differentiate security elements or groups in Windows Systems.
 \linej
 \linej
 \textbf{TGT}: Ticket Granting Ticket. This ticket is encrypted with the KDC key and is used for request to the KDC one or more TGS.
