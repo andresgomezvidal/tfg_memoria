@@ -452,7 +452,7 @@ Because the database file of the AD accounts is locked from copying and reading,
 	\item WMIC: Commands for the Windows Management Instrumentation. They allow all kinds of remote management, including copy of files using Shadow Copy.
 \end{itemize}
 Another way to extract these credentials is to dump them from memory using third party tools and scripts. This is saving part of the data of a process running in the system\cite{dump_ways}.
-There are multiple tools available for this, but in this project only these were used: Mimikatz, Hashdump, ProcDump, pd, Minidump and NinjaCopy.
+There are multiple tools available for this, but in this project only these were used: Mimikatz, Hashdump, ProcDump, pd, Minidump.
 \linej
 Some of these tools have the option to retrieve the password or hashes history, meaning that the attacker could gain valuable insight on the password policy of the target.
 \linej
@@ -548,11 +548,11 @@ Import-Module c:\users\administrator\downloads\PowerSploit-master\Exfiltration\O
 Get-Process lsass | Out-Minidump -DumpFilePath c:\temp
 \end{lstlisting}
 
-\subsubsection{Exploit 11: Dump of LSASS with NinjaCopy}
+\subsubsection{Exploit 11: Retrieval of NTDS.DIT with NinjaCopy}
 %%fixes needed
 %%	%https://github.com/PowerShellMafia/PowerSploit/commit/bd6fe64316afe293d6b4cdf095ed3cfb64b6ab25
 %%	%https://github.com/PowerShellMafia/PowerSploit/issues/293
-Another PowerSploit module that can be used to dump LSASS into a file is \textit{NinjaCopy}:
+Another PowerSploit module that can be used to steal the NTDS.DIT file is \textit{NinjaCopy}:
 \begin{lstlisting}[style=PS]
 Import-Module C:\Users\Administrator\Downloads\PowerSploit-master\Exfiltration\Invoke-NinjaCopy.ps1
 Invoke-NinjaCopy -Path "c:\windows\ntds\ntds.dit"  -LocalDestination "c:\temp\ntds.dit"
@@ -667,7 +667,7 @@ All the exploits used until this point were tested, resulting in half producing 
 		10: Dump of LSASS with Minidump& \cellcolor{green!60}
 			0x1f3fff \linej
 			0x1fffff \\ \hline
-		11: Dump of LSASS with NinjaCopy& \cellcolor{red!60}\\ \hline
+		11: Retrieval of NTDS.DIT with NinjaCopy& \cellcolor{red!60}\\ \hline
 	\end{tabularx}
 	\caption{Exploit detection of unusual grantedAccess values}
 \end{table}
