@@ -1,0 +1,14 @@
+<rule id="111000" level="0">
+	<decoded_as>json</decoded_as>
+	<field name="OrganizationalUnit">\.+</field>
+	<field name="TargetUserName">\.+</field>
+	<field name="TimeGenerated">\.+</field>
+	<field name="EventID">\.+</field>
+	<description>Organizational Unit monitor</description>
+</rule>
+
+<rule id="111001" level="3">
+	<if_sid>111000</if_sid>
+	<field name="TargetUserName">\.+</field>
+	<description>Organizational Unit monitor unusual hours</description>
+</rule>

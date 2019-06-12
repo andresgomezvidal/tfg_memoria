@@ -53,7 +53,7 @@ To keep this simple only the basics are explained about the techniques used in t
 For example there is a sever-agent version of Mimikatz called Pypykatz\cite{pypykatz_agent}\cite{pypykatz_server} that is very new and should be a bit harder to detect that the exploits showed here. Unfortunately the student could not make it retrieve the KRBTGT hash.
 \linej
 \linej
-These scripts try to automate as much of the process as possible, which is normally done in an interactive way. This automation helps to assure that the results are the same each time and reduces the time for each test. All the tests in this project were executed at least twice. Tests were repeated if there were changes that could affect their results.
+These scripts try to automate as much of the process as possible, which is usually done in an interactive way. This automation helps to assure that the results are the same each time and reduces the time for each test. All the tests in this project were executed at least twice. Tests were repeated if there were changes that could affect their results.
 
 \subsubsection{Exploit 1: Local Mimikatz in DC}
 This requires local administrator privileges in the DC and also and an already downloaded version of Mimikatz in the DC, which the attacker can easily get after gaining privileges. If this example were to be used as it is it will probably be detected by the antivirus and Windows Defender, but again they can be disabled by a local administrator and there are techniques to avoid being detected by them.
@@ -242,7 +242,7 @@ The \textit{same\_field} option means that every one of the matches must have th
 The \textit{frequency} option means that the rule has to be matched that number of times to trigger. Is set to 2 because is the minimum value possible.
 \linej
 \linej
-Normally each of the suspicious DLLs would have its own rule, but it would not always identify Mimikatz because the frequency has to be at least 2. Therefore rules \textit{300301} and \textit{300302} identify 2 and 3 DLLs each (using a logical OR), making it possible to trigger the grouping rule.
+Usually each of the suspicious DLLs would have its own rule, but it would not always identify Mimikatz because the frequency has to be at least 2. Therefore rules \textit{300301} and \textit{300302} identify 2 and 3 DLLs each (using a logical OR), making it possible to trigger the grouping rule.
 The last rule identifies the use of the DLLs in a 10 seconds gap as the execution of Mimikatz. This detection could be evaded by adding time between the load of the DLLs in the source code.
 \linej
 \linej
@@ -278,6 +278,7 @@ The program to examine the contents of the cache is \textbf{klist}.
 \linej
 In order to do this we need to enable the execution of Wazuh's remote commands in the Windows agent and set the properties of the command in the manager in \textit{/var/ossec/etc/shared/default/agent.conf}\cite{wazuh_remote_command}:
 \linej
+\label{klist_script_wodle}
 \begin{lstlisting}[style=xml]
 <agent_config os="Windows">
 	<wodle name="command">
@@ -304,7 +305,7 @@ Doing this with only powershell assures it will work in any Windows system witho
 \lstinputlisting[style=PS,caption=Way to get the MaxTicketAge from the Group Policy,captionpos=b]{src/report.ps1}
 \linej
 Unfortunately that way to get the \textit{MaxTicketAge} from the Group Policy in the last script does not work by default with remote commands because Windows remote commands only allow certain types of commands.
-In any case the \textit{MaxTicketAge} value is not normally changed and it requires AD administrator privileges to do it, so due to the time constrains of the project this automation was abandoned. There are other ways to get the \textit{MaxTicketAge} value, but as mentioned is not something to spend time on.
+In any case the \textit{MaxTicketAge} value is not usually changed and it requires AD administrator privileges to do it, so due to the time constrains of the project this automation was abandoned. There are other ways to get the \textit{MaxTicketAge} value, but as mentioned is not something to spend time on.
 \linej
 \linej
 Next there is an example of the difference between the normal output of klist and the string stored in an alert in the manager.
@@ -605,7 +606,11 @@ Grouping the DLLs loaded by the \textit{Import-Module} command probed to be effe
 These 8 DLLs are detected by 4 rules to reach the minimum frequency:
 \lstinputlisting[style=xml]{src/rules_ninjacopy_import.xml}
 \linej
-No false positives were found, but they may appear in a real environment. This technique depends too much on the time frame and can be avoided changing the code. It works with both local and remote cases the same.
+This detection works with both local and remote cases the same.
+\linej
+False positives were found when attempting to log in remotely multiple times one after the other, as described on page \pageref{reverse_login}.
+Other may appear in a real environment.
+This technique depends too much on the time frame and can be avoided changing the code.
 %\linej
 %\linej
 %The next detection attempt was to use a grouping technique for the DLLs the program uses during the copy process. All of them were monitored with the event 7 of Sysmon. The most frecuent were: advapi32, kernel32, kernelbase, msvcrt and ntdll.
@@ -704,3 +709,112 @@ Other detection techniques for these exploits could be implemented with network 
 More ways to detect the cases from the previous section were shown.
 There are more tools and techniques to obtain authentication data that were not studied or tested, but probably some of them can be found using some of the detection methods in this section.
 
+
+\section{Detection of suspicious logins}
+In Windows there are multiple ways to login remotely, but all of them rely on the same authentication method. Depending on its success or failure certain security events are generated. Therefore it does not make sense to have multiple ways to reproduce these attacks, as with the previous cases.
+\linej
+In all these cases the code is run on the no-DC, which authenticates against the DC, using the builtin command \textit{winrs}\cite{winrs}. Here this command is used to specify the remote computer to log in, the user, the password and the command to run after a successful authentication, in that order.
+\linej
+\linej
+Usually this would use a dictionary of common passwords to be mixed with other characters, depending on the password requirements of the AD.
+To simplify its emulation, the same passwords will tried all the time.
+\linej
+\linej
+In this section the essential non-functional requirements RNF-03, RNF-04 and RNF-05 are covered.
+
+\subsection{Reverse brute force login attempts} \label{reverse_login}
+In this case the attacker tries to login guessing the password without changing his ip address.
+He hopes that this goes on undetected because the logins are against different accounts.
+\linej
+This can be reproduced with a very simple loop:
+\lstinputlisting[style=PS]{src/reverse_logins_winrs.ps1}
+\linej
+Fortunately Wazuh already has rules for this in \textit{0580-win-security\_rules.xml}\cite{wazuh_ruleset}.
+Failed logins are identified by the rule 60104, which is triggered by the security event 4771\cite{windows_events}.
+Grouping is used by the rule 60205 to trigger another alert with a higher level, if there are at least 8 in 240 seconds from the same ip address.
+The value of the MS\_FREQ variable is set to 8 in this file.
+\linej
+\lstinputlisting[style=xml,captionpos=b,caption=Rule 60205 of Wazuh]{src/rule_60205.xml}
+
+\subsection{Distributed brute force login attempts}
+Instead of changing the user the attacker changes his ip address every few attempts. In this case is not so much a matter of not being detected, but of not getting temporary banned by ip address, which usually results in a drop of received packages by the firewall of the network.
+\linej
+\linej
+Usually the attacker would connect from outside of the network, because once inside it would be hundreds of orders of magnitude faster to crack them from a file with credentials.
+Instead of changing the ip address of the interface he would change where his remote command comes from, usually using a Virtual Private Network paid service or previously compromised victims.
+Both cases provide multiple servers across the world and is trivial to write a shell command to jump from one to the next.
+\linej
+The next script is mostly about automation to change the ip address for the internal network, which has the interface connected to the \textit{wazuh.local} domain.
+Administrator privileges were required to change the ip address successfully. The sleep was found to be an effective measure to avoid trying to log in before the domain was reconnected:
+\lstinputlisting[style=PS]{src/distributed_logins_winrs.ps1}
+
+\linej
+The rule 60205 in Wazuh only works for failed attempts comming from the same ip address, therefore it fails to detect this. A similar rule can solve this, just by checking the same user is targeted and by changing the <same\_field> requirement to <not\_same\_field> for the ip address:
+\begin{lstlisting}[style=xml]
+<rule id="110001" level="3" frequency="5" timeframe="300">
+	<if_matched_sid>60104</if_matched_sid>
+	<not_same_field>win.eventdata.ipAddress</not_same_field>
+	<same_field>win.eventdata.targetUserName</same_field>
+	<description>Multiple Windows audit failure events with different IPs</description>
+	<options>no_full_log</options>
+	<group>pci_dss_10.6.1,gdpr_IV_35.7.d,</group>
+</rule>
+\end{lstlisting}
+\linej
+This frequency is fine for testing in a laboratory with an internal network, but probably is way too low for a real environment.
+
+\subsection{Login outside of usual hours}
+Allowed logon hours can be set with AD, resulting in failure even with correct passwords when outside of the time range.
+Even so we can not rely always in it and there are situations where is interesting to monitor if there are attemps to log in on unusual hours.
+For example an attacker would want to breach the network when there is a lesser chance of being detected, for example when the security staff is asleep.
+In this case we take interest in detecting these events for users of a certain Organizational Unit, which are useful for AD management.
+\linej
+\linej
+Doing this purely with OSSEC rules would need some hacks to change the code of the rules and restart the manager, for every time the users in the OU change.
+Because this changes are possible and because the security events do not report if the user belongs to an OU, we can consider these rules to be like variables.
+A workaround would be to name the users with a part of the name of the OU, like \textit{OU1\_user1}, and then have rules matching any username starting with it.
+\linej
+\linej
+Of course these are not acceptable and there is a better way.
+Running a remote command with Wazuh we can search the security log for the events of interest, check the hour and verify if they belong to a user of the OU.
+As with the klist script (page \pageref{klist_script_wodle}) a powershell script was created and a remote command was set.
+The script returns JSON output with basic information about the events that met the requirements.
+It needs to be run as Administrator to be able to query the security log.
+The OU name and the hour range are set in the script by hand, but could also be automated.
+%%<wodle name="command">
+%	%<disabled>no</disabled>
+%	%<tag>remoteOU</tag>
+%	%<command>powershell C:\\Users\\Public\\Documents\\OU.ps1</command>
+%	%<interval>10m</interval>
+%	%<ignore_output>no</ignore_output>
+%	%<run_on_start>yes</run_on_start>
+%	%<timeout>0</timeout>
+%	%<skip_verification>yes</skip_verification>
+%%</wodle>
+
+\linej
+\lstinputlisting[style=PS,caption=Remote script to find logins on unusual hours for the OU users,captionpos=b]{src/OU.ps1}
+\linej
+The first part of the script gets the usernames for the OU in question into an array.
+\linej
+The second is a function that parses the event properties, checking if the conditions are met: the hour of the event is not in the valid range (in this case [8, 17]) and the username is in the previous array.
+Next the properties \textit{TargetUserName}, \textit{TimeGenerated}, \textit{OrganizationalUnit} and \textit{EventID} are set in a JSON manner.
+The full string is returned at the end of the function, each event in a line.
+\linej
+The last part is about collecting the security events of interest in the last minutes and calling the function with them. In this case a 10 minute margin was set, because it takes about 5 seconds to query the log each time. The remote command was set to run every 10 minutes to match it.
+\linej
+We take interest in the event id 4771 for the failures and in the events 4768 (TGT request) and 4769 (TGS request) for the successes\cite{windows_events}.
+\linej
+\linej
+The rules in Wazuh are very simple, the first filters the events that match the format and the second just triggers for everything with an username (since the checks are done in the script):
+\lstinputlisting[style=xml]{src/rules_OU.xml}
+
+\subsection{Conclusion}
+These login events are very easy to perform, but also to detect.
+More sofisticated methods can be used, but is important to remember that brute force logins are not efficient when compared to offline cracking.
+There is always a risk of users having unsecure passwords, which can be reduced by enforcing and teaching good password policies.
+\linej
+Detecting logins in unusual hours can be hard just with OSSEC rules, but it can be solved with a remote script.
+\linej
+\linej
+Again the advantage of using an HIDS is we don't need to monitor every mean of authentication, just 3 events are enough. Combined with the already existing rules and possibilities of remote scripts, Wazuh probes to be a useful tool for management of login events.

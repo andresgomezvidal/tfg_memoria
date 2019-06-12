@@ -70,7 +70,7 @@ These requirements could be expanded and more could be added during the project 
 \newcommand{\RNFdos}{Detection of memory dumps for lsass.exe}
 \newcommand{\RNFtres}{Detection of distributed brute force login attempts}
 \newcommand{\RNFcuatro}{Detection of reverse brute force login attempts}
-\newcommand{\RNFcinco}{Detection of login outside of usual times}
+\newcommand{\RNFcinco}{Detection of login outside of usual hours}
 \newcommand{\RNFseis}{Monitoring of trap files in a file server}
 \newcommand{\RNFsiete}{Detection of backdoors}
 \newcommand{\RNFocho}{Use Sysmon to gather system's data in real time}
@@ -134,7 +134,7 @@ These requirements could be expanded and more could be added during the project 
 		\rowcolor{gray!30}
 		Identifier & \textbf{RNF-03} \\ \hline
 		Name & \RNFtres \\ \hline
-		Description & The idea is to identify from Windows security events when a network if being attacked by an attacker with login attempts, but changing his ip every few seconds (to avoid being banned). For example an alert would trigger with at least 5 attempts in 5 minutes, 20 attempts in 30 minutes or 200 attempts in 180 minutes. \\ \hline
+		Description & The idea is to identify from Windows security events when a network if being attacked by with login attempts, but changing his ip every few seconds (to avoid being banned). For example an alert would trigger with at least 5 attempts in 5 minutes, 20 attempts in 30 minutes or 200 attempts in 180 minutes. \\ \hline
 		Priority & Essential \\ \hline
 		Validation & Every one of the scripts for this attack are detected, triggering alerts. \\ \hline
 	\end{tabularx}
@@ -156,9 +156,9 @@ These requirements could be expanded and more could be added during the project 
 		\rowcolor{gray!30}
 		Identifier & \textbf{RNF-05} \\ \hline
 		Name & \RNFcinco \\ \hline
-		Description & The first step would be to specify the Organization Units and their login time ranges. Then set rules in Wazuh to guarantee any logging outside of them would trigger an alert and personal messages to the person in charge of the unit, or any other required action. \linej This and the previous requirements are part of the first increment.  \\ \hline
+		Description & The first step would be to specify the Organizational Units and their logon time ranges. Then set rules in Wazuh to guarantee any logging outside of them would trigger an alert and personal messages to the person in charge of the unit, or any other required action. \linej This and the previous requirements are part of the first increment.  \\ \hline
 		Priority & Essential \\ \hline
-		Validation & Any logins outside the allowed times trigger alerts, sending a message to the Organization Unit coordinator  \\ \hline
+		Validation & Any logins or failures outside the allowed hours trigger alerts, sending a message to the Organizational Unit coordinator  \\ \hline
 	\end{tabularx}
 \end{table}
 \begin{table}[H]
