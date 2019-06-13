@@ -749,7 +749,7 @@ Administrator privileges were required to change the ip address successfully. Th
 \lstinputlisting[style=PS]{src/distributed_logins_winrs.ps1}
 
 \linej
-The rule 60205 in Wazuh only works for failed attempts comming from the same ip address, therefore it fails to detect this. A similar rule can solve this, just by checking the same user is targeted and by changing the <same\_field> requirement to <not\_same\_field> for the ip address:
+The rule 60205 in Wazuh only works for failed attempts comming from the same ip address, therefore it fails to detect this. A similar rule can solve this, just by checking the same user is targeted and by changing the \textit{same\_field} requirement to \textit{not\_same\_field} for the ip address:
 \begin{lstlisting}[style=xml]
 <rule id="110001" level="3" frequency="5" timeframe="300">
 	<if_matched_sid>60104</if_matched_sid>
