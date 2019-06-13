@@ -6,10 +6,12 @@ Furthermore in this project there are no absolute constraints or objectives, as 
 
 \section{Motivation}
 
-Cybersecurity nowadays is very complex and there are many sub-fields and expert tools and it could be argued that is impossible to guarantee that any system is totally safe. To decide which technologies and tools to use we put ourselves in the shoes of an administrator of an enterprise system that wants to improve the security by detecting intrusions in the servers he works on.
+Cybersecurity nowadays is very complex: there are many sub-fields and expert tools and it could be argued that is impossible to guarantee that any system is totally safe.
+In this project we put ourselves in the shoes of a system administrator for an enterprise, that wants to improve the security by detecting intrusions in the servers he works on. This is key to decide which technologies and tools we choose in this project.
 \linej
 \linej
-Cybersecurity measures can be applied in multiple layers of the system, each with different tools, objectives, advantages and cost. In general the security of a system has the next parts:
+Cybersecurity measures can be applied in multiple layers of the system, each with different tools, objectives, advantages and costs.
+In general the security of a system can be divided into the next parts:
 \begin{enumerate}
 	\item \textbf{Firewall}: Control the inbound/outbound connections, on the \textbf{network layer}. In our scenario its objective is to reduce the amount of inbound connections, reducing the chance of intrusion.
 	\item \textbf{IPS}: Intrusion Prevention System to minimize the chance of intrusions, on the \textbf{network and host layers}. Provides active protection by actions.
@@ -17,7 +19,8 @@ Cybersecurity measures can be applied in multiple layers of the system, each wit
 \end{enumerate}
 
 \linej
-The next table shows a \textbf{simplified} flow on how the information is processed by the security layers and methods. For example an IDS can monitor the network connections, scanning the whole packet (header and payload) and filing a report if needed, but has worse performance than a firewall because they only scan the header of the packet and just opt to reject them\cite{firewall-ipds-ids_comparison}.
+The next table shows a \textbf{simplified} flow on how the information is processed by the security layers and methods.
+For example an IDS can monitor the network connections, scanning the whole packet (header and payload) and filing a report if needed, but has worse performance than a firewall because they only scan the header of the packet and just opt to reject them\cite{firewall-ipds-ids_comparison}.
 
 \begin{table}[H]
 	\centering
@@ -34,7 +37,22 @@ $\xrightarrow{\makebox[\textwidth]{Direction of the data flow}}$
 
 \linej
 \linej
-We focus on IDS because we are more interested about detection at host level, rather than network. Also IDS is less explored than IPS or Firewall and due to the advance in gathering and processing of data in the last years IDS has become much more viable and reliable.
+An IDS that focus on network monitoring is a NIDS.
+They have become widely used over the past two decades because of the impressive capability to provide a granular view of what is happening on the network.
+\linej
+Attackers have grown used to NIDSs and have found ways to evade them, like\cite{libro_ossec}:
+\begin{enumerate}
+	\item Avoid using known patterns in their connections.
+	\item Use encrypted connections.
+	\item Send the data in pieces accross the network. This does not work against NIDSs that can reassemble them, at a greater computing cost. %session splicing and framentation attacks
+	\item Denial of Service attacks: too much traffic overloads the NIDS, blinding it.
+\end{enumerate}
+\linej
+We understand that NIDSs are useful in many situations, and there are many cases in this project where they could be used to complement an HIDS.
+An HIDS can inspect the full stream of communications, making useless the techniques 2 and 3 in the previous example for evading NIDSs.
+\linej
+We focus on HIDS because we are more interested about detection at host level, rather than network.
+Also IDS is less explored than IPS or firewalls and due to the advance in gathering and processing of data in the last years IDS has become much more viable and reliable.
 
 \linej
 \linej

@@ -211,6 +211,17 @@ Sysmon can monitor each of the events either by whitelisting or blacklisting by 
 \linej
 Also is important to note that Sysmon can be a bit tricky to balance the configuration to get as much suspicious events as possible, while not reporting so much it affects the performance of the network. This is responsibility of the administrators of the network, who also have to tune the configuration to their custom needs.
 There are public configs for Sysmon that attempt to provide a good insight of the system while not logging too much data\cite{sysmon_config}.
+%\linej
+%\linej
+%Having a working setup of Wazuh and Sysmon just requires to install Sysmon in the Windows computers and enable receiving its events in the configuration file for Wazuh (\textit{/var/ossec/etc/shared/default/agent.conf}):
+%\begin{lstlisting}[style=xml]
+%<agent_config os="Windows">
+	%<localfile>
+		%<location>Microsoft-Windows-Sysmon/Operational</location>
+		%<log_format>eventchannel</log_format>
+	%</localfile>
+%</agent_config>
+%\end{lstlisting}
 
 \subsection{Detection of Mimikatz}
 Mimikatz is the tool of choice for this kind of attack for most attackers because it is very effective, easy to use and has multiple ways to be used in different attacks\cite{mimikatz_github}\cite{mimikatz_details}. This is a double edge sword for Mimikatz because it has become one of the programs to look for in antimalware detection programs. In this case we assume these programs have not detected Mimikatz and is up to Wazuh to do it. It is interesting to note that the author of Mimikatz provides ways to detect it, like the YARA rules he maintains\cite{mimikatz_github} or BusyLights\cite{understanding_powersploit_mimikatz}.
@@ -221,7 +232,7 @@ Detecting Mimikatz is not a sign of a Golden Ticket attack (unless is clear in t
 Unfortunately as seen in the exploits before there are multiple ways to execute Mimikatz, in an attempt not to be discovered by known techniques.
 \linej
 \linej
-Each time a Mimikatz shell spawns certain DLLs are loaded. The technique to identify a succession of events in a short time as another event is called grouping.
+Each time a Mimikatz shell spawns certain DLLs are loaded. The technique to identify a succession of events in a short time as another event is called grouping or composite.
 Grouping is a very effective technique, but it may require a lot of work to identify its components. In some cases the attack may not produce enough noise or it may not be possible to tell it apart from the normal events of the system\cite{sysmon}\cite{sysmon_event_7_mimikatz}.
 \linej
 Fortunately Mimikatz needs a fair amount of DLLs to work and some of them are not very usual. This makes the execution of Mimikatz noticeable.
@@ -779,7 +790,7 @@ Of course these are not acceptable and there is a better way.
 Running a remote command with Wazuh we can search the security log for the events of interest, check the hour and verify if they belong to a user of the OU.
 As with the klist script (page \pageref{klist_script_wodle}) a powershell script was created and a remote command was set.
 The script returns JSON output with basic information about the events that met the requirements.
-It needs to be run as Administrator to be able to query the security log.
+It needs to be run as Administrator to be able to query the security log and it only needs to be in the DCs, since OU logins are made always against them.
 The OU name and the hour range are set in the script by hand, but could also be automated.
 %%<wodle name="command">
 %	%<disabled>no</disabled>
