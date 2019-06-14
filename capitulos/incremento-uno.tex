@@ -62,9 +62,9 @@ This requires local administrator privileges in the DC and also and an already d
 \linej
 The script uses Mimikatz to get the needed data to generate the Golden Ticket, saving it to a file for convenience. Then the data is split in variables, each being a piece for generating the forged ticket. The \textit{exit} parameter is to exit the Mimikatz shell after executing the command.
 \linej
-After injecting the ticket (with the \textit{/ptt} option) the session haves administrator privileges in the AD, so any service in the AD can be used in this powershell session, any command should be allowed. Without the injection option Mimikatz would store the ticket in a file, which can be injected at any time with Mimikatz.
+After injecting the ticket (with the \textit{/ptt} option) the session haves administrator privileges in the AD, so any service in the AD can be used in this PowerShell session, any command should be allowed. Without the injection option Mimikatz would store the ticket in a file, which can be injected at any time with Mimikatz.
 The id 500 is the normal id for the administrator account in the AD.
-This script can be executed in multiple ways, for example from a powershell interactive terminal run as an administrator.
+This script can be executed in multiple ways, for example from a PowerShell interactive terminal run as an administrator.
 \linej
 \lstinputlisting[style=txt,caption=Example of the contents of the output file,captionpos=b]{src/output.txt}
 \linej
@@ -76,21 +76,21 @@ It provides access not only to the authenticated user's credentials, but every s
 \linej
 Mimikatz exploits this cache of credentials and reports the results to the user in the various forms employed by LSASS\cite{SANS_mimikatz}\cite{pentestlab}.
 
-\subsubsection{Exploit 2: Mimikatz from memory in DC}
-This is similar to the previous example but instead of having a downloaded version of Mimikatz (stored in the disk) the program is downloaded directly into the powershell session, so Mimikatz is never stored in disk.
+\subsubsection{Exploit 2: Mimikatz from memory in DC} \label{invoke-Mimikatz}
+This is similar to the previous example but instead of having a downloaded version of Mimikatz (stored in the disk) the program is downloaded directly into the PowerShell session, so Mimikatz is never stored in disk.
 The clear advantage over the previous one is that it should be harder to detect.
 \linej
 With slight changes this could work in a computer that is not a DC, if the attacker compromised a workstation a domain admin logged onto\cite{dump_ways}.
 \linej
 \lstinputlisting[style=PS,caption=Script to run Mimikatz only in memory and inject a Golden Ticket,captionpos=b]{src/genticket_mem.ps1}
 \linej
-The script downloads a version of Mimikatz from Github and creates a powershell object with its contents, that can be invoked at any time in this shell\cite{powersploit}\cite{mimikatz_details}. Then as before it dumps the needed information to generate the Golden Ticket in a file, which is read and parsed to store the interesting parameters into variables.
+The script downloads a version of Mimikatz from Github and creates a PowerShell object with its contents, that can be invoked at any time in this shell\cite{powersploit}\cite{mimikatz_details}. Then as before it dumps the needed information to generate the Golden Ticket in a file, which is read and parsed to store the interesting parameters into variables.
 \linej
 Due to difficulties with the last \textit{Mimikatz} command to work with the parameters in the variables a workaround was used. This is writing a new file that has the command with those parameters, and then execute the file.
 \linej
 \linej
 On the one hand it can be harder to detect with obfuscation, renaming and not using such an obvious url.
-On the other hand powershell can be monitored for downloading commands, particularly those with objects.
+On the other hand PowerShell can be monitored for downloading commands, particularly those with objects.
 
 \subsubsection{Exploit 3: Mimikatz with DCSync}
 The DCSync is a Mimikatz feature in which a no-DC attempts to impersonate a DC and request account information from a real DC. This technique is less noisy because it does not require direct access to a DC (which are often heavily monitored)\cite{dump_ways}\cite{pentestlab}. To run Mimikatz we still need local administrator privileges in the computer.
@@ -119,12 +119,12 @@ Now we are in a Meterpreter shell, which we can use to get the exact privileges 
 	\caption{Meterpreter shell running}
 \end{figure}
 
-To do this we look for a session running administrator privileges in the AD. In this case the targeted machine had a powershell session running as administrator, to which we migrate.
+To do this we look for a session running administrator privileges in the AD. In this case the targeted machine had a PowerShell session running as administrator, to which we migrate.
 \linej
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figuras/migrate.png}
-	\caption{Migration to a powershell session as AD administrator}
+	\caption{Migration to a PowerShell session as AD administrator}
 \end{figure}
 
 Now we are ready to run the real exploit. This loads the Metasploit version of Mimikatz (Kiwi) in the Meterpreter shell, allowing the attacker to use Kiwi commands.
@@ -205,7 +205,7 @@ The idea of finding a relationship between certain windows events and this attac
 \linej
 The real useful addition to the Windows builtin events is having Sysmon\cite{sysmon} in each of the monitored Windows computers. They can be combined to identify attackers better\cite{detection_events}.
 \linej
-With Sysmon we can have reports of events [1-21] and 255, which in some cases provide very precise and useful information of the system. For example we can configure Sysmon to log data about process with a certain processes, like: \textit{powershell}, \textit{Mimikatz}, any \textit{.ps1} or any \textit{.exe}.
+With Sysmon we can have reports of events [1-21] and 255, which in some cases provide very precise and useful information of the system. For example we can configure Sysmon to log data about process with a certain processes, like: \textit{PowerShell}, \textit{Mimikatz}, any \textit{.ps1} or any \textit{.exe}.
 Sysmon can monitor each of the events either by whitelisting or blacklisting by default or both. We can also combine it with rules from Wazuh, using Sysmon to increase the report capabilities and Wazuh to filter them.
 \linej
 \linej
@@ -310,7 +310,7 @@ The idea came from a very different klist script that only works interactively a
 \linej
 This script needs to be run in every member of the network to guarantee detection for every user.
 \linej
-Doing this with only powershell assures it will work in any Windows system without external programs. The downside of this parsing and my limited knowledge of powershell is that the script is a bit bulky and the dependency on the format of the output of klist.
+Doing this with only PowerShell assures it will work in any Windows system without external programs. The downside of this parsing and my limited knowledge of PowerShell is that the script is a bit bulky and the dependency on the format of the output of klist.
 \linej
 \lstinputlisting[style=PS,caption=Script to scan and parse to JSON the tickets in the cache,captionpos=b]{src/klist.ps1}
 \lstinputlisting[style=PS,caption=Way to get the MaxTicketAge from the Group Policy,captionpos=b]{src/report.ps1}
@@ -328,11 +328,11 @@ Next there is an example of the difference between the normal output of klist an
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{figuras/klist_alert.png}}
+	\includegraphics[height=\textheight]{figuras/klist_alert_rotated.png}
 	\caption{Latest alert of the klist monitoring in the manager}
 \end{figure}
 \linej
-The time difference mentioned before is a very easy way to detect a forged ticket. With a simple subtraction in the powershell script only a rule that makes a number comparison in the manager is needed to launch the alert.
+The time difference mentioned before is a very easy way to detect a forged ticket. With a simple subtraction in the PowerShell script only a rule that makes a number comparison in the manager is needed to launch the alert.
 \linej
 \lstinputlisting[style=xml,caption=Rules to detect a suspicious expiration age from the report of the klist script,captionpos=b]{src/rules_klist.xml}
 \linej
@@ -444,10 +444,6 @@ These are good examples of how detecting common steps to multiple exploits is on
 \linej
 \linej
 Another way of detection is to use YARA to look for certain patterns in memory, just like we can search for strings in the events. In the case of events the data comes from the program, which is easy to modify with multiple techniques like substitution or obfuscation. The patterns in memory are much more harder to change because it involves changing the logic of the program. That means most attackers would just take the risk to be detected by this kind of technique.
-\linej
-YARA is very interesting for this kind of project, but it belongs to the Virustotal pack of malware detection tools and so it could be used with Wazuh with a Virustotal API key. The free version only allows a few queries and the option of getting a premium key was not considered. There has been for months an open issue in the Github page of Wazuh for integrating it with YARA (as other IDSs have done before), which has recently evolved to an issue to integrate YARA into Wazuh as a module\cite{yara_module}.
-%Unfortunately this was not done before this part of the project as completed, so there was no time left to investigate more on it.
-%TODO revisar estado issue en el futuro
 
 
 \section{More about the extraction of credentials}
@@ -498,6 +494,7 @@ The creation of processes related to ntds can be reported by Sysmon:
 \end{lstlisting}
 \linej
 And alerts set with Wazuh:
+\label{ntdsutil_detection}
 \lstinputlisting[style=xml]{src/rules_ntds.xml}
 \linej
 The first rule is the parent, it filters windows events with the \textit{ntds} string.
@@ -560,7 +557,7 @@ Import-Module c:\users\administrator\downloads\PowerSploit-master\Exfiltration\O
 Get-Process lsass | Out-Minidump -DumpFilePath c:\temp
 \end{lstlisting}
 
-\subsubsection{Exploit 11: Retrieval of NTDS.DIT with NinjaCopy}
+\subsubsection{Exploit 11: Retrieval of NTDS.DIT with NinjaCopy} \label{invoke-NinjaCopy}
 %%fixes needed
 %%	%https://github.com/PowerShellMafia/PowerSploit/commit/bd6fe64316afe293d6b4cdf095ed3cfb64b6ab25
 %%	%https://github.com/PowerShellMafia/PowerSploit/issues/293
@@ -597,13 +594,13 @@ The direct read of the device can be reported with the event 9 of Sysmon, but ev
 \linej
 \lstinputlisting[style=xml,caption=Rules for detecting NinjaCopy,captionpos=b]{src/rules_ninjacopy.xml}
 \linej
-The local case only generates an event of type 9 and its only signatures are \textit{powershell} and \textit{Device{\textbackslash}HarddiskVolume}. It does not even record the name of the file because the handle is for the volume. This can not really guarantee this event comes from the execution of NinjaCopy, but until now has always worked and never reported a false positive. This rule could be much more useful if the NTDS.DIT file were in a different volume than normal.
+The local case only generates an event of type 9 and its only signatures are \textit{PowerShell} and \textit{Device{\textbackslash}HarddiskVolume}. It does not even record the name of the file because the handle is for the volume. This can not really guarantee this event comes from the execution of NinjaCopy, but until now has always worked and never reported a false positive. This rule could be much more useful if the NTDS.DIT file were in a different volume than normal.
 \linej
 \linej
 The remote case is much more easier to detect. In the tests it spawned at least 4 events of each type in about 12 seconds, all from the DC.
 The bigger the NTDS.DIT file and the slower the connection the more events are produced.
 \linej
-The remote command is executed by the \textit{wsmprovhost} program, which stands for Windows Remote Powershell Session.
+The remote command is executed by the \textit{wsmprovhost} program, which stands for Windows Remote PowerShell Session.
 The contents of the logs of the event type 1 are easy to distinguish from normal, due to the constant value of the \textit{commandLine} and \textit{parentCommandLine} fields.
 \linej
 The second and third rules detect the events of type 1 and 9 for the remote execution, and the last rule is a grouping rule of these two. This assures there are no false positives, but the second rule matches the exploit so well that it could be left out and probably would never cause false positives.
@@ -668,21 +665,21 @@ All the exploits used until this point were tested, resulting in a 100\% rate fo
 		\hline
 		\rowcolor{gray!30}
 		Exploit & unusual grantedAccess\\ \hline
-		1: Local Mimikatz in DC& \cellcolor{green!60}0x143a\\ \hline
-		2: Mimikatz from memory in DC& \cellcolor{green!60} 0x143a\\ \hline
+		1: Local Mimikatz in DC& \cellcolor{green!60}$\bullet$0x143a\\ \hline
+		2: Mimikatz from memory in DC& \cellcolor{green!60} $\bullet$0x143a\\ \hline
 		3: Mimikatz with DCSync& \cellcolor{red!60}\\ \hline
 		4: DCSync with Kiwi& \cellcolor{red!60}\\ \hline
-		5: Hashdump with Meterpreter& \cellcolor{green!60}0x1f3fff\\ \hline
+		5: Hashdump with Meterpreter& \cellcolor{green!60}$\bullet$0x1f3fff\\ \hline
 		6: Retrieval of NTDS.DIT with ntdsutil& \cellcolor{red!60}\\ \hline
 		7: Storing registry hives with Reg& \cellcolor{red!60}\\ \hline
-		8: Dump of LSASS with ProcDump& \cellcolor{green!60}3 events with 0x1fffff\\ \hline
+		8: Dump of LSASS with ProcDump& \cellcolor{green!60}$\bullet$3 events with 0x1fffff\\ \hline
 		9: Dump of LSASS with pd& \cellcolor{green!60}
-			0x1f3fff \linej
-			0x1452 followed by 0x1410, this pair repeated 28 times \linej
-			0x1452 \\ \hline
+			$\bullet$0x1f3fff \linej
+			$\bullet$0x1452 followed by 0x1410, this pair repeated 28 times \linej
+			$\bullet$0x1452 \\ \hline
 		10: Dump of LSASS with Minidump& \cellcolor{green!60}
-			0x1f3fff \linej
-			0x1fffff \\ \hline
+			$\bullet$0x1f3fff \linej
+			$\bullet$0x1fffff \\ \hline
 		11: Retrieval of NTDS.DIT with NinjaCopy& \cellcolor{red!60}\\ \hline
 	\end{tabularx}
 	\caption{Exploit detection of unusual grantedAccess values}
@@ -720,6 +717,160 @@ Other detection techniques for these exploits could be implemented with network 
 More ways to detect the cases from the previous section were shown.
 There are more tools and techniques to obtain authentication data that were not studied or tested, but probably some of them can be found using some of the detection methods in this section.
 
+\section{More about PowerShell}
+In previous examples we have shown how dangerous PowerShell scripts can be for a system, in particular NinjaCopy is a good example of the complexity they can reach.
+\linej
+There are enough PowerShell exploits and mitigation techniques that they could have its own section in this project (for example PowerSploit, PowerShellEmpire and Nishang), but they were not contemplated at the start and there is no time allocated for them now.
+In the last years PowerShell (as an attack platform) has become much more used against organizations, because traditional defenses are not able to mitigate or even stop PowerShell attacks in some cases.
+\linej
+This section is for diving a bit on how an attacker may use PowerShell and how to detect and mitigate it. It was not planned, but not researching about PowerShell capabilities after seen how dangerous it can be seems a bit careless. Therefore about 8 hours were used for this section.
+\linej
+\linej
+In some of the examples in this project PowerShell can be replaced by cmd, the basic command interpreter for Microsoft systems.
+We chose to leave cmd aside our preoccupations because cmd.exe is commonly blocked (unlike PowerShell) and is much less used that PowerShell in cybersecurity attacks.
+\linej
+\linej
+Other similar options for broad attacks, that we are not going to examine, are\cite{powershell_adsecurity}:
+\begin{itemize}
+\item Custom executables.
+\item Sysinternal tools.
+\item Windows Scripting Host.
+\item VBScript, CScript, JavaScript and Batch files.
+\end{itemize}
+\linej
+There are a number of reasons why attackers love PowerShell\cite{powershell_adsecurity}:
+\begin{itemize}
+\item Run code in memory without touching disk.
+\item Download and execute code from another system.
+\item Interface with .Net and Windows APIs.
+\item Built-in remoting.
+\item Most organizations are not watching PowerShell activity.
+\item Many endpoint security products don’t have visibility into PowerShell activity.
+\end{itemize}
+\linej
+Again in this project we can only take a peek at them, but knowing them at least gives us an idea of real world scenarios.
+
+\subsection{Encoding commands}
+PowerShell provides a builtin option to execute commands from an encoded string. This can be used to bypass signature matching. Of course the attacker does not need to encode it in the same machine, that would be a risk for the key string to be detected.
+\linej
+\lstinputlisting[style=PS,caption=Encoding and executing ntdsutil,captionpos=b]{src/powershell_enc.ps1}
+\linej
+Data about the execution of PowerShell can be obtained with the event 1 of Sysmon:
+\begin{lstlisting}[style=xml]
+<ProcessCreate onmatch="include">
+	<CommandLine condition="contains">powershell.exe</CommandLine>
+	<CommandLine condition="contains">encodedCommand</CommandLine>
+	<CommandLine condition="contains">-enc </CommandLine>
+	<CommandLine condition="contains">ntdsutil.exe</CommandLine>
+</ProcessCreate>
+\end{lstlisting}
+\linej
+Focusing logging and detection on the CommandLine field is more effective than the Image field, because it usually provides key information that does not appear in the other. Usually we would not be monitoring this field for the signature ntdsutil.exe, because there are too many commands, but in this case we are doing a exception to show what it brings and that there is no real need for it.
+\linej
+Even though encoding ntdsutil makes it impossible for that string to found in the CommandLine field of the PowerShell process, the execution of ntdsutil can be detected by other means. In this case the string ntdsutil appears in both fields, when ntdsutil.exe is executed.
+\linej
+\linej
+To put it simply the encoded PowerShell command spawns a ntdsutil process:
+\linej
+Image: ``[$\cdots$]powershell.exe'',
+\linej
+CommandLine: ``[$\cdots$]powershell.exe -encodedCommand [$\cdots$]''
+\linej
+$\xrightarrow{\makebox[\textwidth]{Creating process}}$
+Image: ``[$\cdots$]ntdsutil.exe'',
+\linej
+CommandLine: ``[$\cdots$]ntdsutil.exe''
+\linej
+ParentCommandLine: ``[$\cdots$]powershell.exe''
+\linej
+\linej
+\linej
+The very same PowerShell command cannot be totally encoded, therefore it is possible to detect the strings for these options. This applies too to other PowerShell options, like for bypassing the execution policy, they either are detected as encoded or by signature\cite{powershell_adsecurity}.
+Another way to detect encoded commands is to look out for unusual long CommandLine fields:
+\lstinputlisting[style=xml,]{src/rules_powershell_enc_latex.xml}
+\linej
+The first rule to match the event triggers the alert.
+In testing this was always the 100100 rule, but it was checked that the other two also work if this rule is not present.
+The syntax of this rule is simplified for this document, but the original can be found in the repository of this project\cite{memoria_github}.
+\linej
+\linej
+The encoded command used in this case triggered the alerts for too long CommandLine (100100), CommandLine with ntdsutil.exe (300011) and suspicious database events (300013, 300014 and 300015)\ref{ntdsutil_detection}.
+
+\subsection{PowerShell version 5 security features}
+The version 5 of PowerShell has useful security features to mitigate complex PowerShell attacks\cite{powershell_adsecurity}:
+\begin{itemize}
+	\item The PowerShell Constrained Language Mode with AppLocker: it provides mitigation.
+	\item The Anti-Malware Scan Interface: it provides mitigation.
+	\item PowerShell logging features: it provides more data, making possible signature matching for some exploits.
+	\item PowerShell commands to get status on detected threats by Windows Defender: it provides another way to query a data source.
+\end{itemize}
+\linej
+AppLocker is a program used for whitelisting the use of programs in Windows.
+AppLocker also has functionality to allow only enterprise signed scripts, reducing the chance of malicious PowerShell scripts being run.
+\linej
+The Constrained Language Mode limits the capability of PowerShell to base functionality, removing advanced features like .Net and Windows API calls.
+In short it allows day-to-day tasks and at the same time restricts the use of the most dangerous attack tools, because they often rely on these features.
+For example the Invoke-Mimikatz\ref{invoke-Mimikatz} and Invoke-NinjaCopy\ref{invoke-NinjaCopy} methods stop working because they rely on reflective DLL loading.
+\linej
+It can be activated in multiple ways and an attacker could deactivate it too, but these changes can be monitored.
+This setting cannot be changed from a session with the Constrained Mode activated even with administrator privileges.
+\linej
+\linej
+The Anti-Malware Scan Interface enables all script code to be scanned prior to execution by PowerShell and other Windows scripting engines, that are compatible with it.
+This requirement is only satisfied by a few programs nowadays.
+\linej
+\linej
+There are multiple logging features for PowerShell:
+\begin{itemize}
+	\item Logging by modules. It provides the option to log each module. For example \textit{Microsoft.PowerShell.*} for most of the core capabilities and \textit{ActiveDirectory} logs use related to AD functionality.
+	\item The system-wide transcript option records the input and output of PowerShell as it appears in a terminal, for each PowerShell user per computer.
+The files can be written to a write-only share or to the cache until it is back online.
+	\item Script block logging provides the ability to log de-obfuscated PowerShell code to the event log.
+Many PowerShell attacks obfuscate their code to avoid signature matching.
+\end{itemize}
+\linej
+It is highly recommended to disable or remove the legacy version 2 of PowerShell that is left in the system, because it has lots of vulnerabilities that are not going to get patched and it can be used to bypass the previous restrictions.
+
+\subsection{PowerShell without powershell.exe}
+PowerShell is more than a single executable, is a core component of Windows (not removable) that exists in \textit{System.Management.Automation.dll}.
+PowerShell can host different runspaces, which are effectively PowerShell instances.
+A custom PowerShell runspace can be instantiated via code, so PowerShell can be executed through a custom coded executable (such as MyPowershell.exe).
+\linej
+Because PowerShell commands can be executed without the executable powershell.exe, it avoids signature matching and the locked powershell.exe mitigation\cite{powershell_adsecurity}.
+\linej
+\linej
+One of the frameworks that can be used for this is PS$\textgreater$Attack\cite{PSAttack}.
+It includes many offensive PowerShell tools that rely on this DLL to bypass possible locks.
+The PowerShell tools are encrypted to avoid signature matching and are decrypted to memory at run-time\cite{powershell_adsecurity}.
+\linej
+The tool tested was Invoke-Mimikatz, which was previously used in \ref{invoke-Mimikatz}.
+PS$\textgreater$Attack just needs to run the executable and call this module with the options desired.
+\linej
+\linej
+With the PowerShell script block logging this execution gets registered in plain text (with slight format issues).
+This probes that bypassing powershell.exe locks and command encryption can be detected with script block logging.
+The event ids generated by running the executable and the module are 4104, 4105 and 4106, of which the most useful seemed to be 4104.
+%\begin{lstlisting}[style=xml]
+%<agent_config os="Windows">
+	%<localfile>
+		%<location>Microsoft-Windows-PowerShell/Operational</location>
+		%<log_format>eventchannel</log_format>
+	%</localfile>
+%</agent_config>
+%\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=\textheight]{figuras/PSATTACK_mimikatz_rotated.png}
+	\caption{Part of PSAttack events in the archives log}
+\end{figure}
+
+\subsection{Conclusion}
+PowerShell can be very dangerous for the security of Windows systems: it can do almost anything and it has multiple ways to avoid being detected.
+These include encoding, encryption, reflective DLL loading and bypassing locks on executables.
+All of them have been shown in this project, along with mitigations and/or detection techniques.
+\linej
+In this section we have only scratched the surface of PowerShell auditing. It would be interesting to have more time for this topic.
 
 \section{Detection of suspicious logins}
 In Windows there are multiple ways to login remotely, but all of them rely on the same authentication method. Depending on its success or failure certain security events are generated. Therefore it does not make sense to have multiple ways to reproduce these attacks, as with the previous cases.
@@ -788,7 +939,7 @@ A workaround would be to name the users with a part of the name of the OU, like 
 \linej
 Of course these are not acceptable and there is a better way.
 Running a remote command with Wazuh we can search the security log for the events of interest, check the hour and verify if they belong to a user of the OU.
-As with the klist script (page \pageref{klist_script_wodle}) a powershell script was created and a remote command was set.
+As with the klist script (page \pageref{klist_script_wodle}) a PowerShell script was created and a remote command was set.
 The script returns JSON output with basic information about the events that met the requirements.
 It needs to be run as Administrator to be able to query the security log and it only needs to be in the DCs, since OU logins are made always against them.
 The OU name and the hour range are set in the script by hand, but could also be automated.

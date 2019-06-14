@@ -81,6 +81,10 @@ Wazuh offers this kind of integration with Bro and Suricata and probably it woul
 For Windows systems monitoring registry changes could be explored in the same way we study events in this project.
 Wazuh can keep detect changes in the registry as it does with other files: registering its hashes and checking for changes periodically.
 Because the lack of time and experience this idea was left behind.
+\linej
+\linej
+YARA is very interesting for this kind of project, but it belongs to the Virustotal pack of malware detection tools and so it could be used with Wazuh with a Virustotal API key. The free version only allows a few queries and the option of getting a premium key was not considered. There has been for months an open issue in the Github page of Wazuh for integrating it with YARA (as other IDSs have done before), which has recently evolved to an issue to integrate YARA into Wazuh as a module\cite{yara_module}.
+Unfortunately this was not done before the first increment of the project was completed, so there was no chance to use it in the end.
 
 \subsection{Restrictions}
 Leaving aside the time constraint of \projecthours \ hours, the two main factors to decide what improvements to choose for this project are a student without experience in proffesional cybersecurity and that we want some kind of inmediate results from this project.

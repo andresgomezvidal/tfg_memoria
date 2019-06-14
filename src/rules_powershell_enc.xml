@@ -1,0 +1,15 @@
+<rule id="100100" level="3">
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.commandLine">\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.</field>
+	<description>Detected at least 200 characters in commandLine</description>
+</rule>
+<rule id="100101" level="3">
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.commandLine">encodedCommand</field>
+	<description>Detected encodedCommand in commandline</description>
+</rule>
+<rule id="100102" level="3">
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.commandLine">-enc </field>
+	<description>Probably encodedCommand in commandline</description>
+</rule>
