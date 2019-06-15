@@ -85,6 +85,9 @@ Because the lack of time and experience this idea was left behind.
 \linej
 YARA is very interesting for this kind of project, but it belongs to the Virustotal pack of malware detection tools and so it could be used with Wazuh with a Virustotal API key. The free version only allows a few queries and the option of getting a premium key was not considered. There has been for months an open issue in the Github page of Wazuh for integrating it with YARA (as other IDSs have done before), which has recently evolved to an issue to integrate YARA into Wazuh as a module\cite{yara_module}.
 Unfortunately this was not done before the first increment of the project was completed, so there was no chance to use it in the end.
+\linej
+\linej
+Sigma\cite{sigma} is a project that mantains a Generic Signature Format for SIEM Systems. This means a set of files describing threats and relevant information about them, like signatures and false positives. An automated integration with Sigma would also be possible with a script to convert Sigma rules to OSSEC, which was not even considered because it falls out the scope. It could be been used in some parts of this project as a manual resource to find patterns to look for, but in the end was not necessary.
 
 \subsection{Restrictions}
 Leaving aside the time constraint of \projecthours \ hours, the two main factors to decide what improvements to choose for this project are a student without experience in proffesional cybersecurity and that we want some kind of inmediate results from this project.
