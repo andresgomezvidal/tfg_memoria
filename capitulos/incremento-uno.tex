@@ -1,8 +1,13 @@
 \newcommand{\RNO}{\cellcolor{red!60}No}
 \newcommand{\RYES}{\cellcolor{green!60}Yes}
-The title of this increment is ``\IncrementoUno''. This chapter is about the requirements that were selected into this increment and later implemented.
+The title of these increments are ``\IncrementoUno'' and ``\IncrementoDos''. Due to reasons stated later in \ref{increment_explanation} these increments that were planned to be implemented individually were actually done together.
+This chapter is about the requirements that were selected into them and later implemented.
 \linej
 In this laboratory we disabled the antivirus and Windows defender to avoid unnecesary delays. Our focus is to detect what we can without relaying on these programs, so there is no need for them.
+\linej
+\linej
+As this chapter progresses new detection methods are introduced that may be of use in some of the previous cases.
+Usually this is not mentioned, in order to keep the explanations simple.
 
 \section{Golden Ticket}
 Windows domains are a very common way to manage network accounts in companies. The servers of this kind of domain are Domain Controllers and the program that handles the domain directory is the Active Directory. The Domain Controller (DC) runs the Key Distribution Center (KDC), which handles Kerberos ticket requests, which are used to authenticate users and allow access to services (for example login).
@@ -10,6 +15,12 @@ Windows domains are a very common way to manage network accounts in companies. T
 The KRBTGT account is the equivalent of a super-administrator account for Kerberos. It is used to encrypt and sign all Kerberos tickets within a domain, so DCs use the account password to decrypt Kerberos tickets for validation.
 By default this account password never changes and the account name is the same in every domain\cite{stealthbits}.
 \linej
+\begin{figure}[H]
+	\label{kerberos_exchange}
+	\centering
+	\includegraphics[width=.8\textwidth]{figuras/TGT_TGS_PAC.jpg}
+	\caption{Steps for Kerberos authentication}
+\end{figure}
 \linej
 The process to access a service is as follows\cite{tarlogic_theory}\cite{tarlogic_comprehension}\cite{events_1}:
 \begin{enumerate}
@@ -23,12 +34,6 @@ The process to access a service is as follows\cite{tarlogic_theory}\cite{tarlogi
 	\item Optionally the user receives the response to his request to use the service.
 \end{enumerate}
 
-\begin{figure}[H]
-	\label{kerberos_exchange}
-	\centering
-	\includegraphics[width=.8\textwidth]{figuras/TGT_TGS_PAC.jpg}
-	\caption{Steps for Kerberos authentication}
-\end{figure}
 \linej
 The Golden Ticket attack depends on obtaining the password information of the KRBTGT account to generate a forged TGT. It can provide the attacker with the desired privileges in the AD (like administrator).
 \linej
@@ -209,6 +214,12 @@ The real useful addition to the Windows builtin events is having Sysmon\cite{sys
 \linej
 With Sysmon we can have reports of events [1-21] and 255, which in some cases provide very precise and useful information of the system. For example we can configure Sysmon to log data about process with a certain processes, like: \textit{PowerShell}, \textit{Mimikatz}, any \textit{.ps1} or any \textit{.exe}.
 Sysmon can monitor each of the events either by whitelisting or blacklisting by default or both. We can also combine it with rules from Wazuh, using Sysmon to increase the report capabilities and Wazuh to filter them.
+\linej
+\linej
+\label{increment_explanation}
+Originally getting more data from Sysmon and other sources for detection was an increment in itself, but seeing as the first increment could not be accomplished without it both were combined into increment 1.
+This was due to overestimating the report capability of Windows events in the planning stage and because increment 2 was way easier than planned.
+From this point Sysmon and remote scripts are used to identify threats and they do not have to be just additional detection as it was first planned.
 \linej
 \linej
 Also is important to note that Sysmon can be a bit tricky to balance the configuration to get as much suspicious events as possible, while not reporting so much it affects the performance of the network. This is responsibility of the administrators of the network, who also have to tune the configuration to their custom needs.
@@ -985,4 +996,4 @@ There is always a risk of users having unsecure passwords, which can be reduced 
 Detecting logins in unusual hours can be hard just with OSSEC rules, but it can be solved with a remote script.
 \linej
 \linej
-Again the advantage of using an HIDS is we don't need to monitor every mean of authentication, just 3 events are enough. Combined with the already existing rules and possibilities of remote scripts, Wazuh probes to be a useful tool for management of login events.
+Again the advantage of using an HIDS is we don't need to monitor every mean of authentication, just 3 events are enough. Combined with the already existing rules and possibilities of remote scripts, Wazuh probes to be a useful tool for management of login events. Other checks could be easily implemented, for example logins from certain ip ranges can be monitored with regular expressions for the ip field (\textit{win.eventdata.ipAddress}).

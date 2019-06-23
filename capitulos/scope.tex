@@ -88,10 +88,13 @@ Unfortunately this was not done before the first increment of the project was co
 \linej
 \linej
 Sigma\cite{sigma} is a project that mantains a Generic Signature Format for SIEM Systems. This means a set of files describing threats and relevant information about them, like signatures and false positives. An automated integration with Sigma would also be possible with a script to convert Sigma rules to OSSEC, which was not even considered because it falls out the scope. It could be been used in some parts of this project as a manual resource to find patterns to look for, but in the end was not necessary.
+\linej
+\linej
+Another idea that was left behind was to ensure the protection of the Wazuh agent itself in case of attack. This would cover the detection of processes attempting to stop or or modify the agent program or the data sent to the manager. This can also be applied to other actions like disabling logs and modifying settings or security policies. It is interesting for the project because it would be one of the first and most effective steps that a smart attacker would do to avoid being detected.
 
 \subsection{Restrictions}
 Leaving aside the time constraint of \projecthours \ hours, the two main factors to decide what improvements to choose for this project are a student without experience in proffesional cybersecurity and that we want some kind of inmediate results from this project.
-This is why instead of a pure research project (for example machine learning with IDS), we opted for a more traditional and safe approach.
+This is why instead of a pure research project (for example machine learning with IDS), we opted for a more traditional and safer approach.
 Because of this most of the increments were optional (due to the high probability of initial scope being too ambitious), but the first increments are considered vital to the project.
 \linej
 \linej

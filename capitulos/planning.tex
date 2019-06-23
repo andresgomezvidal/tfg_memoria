@@ -791,21 +791,29 @@ In other words, they could be described as the models for the final Gantt diagra
 
 \subsection{Real planning}
 Due to changes on the scope and a 3 month delay due to personal matters of the student there is a big difference with the initial planning.
+\linej
+\linej
+Increment 2 was mixed into increment 1, due to reasons stated later\ref{increment_explanation} these increments that were planned to be implemented individually were actually done together.
+Therefore from now on this document refers to them as a couple of increments to avoid more confusion, but they could also be seen as one.
 
 \newcommand{\PStart}{2018-11-01}
 \newcommand{\FBeginning}{2018-11-07}
 \newcommand{\SIncrementoUnoInicial}{2018-11-08}
 \newcommand{\FIncrementoUnoInicial}{2018-12-05}
-\newcommand{\FPause}{2019-02-25}
+\newcommand{\SPause}{2018-12-06}
+\newcommand{\FPause}{2019-02-24}
+\newcommand{\SComeback}{2019-02-25}
 \newcommand{\FComeback}{2019-02-28}
-\newcommand{\FIncrementoUnoFinal}{2019-05-05}
-%\newcommand{\FIncrementoTres}{}
-%\newcommand{\FIncrementoCuatro}{}
-%\newcommand{\FIncrementoCinco}{}
-%\newcommand{\FIncrementoSeis}{}
-%\newcommand{\FIncrementoSiete}{}
-\newcommand{\SClosing}{2019-06-29}
-\newcommand{\PClosing}{2019-07-17}
+\newcommand{\SIncrementoUnoContinuation}{2019-03-01}
+\newcommand{\FIncrementoUnoContinuation}{2019-05-04}
+\newcommand{\SPauseDos}{2019-05-05}
+\newcommand{\FPauseDos}{2019-05-19}
+\newcommand{\SIncrementoUnoFinal}{2019-05-20}
+\newcommand{\FIncrementoUnoFinal}{2019-06-14}
+\newcommand{\SIncrementoTres}{2019-06-15}
+\newcommand{\FIncrementoTres}{2019-07-17}
+\newcommand{\SClosing}{2019-07-18}
+\newcommand{\PClosing}{2019-07-25}
 
 
 \begin{figure}[H]
@@ -832,28 +840,27 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 		%\ganttbar[name=pause-background-top,bar/.style={fill=none, draw=none}]{}{\FIncrementoUnoInicial}{\FPause} 			% top node
 
 		\ganttgroup{Project management}{\PStart}{\PClosing} \\
+		\ganttgroup{Increment 1 and 2}{\SIncrementoUnoInicial}{\FIncrementoUnoFinal} \\
 		\ganttbar[name=Beginning]{Beginning of the project}{\PStart}{\FBeginning} \\
-		\ganttbar[name=Increment1Start]{Increment 1}{\SIncrementoUnoInicial}{\FIncrementoUnoInicial} \\ %pausa 3 meses
-		\ganttbar[name=Pause, bar/.append style={fill=gray!80}]{Project on hold}{\FIncrementoUnoInicial}{\FPause} \\
-		\ganttbar[name=Comeback]{Updating tools of the project}{\FPause}{\FComeback} \\
-		\ganttbar[name=Increment1End]{Increment 1}{\FComeback}{\FIncrementoUnoFinal} \\
-		%\ganttbar[name=Increment3}]{Increment 3}{}{} \\
-		%\ganttbar[name=Increment4]{Increment 4}{}{} \\
-		%\ganttbar[name=Increment5]{Increment 5}{}{} \\
-		%\ganttbar[name=Increment6]{Increment 6}{}{} \\
-		%\ganttbar[name=Increment7]{Increment 7}{}{} \\
+
+		\ganttbar[name=Increment1Start]{Increment 1 and 2}{\SIncrementoUnoInicial}{\FIncrementoUnoInicial} \\ %pausa 3 meses
+		\ganttbar[name=Pause, bar/.append style={fill=gray!80}]{Project on hold}{\SPause}{\FPause} \\
+		\ganttbar[name=Comeback]{Updating tools of the project}{\SComeback}{\FComeback} \\
+
+		\ganttbar[name=Increment1Continuation]{Increment 1 and 2}{\SIncrementoUnoContinuation}{\FIncrementoUnoContinuation} \\ %pausa 2 semanas
+		\ganttbar[name=Pause2, bar/.append style={fill=gray!80}]{Two weeks pause}{\SPauseDos}{\FPauseDos} \\
+		\ganttbar[name=Increment1End]{Increment 1 and 2}{\SIncrementoUnoFinal}{\FIncrementoUnoFinal} \\
+
+		\ganttbar[name=Increment3]{Increment 3}{\SIncrementoTres}{\FIncrementoTres} \\
 		\ganttbar[name=Closing]{Closing of the project}{\SClosing}{\PClosing} \\
 
 		\ganttlink[link type=straight]{Beginning}{Increment1Start}
-		\ganttlink[link type=straight]{Increment1Start}{Pause}
-		\ganttlink[link type=straight]{Pause}{Comeback}
-		\ganttlink[link type=straight]{Comeback}{Increment1End}
-		%\ganttlink[link type=straight]{Increment1}{Increment3}
-		%\ganttlink[link type=straight]{Increment3}{Increment4}
-		%\ganttlink[link type=straight]{Increment4}{Increment5}
-		%\ganttlink[link type=straight]{Increment5}{Increment6}
-		%\ganttlink[link type=straight]{Increment6}{Increment7}
-		%\ganttlink[link type=straight]{Increment7}{Closing}
+		\ganttlink[link type=straight]{Comeback}{Increment1Continuation}
+		\ganttlink[link mid=.25, link bulge=1.3]{Beginning}{Increment3}
+		\ganttlink[link bulge=0.15]{Comeback}{Increment3}
+		%\ganttlink{Increment1Continuation}{Increment1End}
+		\ganttlink[link type=straight]{Increment1End}{Closing}
+		\ganttlink[link type=straight]{Increment3}{Closing}
 
 		%\ganttbar[name=pause-background-bottom,bar/.style={fill=none, draw=none}]{}{\FIncrementoUnoInicial}{\FPause} 			% bottom node
 		%\begin{scope}
@@ -885,7 +892,7 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 		]{\PStart}{\FBeginning}
 		\newganttlinktypealias{straight}{f-s}
 		\setganttlinklabel{straight}{}
-		\gantttitlecalendar{month=name, week, day}
+		\gantttitlecalendar{month=name, day}
 
 
 		\ganttgroup[name=prel]{Preliminary study and investigation}{\PStart}{2018-11-05} \\
@@ -916,10 +923,12 @@ Due to changes on the scope and a 3 month delay due to personal matters of the s
 
 
 
+\linej
 This was not planned beforehand but it seemed like a good idea to leave some time to investigate exactly what did change while the project was on hold.
 Also a new setup of critical installations, because the documentation of the process before was lacking in details slightly.
 \linej
 The Kibana plugin for Wazuh stopped working because there was a version mismatch with the installed version of Wazuh. Even though it was not critical it was fixed as soon as it was noticed.
+\linej
 
 \begin{figure}[H]
 	\begin{center}
@@ -937,14 +946,14 @@ The Kibana plugin for Wazuh stopped working because there was a version mismatch
 		title height=0.5,
 		title top shift=-.5,
 		vgrid
-		]{\FPause}{\FComeback}
+		]{\SComeback}{\FComeback}
 		\newganttlinktypealias{straight}{f-s}
 		\setganttlinklabel{straight}{}
-		\gantttitlecalendar{month=name, week, day}
+		\gantttitlecalendar{month=name, day}
 
 
-		\ganttgroup[name=prel]{Check changes from last working setup}{\FPause}{2019-02-27} \\
-		\ganttbar[name=tools]{Wazuh documentation and tools used in the project}{\FPause}{2019-02-25} \\
+		\ganttgroup[name=prel]{Check changes from last working setup}{\SComeback}{2019-02-27} \\
+		\ganttbar[name=tools]{Wazuh documentation and tools used in the project}{\SComeback}{2019-02-25} \\
 		\ganttbar[name=attacks]{Known and new attacks}{2019-02-26}{2019-02-27} \\
 		\ganttmilestone[name=fmilestone]{Basic knowledge of the changes}{2019-02-27} \\
 
@@ -962,14 +971,22 @@ The Kibana plugin for Wazuh stopped working because there was a version mismatch
 \end{figure}
 
 
-
-
-\begin{figure}[H]
-	\advance\leftskip-2cm
+\linej
+\linej
+\linej
+Increments 1 and 2 were worked on for most of the project, mainly due to inexperience and unplanned events more than the actual difficulty of their content.
+\linej
+The next Gantt shows the work done on them after the project was on hold for 3 months, because before it only research was done.
+After 3 months most of the research was redone to ensure nothing was forgotten.
+\linej
+The tasks initially planned for increment 2 was so small and integrated into already existing tasks for increment 1 that it made no sense to added them to this Gantt.
+\linej
+\begin{sidewaysfigure}
+	%\advance\leftskip-2cm
 	\begin{ganttchart}[
 		time slot format=isodate,
 		time slot format/start date=\PStart,
-		x unit=0.18cm,
+		x unit=0.15cm,
 		y unit title=1.0cm,
 		y unit chart=1.0cm,
 		bar/.append style={fill=\Cnormal},
@@ -983,29 +1000,27 @@ The Kibana plugin for Wazuh stopped working because there was a version mismatch
 		]{2019-03-01}{\FIncrementoUnoFinal}
 		\newganttlinktypealias{straight}{f-s}
 		\setganttlinklabel{straight}{}
-		\gantttitlecalendar{month=name, week}
+		\gantttitlecalendar{month=name}
 
-
-	\newcommand{\Dstudy}{2019-04-01}
-	\newcommand{\Daction}{2019-04-12}
-
+	\newcommand{\Dstudy}{2019-04-18}
+	\newcommand{\Daction}{2019-05-25}
+	\newcommand{\STesting}{2019-05-26}
 
 		\ganttgroup[name=pstudy]{Preliminary study and investigation}{2019-03-01}{\Dstudy} \\
 		\ganttbar[name=list]{Identify the attacks to detect}{2019-03-01}{2019-03-01} \\
-		\ganttbar[name=attack]{Detailed study of each attack and tools}{2019-03-01}{2019-03-20} \\
-		\ganttbar[name=detection]{Exploration of detection options}{2019-03-14}{\Dstudy} \\
+		\ganttbar[name=attack]{Detailed study of each attack and tools}{2019-03-01}{2019-04-07} \\
+		\ganttbar[name=detection]{Exploration of detection options}{2019-03-14}{2019-04-17} \\
 		\ganttbar[name=fdetection]{Discard undetectable attacks}{\Dstudy}{\Dstudy} \\
 		\ganttbar[name=design]{Basic design of each attack}{\Dstudy}{\Dstudy} \\
 
-		\ganttgroup[name=action]{Code the detection}{2019-04-02}{\Daction} \\
-		\ganttbar[name=RD]{Writing rules and decoders}{2019-04-02}{\Daction} \\
-		\ganttbar[name=actions, bar/.append style={fill=\Coptional},]{Automation of actions}{\Daction}{\Daction} \\
-		\ganttbar[name=normalWindows, bar/.append style={fill=\Coptional},]{Support for Windows 10}{\Daction}{\Daction} \\
-		%\ganttbar[name=additional,bar/.append style={fill=\Coptional}]{Possible additional study and investigation}{\Daction}{\Daction} \\
+		\ganttgroup[name=action]{Code the detection}{2019-04-19}{\Daction} \\
+		\ganttbar[name=RD]{Writing rules and decoders}{2019-04-19}{\FIncrementoUnoContinuation} \\
+		\ganttbar[name=Pause2, bar/.append style={fill=gray!80}]{Two weeks pause}{\SPauseDos}{\FPauseDos} \\
+		\ganttbar[name=RD2]{Writing rules and decoders}{\SIncrementoUnoFinal}{\Daction} \\
 
-		\ganttgroup[name=TF]{Testing and fixing}{2019-04-13}{\FIncrementoUnoFinal} \\
-		\ganttbar[name=test]{Testing}{2019-04-13}{\FIncrementoUnoFinal} \\
-		\ganttbar[name=fix]{Fixing}{2019-04-13}{\FIncrementoUnoFinal} \\
+		\ganttgroup[name=TF]{Testing and fixing}{\STesting}{\FIncrementoUnoFinal} \\
+		\ganttbar[name=test]{Testing}{\STesting}{\FIncrementoUnoFinal} \\
+		\ganttbar[name=fix]{Fixing}{\STesting}{\FIncrementoUnoFinal} \\
 
 		\ganttmilestone[name=milestone]{Certain attacks can be detected now}{\FIncrementoUnoFinal} \\
 
@@ -1018,6 +1033,31 @@ The Kibana plugin for Wazuh stopped working because there was a version mismatch
 		\ganttlink[link bulge=1]{TF}{milestone}
 
 	\end{ganttchart}
-	\caption{``Increment 1: \IncrementoUno'' planning}
-\end{figure}
+	\caption{``Increment 1 and 2'' planning}
+\end{sidewaysfigure}
 
+%\begin{figure}[H]
+	%\advance\leftskip-2cm
+	%\begin{ganttchart}[
+		%time slot format=isodate,
+		%time slot format/start date=\PStart,
+		%x unit=0.18cm,
+		%y unit title=1.0cm,
+		%y unit chart=1.0cm,
+		%bar/.append style={fill=\Cnormal},
+		%milestone label font=\itshape\footnotesize,
+		%group label font=\bfseries\footnotesize,
+		%bar label font=\footnotesize,
+		%title label font=\footnotesize,
+		%title height=0.5,
+		%title top shift=-.5,
+		%vgrid,
+		%]{\SIncrementoTres}{\FIncrementoTres}
+		%\newganttlinktypealias{straight}{f-s}
+		%\setganttlinklabel{straight}{}
+		%\gantttitlecalendar{month=name}
+
+
+	%\end{ganttchart}
+	%\caption{``Increment 3: \IncrementoTres'' planning}
+%\end{figure}
