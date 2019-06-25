@@ -1,7 +1,6 @@
-\newcommand{\RNO}{\cellcolor{red!60}No}
-\newcommand{\RYES}{\cellcolor{green!60}Yes}
 The title of these increments are ``\IncrementoUno'' and ``\IncrementoDos''. Due to reasons stated later in \ref{increment_explanation} these increments that were planned to be implemented individually were actually done together.
 This chapter is about the requirements that were selected into them and later implemented.
+\linej
 \linej
 In this laboratory we disabled the antivirus and Windows defender to avoid unnecesary delays. Our focus is to detect what we can without relaying on these programs, so there is no need for them.
 \linej
@@ -217,7 +216,7 @@ Sysmon can monitor each of the events either by whitelisting or blacklisting by 
 \linej
 \linej
 \label{increment_explanation}
-Originally getting more data from Sysmon and other sources for detection was an increment in itself, but seeing as the first increment could not be accomplished without it both were combined into increment 1.
+Originally getting more data from Sysmon and other sources for detection was an increment in itself, but seeing as the first increment could not be accomplished without it both were combined into the same increment.
 This was due to overestimating the report capability of Windows events in the planning stage and because increment 2 was way easier than planned.
 From this point Sysmon and remote scripts are used to identify threats and they do not have to be just additional detection as it was first planned.
 \linej
@@ -919,7 +918,7 @@ Instead of changing the user the attacker changes his ip address every few attem
 \linej
 \linej
 Usually the attacker would connect from outside of the network, because once inside it would be hundreds of orders of magnitude faster to crack them from a file with credentials.
-Instead of changing the ip address of the interface he would change where his remote command comes from, usually using a Virtual Private Network paid service or previously compromised victims.
+Instead of changing the ip address of the interface he would change where his remote command comes from, usually using a Virtual Private Network paid service, an anonymity network or previously compromised victims.
 Both cases provide multiple servers across the world and is trivial to write a shell command to jump from one to the next.
 \linej
 The next script is mostly about automation to change the ip address for the internal network, which has the interface connected to the \textit{wazuh.local} domain.
