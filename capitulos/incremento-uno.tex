@@ -2,7 +2,9 @@ The title of these increments are ``\IncrementoUno'' and ``\IncrementoDos''. Due
 This chapter is about the requirements that were selected into them and later implemented.
 \linej
 \linej
-In this laboratory we disabled the antivirus and Windows defender to avoid unnecesary delays. Our focus is to detect what we can without relaying on these programs, so there is no need for them.
+In this laboratory we disabled the antivirus and Windows Defender to avoid unnecesary delays.
+Particularly the \textit{DisableAntiSpyware} and \textit{DisableRealTimeMonitoring} were enabled with in the registry.
+Our intention is to detect as much as possible without depending on other programs, and in this increment Windows Defender was not needed.
 \linej
 \linej
 As this chapter progresses new detection methods are introduced that may be of use in some of the previous cases.
@@ -469,7 +471,7 @@ Because the database file of the AD accounts is locked from copying and reading,
 \begin{itemize}
 	\item Reg: Allows to change or save registry hives, including those that contain credentials.
 	\item Ntdsutil: Provides management of this database, including creation of backups.
-	\item WMIC: Commands for the Windows Management Instrumentation. They allow all kinds of remote management, including copy of files using Shadow Copy.
+	\item WMIC: Commands for the Windows Management Instrumentation. They allow all kinds of remote management, including copy of files using Shadow Copy. Sysmon has 3 events to monitor them specifically.
 \end{itemize}
 Another way to extract these credentials is to dump them from memory using third party tools and scripts. This is saving part of the data of a process running in the system\cite{dump_ways}.
 There are multiple tools available for this, but in this project only these were used: Mimikatz, Hashdump, ProcDump, pd, Minidump.
