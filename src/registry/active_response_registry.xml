@@ -1,0 +1,32 @@
+<command>
+	<name>change-registry-value_1</name>
+	<executable>change-registry-value_1.cmd</executable>
+	<timeout_allowed>no</timeout_allowed>
+</command>
+<active-response>
+	<command>change-registry-value_1</command>
+	<location>local</location>
+	<rules_id>333003</rules_id>
+</active-response>
+
+<command>
+	<name>create-registry-value_1</name>
+	<executable>create-registry-value_1.cmd</executable>
+	<timeout_allowed>no</timeout_allowed>
+</command>
+<active-response>
+	<command>create-registry-value_1</command>
+	<location>local</location>
+	<rules_id>333004</rules_id>
+</active-response>
+
+<command>
+	<name>change-registry-value_0</name>
+	<executable>change-registry-value_0.cmd</executable>
+	<timeout_allowed>no</timeout_allowed>
+</command>
+<active-response>
+	<command>change-registry-value_0</command>
+	<location>local</location>
+	<rules_id>333006</rules_id>
+</active-response>

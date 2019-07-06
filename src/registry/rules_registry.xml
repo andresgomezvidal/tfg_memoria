@@ -1,0 +1,43 @@
+<rule id="333000" level="0">
+	<if_group>sysmon_event_12|sysmon_event_13|sysmon_event_14</if_group>
+	<field name="win.eventdata.targetObject">HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\</field>
+	<description>Registry event in HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\</description>
+</rule>
+
+<rule id="333001" level="0">
+	<if_sid>333000</if_sid>
+	<field name="win.eventdata.targetObject">New Value</field>
+	<description>Ignore temporary registry operation</description>
+</rule>
+
+<rule id="333002" level="0">
+	<if_sid>333000</if_sid>
+	<field name="win.eventdata.targetObject">Windows Defender Exploit Guard\\Controlled Folder Access\\</field>
+	<description>Registry event in Windows Defender Exploit Guard\\Controlled Folder Access\\</description>
+</rule>
+<rule id="333003" level="3">
+	<if_sid>333002</if_sid>
+	<field name="win.system.eventID">13</field>
+	<field name="win.eventdata.targetObject">EnableControlledFolderAccess|ExploitGuard_ControlledFolderAccess_AllowedApplications|ExploitGuard_ControlledFolderAccess_ProtectedFolders</field>
+	<field name="win.eventdata.details">0x00000000</field>
+	<description>Registry changed: it should always be 1</description>
+</rule>
+<rule id="333004" Level="3">
+	<if_sid>333002</if_sid>
+	<field name="win.system.eventID">12|14</field>
+	<field name="win.eventdata.targetObject">EnableControlledFolderAccess|ExploitGuard_ControlledFolderAccess_AllowedApplications|ExploitGuard_ControlledFolderAccess_ProtectedFolders</field>
+	<description>Registry deleted: it should always be 1</description>
+</rule>
+
+<rule id="333005" Level="0">
+	<if_sid>333000</if_sid>
+	<field name="win.system.eventID">13</field>
+	<field name="win.eventdata.details">0x00000000</field>
+	<field name="win.eventdata.targetObject">Spynet\\SpyNetReporting|DisableAntiSpyware|DisableBehaviorMonitoring|DisableOnAccessProtection|DisableScanOnRealtimeEnable</field>
+	<description>Ignore registry operation</description>
+</rule>
+<rule id="333006" Level="3">
+	<if_sid>333000</if_sid>
+	<field name="win.eventdata.targetObject">Spynet\\SpyNetReporting|DisableAntiSpyware|DisableBehaviorMonitoring|DisableOnAccessProtection|DisableScanOnRealtimeEnable</field>
+	<description>Registry created, changed or renamed: it should never be 1</description>
+</rule>

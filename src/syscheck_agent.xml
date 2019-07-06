@@ -1,0 +1,7 @@
+<syscheck>
+	<disabled>no</disabled>
+	<directories check_all="yes" realtime="yes" whodata="yes">C:\temp</directories>
+	<scan_on_start>yes</scan_on_start>
+	<alert_new_files>yes</alert_new_files>
+	<auto_ignore>no</auto_ignore>
+</syscheck>

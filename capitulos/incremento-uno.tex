@@ -7,7 +7,7 @@ Particularly the \textit{DisableAntiSpyware} and \textit{DisableRealTimeMonitori
 Our intention is to detect as much as possible without depending on other programs, and in this increment Windows Defender was not needed.
 \linej
 \linej
-As this chapter progresses new detection methods are introduced that may be of use in some of the previous cases.
+As this chapter progresses new detection methods are introduced that could be of use in some of the previous cases.
 Usually this is not mentioned, in order to keep the explanations simple.
 
 \section{Golden Ticket}
@@ -42,13 +42,13 @@ This means TGTs can be generated to access every account within the AD. This for
 The Golden Ticket does not depend at all of the administrator password of the AD, which means that changing this password does not invalidate a Golden Ticket in anyway.
 \linej
 \linej
-Because the attack uses a valid TGT is very hard to detect it is a forgery. Once it has been generated the TGT can be used at any time and any amount of times until the time expiration.
+Because the attack uses a valid TGT is very hard to detect it is a forgery. Once it has been issued the TGT can be used at any time and any amount of times until the time expiration.
 Any TGS obtained from a Golden Ticket is no longer a forgery, because is generated from the DC.
 \linej
 \linej
 The password information of the KRBTGT account can be just the hash of the password, which is stored in memory and can be retrieved with enough local privileges in a DC. To generate the Golden Ticket the attacker also needs the domain name and the SID of the domain to which the KRBTGT account belongs, which are trivial to get\cite{stealthbits}.
 \linej
-Furthermore once the required data is obtained the Golden Ticket can be generated offline using certain programs, like Mimikatz. This means is impossible to detect the creation of the ticket itself if is not done on a computer in the network.
+Furthermore once the required data is obtained the Golden Ticket can be created offline using certain programs, like Mimikatz. This means is impossible to detect the creation of the ticket itself if is not done on a computer in the network.
 \linej
 It follows that this attack can only be detected either during the steps needed to create the TGT (get the hash of the KRBTGT account) or by the use of the TGT.
 \linej
@@ -126,7 +126,7 @@ Now we are in a Meterpreter shell, which we can use to get the exact privileges 
 	\includegraphics[width=\textwidth]{figuras/meterpreter.png}
 	\caption{Meterpreter shell running}
 \end{figure}
-
+\linej
 To do this we look for a session running administrator privileges in the AD. In this case the targeted machine had a PowerShell session running as administrator, to which we migrate.
 \linej
 \begin{figure}[H]
@@ -134,7 +134,7 @@ To do this we look for a session running administrator privileges in the AD. In 
 	\includegraphics[width=\textwidth]{figuras/migrate.png}
 	\caption{Migration to a PowerShell session as AD administrator}
 \end{figure}
-
+\linej
 Now we are ready to run the real exploit. This loads the Metasploit version of Mimikatz (Kiwi) in the Meterpreter shell, allowing the attacker to use Kiwi commands.
 The command in this case retrieves the information of the KRBTGT account needed to generate the Golden Ticket.
 \linej
@@ -146,6 +146,7 @@ In this case the generation of the ticket is not using the data in an automated 
 	\includegraphics[width=\textwidth]{figuras/kiwi_p2.png}
 	\caption{Retrieval of KRBTGT data and generation of the Golden Ticket with Kiwi}
 \end{figure}
+\linej
 The obvious downside of this method for the attacker is that Metasploit is very widely used and known, therefore there could be security monitoring for it\cite{detect_metasploit_traffic}. But again the attacker is using a technique that does not need to control a DC and does not need to store anything in the disk of the targeted system, making it much harder to detect in that regard.
 \linej
 \linej
@@ -164,6 +165,7 @@ Again there is a migration to an administrator account of the AD. In this case a
 	\includegraphics[width=\textwidth]{figuras/hashdump.png}
 	\caption{Retrieval of KRBTGT data with hashdump}
 \end{figure}
+\linej
 As before it is expected of the DCs to be more monitored. This means that the DCSync version is more interesting to an attacker because it has the same difficulty and benefits at a lower risk.
 
 \subsection{Detection purely with signatures}
@@ -178,7 +180,7 @@ Obviously matching some signatures is more valuable than matching others. For ex
 \linej
 \linej
 As we know the techniques to detect or avoid detection evolve with each other over time.
-Any way we manage to detect programs like Mimikatz may be overcome in the future.
+Any way we manage to detect programs like Mimikatz could be overcome in the future.
 \linej
 That does not mean that detection techniques are bound to fail or that there is no point to them.
 Many attackers know how hard it can be to overcome detection techniques.
@@ -227,15 +229,7 @@ Also is important to note that Sysmon can be a bit tricky to balance the configu
 There are public configs for Sysmon that attempt to provide a good insight of the system while not logging too much data\cite{sysmon_config} and some even with OSSEC on mind\cite{ossec_sysmon}.
 \linej
 \linej
-Having a working setup of Wazuh and Sysmon just requires to install Sysmon in the Windows computers and enable forwarding its log. This is configured in \textit{/var/ossec/etc/shared/default/agent.conf}:
-\begin{lstlisting}[style=xml]
-<agent_config os="Windows">
-	<localfile>
-		<location>Microsoft-Windows-Sysmon/Operational</location>
-		<log_format>eventchannel</log_format>
-	</localfile>
-</agent_config>
-\end{lstlisting}
+Having a working setup of Wazuh and Sysmon just requires to install Sysmon in the Windows computers and enable forwarding its log \ref{lst:forward_sysmon}.
 
 \subsection{Detection of Mimikatz}
 Mimikatz is the tool of choice for this kind of attack for most attackers because it is very effective, easy to use and has multiple ways to be used in different attacks\cite{mimikatz_github}\cite{mimikatz_details}. This is a double edge sword for Mimikatz because it has become one of the programs to look for in antimalware detection programs. In this case we assume these programs have not detected Mimikatz and is up to Wazuh to do it. It is interesting to note that the author of Mimikatz provides ways to detect it, like the YARA rules he maintains\cite{mimikatz_github} or BusyLights\cite{understanding_powersploit_mimikatz}.
@@ -247,7 +241,7 @@ Unfortunately as seen in the exploits before there are multiple ways to execute 
 \linej
 \linej
 Each time a Mimikatz shell spawns certain DLLs are loaded. The technique to identify a succession of events in a short time as another event is called grouping or composite.
-Grouping is a very effective technique, but it may require a lot of work to identify its components. In some cases the attack may not produce enough noise or it may not be possible to tell it apart from the normal events of the system\cite{sysmon}\cite{sysmon_event_7_mimikatz}.
+Grouping is a very effective technique, but it can require a lot of work to identify its components. In some cases the attack may not produce enough noise or it may not be possible to tell it apart from the normal events of the system\cite{sysmon}\cite{sysmon_event_7_mimikatz}.
 \linej
 Fortunately Mimikatz needs a fair amount of DLLs to work and some of them are not very usual. This makes the execution of Mimikatz noticeable.
 \linej
@@ -280,7 +274,7 @@ Detecting the use of every variant of Mimikatz is virtually impossible, not only
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{|l|l|l|}
+	\begin{tabular}{|l|l|}
 		\hline
 		\rowcolor{gray!30}
 		Exploit & Detected \\ \hline
@@ -301,35 +295,18 @@ We can not always detect when a forged TGT is generated, but the attacker still 
 The program to examine the contents of the cache is \textbf{klist}.
 \linej
 \linej
-In order to do this we need to enable the execution of Wazuh's remote commands in the Windows agent and set the properties of the command in the manager in \textit{/var/ossec/etc/shared/default/agent.conf}\cite{wazuh_remote_command}:
+In order to do this we need to enable the execution of Wazuh's remote commands in the Windows agent and set the properties of the command in the manager \ref{lst:klist_wodle}\cite{wazuh_remote_command}.
 \linej
-\label{klist_script_wodle}
-\begin{lstlisting}[style=xml]
-<agent_config os="Windows">
-	<wodle name="command">
-		<disabled>no</disabled>
-		<tag>remoteklist</tag>
-		<command>powershell C:\\Users\\Public\\Documents\\klist.ps1</command>
-		<interval>5m</interval>
-		<ignore_output>no</ignore_output>
-		<run_on_start>yes</run_on_start>
-		<timeout>0</timeout>
-		<skip_verification>yes</skip_verification>
-	</wodle>
-</agent_config>
-\end{lstlisting}
 \linej
-In this case the command is a script to get all the tickets of all the sessions with klist, compare the ticket value for the field \textit{TicketExpireHours} with the value of \textit{MaxTicketAge} of the Group Policy (putting the difference in a new field) and parse the output to JSON. Having the output in JSON makes it a bit easier to read from the logs (which is useful to fix any mistake in the script) and removes the need of a decoder in the manager.
+In this case the command is a script \ref{lst:klist}\ to get all the tickets of all the sessions with klist, compare the ticket value for the field \textit{TicketExpireHours} with the value of \textit{MaxTicketAge} of the Group Policy (putting the difference in a new field) and parse the output to JSON. Having the output in JSON makes it a bit easier to read from the logs (which is useful to fix any mistake in the script) and removes the need of a decoder in the manager.
 The idea came from a very different klist script that only works interactively and reports in plain text\cite{klist_script_idea}.
 \linej
 This script needs to be run in every member of the network to guarantee detection for every user.
 \linej
 Doing this with only PowerShell assures it will work in any Windows system without external programs. The downside of this parsing and my limited knowledge of PowerShell is that the script is a bit bulky and the dependency on the format of the output of klist.
 \linej
-\lstinputlisting[style=PS,caption=Script to scan and parse to JSON the tickets in the cache,captionpos=b]{src/klist.ps1}
-\lstinputlisting[style=PS,caption=Way to get the MaxTicketAge from the Group Policy,captionpos=b]{src/report.ps1}
 \linej
-Unfortunately that way to get the \textit{MaxTicketAge} from the Group Policy in the last script does not work by default with remote commands because Windows remote commands only allow certain types of commands.
+Unfortunately the automated way to get the \textit{MaxTicketAge} from the Group Policy in \ref{lst:klist_getMaxTicketAge}\ does not work by default with remote commands because Windows remote commands only allow certain types of commands.
 In any case the \textit{MaxTicketAge} value is not usually changed and it requires AD administrator privileges to do it, so due to the time constrains of the project this automation was abandoned. There are other ways to get the \textit{MaxTicketAge} value, but as mentioned is not something to spend time on.
 \linej
 \linej
@@ -423,7 +400,7 @@ Allowing the attacker to access the \textit{HOST} service on that computer with 
 Silver Tickets get registered in the Kerberos' cache in the same way as the Golden Tickets, so they can be detected with the klist script. The execution of Mimikatz can be detected with grouping just as before.
 
 \subsection{Mitigation}
-These exploits take advantage of the inherent weaknesses of Kerberos, so there is no way to prevent them. Nevertheless, Microsoft provides a public guide explaining how to mitigate this kind of attacks\cite{microsoft_mitigation}.
+These exploits take advantage of the inherent weaknesses of Kerberos, so there is no way to fully prevent them. Nevertheless, Microsoft provides a public guide explaining how to mitigate this kind of attacks\cite{microsoft_mitigation}.
 The easiest way to mitigate this attack is to change the password of the KRBTGT account to invalidate any existing Golden Ticket, which has to be done twice (make sure the domain converges before doing the second password change\cite{hood}), but it also invalidates existing proper TGTs.
 \linej
 The recommendation from Microsoft is to regularly reset the password\cite{tarlogic_comprehension}\cite{adsecurity_483}, which can be done with their official script\cite{reset_script}. This could be also triggered by alerts that we are confident detect Golden Tickets, but as mentioned this could affect other functionality and so the decision is for the network administrators to make. Any TGT that is not valid produces an error in a TGS request, which can be used for exposing an attacker\cite{scom_GT}.
@@ -487,7 +464,7 @@ Another way to get the desired information is to copy the database of the AD Dom
 \linej
 \linej
 The attacker has to open a shell as administrator in a DC to create the backup. Multiple commands or an one-liner can be used:
-\begin{lstlisting}[style=PS,frame=none]
+\begin{lstlisting}[style=PS]
 ntdsutil "activate instance ntds" ifm "create full C:\temp\ntdsutil" quit quit
 \end{lstlisting}
 \linej
@@ -497,6 +474,7 @@ This command creates a ntdsutil shell and activates the instance to later create
 	\includegraphics[width=\textwidth]{figuras/ntdsutil.png}
 	\caption{Backing up the database of the AD using the ntdsutil shell}
 \end{figure}
+\linej
 There are other ways to use ntdsutil in ways harder to detect\cite{more_dumps}, but this is enough for gathering events for analysis.
 \linej
 \linej
@@ -631,7 +609,7 @@ These 8 DLLs are detected by 4 rules to reach the minimum frequency:
 This detection works with both local and remote cases the same.
 \linej
 False positives were found when attempting to log in remotely multiple times one after the other, as described on page \pageref{reverse_login}.
-Other may appear in a real environment.
+Others may appear in a real environment.
 This technique depends too much on the time frame and can be avoided changing the code.
 %\linej
 %\linej
@@ -671,7 +649,7 @@ The third and fourth match the normal cases, excluding them from the detection o
 The last rule uses a regular expression to match any hexadecimal value of \textit{grantedAccess}, therefore detecting any unusual value, because all normal logs have being identified as normal at this point.
 \linej
 \linej
-The results may change with the size of the database, the status of the system and the version of the system and the programs.
+The results might change with the size of the database, the status of the system and the version of the system and the programs.
 All the exploits used until this point were tested, resulting in a 100\% rate for those who dump the LSASS.
 
 \begin{table}[H]
@@ -679,21 +657,21 @@ All the exploits used until this point were tested, resulting in a 100\% rate fo
 		\hline
 		\rowcolor{gray!30}
 		Exploit & unusual grantedAccess\\ \hline
-		1: Local Mimikatz in DC& \cellcolor{green!60}$\bullet$0x143a\\ \hline
-		2: Mimikatz from memory in DC& \cellcolor{green!60} $\bullet$0x143a\\ \hline
+		1: Local Mimikatz in DC& \cellcolor{green!60}$\bullet$ 0x143a\\ \hline
+		2: Mimikatz from memory in DC& \cellcolor{green!60} $\bullet$ 0x143a\\ \hline
 		3: Mimikatz with DCSync& \cellcolor{red!60}\\ \hline
 		4: DCSync with Kiwi& \cellcolor{red!60}\\ \hline
-		5: Hashdump with Meterpreter& \cellcolor{green!60}$\bullet$0x1f3fff\\ \hline
+		5: Hashdump with Meterpreter& \cellcolor{green!60}$\bullet$ 0x1f3fff\\ \hline
 		6: Retrieval of NTDS.DIT with ntdsutil& \cellcolor{red!60}\\ \hline
 		7: Storing registry hives with Reg& \cellcolor{red!60}\\ \hline
-		8: Dump of LSASS with ProcDump& \cellcolor{green!60}$\bullet$3 events with 0x1fffff\\ \hline
+		8: Dump of LSASS with ProcDump& \cellcolor{green!60}$\bullet$ 3 events with 0x1fffff\\ \hline
 		9: Dump of LSASS with pd& \cellcolor{green!60}
-			$\bullet$0x1f3fff \linej
-			$\bullet$0x1452 followed by 0x1410, this pair repeated 28 times \linej
-			$\bullet$0x1452 \\ \hline
+			$\bullet$ 0x1f3fff \linej
+			$\bullet$ 0x1452 followed by 0x1410, this pair repeated 28 times \linej
+			$\bullet$ 0x1452 \\ \hline
 		10: Dump of LSASS with Minidump& \cellcolor{green!60}
-			$\bullet$0x1f3fff \linej
-			$\bullet$0x1fffff \\ \hline
+			$\bullet$ 0x1f3fff \linej
+			$\bullet$ 0x1fffff \\ \hline
 		11: Retrieval of NTDS.DIT with NinjaCopy& \cellcolor{red!60}\\ \hline
 	\end{tabularx}
 	\caption{Exploit detection of unusual grantedAccess values}
@@ -740,8 +718,8 @@ In the last years PowerShell (as an attack platform) has become much more used a
 This section is for diving a bit on how an attacker may use PowerShell and how to detect and mitigate it. It was not planned, but not researching about PowerShell capabilities after seen how dangerous it can be seems a bit careless. Therefore about 8 hours were used for this section.
 \linej
 \linej
-In some of the examples in this project PowerShell can be replaced by cmd, the basic command interpreter for Microsoft systems.
-We chose to leave cmd aside our preoccupations because cmd.exe is commonly blocked (unlike PowerShell) and is much less used that PowerShell in cybersecurity attacks.
+In some of the examples in this project PowerShell can be replaced by CMD.
+We chose to leave CMD aside our preoccupations because cmd.exe is commonly blocked (unlike PowerShell) and is much less used that PowerShell in cybersecurity attacks.
 \linej
 \linej
 Other similar options for broad attacks, that we are not going to examine, are\cite{powershell_adsecurity}:
@@ -784,19 +762,23 @@ Focusing logging and detection on the CommandLine field is more effective than t
 Even though encoding ntdsutil makes it impossible for that string to found in the CommandLine field of the PowerShell process, the execution of ntdsutil can be detected by other means. In this case the string ntdsutil appears in both fields, when ntdsutil.exe is executed.
 \linej
 \linej
+\linej
 To put it simply the encoded PowerShell command spawns a ntdsutil process:
 \linej
-Image: ``[$\cdots$]powershell.exe'',
+\lineh
+\textit{Image: ``[$\cdots$]powershell.exe'',
 \linej
-CommandLine: ``[$\cdots$]powershell.exe -encodedCommand [$\cdots$]''
+CommandLine: ``[$\cdots$]powershell.exe -encodedCommand [$\cdots$]''}
 \linej
-$\xrightarrow{\makebox[\textwidth]{Creating process}}$
-Image: ``[$\cdots$]ntdsutil.exe'',
+\linej
+$\xrightarrow{\makebox[\textwidth]{Creation of the new process}}$
+\textit{Image: ``[$\cdots$]ntdsutil.exe'',
 \linej
 CommandLine: ``[$\cdots$]ntdsutil.exe''
 \linej
-ParentCommandLine: ``[$\cdots$]powershell.exe''
+ParentCommandLine: ``[$\cdots$]powershell.exe''}
 \linej
+\lineh
 \linej
 \linej
 The very same PowerShell command cannot be totally encoded, therefore it is possible to detect the strings for these options. This applies too to other PowerShell options, like for bypassing the execution policy, they either are detected as encoded or by signature\cite{powershell_adsecurity}.
@@ -866,16 +848,7 @@ This probes that bypassing powershell.exe locks and command encryption can be de
 The event ids generated by running the executable and the module are 4104, 4105 and 4106. The most useful seemed to be 4104 because it includes the rebuild code from the blocks.
 \linej
 \linej
-Next the Wazuh manager needs to be configured to forward the PowerShell log to him from the agents. This was done in \textit{/var/ossec/etc/shared/default/agent.conf}:
-\begin{lstlisting}[style=xml]
-<agent_config os="Windows">
-	<localfile>
-		<location>Microsoft-Windows-PowerShell/Operational</location>
-		<log_format>eventchannel</log_format>
-	</localfile>
-</agent_config>
-\end{lstlisting}
-
+Next the Wazuh manager needs to be configured to forward the PowerShell log to him from the agents \ref{lst:forward_powershell}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=\textheight]{figuras/PSATTACK_mimikatz_rotated.png}
@@ -890,7 +863,7 @@ All of them have been shown in this project, along with mitigations and/or detec
 In this section we have only scratched the surface of PowerShell auditing. It would be interesting to have more time for this topic.
 
 \section{Detection of suspicious logins}
-In Windows there are multiple ways to login remotely, but all of them rely on the same authentication method. Depending on its success or failure certain security events are generated. Therefore it does not make sense to have multiple ways to reproduce these attacks, as with the previous cases.
+In Windows there are multiple ways to login remotely, but all of them rely on the same authentication method. Depending on its success or failure certain security events are issued. Therefore it does not make sense to have multiple ways to reproduce these attacks, as with the previous cases.
 \linej
 In all these cases the code is run on the no-DC, which authenticates against the DC, using the builtin command \textit{winrs}\cite{winrs}. Here this command is used to specify the remote computer to log in, the user, the password and the command to run after a successful authentication, in that order.
 \linej
@@ -923,10 +896,9 @@ Usually the attacker would connect from outside of the network, because once ins
 Instead of changing the ip address of the interface he would change where his remote command comes from, usually using a Virtual Private Network paid service, an anonymity network or previously compromised victims.
 Both cases provide multiple servers across the world and is trivial to write a shell command to jump from one to the next.
 \linej
-The next script is mostly about automation to change the ip address for the internal network, which has the interface connected to the \textit{wazuh.local} domain.
-Administrator privileges were required to change the ip address successfully. The sleep was found to be an effective measure to avoid trying to log in before the domain was reconnected:
-\lstinputlisting[style=PS]{src/distributed_logins_winrs.ps1}
-
+The example script \ref{lst:distributed_logins_winrs}\ is mostly about automation to change the ip address for the internal network, which has the interface connected to the \textit{wazuh.local} domain.
+Administrator privileges were required to change the ip address successfully. The sleep was found to be an effective measure to avoid trying to log in before the domain was reconnected.
+\linej
 \linej
 The rule 60205 in Wazuh only works for failed attempts comming from the same ip address, therefore it fails to detect this. A similar rule can solve this, just by checking the same user is targeted and by changing the \textit{same\_field} requirement to \textit{not\_same\_field} for the ip address:
 \begin{lstlisting}[style=xml]
@@ -957,23 +929,11 @@ A workaround would be to name the users with a part of the name of the OU, like 
 \linej
 Of course these are not acceptable and there is a better way.
 Running a remote command with Wazuh we can search the security log for the events of interest, check the hour and verify if they belong to a user of the OU.
-As with the klist script (page \pageref{klist_script_wodle}) a PowerShell script was created and a remote command was set.
+As with the klist detection (page \pageref{klist_detection}) a PowerShell script was created \ref{lst:OU}\ and a remote command was set \ref{lst:OU_wodle}.
 The script returns JSON output with basic information about the events that met the requirements.
 It needs to be run as Administrator to be able to query the security log and it only needs to be in the DCs, since OU logins are made always against them.
 The OU name and the hour range are set in the script by hand, but could also be automated.
-%%<wodle name="command">
-%	%<disabled>no</disabled>
-%	%<tag>remoteOU</tag>
-%	%<command>powershell C:\\Users\\Public\\Documents\\OU.ps1</command>
-%	%<interval>10m</interval>
-%	%<ignore_output>no</ignore_output>
-%	%<run_on_start>yes</run_on_start>
-%	%<timeout>0</timeout>
-%	%<skip_verification>yes</skip_verification>
-%%</wodle>
-
 \linej
-\lstinputlisting[style=PS,caption=Remote script to find logins on unusual hours for the OU users,captionpos=b]{src/OU.ps1}
 \linej
 The first part of the script gets the usernames for the OU in question into an array.
 \linej
@@ -986,8 +946,7 @@ The last part is about collecting the security events of interest in the last mi
 We take interest in the event id 4771 for the failures and in the events 4768 (TGT request) and 4769 (TGS request) for the successes\cite{windows_events}.
 \linej
 \linej
-The rules in Wazuh are very simple, the first filters the events that match the format and the second just triggers for everything with an username (since the checks are done in the script):
-\lstinputlisting[style=xml]{src/rules_OU.xml}
+The rules \ref{lst:OU_rules}\ in Wazuh are very simple, the first filters the events that match the format and the second just triggers for everything with an username (since the checks are done in the script).
 
 \subsection{Conclusion}
 These login events are very easy to perform, but also to detect.

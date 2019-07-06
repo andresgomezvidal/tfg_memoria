@@ -1,0 +1,5 @@
+Set-ItemProperty -path HKLM:"\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet\" -Name 'SpyNetReporting' -Value "0x00000000"
+Set-ItemProperty -path HKLM:"\SOFTWARE\Policies\Microsoft\Windows Defender\" -Name 'DisableAntiSpyware' -Value "0x00000000"
+Set-ItemProperty -path HKLM:"\SOFTWARE\Policies\Microsoft\Windows Defender\" -Name 'DisableBehaviorMonitoring' -Value "0x00000000"
+Set-ItemProperty -path HKLM:"\SOFTWARE\Policies\Microsoft\Windows Defender\" -Name 'DisableOnAccessProtection' -Value "0x00000000"
+Set-ItemProperty -path HKLM:"\SOFTWARE\Policies\Microsoft\Windows Defender\" -Name 'DisableScanOnRealtimeEnable' -Value "0x00000000"

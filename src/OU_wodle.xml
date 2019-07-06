@@ -1,0 +1,12 @@
+<agent_config os="Windows">
+	<wodle name="command">
+		<disabled>no</disabled>
+		<tag>remoteOU</tag>
+		<command>powershell C:\\Users\\Public\\Documents\\OU.ps1</command>
+		<interval>10m</interval>
+		<ignore_output>no</ignore_output>
+		<run_on_start>yes</run_on_start>
+		<timeout>0</timeout>
+		<skip_verification>yes</skip_verification>
+	</wodle>
+</agent_config>

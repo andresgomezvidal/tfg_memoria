@@ -38,7 +38,7 @@ The rest of the increments are considered optional and can be removed if there i
 
 \subsection{Products of the project}
 At the end of the project the next elements will be delivered:
-%TODO
+%TODO Products of the project
 \begin{itemize}
 	\item 
 	\item 
@@ -79,8 +79,10 @@ Wazuh offers this kind of integration with Bro and Suricata and probably it woul
 \linej
 \linej
 For Windows systems monitoring registry changes could be explored in the same way we study events in this project.
-Wazuh can keep detect changes in the registry as it does with other files: registering its hashes and checking for changes periodically.
-Because the lack of time and experience this idea was left behind.
+Wazuh can detect changes in the registry as it does with other files: registering its hashes and checking for changes periodically.
+Windows has audit options for registry, which generate events that allow to monitor it with Wazuh.
+Sysmon also has events for the registry changes: creation, deletion, renaming and value modification.
+Because the lack of time and experience this idea was left behind for most of the project, leaving aside a minor part in the last increment done.
 \linej
 \linej
 YARA is very interesting for this kind of project, but it belongs to the Virustotal pack of malware detection tools and so it could be used with Wazuh with a Virustotal API key. The free version only allows a few queries and the option of getting a premium key was not considered. There has been for months an open issue in the Github page of Wazuh for integrating it with YARA (as other IDSs have done before), which has recently evolved to an issue to integrate YARA into Wazuh as a module\cite{yara_module}.

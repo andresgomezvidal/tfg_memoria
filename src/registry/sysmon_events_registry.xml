@@ -1,0 +1,13 @@
+<RegistryEvent onmatch="include">
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\</TargetObject>
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet\SpyNetReporting</TargetObject>
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware</TargetObject>
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring</TargetObject>
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableOnAccessProtection</TargetObject>
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableScanOnRealtimeEnable</TargetObject>
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\AllowedApplications\</TargetObject>
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\ProtectedFolders\</TargetObject>
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\EnableControlledFolderAccess</TargetObject>
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\ExploitGuard_ControlledFolderAccess_AllowedApplications</TargetObject>
+	<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\ExploitGuard_ControlledFolderAccess_ProtectedFolders</TargetObject>
+</RegistryEvent>

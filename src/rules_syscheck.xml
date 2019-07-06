@@ -1,0 +1,21 @@
+<rule id="333010" level="0">
+	<if_group>syscheck</if_group>
+	<match>c:\temp</match>
+	<description>C:\temp file integrity monitoring event</description>
+</rule>
+<rule id="333011" level="3">
+	<if_sid>333010</if_sid>
+	<match>decoy1|decoy2</match>
+	<description>C:\temp decoy file event</description>
+</rule>
+<rule id="333012" level="3">
+	<if_sid>333010</if_sid>
+	<match>was deleted</match>
+	<description>C:\temp file deleted</description>
+</rule>
+
+<rule id="333019" level="3" timeframe="60" frequency="2" >
+	<if_matched_sid>333011</if_matched_sid>
+	<if_matched_sid>333012</if_matched_sid>
+	<description>Probably crypto ransomware attack</description>
+</rule>
