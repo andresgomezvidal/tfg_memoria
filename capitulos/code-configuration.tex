@@ -1,3 +1,5 @@
+%done="$(\grep -oh 'ref{lst:\w*}' *.tex | cut -d '{' -f2 | tr '\n' '|')"; \grep -oh 'label={lst:\w*}' code-configuration.tex | \grep -vE "${done:0:-1}"
+
 \chapter{Programming and configuration code}
 %\lstinputlisting[style=xml,caption=,captionpos=b]{src/}
 %\lstinputlisting[style=PS,caption=,captionpos=b]{src/}
@@ -21,9 +23,15 @@
 \linej
 
 \section*{File monitoring}
+\lstinputlisting[style=xml,caption=Windows Defender's Controlled Folder Access rules,captionpos=b,label={lst:windows_defender}]{src/rules_windows_defender.xml}
+\linej
 \lstinputlisting[style=xml,caption=Syscheck local configuration in the \textit{ossec.conf} file on the agent,captionpos=b,label={lst:syscheck_agent}]{src/syscheck_agent.xml}
 \linej
 \lstinputlisting[style=xml,caption=Syscheck rules for crypto ransomware detection,captionpos=b,label={lst:syscheck_rules}]{src/rules_syscheck.xml}
+\linej
+\lstinputlisting[style=xml,caption=Syscheck rules for crypto ransomware detection with more deletion events required,captionpos=b,label={lst:syscheck_rules_2}]{src/rules_syscheck_2.xml}
+\linej
+\lstinputlisting[style=xml,caption=Windows File Auditing rules for crypto ransomware detection,captionpos=b,label={lst:file_audit}]{src/rules_file_audit.xml}
 \linej
 
 \section*{Registry monitoring and active response for Windows Defender}

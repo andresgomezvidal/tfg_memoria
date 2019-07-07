@@ -1,0 +1,11 @@
+<rule id="333050" level="3">
+	<if_group>windows</if_group>
+	<field name="win.system.eventID">^1123$|^1124$</field>
+	<field name="win.eventdata.path">c:\\temp</field>
+	<description>Windows Defender Control Folder Access monitoring event</description>
+</rule>
+
+<rule id="333051" level="3" timeframe="60" frequency="10" >
+	<if_matched_sid>333050</if_matched_sid>
+	<description>Probably an attack</description>
+</rule>

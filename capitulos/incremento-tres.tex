@@ -190,7 +190,6 @@ The problem is not detecting its use, but rather not spawning false positives\ci
 \linej
 Because the attack is supposed to be fast, the detection (and response) needs to be even faster to be able to stop it.
 That is why multiple detection ways were explored for this case of study:
-%TODO more?
 \begin{itemize}
 \item For file encryption:
 	\begin{itemize}
@@ -228,7 +227,7 @@ The next PowerShell script creates a random passphrase of letters, numbers and s
 This passphrase is ciphered with the public RSA key and saved to the file ``passphrase.txt''.
 Then script loops over all the files in \textit{C:/temp/} with the \textit{.txt} extension, encrypting them to AES-256 (in block cipher mode) and deleting the original file when done.
 The \textit{openssl} variable is just for convenience.
-\lstinputlisting[style=PS,caption=Script to encrypt files and cipher the passphrase with RSA,captionpos=b]{src/ransomware_basic.ps1}
+\lstinputlisting[style=PS,caption=Script to encrypt files and cipher the passphrase with RSA,captionpos=b,label={lst:ransomware_basic}]{src/ransomware_basic.ps1}
 \linej
 The passphrase file can be deciphered with the private key, getting the random passphrase used in the script:
 \begin{lstlisting}[style=PS,keywordstyle=\color{black}]
@@ -245,7 +244,7 @@ Each of these options has its pros and cons, there is no restriction for using t
 It is important to keep in mind that the Wazuh server is supposed to manage multiple systems, therefore scalability should be a concern and maybe only one of the solutions could be used in a real network.
 
 \subsubsection{Windows Defender's Controlled Folder Access}
-Windows Defender offers the option to monitor specified folders for accesses and/or modification on real-time.
+Windows Defender has the option to monitor specified folders for accesses and/or modification on real-time.
 This feature is designed to combat the threat of ransomware.
 It includes the option to whitelist applications and two basic modes of operation\cite{hardening_windows_10}:
 \begin{itemize}
@@ -253,11 +252,11 @@ It includes the option to whitelist applications and two basic modes of operatio
 	\item Block: Blocks and notifies about suspicious activity with the event 1123.
 \end{itemize}
 \linej
+These events trigger for any suspicious activity, not only for ransomware attacks, but their detection is trivial \ref{lst:windows_defender}.
 Windows Defender event log can be forwarded to Wazuh \ref{lst:forward_Windows_Defender}, allowing to improve the protection provided by Windows Defender with Wazuh.
 The configuration of the whitelisted applications and the monitored directories can be managed by the Group Policy, the Windows Defender interface or the registry.
-%TODO aditional detection
-	%en windows defender depende de granuralizar los comandos de whitelist
-	%windows defender tiene una serie de carpetas que monitoriza por defecto y el resto aparecen en Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\ProtectedFolders
+\linej
+Windows defender has a set of monitored folders by default and the rest are listed in \textit{Computer{\textbackslash}HKEY\_LOCAL\_MACHINE{\textbackslash}SOFTWARE{\textbackslash}Policies{\textbackslash}Microsoft{\textbackslash}Win- dows Defender{\textbackslash}Windows Defender Exploit Guard{\textbackslash}Controlled Folder Access{\textbackslash}Pro- tectedFolders}.
 
 \subsubsection{Sysmon events for file changes}
 Sysmon events can be used to monitor changes in folders too, for example monitoring the folder \textit{C:{\textbackslash}temp{\textbackslash}}:
@@ -284,45 +283,57 @@ Unfortunately none of the Sysmon events can detect file deletion, but they can b
 	\item Event 9 can be used to detect direct reading of the device, an alternative access method to avoid being detected by traditional file monitoring, like in the case of NinjaCopy \ref{invoke-NinjaCopy}.
 	\item Event 11 can detect the new files, which could be identified as encrypted files in some cases with active response. Depending on the directory and the Wazuh rules there may be false positives.
 \end{itemize}
-\linej
-For the execution of this example (with 4 .txt files) Windows Defender reported 6 events of type 1124 and Sysmon 5 of type 11 (4 creations of .txt.enc and symmetric.key).
-This makes sense because events 2 and 9 are triggered by change of creation time and raw access of the drive respectively.
-It is important to note that if the changes are blocked only events of type 1123 are generated.
+%\linej
+%For the execution of this example (with 4 .txt files) Windows Defender reported 6 events of type 1124 and Sysmon 5 of type 11 (4 creations of .txt.enc and symmetric.key).
+%This makes sense because events 2 and 9 are triggered by change of creation time and raw access of the drive respectively.
+%It is important to note that if the changes are blocked only events of type 1123 are generated.
 
 \subsubsection{Windows File Auditing}
-%TODO reducir
 Windows File Auditing is a security feature that can be enabled and configured for multiple folders, reporting with events [4656-4663].
 \linej
 Windows does not log file activity in an usual way.
 Instead, it logs granular file operations that require further processing and they are usually out of order.
 The next table tries to describe and show the difference between these events as simple as possible\cite{windows_events}\cite{events_46_56_X}:
+%\begin{table}[H]
+	%\begin{tabularx}{\textwidth}{|l|X|X|}
+		%\hline
+		%\rowcolor{gray!30}
+		%Event ID & Name and description & Useful data\\ \hline
+		%4656& A handle to an object was requested. Logs the start of every file activity but does not guarantee that it succeeded.&
+			%$\bullet$ Executable responsible
+			%\linej $\bullet$ Filename of the object
+			%\linej $\bullet$ Access mask
+			%\linej $\bullet$ Accesses
+			%\\ \hline
+		%4658& The handle to an object was closed. Logs the end of a file activity.&
+			%$\bullet$ Executable responsible
+			%\\ \hline
+		%4659& A handle to an object was requested with intent to delete. Logs a failed attempt to delete.&
+			%$\bullet$ Executable responsible
+			%\linej $\bullet$ Access mask
+			%\\ \hline
+		%4660& An object was deleted. Logs a delete operation.&
+			%$\bullet$ Executable responsible
+			%\\ \hline
+		%4663& An attempt was made to access an object. Logs the specific micro operations performed as part of the activity.&
+			%$\bullet$ Executable responsible
+			%\linej $\bullet$ Filename of the object
+			%\linej $\bullet$ Access mask
+			%\linej $\bullet$ Accesses
+			%\\ \hline
+	%\end{tabularx}
+	%\caption{Windows File Auditing events}
+%\end{table}
 \begin{table}[H]
-	\begin{tabularx}{\textwidth}{|l|X|X|}
+	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
 		\rowcolor{gray!30}
-		Event ID & Name and description & Useful data\\ \hline
-		4656& A handle to an object was requested. Logs the start of every file activity but does not guarantee that it succeeded.&
-			$\bullet$ Executable responsible
-			\linej $\bullet$ Filename of the object
-			\linej $\bullet$ Access mask
-			\linej $\bullet$ Accesses
-			\\ \hline
-		4658& The handle to an object was closed. Logs the end of a file activity.&
-			$\bullet$ Executable responsible
-			\\ \hline
-		4659& A handle to an object was requested with intent to delete. Logs a failed attempt to delete.&
-			$\bullet$ Executable responsible
-			\linej $\bullet$ Access mask
-			\\ \hline
-		4660& An object was deleted. Logs a delete operation.&
-			$\bullet$ Executable responsible
-			\\ \hline
-		4663& An attempt was made to access an object. Logs the specific micro operations performed as part of the activity.&
-			$\bullet$ Executable responsible
-			\linej $\bullet$ Filename of the object
-			\linej $\bullet$ Access mask
-			\linej $\bullet$ Accesses
-			\\ \hline
+		Event ID & Name and description\\ \hline
+		4656& A handle to an object was requested. Logs the start of every file activity but does not guarantee that it succeeded.\\ \hline
+		4658& The handle to an object was closed. Logs the end of a file activity.\\ \hline
+		4659& A handle to an object was requested with intent to delete. Logs a failed attempt to delete.\\ \hline
+		4660& An object was deleted. Logs a delete operation.\\ \hline
+		4663& An attempt was made to access an object. Logs the specific micro operations performed as part of the activity.\\ \hline
 	\end{tabularx}
 	\caption{Windows File Auditing events}
 \end{table}
@@ -331,11 +342,8 @@ More detail and thought is needed to complete the previous table\cite{windows_ev
 \begin{itemize}
 	\item If an operation is rejected because not having enough privileges the only event issued is 4656.
 	\item Windows only issues the event 4663 when the operation is complete. There might be multiple 4663 events for a single handle, logging smaller operations that make up the overall action.
-	\item The last column refers to useful data for this project, there may be other fields that could be used for more complex detection.
 	\item There are some events that do not appear in the previous range: 4657 is for registry changes and 4661 and 4662 are for AD objects.
-	\item From the previous table we can see that all the events include the path of the executable that modifies the monitored object, which can be used for signature alerts.
-	\item The access mask is included in 3 of 5 events and could be used to identity false positives coming from bulk operations without enough permissions.
-	\item The accesses property refers to the type of operation: read, write, delete.
+	\item Events 4656 and 4663 include the ``accesses'' property, which refers to the type of operation: read, write, delete.
 		The field can include multiple values, for example a rename involves read, delete and write.
 		The problem of this field is that it does not follow a very normal interpretation of these types of basics operations.
 	\begin{itemize}
@@ -343,14 +351,14 @@ More detail and thought is needed to complete the previous table\cite{windows_ev
 		\item``ReadData'' is logged almost in every case, resulting in only being a normal read if none of the others are recorded.
 		\item``Delete'' also includes move events. Move events do not spawn 4659 or 4660 events.
 	\end{itemize}
-	\item The filename of the object is included in 2 of 5 events, which is a huge problem because it requires loooking for related events with full information (4656 or 4663), which requires composite rules in Wazuh.
-	\item The path included is the device path, for example ``{\textbackslash}{\textbackslash}Device{\textbackslash}{\textbackslash}Harddisk- Volume3{\textbackslash}{\textbackslash}openssl{\textbackslash}{\textbackslash}bin{\textbackslash}{\textbackslash}bftest.exe''.
+	\item The path included in the event may be the device path, for example ``{\textbackslash}{\textbackslash}Device{\textbackslash}{\textbackslash}Harddisk- Volume3{\textbackslash}{\textbackslash}openssl{\textbackslash}{\textbackslash}bin{\textbackslash}{\textbackslash}bftest.exe'', instead of the normal volume path like ``c:{\textbackslash}temp''.
 \end{itemize}
 \linej
 We can conclude that these events are not as easy to handle as they could be, but they can still be used for the detection of ransomware.
 
 \subsubsection{Syscheck Monitoring with Wazuh}
 Wazuh can check file changes directly checking checksum differences with the Syscheck module, this is known as File Integrity Monitoring.
+Each agent maintains its own database for better performance.
 \linej
 The monitoring needs to be configured \ref{lst:syscheck_agent}\ in the agent, instead of the manager.
 This generates Syscheck events that can be processed by rules, triggering alerts.
@@ -358,7 +366,7 @@ Syscheck has many options, like files to be ignored (which can also be done with
 \linej
 The most interesting features of Syscheck for this project are\cite{libro_ossec}:
 \begin{itemize}
-	\item Real-time monitoring. It can only be set at folder level, not directly for files, but that can be worked around with ignores in fixed cases.
+	\item Real-time monitoring. It can only be set at folder level, not directly for files, but that can be worked around with ignores in fixed cases or match restrictions in rules.
 	\item Scheduled scan. Interesting from a scalability point of view for checking security settings and looking for rootkits, but not useful for inmediate detection.
 	\item Inmediate scan. The agent can be ordered to do a scan at any time. This is interesting to combine with active response.
 	\item The creation and deletion of files can be detected too.
@@ -381,6 +389,9 @@ Each of the next tables shows a simplification of the advantages and disadvantag
 			\linej $\bullet$ Fundamentally faster active response than Wazuh, which adds multiple steps to the direct response of Windows Defender in block mode.
 		&
 			$\bullet$ The logs do not include the filename, just the folder path.
+			\linej $\bullet$ The logs do not explain the reason to find the event suspicious.
+			\linej $\bullet$ The logs do not detail the kind of file event (creation, modification or deletion).
+				%During the testing they always reported ``blocked from modifying''.
 			\linej $\bullet$ It is an external program, therefore it can not be totally trusted to work on complex cases.
 			\linej $\bullet$ It is one of the most and first denfensive programs targeted by attackers.
 			\linej $\bullet$ The whitelisting may need manual adjustment, for example allowing the Wazuh agent.
@@ -428,7 +439,7 @@ Each of the next tables shows a simplification of the advantages and disadvantag
 			\linej $\bullet$ They always include critical information, like the filename and the program.
 		&
 			$\bullet$ Real malware can be hard to tell apart from false positives.
-			\linej $\bullet$ Real-time monitoring can only be set for folders, not files individually.
+			\linej $\bullet$ The format of the events is not suited for field matching.
 			\\ \hline
 	\end{tabularx}
 	\caption{Advantages and disadvantages of file monitoring with Syscheck events}
@@ -446,7 +457,7 @@ From these tables we can conclude that:
 
 \subsubsection{Protecting Windows Defender}
 If Windows Defender is chosen for protection against ransomware then it makes sense to improve the protection of Windows Defender because is very targeted by attackers.
-This project can not afford much time on this task, but it can offer a solution for the most basic way to deactivate Windows Defender completely or just any of the features against ransomware.
+This project can not afford much time on this task, but it can provide a solution for the most basic way to deactivate Windows Defender completely or just any of the features against ransomware.
 The easiest way for an attacker to do this is to use the Windows registry, therefore enabling or disabling directly the functionality in question.
 \linej
 Access to the registry can be hardened, but in this case is assumed that not allowing to use access to registry editing tools is not enough to prevent an skilled attacker from doing so.
@@ -533,17 +544,33 @@ The main problem with this approach is the management is harder than if it were 
 	%5101 - The antimalware platform is expired
 
 \subsubsection{Reducing false positives}
+In this case the problem with detection methods other than Windows Defender's Controlled Folder Access is there is no guarantee that the reported events are from normal and legitimate operations.
+There are many circumstancial solutions like: maintaining a list of allowed applications or looking for suspicious behaviour (for example many files created and later deleted in a short time).
+But none of them are guaranteed to always work by default.
+Instead a simpler approach was implemented: use decoys and look for suspicious behaviour.
+Because Windows Defender does not provide the filename decoy filtering can not be used with it.
+\linej
 The deletion of files was chosen as the suspicious behaviour to detect, because there is no need to save the encrypted files in the same directory.
-%TODO \ref{} todas las formas de deteccion
-%TODO false postives
-	%usar 2 decoys (mim freq=2)
-	%alternativamente solo 1 decoy con active response y file integrity monitoring
-%TODO script para restaurar decoys?
-	%para todas esas carpetas se puede copiar un archivo o un archivo de cada extensión aleatoriamente
-
+Mass creation of files can also be detected and identified as suspicious.
+\linej
+\linej
+Decoy files are files that appear to be normal files but should never be changed or deleted by a legitimate user.
+Therefore if there are such events paired with other suspicious behaviour in a short amount of time it should mean that a ransomware attack is going on.
+\linej
+These restrictions can be increased to reduce the chance of generating false positives at the risk of losing real positives.
+Increasing the required number of other deleted files over the minimum of two \ref{lst:syscheck_rules_2}, for the decoys and Wazuh composite rules, in contrast with the normal rules \ref{lst:syscheck_rules}.
+\linej
+There are ways to hide decoy files for normal users and to automate their creation, but that is trivial and not the objective of this section.
+To reduce the file storage used by the decoys hard links and soft links could be used, but there is no guarantee that ransomware would treat the files exactly as the rest, therefore reducing the chance of the detection to work.
+\linej
+In this example the decoys are just named ``decoy1'' and ``decoy2'' for simplification.
+Two decoys are used instead of only one with a complex way to duplicate its alert (like using active response), because the storage space should not be affected by this and it is easier.
+\linej
+\linej
+Decoys proved to work on testing with the encrypting script \ref{lst:ransomware_basic}\ and detection with both Windows File Auditing \ref{lst:file_audit}\ and Syscheck Monitoring with Wazuh \ref{lst:syscheck_rules}.
 
 \subsection{Backup deletion}
-Backups offer effective mitigation against crypto ransomware attacks in most cases.
+Backups provide effective mitigation against crypto ransomware attacks in most cases.
 There are many scenarios between distributed backups in servers accross the world and just having local backups.
 Their ability to overcome ransomware attacks depends on multiple factors like: the exact malware, the distribution of the backup system, the security of the backup system, etc.
 \linej
@@ -571,6 +598,10 @@ The Shadow Copies are not in the filesystem of the volume, they are managed dire
 %detectar borrado de backups mirando el tamaño libre en el volumen
 	%si disminuye se actualiza (CBC database?)
 	%si aumenta se debe de haber borrado algo
+
+
+\subsection{Active response against ransomware}
+%TODO
 
 
 %TODO real ransomware tests

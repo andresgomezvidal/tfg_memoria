@@ -1,0 +1,23 @@
+<rule id="333030" level="0">
+	<if_group>windows</if_group>
+	<field name="win.system.eventID">^4656$|^4658$|^4659$|^4660$|^4663$</field>
+	<field name="win.eventdata.objectName">c:\\temp</field>
+	<description>C:\temp file audit monitoring event</description>
+</rule>
+<rule id="333031" level="3">
+	<if_sid>333030</if_sid>
+	<field name="win.system.eventID">^4659$|^4660$</field>
+	<field name="win.eventdata.objectName">decoy1|decoy2</field>
+	<description>C:\temp decoy file deleted or intented to</description>
+</rule>
+<rule id="333032" level="3">
+	<if_sid>333030</if_sid>
+	<field name="win.system.eventID">^4659$|^4660$</field>
+	<description>C:\temp file deleted or intented to</description>
+</rule>
+
+<rule id="333039" level="3" timeframe="60" frequency="2" >
+	<if_matched_sid>333031</if_matched_sid>
+	<if_matched_sid>333032</if_matched_sid>
+	<description>Probably crypto ransomware attack</description>
+</rule>
