@@ -17,6 +17,7 @@
 </rule>
 
 <rule id="333039" level="3" timeframe="60" frequency="2" >
+	<same_field>win.system.computer</same_field>
 	<if_matched_sid>333031</if_matched_sid>
 	<if_matched_sid>333032</if_matched_sid>
 	<description>Probably crypto ransomware attack</description>

@@ -68,6 +68,25 @@
 	keywordstyle=\color{blue}
 }
 
+\lstdefinestyle{sh} {
+	language=sh,		%for syntax highlighting
+	basicstyle=\footnotesize\ttfamily,
+	numbers=none,
+	frame=tb,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	tabsize=2,
+	columns=fixed,
+	showstringspaces=false,
+	showtabs=false,
+	keepspaces,
+	commentstyle=\color{red},
+	stringstyle=\color{gray},		%needs xcolor
+	keywordstyle=\color{blue}
+	directivestyle=\color{gray},	%shebang color
+	emph={local, export },
+	emphstyle=\color{green},
+}
+
 \lstdefinestyle{ruby} {
 	language=Ruby,		%for syntax highlighting
 	basicstyle=\footnotesize\ttfamily,
@@ -158,25 +177,6 @@
 %\lstset{ language=sql }		\begin{lstlisting}		\lstinputlisting[style=sql]{file.sql}
 
 
-
-
-%\lstdefinestyle{sh} {
-	%language=sh,		%for syntax highlighting
-	%basicstyle=\footnotesize\ttfamily,
-	%frame=tb,
-	%tabsize=4,
-	%columns=fixed,
-	%showstringspaces=false,
-	%showtabs=false,
-	%keepspaces,
-	%commentstyle=\color{gray},
-	%stringstyle=\color{brown},
-	%keywordstyle=\color{blue},
-	%directivestyle=\color{gray},			%shebang color
-	%emph={local, export },
-	%emphstyle=\color{green},
-%}
-%\lstset{ language=sh }			%\begin{lstlisting}		\lstinputlisting[style=sh]{script.sh}
 
 
 %\lstdefinestyle{python} {

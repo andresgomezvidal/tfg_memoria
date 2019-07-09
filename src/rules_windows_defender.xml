@@ -6,6 +6,7 @@
 </rule>
 
 <rule id="333051" level="3" timeframe="60" frequency="10" >
+	<same_field>win.system.computer</same_field>
 	<if_matched_sid>333050</if_matched_sid>
 	<description>Probably an attack</description>
 </rule>

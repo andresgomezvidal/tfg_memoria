@@ -1,0 +1,10 @@
+<wodle name="command">
+	<disabled>no</disabled>
+	<tag>free_space</tag>
+	<command>powershell C:\\Users\\Public\\Documents\\free_space.ps1</command>
+	<interval>1m</interval>
+	<ignore_output>no</ignore_output>
+	<run_on_start>yes</run_on_start>
+	<timeout>0</timeout>
+	<skip_verification>yes</skip_verification>
+</wodle>

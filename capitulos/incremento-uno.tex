@@ -303,6 +303,7 @@ The idea came from a very different klist script that only works interactively a
 \linej
 This script needs to be run in every member of the network to guarantee detection for every user.
 \linej
+The conversion to JSON was done manually to add information and because the ``ConvertTo-Json'' cmdlet does not work as expected.
 Doing this with only PowerShell assures it will work in any Windows system without external programs. The downside of this parsing and my limited knowledge of PowerShell is that the script is a bit bulky and the dependency on the format of the output of klist.
 \linej
 \linej
@@ -790,7 +791,7 @@ In testing this was always the 100100 rule, but it was checked that the other tw
 The syntax of this rule is simplified for this document, but the original can be found in the repository of this project\cite{memoria_github}.
 \linej
 \linej
-The encoded command used in this case triggered the alerts for too long CommandLine (100100), CommandLine with ntdsutil.exe (300011) and suspicious database events (300013, 300014 and 300015)\ref{ntdsutil_detection}.
+The encoded command used in this case triggered the alerts for too long CommandLine (100100) and the previous alerts: CommandLine with ntdsutil.exe (300011) and suspicious database events (300013, 300014 and 300015)\ref{ntdsutil_detection}.
 
 \subsection{PowerShell version 5 security features}
 The version 5 of PowerShell has useful security features to mitigate complex PowerShell attacks\cite{powershell_adsecurity}:
@@ -840,6 +841,7 @@ It includes many offensive PowerShell tools that rely on this DLL to bypass poss
 The PowerShell tools are encrypted to avoid signature matching and are decrypted to memory at run-time\cite{powershell_adsecurity}.
 \linej
 The tool tested was Invoke-Mimikatz, which was previously used in \ref{invoke-Mimikatz}.
+\linej
 PS$\textgreater$Attack just needs to run the executable and call this module with the options desired.
 \linej
 \linej

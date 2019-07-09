@@ -294,36 +294,6 @@ Windows File Auditing is a security feature that can be enabled and configured f
 Windows does not log file activity in an usual way.
 Instead, it logs granular file operations that require further processing and they are usually out of order.
 The next table tries to describe and show the difference between these events as simple as possible\cite{windows_events}\cite{events_46_56_X}:
-%\begin{table}[H]
-	%\begin{tabularx}{\textwidth}{|l|X|X|}
-		%\hline
-		%\rowcolor{gray!30}
-		%Event ID & Name and description & Useful data\\ \hline
-		%4656& A handle to an object was requested. Logs the start of every file activity but does not guarantee that it succeeded.&
-			%$\bullet$ Executable responsible
-			%\linej $\bullet$ Filename of the object
-			%\linej $\bullet$ Access mask
-			%\linej $\bullet$ Accesses
-			%\\ \hline
-		%4658& The handle to an object was closed. Logs the end of a file activity.&
-			%$\bullet$ Executable responsible
-			%\\ \hline
-		%4659& A handle to an object was requested with intent to delete. Logs a failed attempt to delete.&
-			%$\bullet$ Executable responsible
-			%\linej $\bullet$ Access mask
-			%\\ \hline
-		%4660& An object was deleted. Logs a delete operation.&
-			%$\bullet$ Executable responsible
-			%\\ \hline
-		%4663& An attempt was made to access an object. Logs the specific micro operations performed as part of the activity.&
-			%$\bullet$ Executable responsible
-			%\linej $\bullet$ Filename of the object
-			%\linej $\bullet$ Access mask
-			%\linej $\bullet$ Accesses
-			%\\ \hline
-	%\end{tabularx}
-	%\caption{Windows File Auditing events}
-%\end{table}
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|X|}
 		\hline
@@ -440,6 +410,14 @@ Each of the next tables shows a simplification of the advantages and disadvantag
 		&
 			$\bullet$ Real malware can be hard to tell apart from false positives.
 			\linej $\bullet$ The format of the events is not suited for field matching.
+				%none of the same ip checks are not working
+					%including same_source_ip and any kind of matches
+						%including manual ip matches in the previous rules
+							%<match>10.0.3.2|10.0.3.3</match>
+							%333011
+								%actually works
+							%333012
+								%but does not
 			\\ \hline
 	\end{tabularx}
 	\caption{Advantages and disadvantages of file monitoring with Syscheck events}
@@ -461,8 +439,9 @@ This project can not afford much time on this task, but it can provide a solutio
 The easiest way for an attacker to do this is to use the Windows registry, therefore enabling or disabling directly the functionality in question.
 \linej
 Access to the registry can be hardened, but in this case is assumed that not allowing to use access to registry editing tools is not enough to prevent an skilled attacker from doing so.
+Note that blocking the access with Windows Resource Protection should make them innacesible for both the attacker and these scripts.
 \linej
-In the end this is a complex problem that does not only affect Windows Defender (the Wazuh agent is a similar case) and is impossible to fully solve, but measures can be taken nonetheless.
+In the end protecting a program is a complex problem that does not only affect Windows Defender (the Wazuh agent is a similar case) and is impossible to fully solve, but measures can be taken nonetheless.
 \linej
 \linej
 There may exist better ways to ``block'' registry changes, but none were found.
@@ -543,7 +522,7 @@ The main problem with this approach is the management is harder than if it were 
 	%5012 - Scanning for viruses is disabled.
 	%5101 - The antimalware platform is expired
 
-\subsubsection{Reducing false positives}
+\subsubsection{Reducing false positives with decoys}
 In this case the problem with detection methods other than Windows Defender's Controlled Folder Access is there is no guarantee that the reported events are from normal and legitimate operations.
 There are many circumstancial solutions like: maintaining a list of allowed applications or looking for suspicious behaviour (for example many files created and later deleted in a short time).
 But none of them are guaranteed to always work by default.
@@ -569,12 +548,35 @@ Two decoys are used instead of only one with a complex way to duplicate its aler
 \linej
 Decoys proved to work on testing with the encrypting script \ref{lst:ransomware_basic}\ and detection with both Windows File Auditing \ref{lst:file_audit}\ and Syscheck Monitoring with Wazuh \ref{lst:syscheck_rules}.
 
+%TODO
+\subsubsection{Reducing false positives with TODO}
+Another option is to scan the executable responsible for the generation of the alerts, if possible.
+This can be combined with the use of decoys.
+\linej
+The two obvious ways to identity the program as malware are:
+%TODO
+\begin{itemize}
+	\item A match against a malware signature:
+	\begin{itemize}
+		\item Raw disk access, instead of a normal access, in order to bypass security controls.
+		\item Any other signature detected by antimalware software like Windows Defender or VirusTotal.
+	\end{itemize}
+	\item Detecting that the program is encrypting files:
+	\begin{itemize}
+		\item Identifying generated files as encrypted. This still has a chance of being a legitimate process.
+			%TODO problem extracting the folder from the logs that give the filename but not the folder and from syscheck (does not have fields at all)
+				%just have a set of rules for each folder
+		\item Detecting load of DLLs used for encryption for the executable. There is not enough time left in the project to identity the DLLs loaded by multiple encryption tools to be able to identity them reliably.
+	\end{itemize}
+\end{itemize}
+\linej
+
 \subsection{Backup deletion}
 Backups provide effective mitigation against crypto ransomware attacks in most cases.
 There are many scenarios between distributed backups in servers accross the world and just having local backups.
 Their ability to overcome ransomware attacks depends on multiple factors like: the exact malware, the distribution of the backup system, the security of the backup system, etc.
 \linej
-In this case we assume the target only has local backups that are managed with the Shadow Copy service, which allows files to be copied even when in use.
+In this case we assume the target only has local backups in a dedicated volume that are managed with the Shadow Copy service, which allows files to be copied even when in use.
 %A Shadow Copy storage can be added to a device and a Shadow Copy can be created as easily as:
 %\begin{lstlisting}[style=xml]
 %vssadmin add shadowstorage /For=C: /On=F: /MaxSize=50%
@@ -592,15 +594,87 @@ A new disk was added to the virtual machine of the SMB server to serve as a Shad
 This and a network disk are the most basic methods for scheduling backups using Shadow Copies, due to Windows restrictions.
 \linej
 \linej
-It is not possible to detect the deletion of Shadow Copies with file monitoring methods like: Sysmon events, Windows' File Activity Monitoring events and Windows Defender's Controlled Folder Access.
-The Shadow Copies are not in the filesystem of the volume, they are managed directly by the Shadow Copy service as special storage.
+It is not possible to detect the deletion of Shadow Copies with previously examined file monitoring methods,
+because they are not in the filesystem of the volume, they are managed directly by the Shadow Copy service as special storage.
 %TODO detection
-%detectar borrado de backups mirando el tamaño libre en el volumen
-	%si disminuye se actualiza (CBC database?)
-	%si aumenta se debe de haber borrado algo
+%TODO detection with enc or other measures to cover the command
+%TODO AppLocker
+
+\subsubsection{Monitoring the free space of the backup volume}
+Following the previous scenario the backups are stored locally in a dedicated volume.
+The free space of the volume should be reduced with each backup and increased with the deletion of existing backups.
+\linej
+The deletion of backups is usually done to free space to be able to create new backups, therefore is done only by a trusted member or resource.
+This means that if the free space increases and it was not done by us it must an attack, with a high risk of being a crypto ransomware attack.
+\linej
+The scripts and configuration used in this example need to be adapted to ignore planned deletions.
+\linej
+\linej
+The basic elements of this monitoring with Wazuh are:
+\begin{itemize}
+	\item The remote script to get the free space of the volume.
+	\item A way to store the previous free space of the volume:
+	\begin{itemize}
+		\item A CDB database. It requires a compilation of the database and the restart of the Wazuh service each time the list is updated.
+		\item A SQL database. Wazuh can save the alert output to a SQL database, but there is no way to select which are saved and which are not, is either all or none. Having a SQL database just for one integer is not efficient at all.
+		\item A variable. Wazuh does support variables, but does not support the extraction of substrings to variables. The service would need to be restarted for each variable change.
+		\item A file. Is the most efficient and simple way.
+	\end{itemize}
+	\item A way to compare the values. Wazuh does not support numeric comparison, therefore a external command is needed.
+\end{itemize}
+\linej
+This process is still possible, but much more complex that it should be, mainly due to the current state of Wazuh:
+\begin{itemize}
+	\item Lack of numeric comparison in rules.
+	\item Restrictions on the arguments to the active response command. The active response would be much better if fields or substrings of the alert could be send to the command.
+	\item Having the output of an active response command being processed a an event, like it can be done with remote commands.
+\end{itemize}
+\linej
+The idea of the detection implemented is to trigger a certain alert only if the new value stored in the file is greater than it was before.
+The problem is how to trigger another alert inmediately after changing the value with active response.
+This can be done with real-time monitoring on that folder.
+\linej
+There are two ways to know when the new value is not acceptable: when it is greater than before or when it is greater than a fixed value.
+The fixed value is simpler to code, but the former option is used in this example because it means there is no need to manually change it.
+\linej
+This requires to have either two files (one for the value and other for the status) or to store them in the same file, in order to keep modifying the free space also if it is less than before but without triggering the same alert as when it is greater.
+Having two files is harder to manage, therefore the same file was used to store the free space value and the status, one line each.
+\linej
+There are two possible values for the status: ``modified'' and ``safe''.
+The first is to mark the new value is greater and the second to mark that the ``modified'' status has been processed or that the new value is less than the previous.
+\linej
+\linej
+The final objective of these steps is to detect two consecutive modifications on the file storing the free space value, the first due to the change of the value and the second due to the change of the status:
+\begin{enumerate}
+	\item The enabled \ref{lst:free_space_wodle}\ remote command \ref{lst:free_space_ps1}\ is executed on the Windows agent.
+	\item The JSON output of the remote command is processed by rules 333100 and 333101 \ref{lst:free_space_rules}\ and an alert is created.
+	\item The alert triggers the active response \ref{lst:free_space_ossec_configuration} script \ref{lst:free_space_sh}. The script gets the free space value from the OSSEC log in \textit{/var/ossec/logs/archives/archives.json}. This value was on the log of the event that triggered the alert. The new value is compared with the previous one:
+	\begin{enumerate}
+		\item If the new value is equal, then no change is done.
+		\item If the new value is lesser or there is none, then the new value is stored in the file, with the ``safe'' status.
+		\item If the new value is greater, then the new value is stored in the file, with the ``modified'' status.
+	\end{enumerate}
+	\item The change on the file is detected by real-time monitoring with Syscheck \ref{lst:free_space_ossec_configuration}, which is processed by the rules 333102 and 333103 \ref{lst:free_space_rules}. An alert is created by the rule 333103.
+	\item The alert triggers the active response \ref{lst:free_space_ossec_configuration} script \ref{lst:free_space_modified_sh}. The script gets the storage file from the OSSEC log in \textit{/var/ossec/logs/archives/archives.json}. This value was on the log of the event that triggered the alert. The file is read and the status is checked:
+	\begin{enumerate}
+		\item If the status is ``safe'', then nothing is done.
+		\item If the status is ``modified'', then it is changed to ``safe''.
+	\end{enumerate}
+	\item The new change on the file is detected by Syscheck again, like in the step 4. Step 5 is executed again, but this time the status is ``safe''. The difference with the previous execution of step 4 is the rule 333110 \ref{lst:free_space_rules}. This is a composite rule that triggers with two or more alerts from the rule 333103 in a period smaller than the used for periodic remote script. Therefore the rule 333110 only triggers when there is a new greater value.
+\end{enumerate}
+\linej
+Is important to keep in mind that this can be simplified and improved in efficiency, but is not really worth the time for this project.
+\linej
+The next diagram is a simplified version of this process:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/free_space_diagram.jpg}
+	\caption{Diagram of the logic and flow of processes for the detection of the increase of free space in the backup volume}
+\end{figure}
 
 
-\subsection{Active response against ransomware}
+\subsection{Active response against crypto ransomware}
+Because the detection is never 100\% free of false positives, the active response needs to be proportional and as least intrusive as possible for the normal execution of the system.
 %TODO
 
 
