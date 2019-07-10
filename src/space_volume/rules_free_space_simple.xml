@@ -1,0 +1,12 @@
+<rule id="333100" level="0">
+	<decoded_as>json</decoded_as>
+	<field name="Total_of_free_bytes">\.+</field>
+	<field name="Total_of_bytes">\.+</field>
+	<field name="Total_of_avail_free_bytes">\.+</field>
+	<description>Free space monitor of a volume</description>
+</rule>
+<rule id="333101" level="3" >
+	<if_sid>333100</if_sid>
+	<field name="Previous_value">\.+</field>
+	<description>New event from the free space monitor of a volume</description>
+</rule>
