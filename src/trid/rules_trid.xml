@@ -1,0 +1,45 @@
+<rule id="333010" level="0">
+	<if_group>syscheck</if_group>
+	<match>c:\temp</match>
+	<description>C:\temp file integrity monitoring event</description>
+</rule>
+<rule id="333013" level="3">
+	<if_sid>333010</if_sid>
+	<match>was modified</match>
+	<description>C:\temp file modified</description>
+</rule>
+<rule id="333014" level="3">
+	<if_sid>333010</if_sid>
+	<match>was added</match>
+	<description>C:\temp file added</description>
+</rule>
+<rule id="333015" level="3" timeframe="60" frequency="10" >
+	<if_matched_sid>333013</if_matched_sid>
+	<description>Probably an attack</description>
+</rule>
+<rule id="333016" level="3" timeframe="60" frequency="10" >
+	<if_matched_sid>333014</if_matched_sid>
+	<description>Probably an attack</description>
+</rule>
+
+
+<rule id="333200" level="0">
+	<if_group>windows</if_group>
+	<match>TridEventLog</match>
+	<description>Trid event</description>
+</rule>
+<rule id="333201" level="0">
+	<if_sid>333200</if_sid>
+	<match>unenc</match>
+	<description>Trid event: unencrypted file</description>
+</rule>
+<rule id="333202" level="3">
+	<if_sid>333200</if_sid>
+	<match>enc</match>
+	<description>Trid event: encrypted file</description>
+</rule>
+<rule id="333203" level="3">
+	<if_sid>333200</if_sid>
+	<match>unknown</match>
+	<description>Trid event: unknown type of file</description>
+</rule>

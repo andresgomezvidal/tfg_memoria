@@ -263,6 +263,7 @@ The \textit{frequency} option means that the rule has to be matched that number 
 \linej
 Usually each of the suspicious DLLs would have its own rule, but it would not always identify Mimikatz because the frequency has to be at least 2. Therefore rules \textit{300301} and \textit{300302} identify 2 and 3 DLLs each (using a logical OR), making it possible to trigger the grouping rule.
 The last rule identifies the use of the DLLs in a 10 seconds gap as the execution of Mimikatz. This detection could be evaded by adding time between the load of the DLLs in the source code.
+%instead of having ORs to get enough frequency it can be fixed using active response to write the event to another log twice, setting the composite rules for that log source instead
 \linej
 \linej
 The problem of these less precise rules is that it is possible to have false positives. None were seen during this project for this case.

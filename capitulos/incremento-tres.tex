@@ -258,7 +258,7 @@ The configuration of the whitelisted applications and the monitored directories 
 \linej
 Windows defender has a set of monitored folders by default and the rest are listed in \textit{Computer{\textbackslash}HKEY\_LOCAL\_MACHINE{\textbackslash}SOFTWARE{\textbackslash}Policies{\textbackslash}Microsoft{\textbackslash}Win- dows Defender{\textbackslash}Windows Defender Exploit Guard{\textbackslash}Controlled Folder Access{\textbackslash}Pro- tectedFolders}.
 
-\subsubsection{Sysmon events for file changes}
+\subsubsection{Sysmon events for file changes} \label{sysmon_events_file}
 Sysmon events can be used to monitor changes in folders too, for example monitoring the folder \textit{C:{\textbackslash}temp{\textbackslash}}:
 \begin{lstlisting}[style=xml]
 <!--EVENT 2: FILE CREATION TIME RETROACTIVELY CHANGED IN THE FILESYSTEM-->
@@ -548,28 +548,34 @@ Two decoys are used instead of only one with a complex way to duplicate its aler
 \linej
 Decoys proved to work on testing with the encrypting script \ref{lst:ransomware_basic}\ and detection with both Windows File Auditing \ref{lst:file_audit}\ and Syscheck Monitoring with Wazuh \ref{lst:syscheck_rules}.
 
-%TODO
-\subsubsection{Reducing false positives with TODO}
-Another option is to scan the executable responsible for the generation of the alerts, if possible.
-This can be combined with the use of decoys.
+\subsubsection{Reducing false positives by detecting their type}
+There are other ways to reduce false positives in this scenario, for example scanning the executable responsible for known malware signatures.
+In this case the explored solution is to check if the new or modified files are encrypted.
 \linej
-The two obvious ways to identity the program as malware are:
-%TODO
+It makes sense to assume that the monitored folder should have some kind of expected content, therefore making it possible to predict their type of file.
+Of course these files still have a chance of being from a legitimate process and the type of the files can be crafted to look like something else.
+\linej
+There are two ways to identify suspicious formats:
 \begin{itemize}
-	\item A match against a malware signature:
-	\begin{itemize}
-		\item Raw disk access, instead of a normal access, in order to bypass security controls.
-		\item Any other signature detected by antimalware software like Windows Defender or VirusTotal. For example from reverse engineering of the executable.
-	\end{itemize}
-	\item Detecting that the program is encrypting files:
-	\begin{itemize}
-		\item Identifying generated files as encrypted. This still has a chance of being a legitimate process.
-			%TODO problem extracting the folder from the logs that give the filename but not the folder and from syscheck (does not have fields at all)
-				%just have a set of rules for each folder
-		\item Detecting load of DLLs used for encryption for the executable. There is not enough time left in the project to identity the DLLs loaded by multiple encryption tools to be able to identity them reliably. This also has a chance of being a legitimate process.
-	\end{itemize}
+	\item By inclusion: Only matching a set of types. Optimal if the type of content is not known. It provides less false positives at the cost of real positives.
+	\item By exclusion: Matching everything that is not a set of types. Optimal if the type of content is known. It has a higher risk of false positives, but it should detect more encrypted files.
 \end{itemize}
 \linej
+Identifying generated files as encrypted can be done by scanning the contents of the file and matching signatures.
+There are several programs that do this well and in this case \textit{Trid}\cite{trid} was chosen.
+\linej
+\linej
+In this case the the folder is monitored in real-time with Syscheck \ref{lst:syscheck_agent} and the detection \ref{lst:trid_rules}\ of mass creation or modification of files in the folder triggers an active response \ref{lst:trid_ossec}\ script \ref{lst:trid_cmd}\ref{lst:trid_ps1}.
+\linej
+The script gets the created or modified files in the folder in the last minutes.
+This is done by reading the folder and by querying the local event log of Sysmon for events of type 2 (in case the malware changes the creation timestamps).
+%like in \ref{sysmon_events_file}\ 
+\linej
+Each file is processed by Trid and the output of the command is written to the Application log (because active response does not allow to feedback output to Wazuh), which is forwarded to Wazuh (by default) and processed by rules \ref{lst:trid_rules}\ for the strings of interest.
+\linej
+\linej
+This was also tested successfully with the encrypting script \ref{lst:ransomware_basic}.
+Even thought this method has room to improve its efficiency, it should be fast enough to work as a last resort in a real environment.
 
 \subsection{Backup deletion}
 Backups provide effective mitigation against crypto ransomware attacks in most cases.
