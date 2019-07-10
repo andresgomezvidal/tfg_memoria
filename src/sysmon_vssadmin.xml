@@ -1,0 +1,6 @@
+<ProcessCreate onmatch="include">
+	<CommandLine condition="contains">vssadmin</CommandLine>
+	<Image condition="contains">powershell</Image>
+	<Image condition="contains">cmd</Image>
+	<Image condition="contains">vssadmin</Image>
+</ProcessCreate>

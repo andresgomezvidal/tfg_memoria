@@ -59,25 +59,27 @@
 \linej
 
 \section*{Backup deletion}
+\lstinputlisting[style=xml,caption=Sysmon configuration for monitoring vssadmin,captionpos=b,label={lst:vssadmin_sysmon}]{src/sysmon_vssadmin.xml}
+\linej
+\lstinputlisting[style=xml,caption=Wazuh rules for the detection deletion with vssadmin,captionpos=b,label={lst:vssadmin_rules}]{src/rules_vssadmin.xml}
+\linej
+
 \lstinputlisting[style=xml,caption=Remote command configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the free space script,captionpos=b,label={lst:free_space_wodle}]{src/space_volume/wodle_free_space.xml}
 \linej
 
-\lstinputlisting[style=PS,caption=PowerShell script to get the free space in the backup volume and parse its output to JSON,captionpos=b,label={lst:free_space_ps1_simple}]{src/space_volume/free_space_simple.ps1}
+\lstinputlisting[style=PS,caption=PowerShell script to manage the free space in the backup volume and report in JSON,captionpos=b,label={lst:free_space_ps1_simple}]{src/space_volume/free_space_simple.ps1}
 \linej
 \lstinputlisting[style=xml,caption=Wazuh rules for processing the output of the free space remote command,captionpos=b,label={lst:free_space_rules_simple}]{src/space_volume/rules_free_space_simple.xml}
 \linej
 
-%\lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/ossec.conf} for the free space detection,captionpos=b,label={lst:free_space_ossec_configuration}]{src/space_volume/ossec.conf}
-%\lstinputlisting[style=PS,caption=PowerShell script to get the free space in the backup volume and parse its output to JSON,captionpos=b,label={lst:free_space_ps1}]{src/space_volume/free_space.ps1}
-%\linej
-%\lstinputlisting[style=xml,caption=Wazuh rules for processing processes for the detection of the increase of the free space,captionpos=b,label={lst:free_space_rules}]{src/space_volume/rules_free_space.xml}
-%\linej
-%\lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/ossec.conf} for the free space detection,captionpos=b,label={lst:free_space_ossec_configuration}]{src/space_volume/ossec.conf}
-%\linej
-%\lstinputlisting[style=sh,caption=Bash script to compare the free space value with the previous one and change the storage file if it needs to,captionpos=b,label={lst:free_space_sh}]{src/space_volume/free_space.sh}
-%\linej
-%\lstinputlisting[style=sh,caption=Bash script to check the status and change the storage file if it needs to,captionpos=b,label={lst:free_space_modified_sh}]{src/space_volume/free_space_modified.sh}
-%\linej
+\lstinputlisting[style=PS,caption=PowerShell script to get the free space in the backup volume and parse its output to JSON,captionpos=b,label={lst:free_space_ps1}]{src/space_volume/free_space.ps1}
+\linej
+\lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/ossec.conf} for the free space detection,captionpos=b,label={lst:free_space_ossec_configuration}]{src/space_volume/ossec.conf}
+\linej
+\lstinputlisting[style=sh,caption=Bash script in \textit{/var/ossec/active-response/bin} to compare the free space value with the previous one and update the storage and log files,captionpos=b,label={lst:free_space_sh}, stringstyle=\color{black}]{src/space_volume/free_space.sh}
+\linej
+\lstinputlisting[style=xml,caption=Wazuh rules for processing processes for the detection of the increase of the free space,captionpos=b,label={lst:free_space_rules}]{src/space_volume/rules_free_space.xml}
+\linej
 
 \section*{Others}
 \lstinputlisting[style=xml,caption=Enable Sysmon log forwarding to Wazuh in \textit{/var/ossec/etc/shared/default/agent.conf},captionpos=b,label={lst:forward_sysmon}]{src/forward_sysmon.xml}

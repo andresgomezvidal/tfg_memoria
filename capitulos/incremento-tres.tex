@@ -559,14 +559,14 @@ The two obvious ways to identity the program as malware are:
 	\item A match against a malware signature:
 	\begin{itemize}
 		\item Raw disk access, instead of a normal access, in order to bypass security controls.
-		\item Any other signature detected by antimalware software like Windows Defender or VirusTotal.
+		\item Any other signature detected by antimalware software like Windows Defender or VirusTotal. For example from reverse engineering of the executable.
 	\end{itemize}
 	\item Detecting that the program is encrypting files:
 	\begin{itemize}
 		\item Identifying generated files as encrypted. This still has a chance of being a legitimate process.
 			%TODO problem extracting the folder from the logs that give the filename but not the folder and from syscheck (does not have fields at all)
 				%just have a set of rules for each folder
-		\item Detecting load of DLLs used for encryption for the executable. There is not enough time left in the project to identity the DLLs loaded by multiple encryption tools to be able to identity them reliably.
+		\item Detecting load of DLLs used for encryption for the executable. There is not enough time left in the project to identity the DLLs loaded by multiple encryption tools to be able to identity them reliably. This also has a chance of being a legitimate process.
 	\end{itemize}
 \end{itemize}
 \linej
@@ -594,11 +594,11 @@ A new disk was added to the virtual machine of the SMB server to serve as a Shad
 This and a network disk are the most basic methods for scheduling backups using Shadow Copies, due to Windows restrictions.
 \linej
 \linej
-It is not possible to detect the deletion of Shadow Copies with previously examined file monitoring methods,
-because they are not in the filesystem of the volume, they are managed directly by the Shadow Copy service as special storage.
-%TODO detection
-%TODO detection with enc or other measures to cover the command
-%TODO AppLocker
+It is not possible to detect the deletion of Shadow Copies with previously examined file monitoring methods, because they are not in the filesystem of the volume, they are managed directly by the Shadow Copy service as special storage.
+\linej
+The detection of the commands in plain text is trivial and similar to previous examples with Sysmon \ref{lst:vssadmin_sysmon}\ and rules in Wazuh \ref{lst:vssadmin_rules}.
+\linej
+The most obvious mitigation in this case is to restrict the use of these commands, for example with AppLocker.
 
 \subsubsection{Monitoring the free space of the backup volume}
 Following the previous scenario the backups are stored locally in a dedicated volume.
@@ -633,51 +633,8 @@ This process is still possible, but much more complex that it should be, mainly 
 There are two ways to do this with the functionality of Wazuh at this time:
 \begin{itemize}
 	\item Use only a remote script \ref{lst:free_space_ps1_simple}\ and keep the storage file in the client. Much more easier and efficient, but less secure. The script only reports back if the new value is greater, making the rules \ref{lst:free_space_rules_simple}\ trivial.
-	\item Use a remote script and on the server a set of scripts, real-time monitoring and the storage file. This is too complex and expensive in resources to consider it seriously.
+	\item Use a remote script \ref{lst:free_space_ps1}\ to fetch the free space data, processing the data is done in the server with an active response \ref{lst:free_space_ossec_configuration}\ script \ref{lst:free_space_sh}, a file for storing the last value and another log to provide feedback \ref{lst:free_space_ossec_configuration}\ in order to create a new alert \ref{lst:free_space_rules}. This is more complex and expensive in resources, but more secure.
 \end{itemize}
-%%Next is the complex solution keeping the file in the server
-%The idea of the detection implemented is to trigger a certain alert only if the new value stored in the file is greater than it was before.
-%The problem is how to trigger another alert inmediately after changing the value with active response.
-%This can be done with real-time monitoring on that folder.
-%\linej
-%There are two ways to know when the new value is not acceptable: when it is greater than before or when it is greater than a fixed value.
-%The fixed value is simpler to code, but the former option is used in this example because it means there is no need to manually change it.
-%\linej
-%This requires to have either two files (one for the value and other for the status) or to store them in the same file, in order to keep modifying the free space also if it is less than before but without triggering the same alert as when it is greater.
-%Having two files is harder to manage, therefore the same file was used to store the free space value and the status, one line each.
-%\linej
-%There are two possible values for the status: ``modified'' and ``safe''.
-%The first is to mark the new value is greater and the second to mark that the ``modified'' status has been processed or that the new value is less than the previous.
-%\linej
-%\linej
-%The final objective of these steps is to detect two consecutive modifications on the file storing the free space value, the first due to the change of the value and the second due to the change of the status:
-%\begin{enumerate}
-	%\item The enabled \ref{lst:free_space_wodle}\ remote command \ref{lst:free_space_ps1}\ is executed on the Windows agent.
-	%\item The JSON output of the remote command is processed by rules 333100 and 333101 \ref{lst:free_space_rules}\ and an alert is created.
-	%\item The alert triggers the active response \ref{lst:free_space_ossec_configuration} script \ref{lst:free_space_sh}. The script gets the free space value from the OSSEC log in \textit{/var/ossec/logs/archives/archives.json}. This value was on the log of the event that triggered the alert. The new value is compared with the previous one:
-	%\begin{enumerate}
-		%\item If the new value is equal, then no change is done.
-		%\item If the new value is lesser or there is none, then the new value is stored in the file, with the ``safe'' status.
-		%\item If the new value is greater, then the new value is stored in the file, with the ``modified'' status.
-	%\end{enumerate}
-	%\item The change on the file is detected by real-time monitoring with Syscheck \ref{lst:free_space_ossec_configuration}, which is processed by the rules 333102 and 333103 \ref{lst:free_space_rules}. An alert is created by the rule 333103.
-	%\item The alert triggers the active response \ref{lst:free_space_ossec_configuration} script \ref{lst:free_space_modified_sh}. The script gets the storage file from the OSSEC log in \textit{/var/ossec/logs/archives/archives.json}. This value was on the log of the event that triggered the alert. The file is read and the status is checked:
-	%\begin{enumerate}
-		%\item If the status is ``safe'', then nothing is done.
-		%\item If the status is ``modified'', then it is changed to ``safe''.
-	%\end{enumerate}
-	%\item The new change on the file is detected by Syscheck again, like in the step 4. Step 5 is executed again, but this time the status is ``safe''. The difference with the previous execution of step 4 is the rule 333110 \ref{lst:free_space_rules}. This is a composite rule that triggers with two or more alerts from the rule 333103 in a period smaller than the used for periodic remote script. Therefore the rule 333110 only triggers when there is a new greater value.
-%\end{enumerate}
-%\linej
-%Is important to keep in mind that this can be simplified and improved in efficiency, but is not really worth the time for this project.
-%\linej
-%The next diagram is a simplified version of this process:
-%\begin{figure}[H]
-	%\centering
-	%\includegraphics[width=\textwidth]{figuras/free_space_diagram.jpg}
-	%\caption{Diagram of the logic and flow of processes for the detection of the increase of free space in the backup volume}
-%\end{figure}
-
 
 \subsection{Active response against crypto ransomware}
 Because the detection is never 100\% free of false positives, the active response needs to be proportional and as least intrusive as possible for the normal execution of the system.

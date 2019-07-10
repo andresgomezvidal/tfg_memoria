@@ -1,0 +1,6 @@
+<rule id="333110" level="3">
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.commandLine">vssadmin</field>
+	<field name="win.eventdata.commandLine">del</field>
+	<description>Vssadmin: deletion</description>
+</rule>

@@ -3,9 +3,11 @@ function Is-Numeric ($Value) {
 }
 $nvalue=0
 $value=0
-$output='{'
-
-$results=fsutil volume diskfree F:
+$volume='F'
+$results=fsutil volume diskfree ${volume}:
+$output='{"backup_volume":"'
+$output += $volume
+$output +='", '
 foreach ($line in $results){ 
 	$label=$line.split(':')[0]
 	$label=$label -replace ' # ','_' 
@@ -23,6 +25,7 @@ foreach ($line in $results){
 	}
 }
 
+New-Item -ItemType Directory -Force -Path C:\storage
 $StorageFile="C:\storage\free_bytes_F.txt"
 if(-not [System.IO.File]::Exists($StorageFile)){
 	$value=0

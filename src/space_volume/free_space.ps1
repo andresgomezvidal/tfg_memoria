@@ -1,5 +1,8 @@
-$output='{'
-$results=fsutil volume diskfree F:
+$volume='F'
+$results=fsutil volume diskfree ${volume}:
+$output='{"backup_volume":"'
+$output += $volume
+$output +='", '
 foreach ($line in $results){ 
 	$label=$line.split(':')[0]
 	$label=$label -replace ' # ','_' 
