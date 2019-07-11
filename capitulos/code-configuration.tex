@@ -34,13 +34,15 @@
 \lstinputlisting[style=xml,caption=Windows File Auditing rules for crypto ransomware detection,captionpos=b,label={lst:file_audit}]{src/rules_file_audit.xml}
 \linej
 
-\lstinputlisting[style=xml,caption=Wazuh rules for detecting encrypted files,captionpos=b,label={lst:trid_rules}]{src/trid/rules_trid.xml}
+\lstinputlisting[style=xml,caption=Wazuh rules for detecting suspicious file extensions,captionpos=b,label={lst:extensions_rules}]{src/detect_encrypted/rules_extensions_only_modified.xml}
 \linej
-\lstinputlisting[style=xml,caption=Active response configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the Trid CMD,captionpos=b,label={lst:trid_ossec}]{src/trid/ossec.conf}
+\lstinputlisting[style=xml,caption=Wazuh rules for detecting encrypted files,captionpos=b,label={lst:trid_rules}]{src/detect_encrypted/rules_trid.xml}
 \linej
-\lstinputlisting[style=PS,caption=CMD script only for executing the Trid PowerShell script,captionpos=b,label={lst:trid_cmd}]{src/trid/trid.cmd}
+\lstinputlisting[style=xml,caption=Active response configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the Trid CMD,captionpos=b,label={lst:trid_ossec}]{src/detect_encrypted/ossec.conf}
 \linej
-\lstinputlisting[style=PS,caption=PowerShell script that writes a Trid log entry for each modified file in the last 2 minutes in the folder,captionpos=b,label={lst:trid_ps1}]{src/trid/trid.ps1}
+\lstinputlisting[style=PS,caption=CMD script only for executing the Trid PowerShell script,captionpos=b,label={lst:trid_cmd}]{src/detect_encrypted/trid.cmd}
+\linej
+\lstinputlisting[style=PS,caption=PowerShell script that writes a Trid log entry for each modified file in the last 2 minutes in the folder,captionpos=b,label={lst:trid_ps1}]{src/detect_encrypted/trid.ps1}
 \linej
 
 \section*{Registry monitoring and active response for Windows Defender}

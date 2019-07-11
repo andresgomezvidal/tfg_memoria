@@ -529,8 +529,7 @@ But none of them are guaranteed to always work by default.
 Instead a simpler approach was implemented: use decoys and look for suspicious behaviour.
 Because Windows Defender does not provide the filename decoy filtering can not be used with it.
 \linej
-The deletion of files was chosen as the suspicious behaviour to detect, because there is no need to save the encrypted files in the same directory.
-Mass creation of files can also be detected and identified as suspicious.
+The deletion of files was chosen as the suspicious behaviour to detect, but mass creation of files can also be detected and identified as suspicious.
 \linej
 \linej
 Decoy files are files that appear to be normal files but should never be changed or deleted by a legitimate user.
@@ -554,15 +553,18 @@ In this case the explored solution is to check if the new or modified files are 
 \linej
 It makes sense to assume that the monitored folder should have some kind of expected content, therefore making it possible to predict their type of file.
 Of course these files still have a chance of being from a legitimate process and the type of the files can be crafted to look like something else.
+There is no need to save the encrypted files in the same directory, but is worth checking it.
 \linej
 There are two ways to identify suspicious formats:
 \begin{itemize}
-	\item By inclusion: Only matching a set of types. Optimal if the type of content is not known. It provides less false positives at the cost of real positives.
 	\item By exclusion: Matching everything that is not a set of types. Optimal if the type of content is known. It has a higher risk of false positives, but it should detect more encrypted files.
+	\item By inclusion: Only matching a set of types. Optimal if the type of content is not known. It provides less false positives at the cost of real positives. This is the choice in this case, because the other option depends heavily on the target.
 \end{itemize}
 \linej
-Identifying generated files as encrypted can be done by scanning the contents of the file and matching signatures.
-There are several programs that do this well and in this case \textit{Trid}\cite{trid} was chosen.
+Identifying generated files as encrypted can be done by scanning the contents of the file and matching signatures and by matching the file extension to a list of suspicious signatures.
+A detection example with a list of suspicious extensions\cite{crypto_ransomware_extensions} for modified files is shown in \ref{lst:extensions_rules}.
+%TODO
+There are several programs that scan the contents with high accuracy and in this case \textit{Trid}\cite{trid} was chosen.
 \linej
 \linej
 In this case the the folder is monitored in real-time with Syscheck \ref{lst:syscheck_agent} and the detection \ref{lst:trid_rules}\ of mass creation or modification of files in the folder triggers an active response \ref{lst:trid_ossec}\ script \ref{lst:trid_cmd}\ref{lst:trid_ps1}.

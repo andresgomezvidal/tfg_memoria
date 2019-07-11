@@ -28,7 +28,7 @@ foreach($file in $Filenames){
 	$output='{"scanned_filename":"'
 	$output+=$file
 	$output+='", "scan_output":"'
-	$out=C:\users\Administrator\Downloads\trid.exe $file | Select-Object -skip 4
+	$out=C:\users\Administrator\Downloads\trid.exe $file | Select-Object -last 1
 	$output+=$out
 	$output+='"}'
 	Write-EventLog -LogName Application -Source TridEventLog -EntryType Information -Message "$output" -EventId 1
