@@ -246,7 +246,7 @@ Grouping is a very effective technique, but it can require a lot of work to iden
 Fortunately Mimikatz needs a fair amount of DLLs to work and some of them are not very usual. This makes the execution of Mimikatz noticeable.
 \linej
 \linej
- The load of a DLL can be detected by the event 7 of Sysmon and the grouping can be identified with Wazuh rules. It also can be detected by the event 10 of Sysmon, for inter-process access, but a greater cost of bandwidth.
+The load of a DLL can be detected by the event 7 of Sysmon and the grouping can be identified with Wazuh rules. It also can be detected by the event 10 of Sysmon, for inter-process access, but a greater cost of bandwidth.
 For this task is better to configure Sysmon to monitor these 5 images, to avoid logging too much:
 \linej
 \lstinputlisting[style=xml,caption=Sysmon monitoring with event 7 for certain DLLs,captionpos=b]{src/sysmon_event_7.xml}
@@ -269,6 +269,7 @@ The last rule identifies the use of the DLLs in a 10 seconds gap as the executio
 The problem of these less precise rules is that it is possible to have false positives. None were seen during this project for this case.
 \linej
 Unfortunately due to the way OSSEC matches rules there is no way to have an hierarchy of rules to trigger a precise grouping rule or the other one.
+It is possible to have a rule for each DLL using active response to generate two alerts instead of one \ref{lst:freq_active_response}, but is much slower and less efficient.
 \linej
 \linej
 Detecting the use of every variant of Mimikatz is virtually impossible, not only because their sheer number due to its popularity but because anyone can compile their own. Therefore the logical way to detect Mimikatz would be to detect the basic step for every version: the interaction with the LSASS and process injection. More can be read on page \pageref{detect_lsass}.

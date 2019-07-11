@@ -6,12 +6,12 @@
 <rule id="300301" level="1" >
 	<if_sid>300300</if_sid>
 	<field name="win.eventdata.imageLoaded">WinSCard.dll|cryptdll.dll</field>
-	<description>Detected event 7 with $(win.eventdata.imageLoaded)</description>
+	<description>Detected event 7</description>
 </rule>
 <rule id="300302" level="1" >
 	<if_sid>300300</if_sid>
 	<field name="win.eventdata.imageLoaded">samlib.dll|hid.dll|vaultcli.dll</field>
-	<description>Detected event 7 with $(win.eventdata.imageLoaded)</description>
+	<description>Detected event 7</description>
 </rule>
 
 <rule id="300303" level="3" timeframe="10" frequency="2" >

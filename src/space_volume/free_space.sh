@@ -12,6 +12,7 @@ nvalue="$(grep -Eoh '"Total_of_free_bytes":"\w+"' <<< "$line" |awk -F ':' '{gsub
 ip="$(grep -Eoh '"ip":"[0-9]+.[0-9]+.[0-9]+.[0-9]+"' <<< "$line" |awk -F ':' '{gsub("\"","",$2); print $2}')"
 volume="$(grep -Eoh '"backup_volume":"\w+"' <<< "$line" |awk -F ':' '{gsub("\"","",$2); print $2}')"
 timestamp="$(grep -Eoh '"timestamp":"[A-Za-z0-9.:+-]+"' <<< "$line" |awk -F ':' '{gsub("\"","",$2); print $2}')"
+current_timestamp=$(date '+%FT%T.%N%z')
 script_filename="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
 DIR="/var/log/ossec-custom/"
 FILE="$DIR/ossec_windows-agent-${ip}_volume-${volume}_free-space"
@@ -33,7 +34,7 @@ fi
 
 if [[ $value -gt 0 && $(awk 'BEGIN {print ('$nvalue' > '$value')}') -eq 1 ]]; then
 	echo "$nvalue" > "$FILE"
-	echo "{\"timestamp\":\"$timestamp\", \"original_alert\":\"$alert\", \"new_value\":\"$nvalue\", \"previous_value\":\"$value\", \"source_ip\":\"$ip\", \"backup_volume\":\"$volume\", \"storage_file\":\"$FILE\"}" >> "$LOG"
-	 [[ $value -eq 0 || "$nvalue" -lt "$value" ]]; then
+	echo "{\"timestamp\":\"$timestamp\", \"current_timestamp\":\"$current_timestamp\", \"original_alert\":\"$alert\", \"new_value\":\"$nvalue\", \"previous_value\":\"$value\", \"source_ip\":\"$ip\", \"backup_volume\":\"$volume\", \"storage_file\":\"$FILE\", \"script_filename\":\"$script_filename\"}" >> "$LOG"
+elif [[ $value -eq 0 || "$nvalue" -lt "$value" ]]; then
 	echo "$nvalue" > "$FILE"
 fi

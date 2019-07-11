@@ -1,0 +1,73 @@
+<rule id="300300" level="0" >
+	<if_group>sysmon_event7</if_group>
+	<field name="win.eventdata.imageLoaded">\\Windows\\System32\\\.*.dll</field>
+	<description>Detected event 7 with \Windows\System32</description>
+</rule>
+<rule id="300301" level="3" >
+	<if_sid>300300</if_sid>
+	<field name="win.eventdata.imageLoaded">WinSCard.dll</field>
+	<description>Detected event 7</description>
+</rule>
+<rule id="300302" level="3" >
+	<if_sid>300300</if_sid>
+	<field name="win.eventdata.imageLoaded">cryptdll.dll</field>
+	<description>Detected event 7</description>
+</rule>
+<rule id="300303" level="3" >
+	<if_sid>300300</if_sid>
+	<field name="win.eventdata.imageLoaded">samlib.dll</field>
+	<description>Detected event 7</description>
+</rule>
+<rule id="300304" level="3" >
+	<if_sid>300300</if_sid>
+	<field name="win.eventdata.imageLoaded">hid.dll</field>
+	<description>Detected event 7</description>
+</rule>
+<rule id="300305" level="3" >
+	<if_sid>300300</if_sid>
+	<field name="win.eventdata.imageLoaded">vaultcli.dll</field>
+	<description>Detected event 7</description>
+</rule>
+
+<rule id="300200" level="0">
+	<decoded_as>json</decoded_as>
+	<field name="original_alert">\.+</field>
+	<field name="source_ip">\.+</field>
+	<field name="imageLoaded">\.+</field>
+	<field name="previous_id">\.+</field>
+	<description>Workaround for min frequency</description>
+</rule>
+<rule id="300201" level="1" >
+	<if_sid>300200</if_sid>
+	<field name="imageLoaded">WinSCard.dll</field>
+	<description>Detected event 7</description>
+</rule>
+<rule id="300202" level="1" >
+	<if_sid>300200</if_sid>
+	<field name="imageLoaded">cryptdll.dll</field>
+	<description>Detected event 7</description>
+</rule>
+<rule id="300203" level="1" >
+	<if_sid>300200</if_sid>
+	<field name="imageLoaded">samlib.dll</field>
+	<description>Detected event 7</description>
+</rule>
+<rule id="300204" level="1" >
+	<if_sid>300200</if_sid>
+	<field name="imageLoaded">hid.dll</field>
+	<description>Detected event 7</description>
+</rule>
+<rule id="300205" level="1" >
+	<if_sid>300200</if_sid>
+	<field name="imageLoaded">vaultcli.dll</field>
+	<description>Detected event 7</description>
+</rule>
+<rule id="300210" level="3" timeframe="10" frequency="2" >
+	<same_field>source_ip</same_field>
+	<if_matched_sid>300201</if_matched_sid>
+	<if_matched_sid>300202</if_matched_sid>
+	<if_matched_sid>300203</if_matched_sid>
+	<if_matched_sid>300204</if_matched_sid>
+	<if_matched_sid>300205</if_matched_sid>
+	<description>Maybe Mimikatz: DLLs with EventID 7</description>
+</rule>

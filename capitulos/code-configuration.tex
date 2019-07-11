@@ -4,6 +4,14 @@
 %\lstinputlisting[style=xml,caption=,captionpos=b]{src/}
 %\lstinputlisting[style=PS,caption=,captionpos=b]{src/}
 
+\section*{Workaround to reach the minimum frequency with active response}
+\lstinputlisting[style=xml,caption=Active response configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the basic DLL alerts,captionpos=b,label={lst:freq_active_response}]{src/ossec_mimikatz_duplicate_log.conf}
+\linej
+\lstinputlisting[style=sh,caption=Bash script in \textit{/var/ossec/active-response/bin} to write to a log twice per DLL alert received,captionpos=b]{src/dll_duplicate_log.sh}
+\linej
+\lstinputlisting[style=xml,caption=Wazuh rules for detection of DLLs with Sysmon and detection of the special duplicate entries in the custom log,captionpos=b]{src/rules_event_7_mimikatz_duplicate_log.xml}
+\linej
+
 \section*{Detection of the use of the TGT with klist}
 \lstinputlisting[style=xml,caption=Remote command configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the klist script,captionpos=b,label={lst:klist_wodle}]{src/klist_wodle.xml}
 \linej
