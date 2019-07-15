@@ -2,10 +2,11 @@
 
 id=$(cut -d '.' -f1 <<< "$4")
 alert=$5
-for ((i = 0 ; i < 5 ; i++)); do 	#in case it is too fast
-	line="$(awk '/"id":"'$alert'"/ && /"id":"'$id.'.*"/{last=$0}; END{print last}' /var/ossec/logs/archives/archives.json)"
+LOG_READ="/var/ossec/logs/alerts/$(date '+%Y/%b')/ossec-alerts-$(date '+%d').json"
+for ((i = 0 ; i < 100 ; i++)); do 	#in case it is too fast
+	line="$(awk '/"id":"'$alert'"/ && /"id":"'$id.'.*"/{last=$0}; END{print last}' $LOG_READ)"
 	if [ -n "$line" ]; then break; fi
-	sleep 2
+	sleep 0.1
 done
 
 nvalue="$(grep -Eoh '"Total_of_free_bytes":"\w+"' <<< "$line" |awk -F ':' '{gsub("\"","",$2); print $2}')"

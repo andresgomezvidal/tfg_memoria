@@ -5,52 +5,52 @@
 %\lstinputlisting[style=PS,caption=,captionpos=b]{src/}
 
 \section*{Workaround to reach the minimum frequency with active response}
-\lstinputlisting[style=xml,caption=Active response configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the basic DLL alerts,captionpos=b,label={lst:freq_active_response}]{src/ossec_mimikatz_duplicate_log.conf}
+\lstinputlisting[style=xml,caption=Active response configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the basic DLL alerts,captionpos=b,label={lst:freq_active_response}]{src/freq_workaround/ossec_mimikatz_duplicate_log.conf}
 \linej
-\lstinputlisting[style=sh,caption=Bash script in \textit{/var/ossec/active-response/bin} to write to a log twice per DLL alert received,captionpos=b]{src/dll_duplicate_log.sh}
+\lstinputlisting[style=sh,caption=Bash script in \textit{/var/ossec/active-response/bin/} to write to a log twice per DLL alert received,captionpos=b]{src/freq_workaround/dll_duplicate_log.sh}
 \linej
-\lstinputlisting[style=xml,caption=Wazuh rules for detection of DLLs with Sysmon and detection of the special duplicate entries in the custom log,captionpos=b]{src/rules_event_7_mimikatz_duplicate_log.xml}
+\lstinputlisting[style=xml,caption=Wazuh rules for detection of DLLs with Sysmon and detection of the special duplicate entries in the custom log,captionpos=b]{src/freq_workaround/rules_event_7_mimikatz_duplicate_log.xml}
 \linej
 
 \section*{Detection of the use of the TGT with klist}
-\lstinputlisting[style=xml,caption=Remote command configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the klist script,captionpos=b,label={lst:klist_wodle}]{src/klist_wodle.xml}
+\lstinputlisting[style=xml,caption=Remote command configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the klist script,captionpos=b,label={lst:klist_wodle}]{src/ticket_detection/klist_wodle.xml}
 \linej
-\lstinputlisting[style=PS,caption=Script to scan and parse to JSON the tickets in the cache,captionpos=b,label={lst:klist}]{src/klist.ps1}
+\lstinputlisting[style=PS,caption=Script to scan and parse to JSON the tickets in the cache,captionpos=b,label={lst:klist}]{src/ticket_detection/klist.ps1}
 \linej
-\lstinputlisting[style=PS,caption=Way to get the MaxTicketAge from the Group Policy,captionpos=b,label={lst:klist_getMaxTicketAge}]{src/report.ps1}
+\lstinputlisting[style=PS,caption=Way to get the MaxTicketAge from the Group Policy,captionpos=b,label={lst:klist_getMaxTicketAge}]{src/ticket_detection/report.ps1}
 \linej
 
 \section*{Detection of suspicious logins}
-\lstinputlisting[style=PS,caption=Distributed brute force logins changing the ip address for the internal network,captionpos=b,label={lst:distributed_logins_winrs}]{src/distributed_logins_winrs.ps1}
+\lstinputlisting[style=PS,caption=Distributed brute force logins changing the ip address for the internal network,captionpos=b,label={lst:distributed_logins_winrs}]{src/logins/distributed_logins_winrs.ps1}
 \linej
-\lstinputlisting[style=xml,caption=Wazuh rules for checking OU logins outside of usual hours,captionpos=b,label={lst:OU_rules}]{src/rules_OU.xml}
+\lstinputlisting[style=xml,caption=Wazuh rules for checking OU logins outside of usual hours,captionpos=b,label={lst:OU_rules}]{src/logins/rules_OU.xml}
 \linej
-\lstinputlisting[style=xml,caption=Remote command configuration in \textit{/var/ossec/etc/shared/default/agent.conf} to find logins on unusual hours for the OU users,captionpos=b,label={lst:OU_wodle}]{src/OU_wodle.xml}
+\lstinputlisting[style=xml,caption=Remote command configuration in \textit{/var/ossec/etc/shared/default/agent.conf} to find logins on unusual hours for the OU users,captionpos=b,label={lst:OU_wodle}]{src/logins/OU_wodle.xml}
 \linej
-\lstinputlisting[style=PS,caption=Remote script to find logins on unusual hours for the OU users,captionpos=b,label={lst:OU}]{src/OU.ps1}
+\lstinputlisting[style=PS,caption=Remote script to find logins on unusual hours for the OU users,captionpos=b,label={lst:OU}]{src/logins/OU.ps1}
 \linej
 
 \section*{File monitoring}
-\lstinputlisting[style=xml,caption=Windows Defender's Controlled Folder Access rules,captionpos=b,label={lst:windows_defender}]{src/rules_windows_defender.xml}
+\lstinputlisting[style=xml,caption=Windows Defender's Controlled Folder Access rules,captionpos=b,label={lst:windows_defender}]{src/file_monitoring/rules_windows_defender.xml}
 \linej
-\lstinputlisting[style=xml,caption=Syscheck local configuration in the \textit{ossec.conf} file on the agent,captionpos=b,label={lst:syscheck_agent}]{src/syscheck_agent.xml}
+\lstinputlisting[style=xml,caption=Syscheck local configuration in the \textit{ossec.conf} file on the agent,captionpos=b,label={lst:syscheck_agent}]{src/file_monitoring/syscheck_agent.xml}
 \linej
-\lstinputlisting[style=xml,caption=Syscheck rules for crypto ransomware detection,captionpos=b,label={lst:syscheck_rules}]{src/rules_syscheck.xml}
+\lstinputlisting[style=xml,caption=Syscheck rules for crypto ransomware detection,captionpos=b,label={lst:syscheck_rules}]{src/file_monitoring/rules_syscheck.xml}
 \linej
-\lstinputlisting[style=xml,caption=Syscheck rules for crypto ransomware detection with more deletion events required,captionpos=b,label={lst:syscheck_rules_2}]{src/rules_syscheck_2.xml}
+\lstinputlisting[style=xml,caption=Syscheck rules for crypto ransomware detection with more deletion events required,captionpos=b,label={lst:syscheck_rules_2}]{src/file_monitoring/rules_syscheck_2.xml}
 \linej
-\lstinputlisting[style=xml,caption=Windows File Auditing rules for crypto ransomware detection,captionpos=b,label={lst:file_audit}]{src/rules_file_audit.xml}
+\lstinputlisting[style=xml,caption=Windows File Auditing rules for crypto ransomware detection,captionpos=b,label={lst:file_audit}]{src/file_monitoring/rules_file_audit.xml}
 \linej
 
-\lstinputlisting[style=xml,caption=Wazuh rules for detecting suspicious file extensions,captionpos=b,label={lst:extensions_rules}]{src/detect_encrypted/rules_extensions_only_modified.xml}
+\lstinputlisting[style=xml,caption=Wazuh rules for detecting suspicious file extensions,captionpos=b,label={lst:extensions_rules}]{src/file_monitoring/detect_encrypted/rules_extensions_only_modified.xml}
 \linej
-\lstinputlisting[style=xml,caption=Wazuh rules for detecting encrypted files,captionpos=b,label={lst:trid_rules}]{src/detect_encrypted/rules_trid.xml}
+\lstinputlisting[style=xml,caption=Wazuh rules for detecting encrypted files,captionpos=b,label={lst:trid_rules}]{src/file_monitoring/detect_encrypted/rules_trid.xml}
 \linej
-\lstinputlisting[style=xml,caption=Active response configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the Trid CMD,captionpos=b,label={lst:trid_ossec}]{src/detect_encrypted/ossec.conf}
+\lstinputlisting[style=xml,caption=Active response configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the Trid CMD,captionpos=b,label={lst:trid_ossec}]{src/file_monitoring/detect_encrypted/ossec.conf}
 \linej
-\lstinputlisting[style=PS,caption=CMD script only for executing the Trid PowerShell script,captionpos=b,label={lst:trid_cmd}]{src/detect_encrypted/trid.cmd}
+\lstinputlisting[style=PS,caption=CMD script only for executing the Trid PowerShell script,captionpos=b,label={lst:trid_cmd}]{src/file_monitoring/detect_encrypted/trid.cmd}
 \linej
-\lstinputlisting[style=PS,caption=PowerShell script that writes a Trid log entry for each modified file in the last 2 minutes in the folder,captionpos=b,label={lst:trid_ps1}]{src/detect_encrypted/trid.ps1}
+\lstinputlisting[style=PS,caption=PowerShell script that writes a Trid log entry for each modified file in the last 2 minutes in the folder,captionpos=b,label={lst:trid_ps1}]{src/file_monitoring/detect_encrypted/trid.ps1}
 \linej
 
 \section*{Registry monitoring and active response for Windows Defender}
@@ -78,32 +78,45 @@
 \linej
 
 \section*{Backup deletion}
-\lstinputlisting[style=xml,caption=Sysmon configuration for monitoring vssadmin,captionpos=b,label={lst:vssadmin_sysmon}]{src/sysmon_vssadmin.xml}
+\lstinputlisting[style=xml,caption=Sysmon configuration for monitoring vssadmin,captionpos=b,label={lst:vssadmin_sysmon}]{src/backup_deletion/sysmon_vssadmin.xml}
 \linej
-\lstinputlisting[style=xml,caption=Wazuh rules for the detection deletion with vssadmin,captionpos=b,label={lst:vssadmin_rules}]{src/rules_vssadmin.xml}
-\linej
-
-\lstinputlisting[style=xml,caption=Remote command configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the free space script,captionpos=b,label={lst:free_space_wodle}]{src/space_volume/wodle_free_space.xml}
+\lstinputlisting[style=xml,caption=Wazuh rules for the detection of backup deletion with vssadmin,captionpos=b,label={lst:vssadmin_rules}]{src/backup_deletion/rules_vssadmin.xml}
 \linej
 
-\lstinputlisting[style=PS,caption=PowerShell script to manage the free space in the backup volume and report in JSON,captionpos=b,label={lst:free_space_ps1_simple}]{src/space_volume/free_space_simple.ps1}
+\lstinputlisting[style=xml,caption=Wazuh rules for the detection of suspicious wbadmin and bcdedit commands,captionpos=b,label={lst:other_backup_rules}]{src/backup_deletion/rules_other_backup.xml}
 \linej
-\lstinputlisting[style=xml,caption=Wazuh rules for processing the output of the free space remote command,captionpos=b,label={lst:free_space_rules_simple}]{src/space_volume/rules_free_space_simple.xml}
+\lstinputlisting[style=xml,caption=Sysmon configuration for monitoring vssadmin,captionpos=b,label={lst:other_backup_sysmon}]{src/backup_deletion/sysmon_other_backup.xml}
 \linej
 
-\lstinputlisting[style=PS,caption=PowerShell script to get the free space in the backup volume and parse its output to JSON,captionpos=b,label={lst:free_space_ps1}]{src/space_volume/free_space.ps1}
+\lstinputlisting[style=xml,caption=Remote command configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the free space script,captionpos=b,label={lst:free_space_wodle}]{src/backup_deletion/space_volume/wodle_free_space.xml}
 \linej
-\lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/ossec.conf} for the free space detection,captionpos=b,label={lst:free_space_ossec_configuration}]{src/space_volume/ossec.conf}
+
+\lstinputlisting[style=PS,caption=PowerShell script to manage the free space in the backup volume and report in JSON,captionpos=b,label={lst:free_space_ps1_simple}]{src/backup_deletion/space_volume/free_space_simple.ps1}
 \linej
-\lstinputlisting[style=sh,caption=Bash script in \textit{/var/ossec/active-response/bin} to compare the free space value with the previous one and update the storage and log files,captionpos=b,label={lst:free_space_sh}, stringstyle=\color{black}]{src/space_volume/free_space.sh}
+\lstinputlisting[style=xml,caption=Wazuh rules for processing the output of the free space remote command,captionpos=b,label={lst:free_space_rules_simple}]{src/backup_deletion/space_volume/rules_free_space_simple.xml}
 \linej
-\lstinputlisting[style=xml,caption=Wazuh rules for processing processes for the detection of the increase of the free space,captionpos=b,label={lst:free_space_rules}]{src/space_volume/rules_free_space.xml}
+
+\lstinputlisting[style=PS,caption=PowerShell script to get the free space in the backup volume and parse its output to JSON,captionpos=b,label={lst:free_space_ps1}]{src/backup_deletion/space_volume/free_space.ps1}
+\linej
+\lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/ossec.conf} for the free space detection,captionpos=b,label={lst:free_space_ossec_configuration}]{src/backup_deletion/space_volume/ossec.conf}
+\linej
+\lstinputlisting[style=sh,caption=Bash script in \textit{/var/ossec/active-response/bin/} to compare the free space value with the previous one and update the storage and log files,captionpos=b,label={lst:free_space_sh}, stringstyle=\color{black}]{src/backup_deletion/space_volume/free_space.sh}
+\linej
+\lstinputlisting[style=xml,caption=Wazuh rules for processing processes for the detection of the increase of the free space,captionpos=b,label={lst:free_space_rules}]{src/backup_deletion/space_volume/rules_free_space.xml}
+\linej
+
+\section*{Active response against crypto ransomware}
+\lstinputlisting[style=PS,caption=PowerShell script to stop and mitigate the execution of crypto ransomware,captionpos=b,label={lst:active_response_crypto_ransomware_ps1}]{src//active_response_crypto_ransomware/stop.ps1}
+\linej
+\lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/ossec.conf} for the integrator custom script,captionpos=b,label={lst:active_response_crypto_ransomware_ossec}]{src//active_response_crypto_ransomware/ossec.conf}
+\linej
+\lstinputlisting[style=python,caption=Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and execute a remote script with ssh,captionpos=b,label={lst:active_response_crypto_ransomware_py}]{src//active_response_crypto_ransomware/custom-ransomware.py}
 \linej
 
 \section*{Others}
-\lstinputlisting[style=xml,caption=Enable Sysmon log forwarding to Wazuh in \textit{/var/ossec/etc/shared/default/agent.conf},captionpos=b,label={lst:forward_sysmon}]{src/forward_sysmon.xml}
+\lstinputlisting[style=xml,caption=Enable Sysmon log forwarding to Wazuh in \textit{/var/ossec/etc/shared/default/agent.conf},captionpos=b,label={lst:forward_sysmon}]{src/forwarding/forward_sysmon.xml}
 \linej
-\lstinputlisting[style=xml,caption=Enable PowerShell log forwarding to Wazuh in \textit{/var/ossec/etc/shared/default/agent.conf},captionpos=b,label={lst:forward_powershell}]{src/forward_powershell.xml}
+\lstinputlisting[style=xml,caption=Enable PowerShell log forwarding to Wazuh in \textit{/var/ossec/etc/shared/default/agent.conf},captionpos=b,label={lst:forward_powershell}]{src/forwarding/forward_powershell.xml}
 \linej
-\lstinputlisting[style=xml,caption=Enable Windows Defender log forwarding to Wazuh in \textit{/var/ossec/etc/shared/default/agent.conf},captionpos=b,label={lst:forward_Windows_Defender}]{src/forward_Windows_Defender.xml}
+\lstinputlisting[style=xml,caption=Enable Windows Defender log forwarding to Wazuh in \textit{/var/ossec/etc/shared/default/agent.conf},captionpos=b,label={lst:forward_Windows_Defender}]{src/forwarding/forward_Windows_Defender.xml}
 \linej

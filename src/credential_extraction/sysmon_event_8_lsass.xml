@@ -1,0 +1,3 @@
+<CreateRemoteThread onmatch="include">
+	<TargetImage condition="image">lsass.exe</TargetImage>
+</CreateRemoteThread>

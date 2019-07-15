@@ -1,0 +1,7 @@
+<ProcessCreate onmatch="include">
+	<Image condition="contains">wsmprovhost.exe</Image>
+</ProcessCreate>
+<RawAccessRead onmatch="include">
+	<Image condition="contains">powershell.exe</Image>
+	<Image condition="contains">wsmprovhost.exe</Image>
+</RawAccessRead>

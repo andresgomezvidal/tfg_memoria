@@ -1,0 +1,6 @@
+<ProcessCreate onmatch="include">
+	<CommandLine condition="contains">powershell.exe</CommandLine>
+	<CommandLine condition="contains">encodedCommand</CommandLine>
+	<CommandLine condition="contains">-enc </CommandLine>
+	<CommandLine condition="contains">ntdsutil.exe</CommandLine>
+</ProcessCreate>

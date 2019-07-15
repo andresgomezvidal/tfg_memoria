@@ -1,0 +1,3 @@
+<ProcessCreate onmatch="include">
+	<Image condition="contains">reg.exe</Image>
+</ProcessCreate>

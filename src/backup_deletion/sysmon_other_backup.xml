@@ -1,0 +1,8 @@
+<ProcessCreate onmatch="include">
+	<CommandLine condition="contains">wbadmin</CommandLine>
+	<CommandLine condition="contains">bcdedit</CommandLine>
+	<Image condition="contains">powershell</Image>
+	<Image condition="contains">cmd</Image>
+	<Image condition="contains">wbadmin</Image>
+	<Image condition="contains">bcdedit</Image>
+</ProcessCreate>

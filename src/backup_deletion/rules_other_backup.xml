@@ -1,0 +1,19 @@
+<rule id="333111" level="3">
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.commandLine">wbadmin</field>
+	<field name="win.eventdata.commandLine">delete</field>
+	<description>Wbadmin: deletion</description>
+</rule>
+<rule id="333112" level="3">
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.commandLine">bcdedit</field>
+	<field name="win.eventdata.commandLine">bootstatuspolicy</field>
+	<field name="win.eventdata.commandLine">ignoreallfailures</field>
+	<description>Bcdedit: suspicius behaviour</description>
+</rule>
+<rule id="333113" level="3">
+	<if_group>sysmon_event1</if_group>
+	<field name="win.eventdata.commandLine">bcdedit</field>
+	<field name="win.eventdata.commandLine">recoveryenabled\s+no</field>
+	<description>Bcdedit: suspicius behaviour</description>
+</rule>

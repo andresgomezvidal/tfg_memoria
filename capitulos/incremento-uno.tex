@@ -66,7 +66,7 @@ These scripts try to automate as much of the process as possible, which is usual
 \subsubsection{Exploit 1: Local Mimikatz in DC}
 This requires local administrator privileges in the DC and also and an already downloaded version of Mimikatz in the DC, which the attacker can easily get after gaining privileges. If this example were to be used as it is it will probably be detected by the antivirus and Windows Defender, but again they can be disabled by a local administrator and there are techniques to avoid being detected by them.
 \linej
-\lstinputlisting[style=PS,caption=Script to generate and inject a Golden Ticket,captionpos=b]{src/genticket.ps1}
+\lstinputlisting[style=PS,caption=Script to generate and inject a Golden Ticket,captionpos=b]{src/ticket_detection/genticket.ps1}
 \linej
 The script uses Mimikatz to get the needed data to generate the Golden Ticket, saving it to a file for convenience. Then the data is split in variables, each being a piece for generating the forged ticket. The \textit{exit} parameter is to exit the Mimikatz shell after executing the command.
 \linej
@@ -74,7 +74,7 @@ After injecting the ticket (with the \textit{/ptt} option) the session haves adm
 The id 500 is the normal id for the administrator account in the AD.
 This script can be executed in multiple ways, for example from a PowerShell interactive terminal run as an administrator.
 \linej
-\lstinputlisting[style=txt,caption=Example of the contents of the output file,captionpos=b]{src/output.txt}
+\lstinputlisting[style=txt,caption=Example of the contents of the output file,captionpos=b]{src/ticket_detection/output.txt}
 \linej
 The password hash of the KRBTGT account is retrieved by Mimikatz interacting with the Local Security Authority (LSA) or Local Security Authority Subsystem Service (LSASS), which is run by the lsass.exe process.
 \linej
@@ -90,7 +90,7 @@ The clear advantage over the previous one is that it should be harder to detect.
 \linej
 With slight changes this could work in a computer that is not a DC, if the attacker compromised a workstation a domain admin logged onto\cite{dump_ways}.
 \linej
-\lstinputlisting[style=PS,caption=Script to run Mimikatz only in memory and inject a Golden Ticket,captionpos=b]{src/genticket_mem.ps1}
+\lstinputlisting[style=PS,caption=Script to run Mimikatz only in memory and inject a Golden Ticket,captionpos=b]{src/ticket_detection/genticket_mem.ps1}
 \linej
 The script downloads a version of Mimikatz from Github and creates a PowerShell object with its contents, that can be invoked at any time in this shell\cite{powersploit}\cite{mimikatz_details}. Then as before it dumps the needed information to generate the Golden Ticket in a file, which is read and parsed to store the interesting parameters into variables.
 \linej
@@ -103,7 +103,7 @@ On the other hand PowerShell can be monitored for downloading commands, particul
 \subsubsection{Exploit 3: Mimikatz with DCSync}
 The DCSync is a Mimikatz feature in which a no-DC attempts to impersonate a DC and request account information from a real DC. This technique is less noisy because it does not require direct access to a DC (which are often heavily monitored)\cite{dump_ways}\cite{pentestlab}. To run Mimikatz we still need local administrator privileges in the computer.
 \linej
-\lstinputlisting[style=PS,caption=Script to run Mimikatz with DCSync,captionpos=b]{src/genticket_dcsync_mimikatz.ps1}
+\lstinputlisting[style=PS,caption=Script to run Mimikatz with DCSync,captionpos=b]{src/ticket_detection/genticket_dcsync_mimikatz.ps1}
 %some times the dcsync Mimikatz command does not work and needs to restart the no DC computer
 \linej
 This follows the same structure as the previous cases, but this time with the dcsync option.
@@ -115,7 +115,7 @@ In this case the access to the no-DC computer in the targeted network is done th
 We need to know the password of the account we want to access remotely and the targeted computer needs to have a SMB share.
 In this case the variable \textit{SMBPass} stores the password, which is \textit{Passw0rd}.
 \linej
-\lstinputlisting[style=ruby,caption=Part 1 of the remote DCSync exploit automation,captionpos=b]{src/metasploit_p1_kiwi.rc}
+\lstinputlisting[style=ruby,caption=Part 1 of the remote DCSync exploit automation,captionpos=b]{src/ticket_detection/metasploit_p1_kiwi.rc}
 \linej
 This runs a remote process, exploiting the SMB capabilities to run commands to spawn a Meterpreter shell\cite{meterpreter} with administrator privileges. There is a chance that the \textit{run} command fails to provide a Meterpreter shell at this stage, but trying again always ends working because the session is not getting created even though the exploit is working.
 \linej
@@ -140,7 +140,7 @@ The command in this case retrieves the information of the KRBTGT account needed 
 \linej
 In this case the generation of the ticket is not using the data in an automated way, because there was no real need since is the same every time and the time needed to do this with Ruby felt like a waste. In this case the ticket is saved to the \textit{/tmp/golden.tck} file in the Kali machine.
 \linej
-\lstinputlisting[style=ruby,caption=Part 2 of the remote DCSync exploit automation,captionpos=b]{src/metasploit_p2_kiwi.rc}
+\lstinputlisting[style=ruby,caption=Part 2 of the remote DCSync exploit automation,captionpos=b]{src/ticket_detection/metasploit_p2_kiwi.rc}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figuras/kiwi_p2.png}
@@ -155,11 +155,11 @@ Of course there is no real need to use Metasploit to get a remote shell to run M
 \subsubsection{Exploit 5: Hashdump with Meterpreter}
 Using a reverse TCP exploit the attacker access the targeted DC with a Meterpreter shell. This is similar to the previous case but using the Meterpreter command \textit{hashdump} instead of the DCSync retrieval of Kiwi\cite{pentestlab}. This stills uses Kiwi to generate the Golden Ticket.
 \linej
-\lstinputlisting[style=ruby,caption=Part 1 of the remote Hashdump exploit automation,captionpos=b]{src/metasploit_p1_hashdump.rc}
+\lstinputlisting[style=ruby,caption=Part 1 of the remote Hashdump exploit automation,captionpos=b]{src/ticket_detection/metasploit_p1_hashdump.rc}
 \linej
 Again there is a migration to an administrator account of the AD. In this case another command to get the SID of the network would be needed if we did not know it already, for example a simple \textit{whoami /user} would suffice.
 \linej
-\lstinputlisting[style=ruby,caption=Part 2 of the remote Hashdump exploit automation,captionpos=b]{src/metasploit_p2_hashdump.rc}
+\lstinputlisting[style=ruby,caption=Part 2 of the remote Hashdump exploit automation,captionpos=b]{src/ticket_detection/metasploit_p2_hashdump.rc}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figuras/hashdump.png}
@@ -249,11 +249,11 @@ Fortunately Mimikatz needs a fair amount of DLLs to work and some of them are no
 The load of a DLL can be detected by the event 7 of Sysmon and the grouping can be identified with Wazuh rules. It also can be detected by the event 10 of Sysmon, for inter-process access, but a greater cost of bandwidth.
 For this task is better to configure Sysmon to monitor these 5 images, to avoid logging too much:
 \linej
-\lstinputlisting[style=xml,caption=Sysmon monitoring with event 7 for certain DLLs,captionpos=b]{src/sysmon_event_7.xml}
+\lstinputlisting[style=xml,caption=Sysmon monitoring with event 7 for certain DLLs,captionpos=b]{src/ticket_detection/sysmon_event_7.xml}
 \linej
 On the manager side the next rules are needed:
 \linej
-\lstinputlisting[style=xml,caption=Rules for suspecting a Mimikatz execution as a group of events,captionpos=b]{src/rules_event_7_mimikatz_alternative.xml}
+\lstinputlisting[style=xml,caption=Rules for suspecting a Mimikatz execution as a group of events,captionpos=b]{src/ticket_detection/rules_event_7_mimikatz_alternative.xml}
 The \textit{sysmon\_event7} means that another rule has marked the log as a Sysmon event of type 7.
 \linej
 The \textit{same\_field} option means that every one of the matches must have the same value in the designed field, which in this case means that these events come from the same computer.
@@ -328,7 +328,7 @@ Next there is an example of the difference between the normal output of klist an
 \linej
 The time difference mentioned before is a very easy way to detect a forged ticket. With a simple subtraction in the PowerShell script only a rule that makes a number comparison in the manager is needed to launch the alert.
 \linej
-\lstinputlisting[style=xml,caption=Rules to detect a suspicious expiration age from the report of the klist script,captionpos=b]{src/rules_klist.xml}
+\lstinputlisting[style=xml,caption=Rules to detect a suspicious expiration age from the report of the klist script,captionpos=b]{src/ticket_detection/rules_klist.xml}
 \linej
 The purpose of the first rule is to identify any log in JSON with \textit{MaxTicketAge} and \textit{TicketExpireHours} fields. The second rule is used to examine the contents of the \textit{TicketExpireHoursGap} field of the logs that the first rule has identified. If the value of the \textit{TicketExpireHoursGap} field starts with a digit different than 0 then it means that \textit{MaxTicketAge} $>$ \textit{TicketExpireHours}, therefore the expiration age is greater that it should, triggering an alert.
 Additionally it can only trigger once each 600 seconds, to avoid flooding of alerts.
@@ -359,14 +359,10 @@ Additionally there could be monitoring for unusual usernames, because is possibl
 \linej
 \linej
 It can be worth checking if the attacker is using klist to clean the cache of injected tickets, to cover any tracks. This can be easily accomplished monitoring the execution of klist with the event 1 of Sysmon:
-\begin{lstlisting}[style=xml]
-<ProcessCreate onmatch="include">
-	<Image condition="contains">klist</Image>
-</ProcessCreate>
-\end{lstlisting}
+\lstinputlisting[style=xml]{src/ticket_detection/sysmon_event_1_klist.xml}
 \linej
 And checking with Wazuh if the option \textit{purge} was used:
-\lstinputlisting[style=xml]{src/rules_klist_purge.xml}
+\lstinputlisting[style=xml]{src/ticket_detection/rules_klist_purge.xml}
 
 \subsection{Silver Ticket}
 A Silver Ticket is very similar to a Golden Ticket, is a forged TGS instead of TGT. Therefore a Silver Ticket only grants access to a service in a computer. Is important to note that some services need the privileges of more services, therefore more than a Silver Ticket may be needed.
@@ -482,15 +478,11 @@ There are other ways to use ntdsutil in ways harder to detect\cite{more_dumps}, 
 \linej
 \linej
 The creation of processes related to ntds can be reported by Sysmon:
-\begin{lstlisting}[style=xml]
-<ProcessCreate onmatch="include">
-	<Image condition="contains">ntdsutil.exe</Image>
-</ProcessCreate>
-\end{lstlisting}
+\lstinputlisting[style=xml]{src/credential_extraction/sysmon_event_1_ntdsutil.xml}
 \linej
 And alerts set with Wazuh:
 \label{ntdsutil_detection}
-\lstinputlisting[style=xml]{src/rules_ntds.xml}
+\lstinputlisting[style=xml]{src/credential_extraction/rules_ntds.xml}
 \linej
 The first rule is the parent, it filters windows events with the \textit{ntds} string.
 \linej
@@ -503,21 +495,13 @@ There is also the remote version of Reg: WinReg. But there was no time to invest
 
 \subsubsection{Exploit 7: Storing registry hives with Reg}
 These commands produce the different save files, each of a different group of credentials, that can be later extracted offline with certain tools\cite{more_dumps}:
-\begin{lstlisting}[style=PS]
-reg.exe save hklm\sam c:\temp\sam.save
-reg.exe save hklm\security c:\temp\security.save
-reg.exe save hklm\system c:\temp\system.save
-\end{lstlisting}
+\lstinputlisting[style=PS]{src/credential_extraction/reg.ps1}
 \linej
 Reg is not detected as malware because it is a builtin tool in Windows. With Sysmon we can report the execution of Reg with the event 1, reporting the creation of a process:
-\begin{lstlisting}[style=xml]
-<ProcessCreate onmatch="include">
-	<Image condition="contains">reg.exe</Image>
-</ProcessCreate>
-\end{lstlisting}
+\lstinputlisting[style=xml]{src/credential_extraction/sysmon_event_1_reg.xml}
 \linej
 And Wazuh to trigger an alert:
-\lstinputlisting[style=xml]{src/rules_reg.xml}
+\lstinputlisting[style=xml]{src/credential_extraction/rules_reg.xml}
 \linej
 The parent rule matches the creation of Reg from the report of Sysmon.
 \linej
@@ -533,40 +517,27 @@ Additionally a grouping detection for the DLLs Reg uses was tested. It detected 
 
 \subsubsection{Exploit 8: Dump of LSASS with ProcDump}
 ProcDump\cite{procdump} is a command-line utility whose primary purpose is monitoring an application for CPU spikes and generating crash dumps during a spike. This program can be used to create a dump file of the running \textit{lsass.exe} process:
-\begin{lstlisting}[style=PS,numbers=none]
-C:\Users\Administrator\Downloads\procdump.exe -accepteula -64 -ma lsass.exe c:\temp\lsass.dmp
-\end{lstlisting}
+\lstinputlisting[style=PS]{src/credential_extraction/procdump.ps1}
 \linej
 The dumped file can be used to extract the credentials by other programs, like Mimikatz\cite{more_dumps}. This is also true for the next exploits.
 
 \subsubsection{Exploit 9: Dump of LSASS with pd}
 ProcessDumper, also known as pd\cite{pd}, is another program to dump the \textit{lsass.exe} contents. For example if the id of the process is 552:
-\begin{lstlisting}[style=PS,numbers=none]
-C:\Users\Administrator\Downloads\pd.exe -p 552 > c:\temp\lsass.dump
-\end{lstlisting}
+\lstinputlisting[style=PS]{src/credential_extraction/pd.ps1}
 
 \subsubsection{Exploit 10: Dump of LSASS with Minidump}
 Minidump is a script from the PowerSploit Post-Explotation Framework\cite{powersploit}. It can be combined with the \textit{Get-Process} builtin to dump the process into a file:
-\begin{lstlisting}[style=PS]
-Import-Module c:\users\administrator\downloads\PowerSploit-master\Exfiltration\Out-Minidump.ps1
-Get-Process lsass | Out-Minidump -DumpFilePath c:\temp
-\end{lstlisting}
+\lstinputlisting[style=PS]{src/credential_extraction/minidump.ps1}
 
 \subsubsection{Exploit 11: Retrieval of NTDS.DIT with NinjaCopy} \label{invoke-NinjaCopy}
 %%fixes needed
 %%	%https://github.com/PowerShellMafia/PowerSploit/commit/bd6fe64316afe293d6b4cdf095ed3cfb64b6ab25
 %%	%https://github.com/PowerShellMafia/PowerSploit/issues/293
 Another PowerSploit module that can be used to steal the NTDS.DIT file is \textit{NinjaCopy}:
-\begin{lstlisting}[style=PS]
-Import-Module C:\Users\Administrator\Downloads\PowerSploit-master\Exfiltration\Invoke-NinjaCopy.ps1
-Invoke-NinjaCopy -Path "c:\windows\ntds\ntds.dit"  -LocalDestination "c:\temp\ntds.dit"
-\end{lstlisting}
+\lstinputlisting[style=PS]{src/credential_extraction/NinjaCopy.ps1}
 \linej
 Or to copy the NTDS.DIT of the DC in this laboratory to a no-DC computer:
-\begin{lstlisting}[style=PS]
-Import-Module C:\Users\Administrator\Downloads\PowerSploit-master\Exfiltration\Invoke-NinjaCopy.ps1
-Invoke-NinjaCopy -Path "c:\windows\ntds\ntds.dit"  -LocalDestination "c:\temp\ntds.dit" -ComputerName "WIN-25U0PFAB511"
-\end{lstlisting}
+\lstinputlisting[style=PS]{src/credential_extraction/NinjaCopy_from_DC.ps1}
 \linej
 This module allows any file, even if it is locked, to be copied without starting suspicious services or injecting in to processes. This is because it can copy \textbf{any file} from a NTFS volume, by opening a read handle to the entire volume, therefore bypassing the following protections\cite{dump_ways}:
 \begin{itemize}
@@ -577,17 +548,9 @@ This module allows any file, even if it is locked, to be copied without starting
 The code to parse NTFS is loaded with a reflective DLL, making it harder to detect because it does not use the Windows loader nor a DLL file.
 \linej
 The direct read of the device can be reported with the event 9 of Sysmon, but event 1 can be useful to make sure in the remote case. This needs to be in the configuration file of Sysmon in the DC:
-\begin{lstlisting}[style=xml]
-<ProcessCreate onmatch="include">
-	<Image condition="contains">wsmprovhost.exe</Image>
-</ProcessCreate>
-<RawAccessRead onmatch="include">
-	<Image condition="contains">powershell.exe</Image>
-	<Image condition="contains">wsmprovhost.exe</Image>
-</RawAccessRead>
-\end{lstlisting}
+\lstinputlisting[style=xml]{src/credential_extraction/sysmon_event_1_9_NinjaCopy.xml}
 \linej
-\lstinputlisting[style=xml,caption=Rules for detecting NinjaCopy,captionpos=b]{src/rules_ninjacopy.xml}
+\lstinputlisting[style=xml,caption=Rules for detecting NinjaCopy,captionpos=b]{src/credential_extraction/rules_ninjacopy.xml}
 \linej
 The local case only generates an event of type 9 and its only signatures are \textit{PowerShell} and \textit{Device{\textbackslash}HarddiskVolume}. It does not even record the name of the file because the handle is for the volume. This can not really guarantee this event comes from the execution of NinjaCopy, but until now has always worked and never reported a false positive. This rule could be much more useful if the NTDS.DIT file were in a different volume than normal.
 \linej
@@ -604,10 +567,10 @@ If the remote command is executed from DC and set to copy from the same computer
 \linej
 \linej
 Grouping the DLLs loaded by the \textit{Import-Module} command probed to be effective. As with Mimikatz, this loads the DLLs needed for NinjaCopy to work, which can be registered by the event 7 of Sysmon:
-\lstinputlisting[style=xml]{src/sysmon_event_7_ninjacopy_import.xml}
+\lstinputlisting[style=xml]{src/credential_extraction/sysmon_event_7_ninjacopy_import.xml}
 \linej
 These 8 DLLs are detected by 4 rules to reach the minimum frequency:
-\lstinputlisting[style=xml]{src/rules_ninjacopy_import.xml}
+\lstinputlisting[style=xml]{src/credential_extraction/rules_ninjacopy_import.xml}
 \linej
 This detection works with both local and remote cases the same.
 \linej
@@ -627,21 +590,13 @@ This event can be used to detect LSASS dumps\cite{sysmon_event_10_lsass}.
 The downside is it can generate significant amounts of logging, therefore it was configured to log only the LSASS process and exclude the instances from the OSSEC agent and the Virtual Box service.
 %This exclude seems to affect other events of type 7 too, even though it should not.
 \linej
-\begin{lstlisting}[style=xml,caption=Sysmon monitoring with event 10 for LSASS reads,captionpos=b]
-<ProcessAccess onmatch="include">
-	<TargetImage condition="contains">C:\Windows\System32\lsass.exe</TargetImage>
-</ProcessAccess>
-<ProcessAccess onmatch="exclude">
-	<SourceImage condition="contains">C:\Windows\System32\vboxservice.exe</SourceImage>
-	<SourceImage condition="contains">C:\Program Files (x86)\ossec-agent\ossec-agent.exe</SourceImage>
-</ProcessAccess>
-\end{lstlisting}
+\lstinputlisting[style=xml,caption=Sysmon monitoring with event 10 for LSASS reads,captionpos=b]{src/credential_extraction/sysmon_event_10_lsass.xml}
 \linej
 After some analysis of these events it was clear that normal accesses could be identified by the \textit{grantedAccess} field. Its value is a mask, that indicates the type of privileges the process is accessed with.
 \linej
 They had a value of \textit{0x3000} (even though these do not happen often) or \textit{0x1000} if the process is \textit{svchost.exe}. The detected malicious programs produced at least one event with a different value on this field.
 \linej
-\lstinputlisting[style=xml,caption=Rules to detect unusual values of grantedAccess,captionpos=b]{src/rules_lsass.xml}
+\lstinputlisting[style=xml,caption=Rules to detect unusual values of grantedAccess,captionpos=b]{src/credential_extraction/rules_lsass.xml}
 \linej
 The first identifies events of type 10 for the LSASS process.
 \linej
@@ -681,14 +636,10 @@ All the exploits used until this point were tested, resulting in a 100\% rate fo
 \end{table}
 \linej
 Another way to detect unusual access to LSASS is with the event 8 of Sysmon\cite{detection_events}, that reports when a process creates a thread in another process:
-\begin{lstlisting}[style=xml]
-<CreateRemoteThread onmatch="include">
-	<TargetImage condition="image">lsass.exe</TargetImage>
-</CreateRemoteThread>
-\end{lstlisting}
+\lstinputlisting[style=xml]{src/credential_extraction/sysmon_event_8_lsass.xml}
 \linej
 As for Wazuh just a rule to detect the event of type 8 and the LSASS executable are enough:
-\lstinputlisting[style=xml]{src/rules_lsass_event_8.xml}
+\lstinputlisting[style=xml]{src/credential_extraction/rules_lsass_event_8.xml}
 \linej
 Only exploits 1, 2 and 5 were detected with this rule.
 
@@ -748,17 +699,10 @@ Again in this project we can only take a peek at them, but knowing them at least
 \subsection{Encoding commands}
 PowerShell provides a builtin option to execute commands from an encoded string. This can be used to bypass signature matching. Of course the attacker does not need to encode it in the same machine, that would be a risk for the key string to be detected.
 \linej
-\lstinputlisting[style=PS,caption=Encoding and executing ntdsutil,captionpos=b]{src/powershell_enc.ps1}
+\lstinputlisting[style=PS,caption=Encoding and executing ntdsutil,captionpos=b]{src/powershell_detection/powershell_enc.ps1}
 \linej
 Data about the execution of PowerShell can be obtained with the event 1 of Sysmon:
-\begin{lstlisting}[style=xml]
-<ProcessCreate onmatch="include">
-	<CommandLine condition="contains">powershell.exe</CommandLine>
-	<CommandLine condition="contains">encodedCommand</CommandLine>
-	<CommandLine condition="contains">-enc </CommandLine>
-	<CommandLine condition="contains">ntdsutil.exe</CommandLine>
-</ProcessCreate>
-\end{lstlisting}
+\lstinputlisting[style=xml]{src/powershell_detection/sysmon_event_1.xml}
 \linej
 Focusing logging and detection on the CommandLine field is more effective than the Image field, because it usually provides key information that does not appear in the other. Usually we would not be monitoring this field for the signature ntdsutil.exe, because there are too many commands, but in this case we are doing a exception to show what it brings and that there is no real need for it.
 \linej
@@ -786,7 +730,7 @@ ParentCommandLine: ``[$\cdots$]powershell.exe''}
 \linej
 The very same PowerShell command cannot be totally encoded, therefore it is possible to detect the strings for these options. This applies too to other PowerShell options, like for bypassing the execution policy, they either are detected as encoded or by signature\cite{powershell_adsecurity}.
 Another way to detect encoded commands is to look out for unusual long CommandLine fields:
-\lstinputlisting[style=xml,]{src/rules_powershell_enc_latex.xml}
+\lstinputlisting[style=xml,]{src/powershell_detection/rules_powershell_enc_latex.xml}
 \linej
 The first rule to match the event triggers the alert.
 In testing this was always the 100100 rule, but it was checked that the other two also work if this rule is not present.
@@ -883,14 +827,14 @@ In this case the attacker tries to login guessing the password without changing 
 He hopes that this goes on undetected because the logins are against different accounts.
 \linej
 This can be reproduced with a very simple loop:
-\lstinputlisting[style=PS]{src/reverse_logins_winrs.ps1}
+\lstinputlisting[style=PS]{src/logins/reverse_logins_winrs.ps1}
 \linej
 Fortunately Wazuh already has rules for this in \textit{0580-win-security\_rules.xml}\cite{wazuh_ruleset}.
 Failed logins are identified by the rule 60104, which is triggered by the security event 4771\cite{windows_events}.
 Grouping is used by the rule 60205 to trigger another alert with a higher level, if there are at least 8 in 240 seconds from the same ip address.
 The value of the MS\_FREQ variable is set to 8 in this file.
 \linej
-\lstinputlisting[style=xml,captionpos=b,caption=Rule 60205 of Wazuh]{src/rule_60205.xml}
+\lstinputlisting[style=xml,captionpos=b,caption=Rule 60205 of Wazuh]{src/logins/rule_60205.xml}
 
 \subsection{Distributed brute force login attempts}
 Instead of changing the user the attacker changes his ip address every few attempts. In this case is not so much a matter of not being detected, but of not getting temporary banned by ip address, which usually results in a drop of received packages by the firewall of the network.
@@ -905,16 +849,7 @@ Administrator privileges were required to change the ip address successfully. Th
 \linej
 \linej
 The rule 60205 in Wazuh only works for failed attempts comming from the same ip address, therefore it fails to detect this. A similar rule can solve this, just by checking the same user is targeted and by changing the \textit{same\_field} requirement to \textit{not\_same\_field} for the ip address:
-\begin{lstlisting}[style=xml]
-<rule id="110001" level="3" frequency="5" timeframe="300">
-	<if_matched_sid>60104</if_matched_sid>
-	<not_same_field>win.eventdata.ipAddress</not_same_field>
-	<same_field>win.eventdata.targetUserName</same_field>
-	<description>Multiple Windows audit failure events with different IPs</description>
-	<options>no_full_log</options>
-	<group>pci_dss_10.6.1,gdpr_IV_35.7.d,</group>
-</rule>
-\end{lstlisting}
+\lstinputlisting[style=xml,captionpos=b,caption=Rule 60205 of Wazuh]{src/logins/rule_60205_alternative.xml}
 \linej
 This frequency is fine for testing in a laboratory with an internal network, but probably is way too low for a real environment.
 Wazuh can be used to ban the ip for a time with its active response feature\cite{active_response}.

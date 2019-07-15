@@ -227,7 +227,7 @@ The next PowerShell script creates a random passphrase of letters, numbers and s
 This passphrase is ciphered with the public RSA key and saved to the file ``passphrase.txt''.
 Then script loops over all the files in \textit{C:/temp/} with the \textit{.txt} extension, encrypting them to AES-256 (in block cipher mode) and deleting the original file when done.
 The \textit{openssl} variable is just for convenience.
-\lstinputlisting[style=PS,caption=Script to encrypt files and cipher the passphrase with RSA,captionpos=b,label={lst:ransomware_basic}]{src/ransomware_basic.ps1}
+\lstinputlisting[style=PS,caption=Script to encrypt files and cipher the passphrase with RSA,captionpos=b,label={lst:ransomware_basic}]{src/ransomware_example/ransomware_basic.ps1}
 \linej
 The passphrase file can be deciphered with the private key, getting the random passphrase used in the script:
 \begin{lstlisting}[style=PS,keywordstyle=\color{black}]
@@ -236,7 +236,7 @@ openssl rsautl -decrypt -in passphrase.txt -inkey keys.pem
 \linej
 Decrypting the files can be done using the same passphrase, because AES is a symmetric algorithm.
 This example assumes the same value for the variables as in the encryption process:
-\lstinputlisting[style=PS]{src/ransomware_decrypt.ps1}
+\lstinputlisting[style=PS]{src/ransomware_example/ransomware_decrypt.ps1}
 
 \subsection{Detection of file crypto ransomware}
 Next some sources for possible detection of crypto ransomware are examined.
@@ -260,22 +260,7 @@ Windows defender has a set of monitored folders by default and the rest are list
 
 \subsubsection{Sysmon events for file changes} \label{sysmon_events_file}
 Sysmon events can be used to monitor changes in folders too, for example monitoring the folder \textit{C:{\textbackslash}temp{\textbackslash}}:
-\begin{lstlisting}[style=xml]
-<!--EVENT 2: FILE CREATION TIME RETROACTIVELY CHANGED IN THE FILESYSTEM-->
-<FileCreateTime onmatch="include">
-	<TargetFilename condition="contains">C:\temp\</TargetFilename>
-</FileCreateTime>
-
-<!--EVENT 9: RAW DISK ACCESS-->
-<RawAccessRead onmatch="include">
-	<Device condition="contains">C:\temp\</Device>
-</RawAccessRead>
-
-<!--EVENT 11: FILE CREATED-->
-<FileCreate onmatch="include">
-	<TargetFilename condition="contains">C:\temp\</TargetFilename>
-</FileCreate>
-\end{lstlisting}
+\lstinputlisting[style=xml]{src/file_monitoring/sysmon.xml}
 \linej
 Unfortunately none of the Sysmon events can detect file deletion, but they can be useful in other ways:
 \begin{itemize}
@@ -410,6 +395,7 @@ Each of the next tables shows a simplification of the advantages and disadvantag
 		&
 			$\bullet$ Real malware can be hard to tell apart from false positives.
 			\linej $\bullet$ The format of the events is not suited for field matching.
+			\linej $\bullet$ Windows Defender may identity it as a thread and stop it.
 				%none of the same ip checks are not working
 					%including same_source_ip and any kind of matches
 						%including manual ip matches in the previous rules
@@ -535,6 +521,10 @@ The deletion of files was chosen as the suspicious behaviour to detect, but mass
 Decoy files are files that appear to be normal files but should never be changed or deleted by a legitimate user.
 Therefore if there are such events paired with other suspicious behaviour in a short amount of time it should mean that a ransomware attack is going on.
 \linej
+A similar option is to use a directory that contains itself in a loop, created by a special mount configuration.
+This has a chance to make the attack get stuck until some kind of defense mechanism is deployed.
+They are also known as Honeyfiles and Honeydirectories respectively\cite{ransomware_oReilly}.
+\linej
 These restrictions can be increased to reduce the chance of generating false positives at the risk of losing real positives.
 Increasing the required number of other deleted files over the minimum of two \ref{lst:syscheck_rules_2}, for the decoys and Wazuh composite rules, in contrast with the normal rules \ref{lst:syscheck_rules}.
 \linej
@@ -563,7 +553,6 @@ There are two ways to identify suspicious formats:
 \linej
 Identifying generated files as encrypted can be done by scanning the contents of the file and matching signatures and by matching the file extension to a list of suspicious signatures.
 A detection example with a list of suspicious extensions\cite{crypto_ransomware_extensions} for modified files is shown in \ref{lst:extensions_rules}.
-%TODO
 There are several programs that scan the contents with high accuracy and in this case \textit{Trid}\cite{trid} was chosen.
 \linej
 \linej
@@ -591,11 +580,8 @@ In this case we assume the target only has local backups in a dedicated volume t
 %vssadmin create shadow /For=C:
 %\end{lstlisting}
 %\linej
-Some known ransomware like Locky and Cerber try to delete existing Shadow Copies before encrypting the files\cite{ransomware_oReilly}:
-\begin{lstlisting}[style=PS]
-C:\Windows\system32\vssadmin.exe delete shadows /all /quiet
-C:\Windows\system32\wbem\wmic.exe shadowcopy delete
-\end{lstlisting}
+Some known ransomware like Locky and Cerber try to delete existing Shadow Copies with these commands\cite{ransomware_oReilly}:
+\lstinputlisting[style=PS]{src/backup_deletion/commands.ps1}
 \linej
 Only vssadmin was used for testing because wmic is just the same but from remote (and is even easier to detect because it has three specific Sysmon events).
 A new disk was added to the virtual machine of the SMB server to serve as a Shadow Copy storage on the \textit{F:} drive.
@@ -607,6 +593,10 @@ It is not possible to detect the deletion of Shadow Copies with previously exami
 The detection of the commands in plain text is trivial and similar to previous examples with Sysmon \ref{lst:vssadmin_sysmon}\ and rules in Wazuh \ref{lst:vssadmin_rules}.
 \linej
 The most obvious mitigation in this case is to restrict the use of these commands, for example with AppLocker.
+\linej
+\linej
+Other commands to watch out with Wazuh \ref{lst:other_backup_rules}\ and Sysmon \ref{lst:other_backup_sysmon}\ can disable recovery with backups and delete backups and the backup catalog created with the Windows Server Backup snap-in\cite{wannacry_IOCS_details}\cite{wbadmin}:
+\lstinputlisting[style=PS]{src/backup_deletion/commands_2.ps1}
 
 \subsubsection{Monitoring the free space of the backup volume}
 Following the previous scenario the backups are stored locally in a dedicated volume.
@@ -644,8 +634,38 @@ There are two ways to do this with the functionality of Wazuh at this time:
 	\item Use a remote script \ref{lst:free_space_ps1}\ to fetch the free space data, processing the data is done in the server with an active response \ref{lst:free_space_ossec_configuration}\ script \ref{lst:free_space_sh}, a file for storing the last value and another log to provide feedback \ref{lst:free_space_ossec_configuration}\ in order to create a new alert \ref{lst:free_space_rules}. This is more complex and expensive in resources, but more secure.
 \end{itemize}
 
-\subsection{Active response against crypto ransomware}
-Because the detection is never 100\% free of false positives, the active response needs to be proportional and as least intrusive as possible for the normal execution of the system.
+\section{Active response against crypto ransomware}
+After the detection of a ransomware attack by any of the methods previously shown is essential to stop or reduce the impact of the attack as soon as possible.
+There is no way to guarantee that a security expert is present at the time or that manual action is fast enough, therefore the process needs to be automated.
+\linej
+Because the detection is never 100\% free of false positives, the incident response needs to be proportional and as less intrusive as possible for the normal execution of the system.
+\linej
+\linej
+The methods considered for the active response script were:
+\begin{enumerate}
+	\item Isolate the affected system to make sure that the infection does not spread further. By disconnecting it from the Internet and maybe from the network, or just by dropping certain kinds of packages. This may require a selective process, for example to isolate it from other Windows machines but not from the Wazuh server.
+	\item Mitigate and stop the execution of the program responsible for raising the alerts.
+	\begin{enumerate}
+		\item Restrictions at program level may stop the attack, even if it is just for a short time.
+For example ensuring no instances of the suspicious executable are run for some minutes by killing them periodically or by blocking its use.
+These can be effective against basic automated malware, but a smart attacker can overcome them pretty easily.
+		\item An easy way to stop files being encrypted or deleted is to lock them before the malware does, but this can be overcome for example by accessing the device directly with NinjaCopy \ref{invoke-NinjaCopy}.
+		\item Change file permissions and ownership for a short time. If the malware is not running with high privileges it can be effective. This needs to be reversed later and it should be protected with mutexes.
+		\item Usually crypto ransomware only works on certain paths, which means that moving the files elsewhere might avoid the encryption. This is not that simple because in NTFS the files still can be identified by special ids, the new path needs enough free space and the process needs to be reversed.
+		\item As a last resort, turning off the computer can stop the encryption process and critical data can be retrieved from RAM using special software.
+			%Unfortunately there are cases where shutting down does not stop the encryption process, leaving the computer even more vulnerable.
+	\end{enumerate}
+\end{enumerate}
+\linej
+In this example \ref{lst:active_response_crypto_ransomware_ps1}\ no actions that are hard to reverse later were implemented, simplifiying the active response process but making it less effective, leaving out 2.(c) and 2.(d). 2.(e) was also not included because the lack of time for the reasearch on data retrieval from RAM, but turning off the computer can be done with a simple \textit{Stop-Computer} command.
+\linej
+\linej
+In this case the active response in Wazuh was actually using the integrator module \ref{lst:active_response_crypto_ransomware_ossec} with a custom script \ref{lst:active_response_crypto_ransomware_py}, using previous rules from Syscheck \ref{lst:syscheck_rules}\ and Trid \ref{lst:trid_rules}.
+This actually is a couple of seconds faster without the Trid rules, because then much less processing power is being used in the Trid active response script to determine if the files are encrypted or not.
+Integrator\cite{integrator} was used instead because slighty more efficient and faster because the log of the triggering alert is available directly, instead of having to search the alert log (which can be huge) with a custom command.
+%\linej
+%To measure the response speed 10 test were made with the test script \ref{lst:ransomware_basic}\ resulting in an average of 5.7 seconds from the start to the stop of this script.
+%Of course this does not offer any kind of guarantee that it will work in a real scenario or that this performance is good or bad, this only serves as an reference in the lab environment.
 %TODO
 
 

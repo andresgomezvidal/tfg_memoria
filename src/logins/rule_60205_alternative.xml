@@ -1,0 +1,8 @@
+<rule id="110001" level="3" frequency="5" timeframe="300">
+	<if_matched_sid>60104</if_matched_sid>
+	<not_same_field>win.eventdata.ipAddress</not_same_field>
+	<same_field>win.eventdata.targetUserName</same_field>
+	<description>Multiple Windows audit failure events with different IPs</description>
+	<options>no_full_log</options>
+	<group>pci_dss_10.6.1,gdpr_IV_35.7.d,</group>
+</rule>

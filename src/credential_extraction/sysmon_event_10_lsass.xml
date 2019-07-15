@@ -1,0 +1,7 @@
+<ProcessAccess onmatch="include">
+	<TargetImage condition="contains">C:\Windows\System32\lsass.exe</TargetImage>
+</ProcessAccess>
+<ProcessAccess onmatch="exclude">
+	<SourceImage condition="contains">C:\Windows\System32\vboxservice.exe</SourceImage>
+	<SourceImage condition="contains">C:\Program Files (x86)\ossec-agent\ossec-agent.exe</SourceImage>
+</ProcessAccess>

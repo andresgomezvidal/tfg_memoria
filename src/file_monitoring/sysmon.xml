@@ -1,0 +1,14 @@
+<!--EVENT 2: FILE CREATION TIME RETROACTIVELY CHANGED IN THE FILESYSTEM-->
+<FileCreateTime onmatch="include">
+	<TargetFilename condition="contains">C:\temp\</TargetFilename>
+</FileCreateTime>
+
+<!--EVENT 9: RAW DISK ACCESS-->
+<RawAccessRead onmatch="include">
+	<Device condition="contains">C:\temp\</Device>
+</RawAccessRead>
+
+<!--EVENT 11: FILE CREATED-->
+<FileCreate onmatch="include">
+	<TargetFilename condition="contains">C:\temp\</TargetFilename>
+</FileCreate>

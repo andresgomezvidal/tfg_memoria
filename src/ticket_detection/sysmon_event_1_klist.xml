@@ -1,0 +1,4 @@
+<ProcessCreate onmatch="include">
+	<Image condition="contains">klist</Image>
+	<CommandLine condition="contains">klist</CommandLine>
+</ProcessCreate>

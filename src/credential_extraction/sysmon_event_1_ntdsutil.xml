@@ -1,0 +1,4 @@
+<ProcessCreate onmatch="include">
+	<Image condition="contains">ntdsutil</Image>
+	<CommandLine condition="contains">ntdsutil</CommandLine>
+</ProcessCreate>
