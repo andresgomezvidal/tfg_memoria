@@ -238,7 +238,7 @@ Decrypting the files can be done using the same passphrase, because AES is a sym
 This example assumes the same value for the variables as in the encryption process:
 \lstinputlisting[style=PS]{src/ransomware_example/ransomware_decrypt.ps1}
 
-\subsection{Detection of file crypto ransomware}
+\subsection{Detection of crypto ransomware}
 Next some sources for possible detection of crypto ransomware are examined.
 Each of these options has its pros and cons, there is no restriction for using them toguether (in case one fails).
 It is important to keep in mind that the Wazuh server is supposed to manage multiple systems, therefore scalability should be a concern and maybe only one of the solutions could be used in a real network.
@@ -663,10 +663,6 @@ In this example \ref{lst:active_response_crypto_ransomware_ps1}\ no actions that
 In this case the active response in Wazuh was actually using the integrator module \ref{lst:active_response_crypto_ransomware_ossec} with a custom script \ref{lst:active_response_crypto_ransomware_py}, using previous rules from Syscheck \ref{lst:syscheck_rules}\ and Trid \ref{lst:trid_rules}.
 This actually is a couple of seconds faster without the Trid rules, because then much less processing power is being used in the Trid active response script to determine if the files are encrypted or not.
 Integrator\cite{integrator} was used instead because slighty more efficient and faster because the log of the triggering alert is available directly, instead of having to search the alert log (which can be huge) with a custom command.
-%\linej
-%To measure the response speed 10 test were made with the test script \ref{lst:ransomware_basic}\ resulting in an average of 5.7 seconds from the start to the stop of this script.
-%Of course this does not offer any kind of guarantee that it will work in a real scenario or that this performance is good or bad, this only serves as an reference in the lab environment.
-%TODO
 
 
 %TODO real ransomware tests
