@@ -1,0 +1,4 @@
+mover archivos a rutas windows genericas para evitar riesgo de que crypto ransomware los encripte y pierdan su utilidad
+	archivos.py
+	archivos.ps1
+	archivos.cmd

@@ -6,6 +6,7 @@
 <rule id="333011" level="3">
 	<if_sid>333010</if_sid>
 	<match>decoy1|decoy2</match>
+	<match>was deleted|was modified</match>
 	<description>C:\temp decoy file event</description>
 </rule>
 <rule id="333012" level="3">
@@ -13,14 +14,23 @@
 	<match>was deleted</match>
 	<description>C:\temp file deleted</description>
 </rule>
-
 <rule id="333013" level="3">
+	<if_sid>333010</if_sid>
+	<match>was modified</match>
+	<description>C:\temp file modified</description>
+</rule>
+<rule id="333014" level="3">
 	<if_sid>333010</if_sid>
 	<match>was added</match>
 	<description>C:\temp file added</description>
 </rule>
-<rule id="333014" level="3" timeframe="60" frequency="10" >
+
+<rule id="333015" level="3" timeframe="60" frequency="10" >
 	<if_matched_sid>333013</if_matched_sid>
+	<description>Suspicious mass modification of files</description>
+</rule>
+<rule id="333016" level="3" timeframe="60" frequency="10" >
+	<if_matched_sid>333014</if_matched_sid>
 	<description>Suspicious mass creation of files</description>
 </rule>
 
