@@ -2,6 +2,25 @@
 %awk -F '{' '/^@.*{..*,/ {gsub(",","",$2); print $2}' bib.bib |awk '{print $1}' |while read -r i; do if [[ -z "$(grep "cite{$i}" ../capitulos/*.tex)" ]]; then  echo "NONE: $i" ; fi;  done
 
 
+%poner enlace directamente en el texto?
+%	solamente cuando sea estilo algo para descargar
+%	todo lo que sea consulta para hacer el trabajo es bibliografia
+%referencias en el texto trocito a trocito están bien, y tambien estan bien ponerlas todas al final
+%tener casi todo online está bien
+%formato siempre igual
+%	elegir un formato de referencia
+%		el año va siempre tras el campo anterior con una coma
+%		articulos
+%			autores: nombre y apellidos o inicial y apellidos, titulo del articulo (entre comillas), revista/congreso/technical report/tesis/TFG/TFM (en cursiva), numero de la revista y paginas (si lo tiene), año, DOI (URL, pero poner DOI en vez de URL)
+%			separacion con puntos
+%
+%			cuando falte informacion no poner esa parte
+%				ejemplo paginas de technical report
+%			In: seria la revista
+%			Titulo y a continuacion el nombre del congreso
+%	libros
+%		autores, titulo, editorial, lugar de publicacion (si se sabe) (se suele encontrar tras "published by"), año, ISBN
+
 @Book{pmbok,
 %address = {},
 %author = {Project Management Institute},

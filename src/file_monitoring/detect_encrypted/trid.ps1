@@ -3,7 +3,7 @@
 
 $Filenames = @()
 $DIR='c:\temp'
-$temp=(Get-Date).AddMinutes(-150)
+$temp=(Get-Date).AddMinutes(-2)
 $events=Get-WinEvent -FilterHashtable @{logname="Microsoft-Windows-Sysmon/Operational"}| Get-WinEventData |  Where-Object{$_.Id -eq 2}| Where-Object{$_.EventDataTargetFilename -like "*$DIR*"} | Where-Object{$_.TimeCreated -ge $temp} | Select-Object EventDataTargetFilename
 foreach($result in $events){
 	$file=$result.EventDataTargetFilename

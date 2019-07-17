@@ -1,13 +1,9 @@
 #https://gallery.technet.microsoft.com/scriptcenter/Get-WinEventData-Extract-344ad840
 . 'C:\Program Files (x86)\ossec-agent\active-response\bin\Get-WinEventData.ps1'
 
-if(($Args.length -eq 0) -Or ([string]::IsNullOrEmpty($Args[0]))){
-	write-host "Essential argument DIR is missing"
-	exit 1
-}
 $Filenames = @()
-$DIR=$Args[0]
-$temp=(Get-Date).AddMinutes(-150)
+$DIR='C:\Users\OU_user1\Downloads'
+$temp=(Get-Date).AddMinutes(-2)
 $events=Get-WinEvent -FilterHashtable @{logname="Microsoft-Windows-Sysmon/Operational"}| Get-WinEventData |  Where-Object{$_.Id -eq 2}| Where-Object{$_.EventDataTargetFilename -like "*$DIR*"} | Where-Object{$_.TimeCreated -ge $temp} | Select-Object EventDataTargetFilename
 foreach($result in $events){
 	$file=$result.EventDataTargetFilename

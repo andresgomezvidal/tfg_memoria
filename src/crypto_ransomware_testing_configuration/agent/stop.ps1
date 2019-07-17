@@ -22,7 +22,7 @@ if(-Not ([string]::IsNullOrEmpty($process_id))){
 }
 
 #Lock files recursively in each directory in $DIRS
-$DIRS=@('c:\temp', 'c:\tmp')
+$DIRS=@('C:\Users\OU_user1\Downloads', 'c:\tmp')
 if((-Not ([string]::IsNullOrEmpty($directory))) -And ($DIRS -notcontains $directory)){
 	$DIRS+=$directory
 }

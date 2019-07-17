@@ -9,7 +9,7 @@ alert_file = open(sys.argv[1])
 alert_json = json.loads(alert_file.read())
 alert_file.close()
 
-# Extract fields call the script
+# Extract fields and call the script
 alert_id=alert_json['rule']['id']
 if alert_id == '333019':
     directory=alert_json['syscheck']['path'].replace("\\","/").rsplit('/',1)[0]

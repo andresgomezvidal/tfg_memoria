@@ -1,27 +1,41 @@
-<ProcessCreate onmatch="include">
-	<Image condition="contains">powershell</Image>
-	<Image condition="contains">cmd</Image>
+<Sysmon schemaversion="4.20">
+<HashAlgorithms>md5,sha256</HashAlgorithms>
+<EventFiltering>
+	<ProcessCreate onmatch="include">
+		<Image condition="contains">powershell</Image>
+		<Image condition="contains">cmd</Image>
 
-	<CommandLine condition="contains">wbadmin</CommandLine>
-	<CommandLine condition="contains">bcdedit</CommandLine>
-	<Image condition="contains">wbadmin</Image>
-	<Image condition="contains">bcdedit</Image>
+		<CommandLine condition="contains">wbadmin</CommandLine>
+		<CommandLine condition="contains">bcdedit</CommandLine>
+		<Image condition="contains">wbadmin</Image>
+		<Image condition="contains">bcdedit</Image>
 
-	<CommandLine condition="contains">vssadmin</CommandLine>
-	<Image condition="contains">vssadmin</Image>
-</ProcessCreate>
+		<CommandLine condition="contains">vssadmin</CommandLine>
+		<Image condition="contains">vssadmin</Image>
+	</ProcessCreate>
 
-<!--EVENT 2: FILE CREATION TIME RETROACTIVELY CHANGED IN THE FILESYSTEM-->
-<FileCreateTime onmatch="include">
-	<TargetFilename condition="contains">C:\temp\</TargetFilename>
-</FileCreateTime>
+	<FileCreateTime onmatch="include">
+		<TargetFilename condition="contains">C:\Users\OU_user1\Downloads\</TargetFilename>
+	</FileCreateTime>
+	<RawAccessRead onmatch="include">
+		<Device condition="contains">C:\Users\OU_user1\Downloads\</Device>
+	</RawAccessRead>
+	<!--<FileCreate onmatch="include">-->
+		<!--<TargetFilename condition="contains">C:\Users\OU_user1\Downloads\</TargetFilename>-->
+	<!--</FileCreate>-->
 
-<!--EVENT 9: RAW DISK ACCESS-->
-<RawAccessRead onmatch="include">
-	<Device condition="contains">C:\temp\</Device>
-</RawAccessRead>
-
-<!--EVENT 11: FILE CREATED-->
-<FileCreate onmatch="include">
-	<TargetFilename condition="contains">C:\temp\</TargetFilename>
-</FileCreate>
+	<RegistryEvent onmatch="include">
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\</TargetObject>
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet\SpyNetReporting</TargetObject>
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware</TargetObject>
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring</TargetObject>
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableOnAccessProtection</TargetObject>
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableScanOnRealtimeEnable</TargetObject>
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\AllowedApplications\</TargetObject>
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\ProtectedFolders\</TargetObject>
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\EnableControlledFolderAccess</TargetObject>
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\ExploitGuard_ControlledFolderAccess_AllowedApplications</TargetObject>
+		<TargetObject condition="begin with">HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\ExploitGuard_ControlledFolderAccess_ProtectedFolders</TargetObject>
+	</RegistryEvent>
+</EventFiltering>
+</Sysmon>
