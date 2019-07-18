@@ -6,6 +6,7 @@ if(-Not ([string]::IsNullOrEmpty($Args[2]))){
 	$executable=$executable.replace('\\','/')
 	$executable=$executable.replace('//','/')
 	$executable_short=$executable.split('/')[-1]
+	$executable_short_noexec=$executable_short.split('.')[0]
 	$kill_all=$Args[3]
 }
 
@@ -54,7 +55,7 @@ $seconds=600
 $interval=10
 for ($i=0; $i -lt $seconds; $i+=$interval) {
 	if (($kill_all -eq 1) -or ($kill_all -eq $True)){
-		(Stop-Process -Name $executable -PassThru -Force) -or (Stop-Process -Name $executable_short -Force)
+		(Stop-Process -Name $executable -PassThru -Force) -or (Stop-Process -Name $executable_short -Force) -or (Stop-Process -Name $executable_short_noexec -Force)
 	}
 	Start-sleep -s $interval
 }

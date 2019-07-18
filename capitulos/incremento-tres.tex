@@ -210,7 +210,7 @@ This example shows how easily removal and encryption of files can be done with t
 \linej
 In this scenario the attacker uses AES for the files and ciphers the key passphrase with a RSA public key.
 Both algorithms are supported by many tools: GnuGG, OpenSSL, custom DLLs and programming languages like PowerShell or Python.
-OpenSSL was chosen because it works the same on Windows and GNU/Linux and is easy to use and install.
+OpenSSL\cite{openssl} was chosen because it works the same on Windows and GNU/Linux and is easy to use and install.
 \linej
 \linej
 The first step would be the generation of the pair of RSA keys.
@@ -414,7 +414,7 @@ From these tables we can conclude that:
 	\item Fast local action is more suited to antivirus than IDS, therefore it makes sense to turn to Windows Defender for this feature. Further actions can still be implemented with Wazuh active response. For the others the active response is still possible, but slower.
 	\item Windows Defender is the most attractive method to detect and stop the malware, but there are risks in only trusting Windows Defender.
 	\item Because is hard to detect the creation of new files with the Windows File Auditing it makes sense to use the event 11 of Sysmon for this and likewise Sysmon can not detect file deletion which this security auditing can. But both have fundamental problems with false positives.
-	\item Direct monitoring with Wazuh seems to be easier and more effective that combining Windows File Auditing with Sysmon.
+	\item Direct monitoring with Wazuh seems to be easier and more effective that combining Windows File Auditing with Sysmon, but it should be fundamentally slower because it needs to compare the checksum in order to detect any changes.
 	\item The Sysmon events 2 and 9 are always useful to find suspicious events with a low chance of false positives.
 	\item Windows Defender detects the attack on its own, while the others need to relate multiple events in a short period of time with Wazuh's composite rules.
 \end{itemize}
