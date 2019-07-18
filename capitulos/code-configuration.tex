@@ -106,11 +106,33 @@
 \linej
 
 \section*{Active response against crypto ransomware}
-\lstinputlisting[style=PS,caption=PowerShell script to stop and mitigate the execution of crypto ransomware,captionpos=b,label={lst:active_response_crypto_ransomware_ps1}]{src//active_response_crypto_ransomware/stop.ps1}
+\lstinputlisting[style=PS,caption=PowerShell script to stop and mitigate the execution of crypto ransomware,captionpos=b,label={lst:active_response_crypto_ransomware_ps1}]{src/active_response_crypto_ransomware/stop.ps1}
 \linej
-\lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/ossec.conf} for the integrator custom script,captionpos=b,label={lst:active_response_crypto_ransomware_ossec}]{src//active_response_crypto_ransomware/ossec.conf}
+\lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/ossec.conf} for the integrator custom script,captionpos=b,label={lst:active_response_crypto_ransomware_ossec}]{src/active_response_crypto_ransomware/ossec.conf}
 \linej
-\lstinputlisting[style=python,caption=Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and execute a remote script with ssh,captionpos=b,label={lst:active_response_crypto_ransomware_py}]{src//active_response_crypto_ransomware/custom-ransomware.py}
+\lstinputlisting[style=python,caption=Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and execute a remote script with ssh,captionpos=b,label={lst:active_response_crypto_ransomware_py}]{src/active_response_crypto_ransomware/custom-ransomware.py}
+\linej
+
+\section*{Testing with real crypto ransomware}
+The configuration is exactly the same as with the previous cases in \ref{lst:trid_cmd}, \ref{lst:trid_ps1}, \ref{lst:change-registry-value_0} to \ref{lst:delete-registry}, \ref{lst:free_space_ps1} and \ref{lst:free_space_sh}.
+It changes slightly in the rest, included here:
+\linej
+\lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/ossec.conf} for the active response and integrator modules,captionpos=b,label={lst:real_crypto_ransomware_testing}]{src/crypto_ransomware_testing_configuration/manager/ossec.conf}
+\linej
+\lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/shared/default/agent.conf} for the configuration of the Windows agent from the server,captionpos=b]{src/crypto_ransomware_testing_configuration/manager/agent.conf}
+\linej
+\lstinputlisting[style=xml,caption=Wazuh rules for detection in \textit{/var/ossec/etc/rules/local\_rules.xml},captionpos=b]{src/crypto_ransomware_testing_configuration/manager/rules.xml}
+\linej
+\lstinputlisting[style=python,caption=Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and execute a remote script with ssh,captionpos=b,label={lst:custom_ransomware_py_1}]{src/crypto_ransomware_testing_configuration/manager/custom-ransomware.py}
+\linej
+\lstinputlisting[style=python,caption=Alternative Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and kill the executable with ssh,captionpos=b,label={lst:custom_ransomware_py_2}]{src/crypto_ransomware_testing_configuration/manager/custom-ransomware_2.py}
+\linej
+
+\lstinputlisting[style=PS,caption=PowerShell script to stop and mitigate the execution of crypto ransomware,captionpos=b,label={lst:crypto_ransomware_testing_configuration_stop}]{src/crypto_ransomware_testing_configuration/agent/stop.ps1}
+\linej
+\lstinputlisting[style=xml,caption=Syscheck local configuration in the \textit{ossec.conf} file on the agent,captionpos=b]{src/crypto_ransomware_testing_configuration/agent/ossec.conf}
+\linej
+\lstinputlisting[style=xml,caption=Sysmon configuration,captionpos=b]{src/crypto_ransomware_testing_configuration/agent/sysmon.xml}
 \linej
 
 \section*{Others}

@@ -29,23 +29,23 @@
 <rule id="333015" level="3" timeframe="30" frequency="10" >
 	<if_matched_sid>333013</if_matched_sid>
 	<ignore>60</ignore>
-	<description>Suspicious mass modification of files</description>
+	<description>Many file modifications in a short time</description>
 </rule>
 <rule id="333016" level="3" timeframe="30" frequency="10" >
 	<if_matched_sid>333014</if_matched_sid>
 	<ignore>60</ignore>
-	<description>Suspicious mass creation of files</description>
+	<description>Many file creations in a short time</description>
 </rule>
 <rule id="333017" level="3" timeframe="30" frequency="10" >
 	<if_matched_sid>333012</if_matched_sid>
 	<ignore>60</ignore>
-	<description>Many deletions in a short time</description>
+	<description>Many file deletions in a short time</description>
 </rule>
 
 <rule id="333019" level="3" timeframe="60" frequency="2" >
 	<if_matched_sid>333011</if_matched_sid>
 	<ignore>5</ignore>
-	<description>Decoys deleted or modified</description>
+	<description>Suspicius mass deletion of tiles in a short time</description>
 </rule>
 
 

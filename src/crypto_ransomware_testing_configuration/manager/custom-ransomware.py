@@ -18,17 +18,6 @@ if alert_id == '333019':
     pid=full_log.split("Process id: '")[1].split("'\n")[0]
     exe=full_log.split("Process name: '")[1].split("'\n")[0].replace("\\","/")
     options=1
-# elif alert_id == '333202':
-    # full_log=alert_json['full_log']
-    # directory=full_log.split("scanned_filename\":\"")[1].split("\",")[0].replace("\\","/").rsplit('/',1)[0]
-    # pid=""
-    # exe=""
-# elif alert_id == '333050':
-    # full_log=alert_json['full_log']
-    # directory="unknown"
-    # pid="0"
-    # exe=full_log.split("\"message\":\"")[1].split("has been")[0].replace("\\","/")
-    # options=1
 elif alert_id == '62103' or alert_id == '62104':
     directory="unknown"
     pid="0"

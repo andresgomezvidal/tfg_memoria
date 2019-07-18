@@ -51,7 +51,7 @@ Foreach($DIR in $DIRS){
 
 # PERIODIC ACTIONS
 
-$seconds=600
+$seconds=200
 $interval=10
 for ($i=0; $i -lt $seconds; $i+=$interval) {
 	if (($kill_all -eq 1) -or ($kill_all -eq $True)){

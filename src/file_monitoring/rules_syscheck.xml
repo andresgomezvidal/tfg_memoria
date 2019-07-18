@@ -16,7 +16,7 @@
 </rule>
 <rule id="333013" level="3">
 	<if_sid>333010</if_sid>
-	<match>was modified</match>
+	<match>was modified|checksum changed</match>
 	<description>C:\temp file modified</description>
 </rule>
 <rule id="333014" level="3">
@@ -27,15 +27,15 @@
 
 <rule id="333015" level="3" timeframe="60" frequency="10" >
 	<if_matched_sid>333013</if_matched_sid>
-	<description>Suspicious mass modification of files</description>
+	<description>Many file modifications in a short time</description>
 </rule>
 <rule id="333016" level="3" timeframe="60" frequency="10" >
 	<if_matched_sid>333014</if_matched_sid>
-	<description>Suspicious mass creation of files</description>
+	<description>Many file creations in a short time</description>
 </rule>
 
 <rule id="333019" level="3" timeframe="60" frequency="2" >
 	<if_matched_sid>333011</if_matched_sid>
 	<if_matched_sid>333012</if_matched_sid>
-	<description>Probably crypto ransomware attack</description>
+	<description>Suspicius mass deletion of tiles in a short time</description>
 </rule>

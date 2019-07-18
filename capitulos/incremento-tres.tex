@@ -64,12 +64,12 @@ A major antimalware company states a 90\% increase in detection for business and
 Often ransomware includes remote control software to allow the remote execution of commands.
 They often check if the server (certain ips or domains) can be reach before starting the process, waiting for a possible connection in the future if not.
 Because these domain addresses are always resolving to new host ips, the criminal enterprises can regularly move around the Internet in relative safety, as they will always know their malcode can speak to them.
-Keeping this Command and control server functional and anonymous may be hard and expensive depending on the approach used by the attacker.
+Keeping this Command and Control (C\&C) server functional and anonymous may be hard and expensive depending on the approach used by the attacker.
 They have evolved to use algorithms to generate a list of thousands of domains dynamically.
 %Particularly DNS scans for new suspicious entries is advised.
 \linej
 The flaw of this approach is that can trigger behavioural alerts and reduces the scope of the attacks.
-There is no need to initially contact the Command and control server, even for crypto ransomware because the public RSA key can be downloaded with the malware.
+There is no need to initially contact the Command and Control server, even for crypto ransomware because the public RSA key can be downloaded with the malware.
 In some cases the attacker can command the malware to delete itself to avoid leaving evidence for security proffesionals\cite{ransomware_oReilly}\cite{ransomware_digital_extortion}.
 \linej
 \linej
@@ -653,7 +653,6 @@ These can be effective against basic automated malware, but a smart attacker can
 		\item Change file permissions and ownership for a short time. If the malware is not running with high privileges it can be effective. This needs to be reversed later and it should be protected with mutexes.
 		\item Usually crypto ransomware only works on certain paths, which means that moving the files elsewhere might avoid the encryption. This is not that simple because in NTFS the files still can be identified by special ids, the new path needs enough free space and the process needs to be reversed.
 		\item As a last resort, turning off the computer can stop the encryption process and critical data can be retrieved from RAM using special software.
-			%Unfortunately there are cases where shutting down does not stop the encryption process, leaving the computer even more vulnerable.
 	\end{enumerate}
 \end{enumerate}
 \linej
@@ -665,19 +664,93 @@ This actually is a couple of seconds faster without the Trid rules, because then
 Integrator\cite{integrator} was used instead because slighty more efficient and faster because the log of the triggering alert is available directly, instead of having to search the alert log (which can be huge) with a custom command.
 
 
-%TODO real ransomware tests
-%\section{}
-%TODO table detection Yes/No colors
-%\begin{table}[H]
-	%\centering
-	%\begin{tabular}{|l|l|l|}
-		%\hline
-		%\rowcolor{gray!30}
-		%Ransomware variant & Detected \\ \hline
-		%TODO& \RYES\\ \hline
-	%\end{tabular}
-	%\caption{Real ransomware detection by previous methods}
-%\end{table}
+\section{Testing with real crypto ransomware}
+The configuration created in this chapter \ref{lst:real_crypto_ransomware_testing}\ was put toguether and slighty modified to test it with a real crypto ransomware software.
+The malware chosen was the \textit{cmb} version of Dharma\cite{dharma}, which is called that because it encrypts files with the \textit{cmb} extension.
+\linej
+This version is almost a year old and has been analyzed by multiple parties, but it still works in mid July of 2019 because the Command and Control servers are available due to a recent Dharma campaign.
+This is interesting because it gives the chance to study a working crypto ransomware which uses a C\&C and there are previous studies to know exactly what is going on.
+\linej
+\linej
+The objective of this ransomware is any kind of personal file.
+In this case it encrypted pictures, videos, text files, shortcuts, etc, but not executables or scripts.
+The actions of Dharma in order were\cite{dharma}:
+\begin{enumerate}
+	\item Remove existing Shadow Copies.
+	\item Disable the OSSEC agent.
+	\item Encrypt the files.
+	\item Show a message asking for Bitcoin payment.
+\end{enumerate}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.9\textwidth]{figuras/Bitcoin_Dharma.png}
+	\caption{Dharma asking for payment in Bitcoins}
+\end{figure}
+\linej
+Five tests were needed in order to make sure of the exact process of the malware and to manage to stop it with active response.
+Next is a summary of the problems and their causes in this tests:
+\begin{itemize}
+	\item The main problem in this case was that the resource usage was so high that any simple command took much more time than normal.
+This made the alerts suffer a delay before reaching the manager, because the buffer of the agent was too small to handle so many events toguether.
+The active response was too slow to act before the encryption was complete or almost complete, making it useless.
+\linej
+The solution was to use an early but reliable malware detection, which was not used before because it was not necessary.
+The detection of the program as malware by Windows Defender was almost instantaneous and its events include the process responsible, making it easy to extract.
+Once the executable is known it is just a matter of executing a trivial command to stop it.
+
+	\item The only measure that worked against the ransomware was to kill it, either by knowing the ID of the process or the name of the executable.
+This was because disabling the Internet adapter is just for stop it from spreading and locking the files was too slow to have any effect.
+
+	\item Another problem was that the script \ref{lst:crypto_ransomware_testing_configuration_stop}\ to stop and mitigate the ransomware was too slow (mostly due to the overhead of running it with \textit{ssh}) and it did not provide any real benefit from it.
+\linej
+Instead of running the script it was more effective to just kill the process, which was the interesting part of the script after it was clear that the rest was useless.
+\end{itemize}
+\linej
+This resulted in a new integrator script \ref{lst:custom_ransomware_py_2}, which is more simple and effective than the previous \ref{lst:custom_ransomware_py_1}.
+\linej
+\linej
+Windows Defender identified the malware correctly as a Dharma variant.
+The file was allowed to bypass the disk control of Windows Defender, in order to execute it as a \textit{.exe} with the file explorer (as a normal user would do).
+\linej
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Rule ID & Description \\ \hline
+		62103 & Windows Defender detected potentially unwanted software.\\ \hline
+		62103 & Windows Defender's action against potentially unwanted software.\\ \hline
+		333050 & Windows Defender's Controlled Folder Access protection against a suspicious event.\\ \hline
+		333015 & Many file modifications in a short time.\\ \hline
+		333016 & Many file creations in a short time.\\ \hline
+		333017 & Many file deletions in a short time.\\ \hline
+		333019 & Suspicius mass deletion of tiles in a short time.\\ \hline
+		333026 & File added with a suspicious extension.\\ \hline
+		333039 & Mass deletion or attempts. Detected with Windows File Auditing events instead of Syscheck like the others.\\ \hline
+		333110 & Backup deletion with vssadmin.\\ \hline
+		333103 & The free space of the backup volume was increased.\\ \hline
+	\end{tabularx}
+	\caption{Most relevant rules that generated alerts with Dharma}
+\end{table}
+\linej
+None of the monitored file events of Sysmon (type 2 and 9) were registered and none of the monitored registry entries was modified, but the malware always tried to disable the OSSEC agent before starting the encryption.
+Dharma just changed the configuration files and restarted the agent, resulting in an agent without configuration, therefore running but not reporting.
+If the directory in question (\textit{C:/Program Files (x86)/ossec-agent/}) is protected with Windows Defender then no harm is done and the agent runs as usual.
+\linej
+\linej
+Detecting the deletion of backups works and is almost instantaneous because the malware is not encrypting files yet, but it does not provide any useful information to identify and stop the origin.
+%As with many other cases this is a problem of the event reporting too little and the Windows tools to manage the processes being too weak.
+\linej
+\linej
+Trid was discarded after the first test because it failed to identity the new files as encrypted and it was very expensive on resources.
+Next is an example of Trid reporting an encrypted file as a set of harmless data:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/Trid_Dharma.png}
+	\caption{Result of running Trid on a fully encrypted file by Dharma}
+\end{figure}
+%If the file is being encrypted the result would probably be \textit{unknown}.
+\linej
+This is a good example of how a detection system can fail even when working perfectly in isolated tests, but it also shows how is possible to overcome these kind of problems with the right data.
 
 \section{Mitigation}
 Ransomware does not need any particular weakness or vulnerability to work on a system, but the better protected the system is the harder it is for it to be victim of a ransomware attack.
