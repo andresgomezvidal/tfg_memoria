@@ -2,34 +2,16 @@
 %awk -F '{' '/^@.*{..*,/ {gsub(",","",$2); print $2}' bib.bib |awk '{print $1}' |while read -r i; do if [[ -z "$(grep "cite{$i}" ../capitulos/*.tex)" ]]; then  echo "NONE: $i" ; fi;  done
 
 
-%poner enlace directamente en el texto?
-%	solamente cuando sea estilo algo para descargar
-%	todo lo que sea consulta para hacer el trabajo es bibliografia
-%referencias en el texto trocito a trocito están bien, y tambien estan bien ponerlas todas al final
-%tener casi todo online está bien
-%formato siempre igual
-%	elegir un formato de referencia
-%		el año va siempre tras el campo anterior con una coma
-%		articulos
-%			autores: nombre y apellidos o inicial y apellidos, titulo del articulo (entre comillas), revista/congreso/technical report/tesis/TFG/TFM (en cursiva), numero de la revista y paginas (si lo tiene), año, DOI (URL, pero poner DOI en vez de URL)
-%			separacion con puntos
-%
-%			cuando falte informacion no poner esa parte
-%				ejemplo paginas de technical report
-%			In: seria la revista
-%			Titulo y a continuacion el nombre del congreso
-%	libros
-%		autores, titulo, editorial, lugar de publicacion (si se sabe) (se suele encontrar tras "published by"), año, ISBN
 
 @Book{pmbok,
 %address = {},
 %author = {Project Management Institute},
 title = {Guía de los Fundamentos para la Dirección de Proyectos (Guía del PMBOK) , 5 a edición},
 %publisher = {Project Management Institute},
-%address = {14 Campus Boulevard Newtown Square, Pensilvania 19073-3299 EE.UU.}
-publisher = {Project Management Institute in Pensilvania},
+%address = {14 Campus Boulevard Newtown Square, Pensilvania 19073-3299 EE.UU.},
+publisher = {Project Management Institute, Newtown Square EE.UU.},
 year = {2013},
-isbn = {9781628250091}
+isbn = {9781628250091},
 }
 
 
@@ -38,19 +20,19 @@ isbn = {9781628250091}
  title = {OSSEC host-based intrusion detection guide},
  %publisher = {Syngress Pub},
  %address = {Burlington, Mass},
- publisher = {Syngress Pub in Burlington, Massachusetts},
+ publisher = {Syngress Pub, Burlington EE.UU.},
  year = {2008},
- isbn = {9781597492409}
+ isbn = {9781597492409},
 }
 
 
 @Book{ransomware_oReilly,
  author = {Liska, Allan},
  title = {Ransomware : defending against digital extortion},
- publisher = {O'Reilly Media},
+ %address = {Sebastopol, CA},
+ publisher = {O'Reilly Media, Sebastopol EE.UU.},
  year = {2016},
-% address = {Sebastopol, CA},
- isbn = {9781491967881}
+ isbn = {9781491967881},
  }
 
 @Book{ransomware_digital_extortion,
@@ -58,9 +40,9 @@ isbn = {9781628250091}
  title = {Preventing digital extortion : mitigate ransomware, DDoS, and other cyber-extortion attacks},
  %address = {Birmingham, UK},
  %publisher = {Packt Publishing},
- publisher = {Packt Publishing in Birmingham, UK},
+ publisher = {Packt Publishing, Birmingham U.K.},
  year = {2017},
- isbn = {9781787120365}
+ isbn = {9781787120365},
  }
 
 
@@ -68,36 +50,30 @@ isbn = {9781628250091}
 
 
 
-
-%@online{AD_setting_up,
-%	title = {Setting up AD in Windows Server 2016},
-%	url = {https://blogs.technet.microsoft.com/canitpro/2017/02/22/step-by-step-setting-up-active-directory-in-windows-server-2016/},
-%	urldate = {}
-%}
-
-@article{use_case_definition,
-	author = {Larson, E. \& Larson, R. (2004)},
-	journal = {Paper presented at PMI\textregistered Global Congress 2004—North America, Anaheim, CA. Newtown Square, PA: Project Management Institute},
+@article{use_case_definition, 		%https://www.pmi.org/learning/library/use-cases-project-manager-know-8262
+	author = {Larson, E. \& Larson, R.},
+	%journal = {Paper presented at PMI\textregistered Global Congress 2004—North America, Anaheim, CA. Newtown Square, PA: Project Management Institute},
+	journal = {Paper presented at PMI\textregistered Global Congress},
 	title = {Use cases: what every project manager should know},
 	%ams-subject = {},
 	%review = {},
 	%pages = {},
 	%volume = {},
-	%year = {},
+	year = {2004},
 	%urldate = {2018-11-04},
 }
 
 @article{comparison_ics, 			%https://www.osti.gov/servlets/purl/1376870
 	title = {A Survey of Security Tools for the Industrial Control System Environment},
 	author = {Hurd, Carl M. and McCarty, Michael V.},
-	abstractNote = {This report details the results of a survey conducted by Idaho National Laboratory (INL) to identify existing tools which could be used to prevent, detect, mitigate, or investigate a cyber-attack in an industrial control system (ICS) environment. This report compiles a list of potentially applicable tools and shows the coverage of the tools in an ICS architecture.},
+	journal = {Technical report},
 	doi = {10.2172/1376870},
-	place = {United States},
 	year = {2017},
-	month = {6}
-	%journal = {},
+	%month = {6},
 	%number = ,
 	%volume = ,
+	%place = {United States},
+	%abstractNote = {This report details the results of a survey conducted by Idaho National Laboratory (INL) to identify existing tools which could be used to prevent, detect, mitigate, or investigate a cyber-attack in an industrial control system (ICS) environment. This report compiles a list of potentially applicable tools and shows the coverage of the tools in an ICS architecture.},
 }
 @article{snort_learning, 		%https://arxiv.org/pdf/1710.04843.pdf    https://arxiv.org/abs/1710.04843
 	author = {Shah, Syed Ali Raza and Issac, Biju},
@@ -108,48 +84,54 @@ isbn = {9781628250091}
 	number = {C},
 	month = mar,
 	year = {2018},
-	issn = {0167-739X},
+	%issn = {0167-739X},
 	pages = {157--170},
-	url = {https://doi.org/10.1016/j.future.2017.10.016},
+	%url = {https://doi.org/10.1016/j.future.2017.10.016},
 %	numpages = {14},
-%	doi = {10.1016/j.future.2017.10.016},
+	doi = {10.1016/j.future.2017.10.016},
 %	acmid = {3174633},
 %	keywords = {Fuzzy Logic, Intrusion detection, Machine learning, Performance comparison, Snort and Suricata, Support Vector Machine},
 %	address = {Amsterdam, The Netherlands, The Netherlands},
-	publisher = {Elsevier Science Publishers B. V.},
+%	publisher = {Elsevier Science Publishers B. V.},
 }
 
 @article{snort_honeypot, 	%https://pdfs.semanticscholar.org/3397/163c7e89c2c039f5e207677c81df778b9984.pdf 			https://www.semanticscholar.org/paper/Combining-IDS-and-Honeynet-Methods-for-Improved-and-Riebach-T%C3%B6dtmann/3397163c7e89c2c039f5e207677c81df778b9984
   title={Combining IDS and Honeynet Methods for Improved Detection and Automatic Isolation of Compromised Systems},
   author={Stephan Riebach and Birger T{\"o}dtmann and Erwin P. Rathgeb},
-  year={2005}
+  year={2005},
+  journal={Technical report},
 }
 
 @article{honeypot_ossec_trees, 	%http://www.ijcncs.org/published/volume2/issue1/p7_2-1.pdf 		http://www.ijcncs.org/published/volume2/issue1/index.php
   title={Monitoring and Analyzing System Activities Using High Interaction Honeypot},
   author={Dr.Najla B. Al-Dabagh and Mohammed A. Fakhri},
   year={2014},
+  pages={39--45},
   journal={International Journal of Computer Networks and Communications Security},
 }
 
 @article{honeypot_weka_learning, 	%https://www.researchgate.net/publication/306017096_A_machine_learning_based_approach_for_intrusion_prevention_using_honeypot_interaction_patterns_as_training_data
   title={A machine learning based approach for intrusion prevention using honeypot interaction patterns as training data},
   author={Daniel Zammit},
-  year={2016}
+  year={2016},
+  %doi={10.13140/RG.2.1.1996.0561},
+  %journal={Thesis in the University of Malta},
+  journal={Thesis},
 } %Zammit, Daniel. (2016). A machine learning based approach for intrusion prevention using honeypot interaction patterns as training data. 10.13140/RG.2.1.1996.0561.
 
 @article{SANS_mimikatz, 	%https://daloo.de/testwebdavhere/mimikatz-overview-defenses-detection-36780.pdf %https://www.sans.org/reading-room/whitepapers/forensics/mimikatz-overview-defenses-detection-36780
   title={SANS Institute InfoSec Reading Room: Mimikatz Overview, Defenses and Detection},
   author={James Mulder},
-  year={2016}
+  year={2016},
+  journal={Technical report},
 } %SANS Institute InfoSec Reading Room: Mimikatz Overview, Defenses and Detection
 
 
 @article{ransomware_malwarebytes, 	%https://www.malwarebytes.com/pdf/white-papers/CTNT-Q4-17.pdf
   title={Cybercrime tactics and techniques: 2017 state of malware},
   author={Malwarebytes Labs},
-%TODO poner solo los primeros autores mencionados?
-  year={2017}
+  year={2017},
+  journal={Technical report},
 }
 
 
@@ -622,6 +604,32 @@ isbn = {9781628250091}
 	url = {https://sensorstechforum.com/remove-cmb-dharma-virus-cmb-files/},
 	urldate = {2019-07-18}
 }
+@online{antiflooding,
+	title = {Wazuh documentation: Anti-flooding mechanism},
+	url = {https://documentation.wazuh.com/current/user-manual/capabilities/antiflooding.html},
+	urldate = {2019-07-19}
+}
+
+
+
+
+
+
+
+%ONLY USER MANUAL
+%@online{AD_setting_up,
+%	title = {Setting up AD in Windows Server 2016},
+%	url = {https://blogs.technet.microsoft.com/canitpro/2017/02/22/step-by-step-setting-up-active-directory-in-windows-server-2016/},
+%	urldate = {}
+%}
+
+
+
+
+
+
+
+
 
 %@online{,
 %	author = {},

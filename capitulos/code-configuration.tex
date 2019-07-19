@@ -23,7 +23,7 @@
 \section*{Detection of suspicious logins}
 \lstinputlisting[style=PS,caption=Distributed brute force logins changing the ip address for the internal network,captionpos=b,label={lst:distributed_logins_winrs}]{src/logins/distributed_logins_winrs.ps1}
 \linej
-\lstinputlisting[style=xml,caption=Wazuh rules for checking OU logins outside of usual hours,captionpos=b,label={lst:OU_rules}]{src/logins/rules_OU.xml}
+\lstinputlisting[style=xml,caption=Wazuh rules for checking OU logins outside usual hours,captionpos=b,label={lst:OU_rules}]{src/logins/rules_OU.xml}
 \linej
 \lstinputlisting[style=xml,caption=Remote command configuration in \textit{/var/ossec/etc/shared/default/agent.conf} to find logins on unusual hours for the OU users,captionpos=b,label={lst:OU_wodle}]{src/logins/OU_wodle.xml}
 \linej
@@ -110,7 +110,7 @@
 \linej
 \lstinputlisting[style=xml,caption=Configuration in \textit{/var/ossec/etc/ossec.conf} for the integrator custom script,captionpos=b,label={lst:active_response_crypto_ransomware_ossec}]{src/active_response_crypto_ransomware/ossec.conf}
 \linej
-\lstinputlisting[style=python,caption=Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and execute a remote script with ssh,captionpos=b,label={lst:active_response_crypto_ransomware_py}]{src/active_response_crypto_ransomware/custom-ransomware.py}
+\lstinputlisting[style=python,caption=Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and execute a remote script with SSH,captionpos=b,label={lst:active_response_crypto_ransomware_py}]{src/active_response_crypto_ransomware/custom-ransomware.py}
 \linej
 
 \section*{Testing with real crypto ransomware}
@@ -123,9 +123,9 @@ It changes slightly in the rest, included here:
 \linej
 \lstinputlisting[style=xml,caption=Wazuh rules for detection in \textit{/var/ossec/etc/rules/local\_rules.xml},captionpos=b]{src/crypto_ransomware_testing_configuration/manager/rules.xml}
 \linej
-\lstinputlisting[style=python,caption=Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and execute a remote script with ssh,captionpos=b,label={lst:custom_ransomware_py_1}]{src/crypto_ransomware_testing_configuration/manager/custom-ransomware.py}
+\lstinputlisting[style=python,caption=Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and execute a remote script with SSH,captionpos=b,label={lst:custom_ransomware_py_1}]{src/crypto_ransomware_testing_configuration/manager/custom-ransomware.py}
 \linej
-\lstinputlisting[style=python,caption=Alternative Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and kill the executable with ssh,captionpos=b,label={lst:custom_ransomware_py_2}]{src/crypto_ransomware_testing_configuration/manager/custom-ransomware_2.py}
+\lstinputlisting[style=python,caption=Alternative Python script in \textit{/var/ossec/integrations/} to parse the triggering alert and kill the executable with SSH,captionpos=b,label={lst:custom_ransomware_py_2}]{src/crypto_ransomware_testing_configuration/manager/custom-ransomware_2.py}
 \linej
 
 \lstinputlisting[style=PS,caption=PowerShell script to stop and mitigate the execution of crypto ransomware,captionpos=b,label={lst:crypto_ransomware_testing_configuration_stop}]{src/crypto_ransomware_testing_configuration/agent/stop.ps1}

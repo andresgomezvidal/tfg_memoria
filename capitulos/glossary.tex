@@ -7,13 +7,13 @@
 	%done="$(awk -F '{' '/\\textbf\{/ {print $2}' glossary.tex  |cut -d '}' -f1 |tr '\n' '|')"; \grep -E '\b[[:upper:]][[:upper:]]+\b'  *.tex |cut -d ':' -f2  | \grep -v '^[[:space:]]*%' |\grep -Eo '\b[[:upper:]][[:upper:]]+\b' | sort -u |grep -vE "UNIVERSITY|SANTIAGO|COMPOSTELA|ESCOLA|TÉCNICA|SUPERIOR|DE|ENXEÑARÍA|TODO|LARGE|STATE|JSON|XML|FAQ|UDP|TCP|IP|ARD|CA|CRD|GNU|GPL|OF|PA|RD|SL|TF|SEC|WBS|KERB|REQUEST|CPU|DIT|HOST|NTDS|OR|PS|RAM|RNF|RNO|RYES|SYSTEM|UNKNOWN|WIN|WMIC|${done:0:-1}"
 
 
-\textbf{AD}: Active Directory. The directory domain of Windows systems, thought it can be also used by GNU/Linux with Samba.
+\textbf{AD}: Active Directory. The directory domain of Windows systems, though it can be also used by GNU/Linux with Samba.
 \linej
 \linej
 \textbf{AES}: Advanced Encryption Standard. Popular symmetric encryption algorithm with different key lengths.
 \linej
 \linej
-\textbf{API}: Application Program Interface. Is a set of subroutines, functions and procedures from a library to be used by other software.
+\textbf{API}: Application Program Interface. It is a set of subroutines, functions and procedures from a library to be used by other software.
 \linej
 \linej
 \textbf{AWK}: Programming language created by Alfred \textbf{A}ho, Peter \textbf{W}einberger, and Brian \textbf{K}ernighan, used mostly for string parsing.
@@ -70,7 +70,7 @@
 \textbf{Kerberos}: Computer network authentication protocol that uses tickets to allow computers over a network to authenticate in a secure manner. Windows 2000 and later uses Kerberos as its default authentication method.
 \linej
 \linej
-\textbf{KRBTGT}: Kerberos super-administrator account, used for encrypting all the authentication tokens for the DC. Is hidden, local, can not be deleted, neither the name changed.
+\textbf{KRBTGT}: Kerberos super-administrator account, used for encrypting all the authentication tokens for the DC. It is hidden, local, can not be deleted, neither the name changed.
 \linej
 \linej
 %\textbf{PMBOK}: Project Management Body of Knowledge. Is a set of standard terminology and guidelines for project management.
@@ -91,37 +91,34 @@
 \textbf{NTFS}: New Technology File System. Main filesystem of Microsoft systems.
 \linej
 \linej
-\textbf{LSA}: Short for \textbf{L}ocal \textbf{S}ecurity \textbf{A}uthority Subsystem Service. Process in Microsoft Windows operating systems that is responsible for enforcing the security policy on the system. It verifies users logging on to a Windows computer or server, handles password changes, and creates access tokens.
-\linej
-\linej
-\textbf{LSASS}: Local Security Authority Subsystem Service. Process in Microsoft Windows operating systems that is responsible for enforcing the security policy on the system. It verifies users logging on to a Windows computer or server, handles password changes, and creates access tokens.
+\textbf{LSA}: Short for \textbf{L}ocal \textbf{S}ecurity \textbf{A}uthority Subsystem Service (LSASS). Process in Microsoft Windows operating systems that is responsible for enforcing the security policy on the system. It verifies users logging on to a Windows computer or server, handles password changes, and creates access tokens.
 \linej
 \linej
 \textbf{NIDS}: Network-based Intrusion Detection System.
 \linej
 \linej
-\textbf{Noise}: Abnormal or suspicius behaviour in a system, from a cybersecurity point of view.
+\textbf{Noise}: Abnormal or suspicious behaviour in a system, from a cybersecurity point of view.
 \linej
 \linej
 \textbf{OpenSLL}: Widely used software library for secure communications.
 \linej
 \linej
-\textbf{OSSEC}: \textbf{O}pen \textbf{S}ource HIDS \textbf{SEC}urity. Is an HIDS solution with detection based on rules and decoders.
+\textbf{OSSEC}: \textbf{O}pen \textbf{S}ource HIDS \textbf{SEC}urity. It is an HIDS solution with detection based on rules and decoders.
 \linej
 \linej
 \textbf{OU}: Organizational Unit. They are a type of group structure for AD.
 \linej
 \linej
-\textbf{PDF}: Portable Document Format. Popular file format and extension for digital documents.
-\linej
-\linej
-\textbf{RaaS}: Ransomware-as-a-Service. Is the process of offering code and help with ransomware attacks, as it was another software service.
+%\textbf{PDF}: Portable Document Format. Popular file format and extension for digital documents.
+%\linej
+%\linej
+\textbf{RaaS}: Ransomware-as-a-Service. It is the process of offering code and help with ransomware attacks, as if it were another software service.
 \linej
 \linej
 \textbf{RSA}: Public-key cipher algorithm designed by \textbf{R}ivest, \textbf{S}hamir and \textbf{A}dleman.
 \linej
 \linej
-\textbf{Samba}: Is a set of programs for interoperability between Linux and Windows.
+\textbf{Samba}: It is a set of programs for interoperability between Linux and Windows.
 \linej
 \linej
 \textbf{SMB}: Server Message Block protocol for sharing files, printers, communications, etc in Microsoft systems. Some of its services can be accessed with Samba.
@@ -136,10 +133,10 @@
 \textbf{SIEM}: Security Information and Event Management. This includes features like event and log collection, scalability, reporting, alerting and log management.
 \linej
 \linej
-\textbf{SSH}: Secure Shell. Network protocol to use services or execute commands securely over a network.
+\textbf{SSH}: Secure Shell. Network protocol to use services or execute commands securely over a network. It can also refer to the program running the agent.
 \linej
 \linej
-\textbf{TGT}: Ticket Granting Ticket. This ticket is encrypted with the KDC key and is used for request to the KDC one or more TGS.
+\textbf{TGT}: Ticket Granting Ticket. This ticket is encrypted with the KDC key and is used for requesting to the KDC one or more TGS.
 \linej
 \linej
 \textbf{TGS}: Ticket Granting Service. This ticket is encrypted with the service key and is used to authenticate against a service.
@@ -154,6 +151,6 @@
 \textbf{USD}: United States Dollar. The official currency in the United States, used in this document as a money reference.
 \linej
 \linej
-\textbf{YARA}: Tool that does pattern/string/signature matching, with great in performance, results and easiness to write rules.
+\textbf{YARA}: Tool that does pattern/string/signature matching, with great performance, results and easiness to write rules.
 \linej
 \linej

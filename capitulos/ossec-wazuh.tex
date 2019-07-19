@@ -74,7 +74,7 @@ There are two possible architectures for this setup: having the ELK stack in the
 To understand better the communications and data flow in Wazuh we will now get into more detail on the process\cite{wazuh_architecture2}\cite{wazuh_data_flow}.
 \linej
 \linej
-Wazuh agents use the OSSEC message protocol to send collected events to the Wazuh server over port 1514 (UDP or TCP). The Wazuh server then decodes and rule-checks the received events with the analysis engine. Events that trip a rule are augmented with alert data such as rule id and rule name. The Wazuh message protocol uses a 192-bit Blowfish encryption with a full 16-round implementation, or AES encryption with 128 bits per block and 256-bit keys.
+Wazuh agents use the OSSEC message protocol to send collected events to the Wazuh server over port 1514 (UDP or TCP). The Wazuh server then decodes and rule-checks the received events with the analysis engine. Events that trip a rule are augmented with alert data such as rule ID and rule name. The Wazuh message protocol uses a 192-bit Blowfish encryption with a full 16-round implementation, or AES encryption with 128 bits per block and 256-bit keys.
 %trip is a valid way to say it: https://documentation.wazuh.com/current/getting-started/components.html
 \linej
 Logstash formats the incoming data and optionally enriches it with GeoIP information before sending it to Elasticsearch (port 9200/TCP). Once the data is indexed into Elasticsearch, Kibana (port 5601/TCP) is used to mine and visualize the information.
@@ -134,7 +134,7 @@ In this project the same level is used for all the rules that are meant to trigg
 \linej
 \linej
 Rules can be added in \textit{/var/ossec/etc/rules/} and decoders in \textit{/var/ossec/etc/decoders/} without any issue, but to change the already existing ones in \textit{/var/ossec/ruleset/rules/} or \textit{/var/ossec/ruleset/decoders/} is a bad idea because the next changes in those files from updates would overwrite them.
-%The solution is to copy the code (actually only the id is needed) of the existing item to the folder where we can add new ones, make the desired changes add \textit{overwrite=``yes''}\cite{wazuh_custom}.
+%The solution is to copy the code (actually only the ID is needed) of the existing item to the folder where we can add new ones, make the desired changes add \textit{overwrite=``yes''}\cite{wazuh_custom}.
 \linej
 \linej
 As mentioned before Wazuh adds its own ruleset over the one provided by the OSSEC project. The next table shows about 20\% of the combined ruleset that Wazuh uses, where ``Out of the box'' means that the source was the OSSEC project.
@@ -164,7 +164,7 @@ We get the next output:
 	\caption{Example of output for ossec-logtest}
 \end{figure}
 \linej
-This example shows how Wazuh processes the input text, that usually would be in a \textit{ssh} event.
+This example shows how Wazuh processes the input text, that usually would be in a \textit{SSH} event.
 The decoder \textit{sshd} matches the format of the input text, and that it is able to extract the \textit{dstuser} and \textit{srcip} fields.
 Then the event is processed by the set of rules until it matches the conditions of the rule \textit{5715}, which should generate an alert.
 \linej

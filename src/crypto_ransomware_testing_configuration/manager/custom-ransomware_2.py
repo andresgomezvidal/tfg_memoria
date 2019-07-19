@@ -20,4 +20,6 @@ else:
     exit(1)
 
 # Execute the command and call the script with ssh
-os.system("ssh Administrator@10.0.3.2 'powershell  Stop-Process -Name "+exe+" -Force' 2>&1 &")
+exe_short=exe.split("/")[-1]
+exe_short_noexe=exe_short.split(".")[0]
+os.system("ssh Administrator@10.0.3.2 'powershell (Stop-Process -Name "+exe+" -PassThru -Force) -or (Stop-Process -Name "+exe_short_noexe+" -PassThru -Force) -or (Stop-Process -Name "+exe_short+" -Force)' 2>&1 &")

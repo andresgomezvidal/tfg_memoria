@@ -1,2 +1,40 @@
+\section{Conclusion}
+This project has shown how Wazuh can be used to improve the cybersecurity of a system, in some cases without the need of expert knowledge in scripting or pentesting.
+\linej
+Wazuh has been under development for some years and there are still parts that lack basic funcionality.
+This project has tried to show and fix some of them, without changing the source code in order to have more time for other tasks.
+\linej
+\linej
+The main use of a HIDS should be to gather and process data in order to detect security threats.
+Wazuh provides a set of features that make it a very good tool for monitoring system behaviour, but not as good in other aspects.
+\linej
+Stopping the threats can be too much for this kind of system, there are obvious limitations that make it impossible to be as effective as a local antimalware software.
+Trusting user scripts for defensive security is very risky and bound to fail sooner or later.
+\linej
+\linej
+Even though in this project only the server runs GNU/Linux is clear from its management and the documentation that Wazuh is less suited for Windows systems.
+Many workarounds and third-party tools are needed because of this.
+Therefore it is assumed that the project could have advanced faster if it were on GNU/Linux security instead of Windows.
+\linej
+\linej
+Using an incremental methodology proved to be a right choice because there were many desired features that were left behind because lack of time.
+It also fits very well with the work flow in this kind project, with very simple development.
+The essential requirements and increments were satisfied and a bit more depth than initially planned was applied in many cases, resulting in what we consider a higher quality for the product.
 
-%TODO
+\section{Additions}
+Multiple ways to detect and act against malware have been analyzed in this project, but this is just the tip of the iceberg and much work remains to be done.
+There are many features and research that could improve the current state of Wazuh as a reliable cybersecurity tool:
+\begin{itemize}
+	\item All the ideas left behind in this project due to lack of time. They are explained in the exclusions part of the scope section \ref{exclusions}.
+	\item Ability to set real variables in the rules, instead of the current ones that are actually constans because they need a restart of the service to be updated.
+Unfortunately this can also result in a loss of performance for processing the rules.
+	\item A functional database system for all kinds of data, instead of the current CDB that only is useful for IP addresses. This would solve the problem of just monitoring a value, like the case of the free space of the backup volume \ref{free_space_volume}.
+	\item Having more decoders for common monitoring commands in Windows, instead of having to write your own or parse the output of the command with an script.
+	\item Executing remote commands with direct feedback to the manager, instead of having to use workarounds like writing to a monitored log.
+	\item Active response directly with PowerShell, instead of having to use CMD or SSH. This is in development.
+	\item Active response with dynamic arguments from the alert, instead of processing the alert manually with a local script and using another program (in this case SSH) for the remote execution.
+	\item Option to have only a frequency of 1 in composite rules, which is not such a rare need, instead of needing workarounds for it.
+	\item Integration with local antimalware software. This has been done using APIs and custom scripts with some software (like VirusTotal) but not with others as basic as Windows Defender.
+	\item Integration with other IDSs. This can provide detection features based on behaviour or network data that Wazuh can not gather on its own.
+	\item Further research and development in any of the parts treated in this project.
+\end{itemize}

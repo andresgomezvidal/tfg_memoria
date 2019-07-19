@@ -9,3 +9,25 @@ EN APARTADO DE GESTION DEL PROYECTO
 	\linej
 	In this project the requirements will be fulfilled in multiple stages along the project, with increments.
 
+
+
+EN MANUAL DE USUARIO
+	explicar lo que tiene que tener el sistema para poder ejecutar todo eso
+	no hace falta explicar el porqué de nada
+	el objetivo es tener lo que hace falta para implementar defensa sin tener que andar moviendose por la memoria
+	debe ser reduntante, no pasa nada
+		puedo copiar y pegar lo que ya tengo escrito
+	no hace falta explicar cómo configurar las cosas a no se que sea algo muy especifico (que es lo que ya se hace con las reglas y la configuracion)
+		si que hace falta decir lo que tiene que tener el usuario para poder usar esto
+			ejemplo windows server 2019 o AD o ssh para alguna cosa
+				pero en esos casos no hace falta explicar como montarlos
+	There is a chance that the \textit{run} command fails to provide a Meterpreter shell at this stage, but trying again always ends working because the session is not getting created even though the exploit is working.
+	active response ssh
+		https://winscp.net/eng/docs/guide_windows_openssh_server
+	AD configuracion
+		\cite{AD_setting_up}
+
+
+poner IP en mayus
+quitar comillas
+cursiva solo cuando haga falta
