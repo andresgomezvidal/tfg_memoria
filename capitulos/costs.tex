@@ -1,2 +1,98 @@
 \section{Cost management}
-%TODO Cost management
+In this section an estimation of the costs of the project is made based on the relevant data avaiable at the end of the project.
+\linej
+The project is set in Spain, therefore the currency used is the Euro (\euro{}). This is used up to a precision of cents.
+\linej
+Even though Tarlogic is considered the client there is no payment to the student because this is the final project of a degree.
+\linej
+The costs were divided into \textit{direct costs} and \textit{indirect costs}.
+
+\subsection{Direct costs}
+All the software used in the project was free, including the Windows images (they were free trials).
+\linej
+\linej
+Other materials are the CD to burn the software of the project and the version of this document in paper.
+Their combined cost is estimated in 20\euro{}.
+\linej
+\linej
+The rest of the direct costs are the human and hardware resources.
+
+\subsubsection{Human resources}
+The human resources are the student, the director from the University, the director from Tarlogic and two members of Tarlogic that helped the student with issues at several points in the project.
+\linej
+\linej
+The next salary parameters are assumed:
+\begin{itemize}
+	\item There are 14 payments per year.
+	\item Social Security costs 32\% of the brute salary.
+	\item The job journey is 8 hours of work per day and there are 20 working days per month.
+\end{itemize}
+\linej
+The estimation of the hours that the student worked on the project is \projecthours.
+For any one else the hours are unknown, but is safe to assume a low value, therefore 11 hours is the estimation in each case.
+\linej
+The anual brute income for the job titles are taken from the website \textit{Indeed}\cite{indeed}, which calculates the average of hundreds of job offers in the last months.
+In the case of the student the salary was an optimistic number chosen arbitrary.
+\linej
+The job title assumed for the student is Junior Developer.
+The job title assumed for the directors is Project Manager.
+The Project Manager has 22 hours because this project has 2 directors.
+\linej
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|X|l|l|l|l|}
+		\hline
+		\rowcolor{gray!30}
+		Role                             & Anual brute &  Social Security &    Total anual & Cost/Hour\\ \hline
+		Project Manager                  & 45448\euro{}&   14543.36\euro{}& 59991.36\euro{}& 26.78\euro{}\\ \hline
+		Senior Engineer in Cybersecurity & 29754\euro{}&    9521.28\euro{}& 39275.28\euro{}& 17.53\euro{}\\ \hline
+		System Administrator             & 24234\euro{}&    7754.88\euro{}& 31988.88\euro{}& 14.28\euro{}\\ \hline
+		Junior Developer                 & 16000\euro{}&       5120\euro{}&    21120\euro{}& 9.42\euro{}\\ \hline
+	\end{tabularx}
+	\caption{Anual costs of the human resources}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|X|l|l|l|}
+		\hline
+		\rowcolor{gray!30}
+		Role & Hours & Cost/Hour & Total cost\\ \hline
+		Project Manager & 22 & 26.78\euro{}& 589.20\euro{}\\ \hline
+		Senior engineer in cybersecurity & 11 & 17.53\euro{}& 192.86\euro{}\\ \hline
+		System administrator & 11 & 14.28\euro{}& 157.08\euro{}\\ \hline
+		Junior Developer & \projecthours & 9.42\euro{}& 3931.71\euro{}\\ \hline
+	\end{tabularx}
+	\caption{Costs of the human resources for the hours dedicated to the project}
+\end{table}
+\linej
+The total of the last table is 4870.85\euro{}.
+
+\subsubsection{Hardware resources}
+The cost of the hardware is calculated with the amortization and the total price of the item, with the next formula:
+\begin{figure}[H]
+	\[ \frac{Price\ of\ the\ item}{12 \cdot Duration\ of\ the\ item\ in\ years} \cdot Duration\ of\ the\ project\ in\ months\ \]
+	\caption{Formula to calculate the cost of hardware items}
+\end{figure}
+\linej
+In this case is assumed that the duration of project is 5.5 months, due to the time the project was on hold.
+The duration of the hardware items is estimated in 3-5 years, so the average is used in this case for all the items.
+\linej
+\linej
+The hardware items are:
+\begin{itemize}
+	\item A computer leaning to the higher end in order to run the set of virtual machines: with 20 GB of RAM, an \textit{i5-2500k} processor and about 500GB of free disk storage (of which 100GB were of Solid State Disk). The estimation of the computer is hard to make because it is several years old and made of parts buyed years apart from each other. The value estimated is 1250\euro{}, therefore resulting in a cost of 143.23\euro{}.
+	\item A monitor of 24 inches valued in 147.75\euro{} last year. Using the previous formula the cost is 16.93\euro{}.
+	\item Other peripheral devices: their collective value is estimated in 20\euro{}, therefore resulting in a cost of 2.23\euro{}.
+\end{itemize}
+\linej
+The total of the hardware cost is 162.39\euro{}.
+
+\subsection{Indirect costs}
+The indirect costs of the project mean hidden costs in the resources used.
+For example the cost of the Internet connection, electrical devices, etc.
+\linej
+According to the General Secretary of the University of Santiago de Compostela the indirect costs in this kind of final degree project should be calculated as an extra 20\% of the direct costs\cite{indirect_costs}.
+\linej
+\linej
+Because the estimation of the direct costs is 5033.24\euro{}, the indirect costs add 1006.64\euro{} over it.
+
+\subsection{Total costs of the project}
+The total costs is calculated simply by the addition of direct and indirect costs, resulting in 6039.88\euro{}.

@@ -150,7 +150,7 @@ In this case the generation of the ticket is not using the data in an automated 
 The obvious downside of this method for the attacker is that Metasploit is very widely used and known, therefore there could be security monitoring for it\cite{detect_metasploit_traffic}. But again the attacker is using a technique that does not need to control a DC and does not need to store anything in the disk of the targeted system, making it much harder to detect in that regard.
 \linej
 \linej
-Of course there is no real need to use Metasploit to get a remote shell to run Mimikatz. The attacker could use \textit{ssh}, run remote commands with \textit{psexec} or use the Windows Remote Shell. But some of these need to be enabled and they would not be much different from the previous examples.
+Of course there is no real need to use Metasploit to get a remote shell to run Mimikatz. The attacker could use SSH, run remote commands with \textit{psexec} or use the Windows Remote Shell. But some of these need to be enabled and they would not be much different from the previous examples.
 
 \subsubsection{Exploit 1.5: Hashdump with Meterpreter}
 Using a reverse TCP exploit the attacker access the targeted DC with a Meterpreter shell. This is similar to the previous case but using the Meterpreter command \textit{hashdump} instead of the DCSync retrieval of Kiwi\cite{pentestlab}. This stills uses Kiwi to generate the Golden Ticket.
@@ -306,7 +306,7 @@ The idea came from a very different klist script that only works interactively a
 \linej
 This script needs to be run in every member of the network to guarantee detection for every user.
 \linej
-The conversion to JSON was done manually to add information and because the ``ConvertTo-Json'' cmdlet does not work as expected.
+The conversion to JSON was done manually to add information and because the \textit{ConvertTo-Json} cmdlet does not work as expected.
 Doing this with only PowerShell assures it will work in any Windows system without external programs. The downside of this parsing and my limited knowledge of PowerShell is that the script is a bit bulky and the dependency on the format of the output of klist.
 \linej
 \linej

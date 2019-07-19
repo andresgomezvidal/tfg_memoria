@@ -37,7 +37,7 @@ The cybercriminal wants the victim to notice as soon as the attack is done, to g
 \linej
 \linej
 The next image shows a simplification of the steps of a ransomware attack.
-We only care for the detection of the ``Destruction'' segment, but that does not mean we can ignore the whole picture.
+We only care for the detection of the \textit{Destruction} segment, but that does not mean we can ignore the whole picture.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figuras/anatomy_of_a_ransomware_attack.png}
@@ -300,15 +300,15 @@ More detail and thought is needed to complete the previous table\cite{windows_ev
 	\item If an operation is rejected due to not having enough privileges the only event issued is 4656.
 	\item Windows only issues the event 4663 when the operation is complete. There might be multiple 4663 events for a single handle, logging smaller operations that make up the overall action.
 	\item There are some events that do not appear in the previous range: 4657 is for registry changes and 4661 and 4662 are for AD objects.
-	\item Events 4656 and 4663 include the ``accesses'' property, which refers to the type of operation: read, write, delete.
+	\item Events 4656 and 4663 include the \textit{accesses} property, which refers to the type of operation: read, write, delete.
 		The field can include multiple values, for example a rename involves read, delete and write.
 		The problem of this field is that it does not follow an intuitive interpretation of these types of basics operations.
 	\begin{itemize}
-		\item``WriteData'' implies that a file was created or modified unless a ``delete'' access was recorded for the same handle. The only way to know if it was created or if it was modified is to know if the file existed before, for example with a database.
-		\item``ReadData'' is logged almost in every case, resulting in only being a normal read if none of the others are recorded.
-		\item``Delete'' also includes move events. Move events do not spawn 4659 or 4660 events.
+		\item \textit{WriteData} implies that a file was created or modified unless a \textit{delete} access was recorded for the same handle. The only way to know if it was created or if it was modified is to know if the file existed before, for example with a database.
+		\item \textit{ReadData} is logged almost in every case, resulting in only being a normal read if none of the others are recorded.
+		\item \textit{Delete} also includes move events. Move events do not spawn 4659 or 4660 events.
 	\end{itemize}
-	\item The path included in the event may be the device path, for example ``{\textbackslash}{\textbackslash}Device{\textbackslash}{\textbackslash}Harddisk- Volume3{\textbackslash}{\textbackslash}openssl{\textbackslash}{\textbackslash}bin{\textbackslash}{\textbackslash}bftest.exe'', instead of the normal volume path like ``c:{\textbackslash}temp''.
+\item The path included in the event may be the device path, for example \textit{{\textbackslash}{\textbackslash} Device{\textbackslash}{\textbackslash}Harddisk-Volume3{\textbackslash}{\textbackslash}openssl{\textbackslash}{\textbackslash}bin{\textbackslash}{\textbackslash}bftest.exe}, instead of the normal volume path like \textit{c:{\textbackslash}temp}.
 \end{itemize}
 \linej
 We can conclude that these events are not as easy to handle as they could be, but they can still be used for the detection of ransomware.
@@ -533,7 +533,7 @@ Increasing the required number of other deleted files over the minimum of two \r
 There are ways to hide decoy files for normal users and to automate their creation, but that is trivial and not the objective of this section.
 To reduce the file storage used by the decoys hard links and soft links could be used, but there is no guarantee that ransomware would treat the files exactly as the rest, therefore reducing the chance of the detection to work.
 \linej
-In this example the decoys are just named ``decoy1'' and ``decoy2'' for simplification.
+In this example the decoys are just named \textit{decoy1} and \textit{decoy2} for simplification.
 Two decoys are used instead of only one with a complex way to duplicate its alert (like using active response), because the storage space should not be affected by this and it is easier.
 \linej
 \linej
@@ -555,7 +555,7 @@ There are two ways to identify suspicious formats:
 \linej
 Identifying generated files as encrypted can be done by scanning the contents of the file and matching signatures and by matching the file extension to a list of suspicious signatures.
 A detection example with a list of suspicious extensions\cite{crypto_ransomware_extensions} for modified files is shown in \ref{lst:extensions_rules}.
-There are several programs that scan the contents with high accuracy and in this case \textit{Trid}\cite{trid} was chosen.
+There are several programs that scan the contents with high accuracy and in this case Trid\cite{trid} was chosen.
 \linej
 \linej
 In this case the the folder is monitored in real-time with Syscheck \ref{lst:syscheck_agent} and the detection \ref{lst:trid_rules}\ of mass creation or modification of files in the folder triggers an active response \ref{lst:trid_ossec}\ script \ref{lst:trid_cmd}\ref{lst:trid_ps1}.
@@ -697,7 +697,7 @@ This can cause problems to programs that need a lot of system resources to work 
 The active response was triggered too late to act before the encryption was complete or almost complete, making it useless.
 \linej
 The solution was to use an early but reliable malware detection, which was not used before because it was not necessary.
-The detection of the program as malware by Windows Defender was almost instantaneous and its events (\textit{62103} and \textit{62104}) include the process responsible, making it easy to extract.
+The detection of the program as malware by Windows Defender was almost instantaneous and its events (62103 and 62104) include the process responsible, making it easy to extract.
 Once the executable is known it is just a matter of executing a trivial command to stop it.
 
 	\item The OSSEC agent was not configured to handle so many events toguether, resulting in a congestion of events to be reported to the manager, which can result in events suffering delays and arriving out of order and in some cases they saturate the manager because it can not process them fast enough.
@@ -709,7 +709,7 @@ In the end the problem remains unsolved because it is mainly caused by the exces
 	\item The only measure that worked against the ransomware was to kill it, either by knowing the ID of the process or the name of the executable.
 This was because disabling the Internet adapter is just for stop it from spreading and locking the files was too slow to have any effect.
 
-	\item Another problem was that the script \ref{lst:crypto_ransomware_testing_configuration_stop}\ to stop and mitigate the ransomware was too slow (mostly due to the overhead of running it with \textit{SSH}) and it did not provide any real benefit from it.
+	\item Another problem was that the script \ref{lst:crypto_ransomware_testing_configuration_stop}\ to stop and mitigate the ransomware was too slow (mostly due to the overhead of running it with SSH) and it did not provide any real benefit from it.
 \linej
 Instead of running the script it was more effective to just kill the process, which was the interesting part of the script after it was clear that the rest was useless.
 \end{itemize}
@@ -786,6 +786,10 @@ They can mean the difference between compromising just a system or the whole net
 They may not be enough to keep the attacker away from using the software, but at least they probably would rise some alerts or slow the process.
 In some cases the attacker may reconsider the target to not be worth the effort.
 Some of the recommended restrictions are about: Tor, powershell, vssadmin, wmic, certain directories and not digitally signed software.
+	\item Restrictions on the allowed folders to run executables:
+For example if malware manages to overcome the digital signature check it can be stopped if it is executed from a suspicious directory or from none at all.
+This may help even with cases where the user is not aware that he is running a program.
+In Unix-like systems this can be done when mounting devices with the \textit{noexec} option.
 	\item Removing unused devices:
 Basic action to prevent possible further infection spreading.
 It should be applied to physical devices like: mapped drives, USB storage devices or memory sticks and smartphones.

@@ -341,7 +341,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 	\end{ganttchart}
 	\end{center}
-	\caption{``Beginning of the project'' planning}
+	\caption{Planning of the beginning of the project}
 \end{figure}
 
 
@@ -403,7 +403,7 @@ In other words, they could be described as the models for the final Gantt diagra
 		\ganttlink{TF}{milestone}
 
 	\end{ganttchart}
-	\caption{``Increment 1: \IncrementoUno'' planning}
+	\caption{Planning of the increment 1: \textit{\IncrementoUno}}
 \end{figure}
 
 
@@ -453,7 +453,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 	\end{ganttchart}
 	\end{center}
-	\caption{``Increment 2: \IncrementoDos'' planning}
+	\caption{Planning of the increment 2: \textit{\IncrementoDos}}
 \end{figure}
 
 
@@ -513,7 +513,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 	\end{ganttchart}
 	\end{center}
-	\caption{``Increment 3: \IncrementoTres'' planning}
+	\caption{Planning of the increment 3: \textit{\IncrementoTres}}
 \end{figure}
 
 
@@ -561,7 +561,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 	\end{ganttchart}
 	\end{center}
-	\caption{``Increment 4: \IncrementoCuatro'' planning}
+	\caption{Planning of the increment 4: \textit{\IncrementoCuatro}}
 \end{figure}
 
 
@@ -621,7 +621,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 	\end{ganttchart}
 	\end{center}
-	\caption{``Increment 5: \IncrementoCinco'' planning}
+	\caption{Planning of the increment 5: \textit{\IncrementoCinco}}
 \end{figure}
 
 
@@ -679,7 +679,7 @@ In other words, they could be described as the models for the final Gantt diagra
 
 	\end{ganttchart}
 	\end{center}
-	\caption{``Increment 6: \IncrementoSeis'' planning}
+	\caption{Planning of the increment 6: \textit{\IncrementoSeis}}
 \end{figure}
 
 
@@ -730,52 +730,11 @@ In other words, they could be described as the models for the final Gantt diagra
 
 	\end{ganttchart}
 	\end{center}
-	\caption{``Increment 7: \IncrementoSiete'' planning}
+	\caption{Planning of the increment 7: \textit{\IncrementoSiete}}
 \end{figure}
 
 
 
-
-
-\renewcommand{\Dlen}{\Ddiez}
-\begin{figure}[H]
-	\begin{center}
-	\begin{ganttchart}[
-		x unit=0.45cm,
-		y unit title=1.0cm,
-		y unit chart=1.0cm,
-		vgrid,
-		bar/.append style={fill=\Cnormal},
-		milestone label font=\itshape\footnotesize,
-		group label font=\bfseries\footnotesize,
-		bar label font=\footnotesize,
-		title label font=\footnotesize,
-	]{1}{\Dlen}
-		\newganttlinktypealias{straight}{f-s}
-		\setganttlinklabel{straight}{}
-		\gantttitle{Planning in days}{\Dlen} \\
-		\gantttitlelist{1,...,\Dlen}{1} \\
-
-
-		\ganttgroup[name=repo]{Ruleset repository}{1}{3} \\
-		\ganttbar[name=revision]{Revision of the guidelines of the official repository}{1}{3} \\
-		\ganttmilestone[name=rmilestone]{Pull request to the official repository}{3} \\
-
-		\ganttgroup[name=documentation]{Documentation of the project}{1}{\Dlen} \\
-		\ganttbar[name=memory]{Project memory}{1}{12} \\
-		\ganttbar[name=other, bar/.append style={fill=\Coptional},]{Other documentation}{12}{12} \\
-		\ganttbar[name=presentation]{Project presentation}{13}{\Dlen} \\
-		\ganttmilestone[name=dmilestone]{Project documentation}{\Dlen} \\
-
-		\ganttlink{revision}{rmilestone}
-
-		\ganttlink{memory}{dmilestone}
-		\ganttlink{presentation}{dmilestone}
-
-	\end{ganttchart}
-	\end{center}
-	\caption{``Closing of the project'' planning}
-\end{figure}
 
 
 
@@ -843,17 +802,17 @@ Therefore from now on this document refers to them as a couple of increments to 
 \newcommand{\SIncrementoUnoFinal}{2019-05-20}
 \newcommand{\FIncrementoUnoFinal}{2019-06-14}
 \newcommand{\SIncrementoTres}{2019-06-15}
-\newcommand{\FIncrementoTres}{2019-07-17}
-\newcommand{\SClosing}{2019-07-18}
+\newcommand{\FIncrementoTres}{2019-07-18}
+\newcommand{\SClosing}{2019-07-19}
 \newcommand{\PClosing}{2019-07-23}
 
 
 \begin{figure}[H]
-	\advance\leftskip-1.5cm
+	\advance\leftskip-1.7cm
 	\begin{ganttchart}[
 		time slot format=isodate,
 		time slot format/start date=\PStart,
-		x unit=0.05cm,
+		x unit=0.048cm,
 		y unit title=1.0cm,
 		y unit chart=1.0cm,
 		bar/.append style={fill=\Cnormal},
@@ -877,7 +836,7 @@ Therefore from now on this document refers to them as a couple of increments to 
 
 		\ganttbar[name=Increment1Start]{Increment 1 and 2}{\SIncrementoUnoInicial}{\FIncrementoUnoInicial} \\ %pausa 3 meses
 		\ganttbar[name=Pause, bar/.append style={fill=gray!80}]{Project on hold}{\SPause}{\FPause} \\
-		\ganttbar[name=Comeback]{Updating tools of the project}{\SComeback}{\FComeback} \\
+		\ganttbar[name=Comeback]{Updating tools}{\SComeback}{\FComeback} \\
 
 		\ganttbar[name=Increment1Continuation]{Increment 1 and 2}{\SIncrementoUnoContinuation}{\FIncrementoUnoContinuation} \\ %pausa 2 semanas
 		\ganttbar[name=Pause2, bar/.append style={fill=gray!80}]{Two weeks pause}{\SPauseDos}{\FPauseDos} \\
@@ -949,7 +908,7 @@ Therefore from now on this document refers to them as a couple of increments to 
 
 	\end{ganttchart}
 	\end{center}
-	\caption{``Beginning of the project'' planning}
+	\caption{Planning of the beginning of the project}
 \end{figure}
 
 
@@ -999,7 +958,7 @@ The Kibana plugin for Wazuh stopped working because there was a version mismatch
 
 	\end{ganttchart}
 	\end{center}
-	\caption{``Updating tools of the project'' planning}
+	\caption{Planning of updating the tools of the project}
 \end{figure}
 
 
@@ -1065,31 +1024,96 @@ The tasks initially planned for increment 2 was so small and integrated into alr
 		\ganttlink[link bulge=1]{TF}{milestone}
 
 	\end{ganttchart}
-	\caption{``Increment 1 and 2'' planning}
+	\caption{Planning of the increments 1 and 2}
 \end{sidewaysfigure}
 
-%\begin{figure}[H]
-	%\advance\leftskip-2cm
-	%\begin{ganttchart}[
-		%time slot format=isodate,
-		%time slot format/start date=\PStart,
-		%x unit=0.18cm,
-		%y unit title=1.0cm,
-		%y unit chart=1.0cm,
-		%bar/.append style={fill=\Cnormal},
-		%milestone label font=\itshape\footnotesize,
-		%group label font=\bfseries\footnotesize,
-		%bar label font=\footnotesize,
-		%title label font=\footnotesize,
-		%title height=0.5,
-		%title top shift=-.5,
-		%vgrid,
-		%]{\SIncrementoTres}{\FIncrementoTres}
-		%\newganttlinktypealias{straight}{f-s}
-		%\setganttlinklabel{straight}{}
-		%\gantttitlecalendar{month=name}
+\begin{figure}[H]
+	\advance\leftskip-2cm
+	\begin{ganttchart}[
+		time slot format=isodate,
+		time slot format/start date=\PStart,
+		x unit=0.25cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		bar/.append style={fill=\Cnormal},
+		milestone label font=\itshape\footnotesize,
+		group label font=\bfseries\footnotesize,
+		bar label font=\footnotesize,
+		title label font=\footnotesize,
+		title height=0.5,
+		title top shift=-.5,
+		vgrid,
+		]{\SIncrementoTres}{\FIncrementoTres}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitlecalendar{month=name}
+
+		\newcommand{\Dstudy}{2019-07-06}
+		\newcommand{\STesting}{2019-07-07}
+
+		\ganttgroup[name=pstudy]{Preliminary research and codification}{\SIncrementoTres}{\Dstudy} \\
+		\ganttbar[name=list]{Study of ransomware}{\SIncrementoTres}{2019-06-23} \\
+		\ganttbar[name=attack]{Codification of the basic file encryption example}{2019-06-24}{2019-06-24} \\
+		\ganttbar[name=detection]{Exploration and codification of detection options}{2019-06-25}{\Dstudy} \\
+
+		\ganttgroup[name=TF]{Testing and fixing}{\STesting}{\FIncrementoTres} \\
+		\ganttbar[name=TD]{Testing and fixing the detection mechanisms}{\STesting}{2019-07-16} \\
+		\ganttbar[name=RR]{Testing with real ransomware}{2019-07-17}{\FIncrementoTres} \\
+
+		\ganttmilestone[name=milestone]{Detection/action against certain ransomware patterns}{\FIncrementoTres} \\
+
+		\ganttlink{list}{attack}
+		\ganttlink{attack}{detection}
+		\ganttlink{pstudy}{TF}
+		\ganttlink{TD}{RR}
+		\ganttlink{TF}{milestone}
+	\end{ganttchart}
+\caption{Planning of the increment 3: \textit{\IncrementoTres}}
+\end{figure}
 
 
-	%\end{ganttchart}
-	%\caption{``Increment 3: \IncrementoTres'' planning}
-%\end{figure}
+\linej
+\linej
+\linej
+\begin{figure}[H]
+	\begin{center}
+	\begin{ganttchart}[
+		time slot format=isodate,
+		x unit=0.80cm,
+		y unit title=1.0cm,
+		y unit chart=1.0cm,
+		bar/.append style={fill=\Cnormal},
+		milestone label font=\itshape\footnotesize,
+		group label font=\bfseries\footnotesize,
+		bar label font=\footnotesize,
+		title label font=\footnotesize,
+		title height=0.5,
+		title top shift=-.5,
+		vgrid
+		]{\SClosing}{\PClosing}
+		\newganttlinktypealias{straight}{f-s}
+		\setganttlinklabel{straight}{}
+		\gantttitlecalendar{month=name, day}
+
+%\newcommand{\SClosing}{2019-07-19}
+%\newcommand{\PClosing}{2019-07-23}
+
+		%\ganttgroup[name=repo]{Ruleset repository}{1}{3} \\
+		%\ganttbar[name=revision]{Revision of the guidelines of the official repository}{1}{3} \\
+		%\ganttmilestone[name=rmilestone]{Pull request to the official repository}{3} \\
+
+		\ganttgroup[name=documentation]{Finishing the documentation of the project}{\SClosing}{\PClosing} \\
+		\ganttbar[name=fixes]{Cost management and detail fixing}{\SClosing}{2019-07-19} \\
+		\ganttbar[name=revision]{Review of the memory by the tutors}{2019-07-20}{\PClosing} \\
+		\ganttmilestone[name=milestone]{The documentation of the project is finished}{\PClosing} \\
+
+
+		\ganttlink{fixes}{revision}
+		\ganttlink{revision}{milestone}
+
+	\end{ganttchart}
+	\end{center}
+	\caption{Planning of the closing of the project}
+\end{figure}
+
+
