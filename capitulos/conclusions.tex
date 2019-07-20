@@ -33,7 +33,7 @@ Unfortunately this can also result in a loss of performance for processing the r
 	\item Having more decoders for common monitoring commands in Windows, instead of having to write your own or parse the output of the command with an script.
 	\item Executing remote commands with direct feedback to the manager, instead of having to use workarounds like writing to a monitored log.
 	\item Active response directly with PowerShell, instead of having to use CMD or SSH. This is in development.
-	\item Active response with dynamic arguments from the alert, instead of processing the alert manually with a local script and using another program (in this case SSH) for the remote execution.
+	\item Active response with dynamic arguments from the alert, instead of processing the alert manually with a local script and using another program (in this case SSH) for the remote execution. Not to be confused with the dynamic fields for decoders.
 	\item Option to have only a frequency of 1 in composite rules, which is not such a rare need, instead of needing workarounds for it.
 	\item Integration with local antimalware software. This has been done using APIs and custom scripts with some software (like VirusTotal) but not with others as basic as Windows Defender.
 	\item Integration with other IDSs. This can provide detection features based on behaviour or network data that Wazuh can not gather on its own.

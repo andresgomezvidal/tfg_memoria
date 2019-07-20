@@ -1,29 +1,10 @@
-EN MANUAL DE USUARIO
-	explicar lo que tiene que tener el sistema para poder ejecutar todo eso
-	no hace falta explicar el porqué de nada
-	el objetivo es tener lo que hace falta para implementar defensa sin tener que andar moviendose por la memoria
-	debe ser reduntante, no pasa nada
-		puedo copiar y pegar lo que ya tengo escrito
-	no hace falta explicar cómo configurar las cosas a no se que sea algo muy especifico (que es lo que ya se hace con las reglas y la configuracion)
-		si que hace falta decir lo que tiene que tener el usuario para poder usar esto
-			ejemplo windows server 2019 o AD o ssh para alguna cosa
-				pero en esos casos no hace falta explicar como montarlos
-	There is a chance that the \textit{run} command fails to provide a Meterpreter shell at this stage, but trying again always ends working because the session is not getting created even though the exploit is working.
+MANUAL TECNICO (si se hiciera)
 	active response ssh
 		https://winscp.net/eng/docs/guide_windows_openssh_server
 	AD configuracion
 		\cite{AD_setting_up}
-	parece que si se modifican los .py en integrator no se actualizan los cambios para Wazuh hasta que se reinicia el servicio wazuh-manager
-	Dharma
-		The security preparations for the virtual machines were to uninstall the virtual box guest additions, which is one of the main risk factors for attacking the host.
-		Disabling network interfaces is also recommended, but it was not possible in this case because the ransomware needs to contact the C\&C.
-		\linej
-		Decir que se usan snapshots para volver al estado previo al test para repetirlo
-		https://www.tutorialjinni.com/cmb-dharma-ransomware-sample-download.html
 	enable Controlled Folder Access
 		turn on windows defender
 			https://docs.microsoft.com/en-au/windows/security/threat-protection/windows-defender-antivirus/configure-real-time-protection-windows-defender-antivirus
 		https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/enable-controlled-folders-exploit-guard
 			Set-MpPreference -EnableControlledFolderAccess Enabled
-
-dejar manual para el final
