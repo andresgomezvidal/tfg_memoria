@@ -1,12 +1,9 @@
-%Especificación de requisitos: debe indicarse, polo miúdo, a especificación do 
-%Sistema, xunto coa información que este debe almacenar e as interfaces con outros 
-%Sistemas, sexan hardware ou software, e outros requisitos (rendemento, seguridade, 
-%etc).
-
 The requirement specification is a full description of the software the project is to develop.
 PMBOK\cite{pmbok} states that requirements are conditions or capabilities that a product must meet to satisfy the contract.
 The requirements expose the needs of the client, which have to be accomplished to finish the project successfully.
-Note that the client in this case is Tarlogic even if the product is a contribution to an open source project.
+The client of the project is Tarlogic.
+%CAMBIADO
+%Note that the client in this case is Tarlogic even if the product is a contribution to an open source project.
 \linej
 Depending of their type they can describe features, data, relations, properties or any details necessary to explain the system without ambiguity, in a way it can be easily understood.
 
@@ -20,26 +17,26 @@ Most of them are so simple that there are basically no other ways to write them.
 \linej
 In this project there are no tests in the way a traditional project for software development would have.
 The closest thing are the Wazuh rules, being their trigger considered a success and either the opposite or any false positives considered a failure.
-This is actually pretty simple and effective, when we can assure the events generated from an attack.
-\linej
-\linej
-The only script that could be argued to be complex enough to need a traditional development approach is \textit{klist.ps1}\cite{memoria_github}, explained in page \pageref{klist_detection}. Is a bit over 100 lines script that parses the output of a few commands line by line in a classic for-loop fashion and adds a field with the value from a subtraction operation.
-\linej
-This script is the biggest and most complex software made in this project, and yet almost no knowledge of powershell was needed and was made in a couple of hours.
-Its logic is basically the same in all the script: if the line has this field then extract this part.
-\linej
-It seems a bit like an stretch to suddenly change a $\sim$400 hours project to a development approach because of an unplanned $\sim$2 hours script.
-\linej
-\linej
-Therefore it makes sense to limit the resources for the requirement specification. These resources can be spend elsewhere in the project, instead of being wasted in something that would not bring significant quality to the project.
-\linej
-It would be a different matter if there were some kind of development for adding functionality or integration of tools to Wazuh. In that case the project should have a proper full requirement specification, at least for them.
+%This is actually pretty simple and effective, when we can assure the events generated from an attack.
+%\linej
+%\linej
+%The only script that could be argued to be complex enough to need a traditional development approach is \textit{klist.ps1}\cite{memoria_github}, explained in page \pageref{klist_detection}. Is a bit over 100 lines script that parses the output of a few commands line by line in a classic for-loop fashion and adds a field with the value from a subtraction operation.
+%\linej
+%This script is the biggest and most complex software made in this project, and yet almost no knowledge of powershell was needed and was made in a couple of hours.
+%Its logic is basically the same in all the script: if the line has this field then extract this part.
+%\linej
+%It seems a bit like an stretch to suddenly change a $\sim$400 hours project to a development approach because of an unplanned $\sim$2 hours script.
+%\linej
+%\linej
+%Therefore it makes sense to limit the resources for the requirement specification. These resources can be spend elsewhere in the project, instead of being wasted in something that would not bring significant quality to the project.
+%\linej
+%It would be a different matter if there were some kind of development for adding functionality or integration of tools to Wazuh. In that case the project should have a proper full requirement specification, at least for them.
 
 \linej
 \linej
 The requirement specification is simplified:
 \begin{itemize}
-	\item \textbf{Use cases}: A use case is a description of all the ways an end-user wants to ``use'' a system. These ``uses'' are like requests of the system, and use cases describe what that system does in response to such requests. In other words, use cases describe the conversation between a system and its user(s), known as actors. Although the system is usually automated (such as an Order system), use cases also apply to equipment, devices, or business processes\cite{use_case_definition}. It does not make sense to have them for this project because the software is too straightforward to have different ways to be used.
+	\item \textbf{Use cases}: A use case is a description of all the ways an end-user wants to \textit{use} a system. These \textit{uses} are like requests of the system, and use cases describe what that system does in response to such requests. In other words, use cases describe the conversation between a system and its user(s), known as actors. Although the system is usually automated (such as an Order system), use cases also apply to equipment, devices, or business processes\cite{use_case_definition}. It does not make sense to have them for this project because the software is too straightforward to have different ways to be used.
 	\item \textbf{Actors}: There is no need due to the software being just an one way automated interaction.
 	\item \textbf{Functional requirements}: They describe the specifics about the functionality the system needs to have. There could be functional requirements, but in most cases they would be almost the same as the rules or scripts they try to describe, making them pointless.
 %The functional requirements can be considered a redundant version of the use cases, because both describe the same functionalities.
@@ -129,7 +126,7 @@ These requirements could be expanded and more could be added during the project 
 		\rowcolor{gray!30}
 		Identifier & \textbf{RNF-03} \\ \hline
 		Name & \RNFtres \\ \hline
-		Description & The idea is to identify from Windows security events when a network if being attacked by with login attempts, but changing his ip every few seconds (to avoid being banned). For example an alert would trigger with at least 5 attempts in 5 minutes, 20 attempts in 30 minutes or 200 attempts in 180 minutes. \\ \hline
+		Description & The idea is to identify from Windows security events when a network is being attacked through login attempts, but changing his IP every few seconds (to avoid being banned). For example an alert would trigger with at least 5 attempts in 5 minutes, 20 attempts in 30 minutes or 200 attempts in 180 minutes. \\ \hline
 		Priority & Essential \\ \hline
 		Validation & Every one of the scripts for this attack are detected, triggering alerts. \\ \hline
 	\end{tabularx}
@@ -140,7 +137,7 @@ These requirements could be expanded and more could be added during the project 
 		\rowcolor{gray!30}
 		Identifier & \textbf{RNF-04} \\ \hline
 		Name & \RNFcuatro \\ \hline
-		Description & Multiple login attempts are made from the same ip to different accounts. For example it would be noticed with at least 3 attempts in 10 seconds, 12 attempts in 1 minute or 120 attempts in 1 hour. The data source for Wazuh would be Windows security events. \\ \hline
+		Description & Multiple login attempts are made from the same IP to different accounts. For example it would be noticed with at least 3 attempts in 10 seconds, 12 attempts in 1 minute or 120 attempts in 1 hour. The data source for Wazuh would be Windows security events. \\ \hline
 		Priority & Essential \\ \hline
 		Validation & Any of the scripts used to reproduce the attack trigger an alert. \\ \hline
 	\end{tabularx}
@@ -196,9 +193,9 @@ These requirements could be expanded and more could be added during the project 
 		\rowcolor{gray!30}
 		Identifier & \textbf{RNF-09} \\ \hline
 		Name & \RNFnueve \\ \hline
-		Description & Research about ransomware and reproducing it in a local environment are key to guarantee its detection. This would be particularly interesting in the file server, a more likely target for this kind of attack. It is yet to be decided if stopping this kind of attack would take priority over anything else, for example shutting down the computer or disconnecting it from the network temporarily if there were no other choices. This requirement is covered in the third increment. \\ \hline
+		Description & Research about ransomware and reproducing it in a local environment are key to guarantee its detection. This would be particularly interesting in the file server, a more likely target for this kind of attack. This requirement is covered in the third increment. \\ \hline
 		Priority & Essential \\ \hline
-		Validation & Studied cryptolocker tools get detected and stopped (if possible) by Wazuh  \\ \hline
+		Validation & Studied cryptolocker patterns and tools get detected and stopped (if possible) by Wazuh  \\ \hline
 	\end{tabularx}
 \end{table}
 \begin{table}[H]
@@ -229,9 +226,11 @@ These requirements could be expanded and more could be added during the project 
 		\rowcolor{gray!30}
 		Identifier & \textbf{RNF-12} \\ \hline
 		Name & \RNFdoce \\ \hline
-		Description & The GPDR is a regulation on data protection and privacy. The functionality in Wazuh to assure the GPDR would be the core to this fifth increment. The expected difficulty would come from the need to guarantee fully it with a large and significant amount of tests.  \\ \hline
+		Description & The GPDR is a regulation on data protection and privacy. The functionality in Wazuh to assure the GPDR would be the core to the fifth increment.
+		%The expected difficulty would come from the need to guarantee fully it with a large and significant amount of tests.
+		\\ \hline
 		Priority & Desired \\ \hline
-		Validation & Any modification or not allowed access of the monitored files gets detected by the agent, triggering the corresponding alert \\ \hline
+		Validation & Any modification or unauthorized access of the monitored files gets detected by the agent, triggering the corresponding alert \\ \hline
 	\end{tabularx}
 \end{table}
 \begin{table}[H]
@@ -251,7 +250,7 @@ These requirements could be expanded and more could be added during the project 
 		\rowcolor{gray!30}
 		Identifier & \textbf{RNF-14} \\ \hline
 		Name & \RNFcatorce \\ \hline
-		Description & There needs to be at least development if this integration is not transparent at that time in the project. The testing period would probably be a bit longer than usual because it would involve new programs. The seventh requirement is based on this. \\ \hline
+		Description & The necessary development for this integration to be possible with software that is not supported at the moment. The testing period would probably be a bit longer than usual because it would involve new programs. The seventh increment is based on this. \\ \hline
 		Priority & Optional \\ \hline
 		Validation & Assure the data from the integrated program reaches Wazuh and the alerts only get triggered when they should \\ \hline
 	\end{tabularx}

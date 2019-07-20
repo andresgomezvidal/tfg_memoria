@@ -1,7 +1,7 @@
 \section{Conclusion}
 This project has shown how Wazuh can be used to improve the cybersecurity of a system, in some cases without the need of expert knowledge in scripting or pentesting.
 \linej
-Wazuh has been under development for some years and there are still parts that lack basic funcionality.
+Wazuh has been under development for some years and there are still parts that lack basic functionality.
 This project has tried to show and fix some of them, without changing the source code in order to have more time for other tasks.
 \linej
 \linej
@@ -26,7 +26,8 @@ Multiple ways to detect and act against malware have been analyzed in this proje
 There are many features and research that could improve the current state of Wazuh as a reliable cybersecurity tool:
 \begin{itemize}
 	\item All the ideas left behind in this project due to lack of time. They are explained in the exclusions part of the scope section \ref{exclusions}.
-	\item Ability to set real variables in the rules, instead of the current ones that are actually constans because they need a restart of the service to be updated.
+In most cases they are related to other technologies or tasks that could require an entire project by themselves.
+	\item Ability to set real variables in the rules, instead of the current ones that are actually constants because they need a restart of the service to be updated.
 Unfortunately this can also result in a loss of performance for processing the rules.
 	\item A functional database system for all kinds of data, instead of the current CDB that only is useful for IP addresses. This would solve the problem of just monitoring a value, like the case of the free space of the backup volume \ref{free_space_volume}.
 	\item Having more decoders for common monitoring commands in Windows, instead of having to write your own or parse the output of the command with an script.

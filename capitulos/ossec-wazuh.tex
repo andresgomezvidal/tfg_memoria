@@ -5,7 +5,7 @@ Wazuh is a fork of OSSEC. It adds a RESTFul API, has a more updated ruleset and 
 We will use OSSEC through Wazuh to code rules and decoders, without the need to change any code of the program itself.
 This means this project can focus directly on detection without the need to create a full system from scratch.
 \linej
-In short Wazuh is the HIDS used in this project to detect and in some cases act against suspicius threats.
+In short Wazuh is the HIDS used in this project to detect and in some cases act against suspicious threats.
 \begin{figure}[H]
   \centering
 	\includegraphics[width=.6\textwidth]{figuras/wazuh_stack.png}
@@ -21,8 +21,9 @@ The most interesting qualities of Wazuh for this project are\cite{wazuh_index}\c
 	\item \textbf{Multiple sources of data}: The scanned data can be from logs, output of commands or databases.
 	\item \textbf{Active response}: Automated remediation to security violations and threats, to mitigate more the possible damage. For example to stop the Internet connection to isolate a compromised system.
 	\item \textbf{Improved ruleset}: It is the combination of rules and decoders. Having this ruleset out of the box reduces the workload of this project. It can also serve as reference and complement some of the rules and decoders that this project intends to work on.
-	\item \textbf{Open source, free and easy to contribute to}: This is optional but nice, as it offers a chance to an inexperienced student to contribute in a real and useful project. The project is hosted on Github and Google Groups. In this project the contribution would be to the ruleset\cite{wazuh_ruleset} and not to the core of Wazuh\cite{wazuh} or the documentation\cite{wazuh_documentation2}.
-		%TODO decidir si hacer contribución al ruleset y si cambiar/dejar esto y otras menciones similares
+	\item \textbf{Open source, free and easy to contribute to}: This is optional but nice, as it offers a chance to an inexperienced student to contribute in a real and useful project. The project is hosted on Github and Google Groups.
+		%In this project the contribution would be to the ruleset\cite{wazuh_ruleset} and not to the core of Wazuh\cite{wazuh} or the documentation\cite{wazuh_documentation2}.
+		%CAMBIADO
 \end{itemize}
 \linej
 The RESTFul API interacts using OSSEC commands and would be interesting if this project were related to a tool issuing queries to Wazuh, but this is not the case. Anyway it is still something valuable to have as these kind of tools are very common nowadays.
@@ -94,7 +95,7 @@ There is also the option to store the alerts in a database if OSSEC is compiled 
 They constitute the main part of this project and they can be used to detect application or system errors, misconfigurations, attempted and/or successful malicious activities, policy violations and a variety of other security and operational issues\cite{wazuh_index}. Wazuh is quite helpful with the features and documentation of the ruleset and in this project the already existing rules and decoders were a great help as examples.
 \linej
 \linej
-From the previous figure, the elements inmediately related to the ruleset are:
+From the previous figure, the elements immediately related to the ruleset are:
 \begin{figure}[H]
   \centering
 	\includegraphics[width=.4\textwidth]{figuras/wazuh_data_flow1_zoom.png}
@@ -113,7 +114,7 @@ At least a rule in the hierarchy has to be related to the decoder of the event f
 When alerts are triggered they are recorded into the log, and also can be stored in a database, send e-mails and execute commands\cite{libro_ossec}.
 \linej
 \linej
-There are two tipes of rules\cite{libro_ossec}:
+There are two types of rules\cite{libro_ossec}:
 \begin{itemize}
 	\item \textbf{Atomic}: They are based on simple events, without any correlation. They are by far the most used.
 	\item \textbf{Composite}: Those with multiple events. They have a time window and a number of times the rule has to be true before triggering the alert. They can group multiple atomic rules, all of which have to be true for the composite rule to be true.
@@ -137,7 +138,7 @@ Rules can be added in \textit{/var/ossec/etc/rules/} and decoders in \textit{/va
 %The solution is to copy the code (actually only the ID is needed) of the existing item to the folder where we can add new ones, make the desired changes add \textit{overwrite=``yes''}\cite{wazuh_custom}.
 \linej
 \linej
-As mentioned before Wazuh adds its own ruleset over the one provided by the OSSEC project. The next table shows about 20\% of the combined ruleset that Wazuh uses, where ``Out of the box'' means that the source was the OSSEC project.
+As mentioned before Wazuh adds its own ruleset over the one provided by the OSSEC project. The next table shows about 20\% of the combined ruleset that Wazuh uses, where \textit{Out of the box} means that the source was the OSSEC project.
 \begin{figure}[H]
   \centering
 	\makebox[\textwidth][c]{\includegraphics[width=1.1\textwidth]{figuras/wazuh_ruleset.png}}
@@ -166,7 +167,7 @@ We get the next output:
 \linej
 This example shows how Wazuh processes the input text, that usually would be in a SSH event.
 The decoder \textit{sshd} matches the format of the input text, and that it is able to extract the \textit{dstuser} and \textit{srcip} fields.
-Then the event is processed by the set of rules until it matches the conditions of the rule \textit{5715}, which should generate an alert.
+Then the event is processed by the set of rules until it matches the conditions of the rule 5715, which should generate an alert.
 \linej
 \linej
 After version 3.0.0 (we are currently in 3.9) Wazuh incorporates an integrated decoder for JSON logs enabling the extraction of data from any source in this format. This can be very useful in many situations, for example trivializing the generation of alerts for programs reporting in JSON, without the need for a decoder for each one\cite{wazuh_json}.

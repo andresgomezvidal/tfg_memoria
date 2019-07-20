@@ -1,8 +1,13 @@
 The title of these increments are \textit{\IncrementoUno} and \textit{\IncrementoDos}. Due to reasons stated later in \ref{increment_explanation} these increments that were planned to be implemented individually were actually done together.
-This chapter is about the requirements that were selected into them and later implemented.
+This chapter satisfies the next non-functional requirements: RNF-01, RNF-02, RNF-03, RNF-04, RNF-05 and RNF-08.
 \linej
 \linej
-In this laboratory we disabled the antivirus and Windows Defender to avoid unnecesary delays.
+In order to understand and detect the malware we try to put ourselves in the attacker place, in some cases using scripts and tools that can be considered harmful and illegal.
+This is only a way to accomplish the real objective that is the detection.
+This behaviour is kept to a minimum, it is only done in the machines of this laboratory and no kind of harm is intended outside of this project.
+\linej
+\linej
+In this laboratory we disabled the antivirus and Windows Defender to avoid unnecessary delays.
 Particularly the \textit{DisableAntiSpyware} and \textit{DisableRealTimeMonitoring} were enabled in the registry.
 Our intention is to detect as much as possible without depending on other programs, and in this increment Windows Defender was not needed.
 \linej
@@ -56,7 +61,8 @@ It follows that this attack can only be detected either during the steps needed 
 By default Mimikatz sets the forged ticket age to 10 years, which is useful to some attackers because they would need only one attack to compromise the entire network for that time.
 
 \subsection{Exploit methods}
-To keep this simple only the basics are explained about the techniques used in the examples for a Golden Ticket attack. Because some of the exploits are similar they are numbered for easier identification. The scripts in the next exploits were used to understand the different ways to perform Golden Ticket attacks and during the tests to try to detect them. Of course there are more ways to generate a Golden Ticket, and some are much more harder to detect, but there is no time to examine them all. Also it is possible to combine several of the next exploits or change some of their steps.
+To keep this simple only the basics are explained about the techniques used in the examples for a Golden Ticket attack. Because some of the exploits are similar they are numbered for easier identification. The scripts in the next exploits were used to understand the different ways to perform Golden Ticket attacks and during the tests to try to detect them.
+Of course there are more ways to generate a Golden Ticket (and some are much more harder to detect) and it is possible to combine several of the next exploits or change some of their steps.
 \linej
 For example there is a sever-agent version of Mimikatz called Pypykatz\cite{pypykatz_agent}\cite{pypykatz_server} that is very new and should be a bit harder to detect than the exploits showed here. Unfortunately the student could not make it retrieve the KRBTGT hash.
 \linej
@@ -97,7 +103,7 @@ The script downloads a version of Mimikatz from Github and creates a PowerShell 
 Due to difficulties with the last \textit{Mimikatz} command to work with the parameters in the variables a workaround was used. This is writing a new file that has the command with those parameters, and then execute the file.
 \linej
 \linej
-On the one hand it can be harder to detect with obfuscation, renaming and not using such an obvious url.
+On the one hand it can be harder to detect with obfuscation, renaming and not using such an obvious URL.
 On the other hand PowerShell can be monitored for downloading commands, particularly those with objects.
 
 \subsubsection{Exploit 1.3: Mimikatz with DCSync}
@@ -214,7 +220,7 @@ The idea of finding a relationship between certain windows events and this attac
 	\item Also it was concerning the amount of noise this method has, even though in a laboratory without real system load, to tell apart an intrusion from a totally healthy system.
 \end{itemize}
 \linej
-The real useful addition to the Windows builtin events is having Sysmon\cite{sysmon} in each of the monitored Windows computers. They can be combined to identify attackers better\cite{detection_events}.
+The real useful addition to the Windows built-in events is having Sysmon\cite{sysmon} in each of the monitored Windows computers. They can be combined to identify attackers better\cite{detection_events}.
 \linej
 With Sysmon we can have reports of events with IDs [1-21] and 255, which in some cases provide very precise and useful information of the system. For example we can configure Sysmon to log data about processes, like: \textit{PowerShell}, \textit{Mimikatz}, any \textit{.ps1} or any \textit{.exe}.
 Sysmon can monitor each of the events either by whitelisting or blacklisting by default or both. We can also combine it with rules from Wazuh, using Sysmon to increase the report capabilities and Wazuh to filter them.
@@ -273,7 +279,7 @@ Unfortunately due to the way OSSEC matches rules there is no way to have an hier
 It is possible to have a rule for each DLL using active response to generate two alerts instead of one \ref{lst:freq_active_response}, but is much slower and less efficient.
 \linej
 \linej
-Detecting the use of every variant of Mimikatz is virtually impossible, not only because their sheer number due to its popularity but because anyone can compile their own. Therefore the logical way to detect Mimikatz would be to detect the basic step for every version: the interaction with the LSASS and process injection. More can be read on page \pageref{detect_lsass}.
+Detecting the use of every variant of Mimikatz is virtually impossible, not only because their sheer number due to its popularity but because anyone can compile their own. Therefore the logical way to detect Mimikatz would be to detect the basic step for every version: the interaction with the LSASS and process injection. This is studied later on page \pageref{detect_lsass}.
 
 \begin{table}[H]
 	\centering
@@ -318,7 +324,7 @@ Next there is an example of the difference between the normal output of klist an
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.9\textwidth]{figuras/klist_normal.png}
+	\includegraphics[width=\textwidth]{figuras/klist_normal.png}
 	\caption{Klist listing tickets for a certain session}
 \end{figure}
 \begin{figure}[H]
@@ -487,7 +493,7 @@ And alerts set with Wazuh:
 \linej
 The first rule is the parent, it filters windows events with the \textit{ntds} string.
 \linej
-The second rule detects the ntdsutil executable. This signature is more useful than usual because it is a builtin tool. The third matches \textit{ntds} for the command line, which is not really reliable.
+The second rule detects the ntdsutil executable. This signature is more useful than usual because it is a built-in tool. The third matches \textit{ntds} for the command line, which is not really reliable.
 \linej
 The rest are for detecting suspicious database events from Windows events. These database events assure the detection of ntdsutil even if it were to be executed without using known signatures.
 \linej
@@ -498,7 +504,7 @@ There is also the remote version of Reg: WinReg. But there was no time to invest
 These commands produce the different save files, each for a different group of credentials, that can be later extracted offline with certain tools\cite{more_dumps}:
 \lstinputlisting[style=PS]{src/credential_extraction/reg.ps1}
 \linej
-Reg is not detected as malware because it is a builtin tool in Windows. With Sysmon we can report the execution of Reg with the event 1, reporting the creation of a process:
+Reg is not detected as malware because it is a built-in tool in Windows. With Sysmon we can report the execution of Reg with the event 1, reporting the creation of a process:
 \lstinputlisting[style=xml]{src/credential_extraction/sysmon_event_1_reg.xml}
 \linej
 And Wazuh to trigger an alert:
@@ -527,7 +533,7 @@ ProcessDumper, also known as pd\cite{pd}, is another program to dump the \textit
 \lstinputlisting[style=PS]{src/credential_extraction/pd.ps1}
 
 \subsubsection{Exploit 2.5: Dump of LSASS with Minidump}
-Minidump is a script from the PowerSploit Post-Explotation Framework\cite{powersploit}. It can be combined with the \textit{Get-Process} builtin to dump the process into a file:
+Minidump is a script from the PowerSploit Post-Explotation Framework\cite{powersploit}. It can be combined with the \textit{Get-Process} built-in to dump the process into a file:
 \lstinputlisting[style=PS]{src/credential_extraction/minidump.ps1}
 
 \subsubsection{Exploit 2.6: Retrieval of NTDS.DIT with NinjaCopy} \label{invoke-NinjaCopy}
@@ -575,7 +581,7 @@ These 8 DLLs are detected by 4 rules to reach the minimum frequency:
 \linej
 This detection works the same with both local and remote cases.
 \linej
-False positives were found when attempting to log in remotely multiple times one after the other, as described on page \pageref{reverse_login}.
+False positives were found when attempting to log in remotely multiple consecutive times, as described on the part about brute force reverse logins on page \pageref{reverse_login}.
 Others may appear in a real environment.
 This technique depends too much on the time frame and can be avoided changing the code.
 %\linej
@@ -698,7 +704,7 @@ There are a number of reasons why attackers love PowerShell\cite{powershell_adse
 Again in this project we can only take a peek at them, but knowing them at least gives us an idea of real world scenarios.
 
 \subsection{Encoding commands}
-PowerShell provides a builtin option to execute commands from an encoded string. This can be used to bypass signature matching. Of course the attacker does not need to encode it in the same machine, that would be a risk for the key string to be detected.
+PowerShell provides a built-in option to execute commands from an encoded string. This can be used to bypass signature matching. Of course the attacker does not need to encode it in the same machine, that would be a risk for the key string to be detected.
 \linej
 \lstinputlisting[style=PS,caption=Encoding and executing ntdsutil,captionpos=b]{src/powershell_detection/powershell_enc.ps1}
 \linej
@@ -738,7 +744,7 @@ In testing this was always the 100100 rule, but it was checked that the other tw
 The syntax of this rule is simplified for this document, but the original can be found in the repository of this project\cite{memoria_github}.
 \linej
 \linej
-The encoded command used in this case triggered the alerts for too long CommandLine (100100) and the previous alerts: CommandLine with ntdsutil.exe (300011) and suspicious database events (300013, 300014 and 300015)\ref{ntdsutil_detection}.
+The encoded command used in this case triggered the alerts for too long CommandLine (100100) and the previous alerts to detect the use of ntdsutil in \ref{ntdsutil_detection}: CommandLine with ntdsutil.exe (300011) and suspicious database events (300013, 300014 and 300015).
 
 \subsection{PowerShell version 5 security features}
 The version 5 of PowerShell has useful security features to mitigate complex PowerShell attacks\cite{powershell_adsecurity}:
@@ -754,7 +760,7 @@ AppLocker also has functionality to allow only enterprise signed scripts, reduci
 \linej
 The Constrained Language Mode limits the capability of PowerShell to base functionality, removing advanced features like .Net and Windows API calls.
 In short it allows day-to-day tasks and at the same time restricts the use of the most dangerous attack tools, because they often rely on these features.
-For example the Invoke-Mimikatz\ref{invoke-Mimikatz} and Invoke-NinjaCopy\ref{invoke-NinjaCopy} methods stop working because they rely on reflective DLL loading.
+For example the previous Invoke-Mimikatz\ref{invoke-Mimikatz} and Invoke-NinjaCopy\ref{invoke-NinjaCopy} methods stop working because they rely on reflective DLL loading.
 \linej
 It can be activated in multiple ways and an attacker could deactivate it too, but these changes can be monitored.
 This setting cannot be changed from a session with the Constrained Mode activated even with administrator privileges.
@@ -787,7 +793,7 @@ One of the frameworks that can be used for this is PS$\textgreater$Attack\cite{P
 It includes many offensive PowerShell tools that rely on this DLL to bypass possible locks.
 The PowerShell tools are encrypted to avoid signature matching and are decrypted to memory at run-time\cite{powershell_adsecurity}.
 \linej
-The tool tested was Invoke-Mimikatz, which was previously used in \ref{invoke-Mimikatz}.
+The tool tested was Invoke-Mimikatz, which was previously used in order to test the detection of Mimikatz in \ref{invoke-Mimikatz}.
 \linej
 PS$\textgreater$Attack just needs to run the executable and call this module with the desired options.
 \linej
@@ -807,14 +813,14 @@ Next the Wazuh manager needs to be configured to forward the PowerShell log to h
 \subsection{Conclusion}
 PowerShell can be very dangerous for the security of Windows systems: it can do almost anything and it has multiple ways to avoid being detected.
 These include encoding, encryption, reflective DLL loading and bypassing locks on executables.
-All of them have been shown in this project, along with mitigations and/or detection techniques.
+All of them have been shown in this project, along with mitigation and/or detection techniques.
 \linej
 In this section we have only scratched the surface of PowerShell auditing. It would be interesting to have more time for this topic.
 
 \section{Detection of suspicious logins}
 In Windows there are multiple ways to login remotely, but all of them rely on the same authentication method. Depending on its success or failure certain security events are issued. Therefore it does not make sense to have multiple ways to reproduce these attacks, as with the previous cases.
 \linej
-In all these cases the code is run on the no-DC, which authenticates against the DC, using the builtin command \textit{winrs}\cite{winrs}. Here this command is used to specify the remote computer to log in, the user, the password and the command to run after a successful authentication, in that order.
+In all these cases the code is run on the no-DC, which authenticates against the DC, using the built-in command \textit{winrs}\cite{winrs}. Here this command is used to specify the remote computer to log in, the user, the password and the command to run after a successful authentication, in that order.
 \linej
 \linej
 Usually this would use a dictionary of common passwords to be mixed with other characters, depending on the password requirements of the AD.
@@ -824,7 +830,7 @@ To simplify its emulation, the same passwords were tried all the time.
 In this section the essential non-functional requirements RNF-03, RNF-04 and RNF-05 are covered.
 
 \subsection{Reverse brute force login attempts} \label{reverse_login}
-In this case the attacker tries to login guessing the password without changing his ip address.
+In this case the attacker tries to login guessing the password without changing his IP address.
 He hopes that this goes on undetected because the logins are against different accounts.
 \linej
 This can be reproduced with a very simple loop:
@@ -832,32 +838,32 @@ This can be reproduced with a very simple loop:
 \linej
 Fortunately Wazuh already has rules for this in \textit{0580-win-security\_rules.xml}\cite{wazuh_ruleset}.
 Failed logins are identified by the rule 60104, which is triggered by the security event 4771\cite{windows_events}.
-Grouping is used by the rule 60205 to trigger another alert with a higher level, if there are at least 8 in 240 seconds from the same ip address.
+Grouping is used by the rule 60205 to trigger another alert with a higher level, if there are at least 8 in 240 seconds from the same IP address.
 The value of the MS\_FREQ variable is set to 8 in this file.
 \linej
 \lstinputlisting[style=xml,captionpos=b,caption=Rule 60205 of Wazuh]{src/logins/rule_60205.xml}
 
 \subsection{Distributed brute force login attempts}
-Instead of changing the user the attacker changes his ip address every few attempts. In this case it is not so much a matter of not being detected, but of not getting temporarily banned by ip address, which usually results in a drop of received packages by the firewall of the network.
+Instead of changing the user the attacker changes his IP address every few attempts. In this case it is not so much a matter of not being detected, but of not getting temporarily banned by IP address, which usually results in a drop of received packages by the firewall of the network.
 \linej
 \linej
 Usually the attacker would connect from outside of the network, because once inside it would be hundreds of orders of magnitude faster to crack them from a file with credentials.
-Instead of changing the ip address of the interface he would change where his remote command comes from, usually using a Virtual Private Network paid service, an anonymity network or previously compromised victims.
+Instead of changing the IP address of the interface he would change where his remote command comes from, usually using a Virtual Private Network paid service, an anonymity network or previously compromised victims.
 Both cases provide multiple servers across the world and it is trivial to write a shell command to jump from one to the next.
 \linej
-The example script \ref{lst:distributed_logins_winrs}\ is mostly about automation to change the ip address for the internal network, which has the interface connected to the \textit{wazuh.local} domain.
-Administrator privileges were required to change the ip address successfully. The sleep was found to be an effective measure to avoid trying to log in before the domain was reconnected.
+The example script \ref{lst:distributed_logins_winrs}\ is mostly about automation to change the IP address for the internal network, which has the interface connected to the \textit{wazuh.local} domain.
+Administrator privileges were required to change the IP address successfully. The sleep was found to be an effective measure to avoid trying to log in before the domain was reconnected.
 \linej
 \linej
-The rule 60205 in Wazuh only works for failed attempts comming from the same ip address, therefore it fails to detect this. A similar rule can solve this, just by checking the same user is targeted and by changing the \textit{same\_field} requirement to \textit{not\_same\_field} for the ip address:
+The rule 60205 in Wazuh only works for failed attempts coming from the same IP address, therefore it fails to detect this. A similar rule can solve this, just by checking the same user is targeted and by changing the \textit{same\_field} requirement to \textit{not\_same\_field} for the IP address:
 \lstinputlisting[style=xml,captionpos=b,caption=Rule 60205 of Wazuh]{src/logins/rule_60205_alternative.xml}
 \linej
 This frequency is fine for testing in a laboratory with an internal network, but probably is way too low for a real environment.
-Wazuh can be used to ban the ip for a time with its active response feature\cite{active_response}.
+Wazuh can be used to ban the IP for a time with its active response feature\cite{active_response}.
 
 \subsection{Login outside of usual hours}
 Allowed logon hours can be set with AD, resulting in failure even with correct passwords when outside of the time range.
-Even so we can not always rely in it and there are situations where it is interesting to monitor if there are attemps to log in on unusual hours.
+Even so we can not always rely in it and there are situations where it is interesting to monitor if there are attempts to log in on unusual hours.
 For example an attacker would want to breach the network when there is a lesser chance of being detected, for example when the security staff is asleep.
 In this case we take interest in detecting these events for users of a certain Organizational Unit, which are useful for AD management.
 \linej
@@ -869,7 +875,7 @@ A workaround would be to name the users with a part of the name of the OU, like 
 \linej
 Of course these are not acceptable and there is a better way.
 Running a remote command with Wazuh we can search the security log for the events of interest, check the hour and verify if they belong to a user of the OU.
-As with the klist detection (page \pageref{klist_detection}) a PowerShell script was created \ref{lst:OU}\ and a remote command was set \ref{lst:OU_wodle}.
+As with the case of the klist detection (on page \pageref{klist_detection}) a PowerShell script was created \ref{lst:OU}\ and a remote command was set \ref{lst:OU_wodle}.
 The script returns JSON output with basic information about the events that met the requirements.
 It needs to be run as Administrator to be able to query the security log and it only needs to be in the DCs, since OU logins are made always against them.
 The OU name and the hour range are set in the script by hand, but could also be automated.
@@ -890,10 +896,10 @@ The rules \ref{lst:OU_rules}\ in Wazuh are very simple, the first filters the ev
 
 \subsection{Conclusion}
 These login events are very easy to perform, but also to detect.
-More sofisticated methods can be used, but it is important to remember that brute force logins are not efficient when compared to offline cracking.
-There is always a risk of users having unsecure passwords, which can be reduced by enforcing and teaching good password policies.
+More sophisticated methods can be used, but it is important to remember that brute force logins are not efficient when compared to offline cracking.
+There is always a risk of users having insecure passwords, which can be reduced by enforcing and teaching good password policies.
 \linej
 Detecting logins in unusual hours can be hard just with OSSEC rules, but it can be solved with a remote script.
 \linej
 \linej
-Again the advantage of using an HIDS is we do not need to monitor every mean of authentication, just 3 events are enough. Combined with the already existing rules and possibilities of remote scripts, Wazuh probes to be a useful tool for management of login events. Other checks could be easily implemented, for example logins from certain ip ranges can be monitored with regular expressions for the ip field (\textit{win.eventdata.ipAddress}).
+Again the advantage of using an HIDS is we do not need to monitor every mean of authentication, just 3 events are enough. Combined with the already existing rules and possibilities of remote scripts, Wazuh probes to be a useful tool for management of login events. Other checks could be easily implemented, for example logins from certain IP ranges can be monitored with regular expressions for the IP field (\textit{win.eventdata.ipAddress}).

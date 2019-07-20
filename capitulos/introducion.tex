@@ -45,7 +45,7 @@ Attackers have grown used to NIDSs and have found ways to evade them, like\cite{
 \begin{enumerate}
 	\item Avoid using known patterns in their connections.
 	\item Use encrypted connections.
-	\item Send the data in pieces accross the network. This does not work against NIDSs that can reassemble them, at a greater computing cost. %session splicing and framentation attacks
+	\item Send the data in pieces across the network. This does not work against NIDSs that can reassemble them, at a greater computing cost. %session splicing and framentation attacks
 	\item Denial of Service attacks: too much traffic overloads the NIDS, blinding it.
 \end{enumerate}
 \linej
@@ -79,8 +79,8 @@ There are two types of IDS, based on the detection mechanism:
 	\item Signature based: The IDS looks for specific data (signature), for example a string. This is often an efficient solution to known attacks, but is fundamentally useless against unknown attacks (attacks without a signature in the IDS database).
 	\item Behaviour analysis: After a training period the IDS can detect when an event is rare (by probability) and correlate these suspicious occurrences to an intrusion.
 \end{itemize}
-In our case we take interest in the signature approach because it is much more used and behavior analysis is more fit for networks than for hosts.
-Abnormal or suspicious behavior is called \textit{noise} in cybersecurity jargon.
+In our case we take interest in the signature approach because it is much more used and behaviour analysis is more fit for networks than for hosts.
+Abnormal or suspicious behaviour is called \textit{noise} in cybersecurity jargon.
 
 \linej
 \linej
@@ -94,10 +94,10 @@ OSSEC is an HIDS solution with detection based on rules and decoders. Both rules
 \begin{itemize}
 	\item \textbf{Widely Used}: OSSEC is a growing project, used by many different entities (ISPs, universities, governments, large corporate data centers) as their main HIDS solution. In addition to being deployed as an HIDS, it is commonly used strictly as a log analysis tool, monitoring and analyzing firewalls, IDSs, web servers and authentication logs.
 	\item \textbf{Scalable}: Because it is an HIDS and it uses \textbf{agents}. Each monitored host can either install the agent or use an agentless agent\cite{agentless}\cite{ossec_agent}. Agentless agents are processes initiated from the OSSEC manager, which gather information from remote systems, and use any RPC method (e.g. SSH, SNMP, RDP, WMI).
-	\item \textbf{Multi-platform}: GNU/Linux, Windows, Mac OS and Solaris. This is important because most professional services are on GNU/Linux or Windows, but it is important to note that rules can only work in one operating system.
+	\item \textbf{Multi-platform}: GNU/Linux, Windows, Mac OS and Solaris. This is important because most professional services are on GNU/Linux or Windows, but it is important to note that some rules can only work for certain versions of operating systems.
 	\item \textbf{Free}: OSSEC is a free software and will remain so in the future; you can redistribute it and/or modify it under the terms of the GNU General Public License (version 2) as published by the FSF -- Free Software Foundation.
 	\item \textbf{Open source}: The code is open, so you can read, contribute and debug it all you want.
-	\item \textbf{Rootkits detection}: This type of malware usually replaces or changes existing operating system components in order to alter the behavior of the system. Rootkits can hide other processes, files or network connections like itself.
+	\item \textbf{Rootkits detection}: This type of malware usually replaces or changes existing operating system components in order to alter the behaviour of the system. Rootkits can hide other processes, files or network connections like itself.
 	\item \textbf{File integrity monitoring}: To detect access or changes to sensitive data.
 \end{itemize}
 \linej
@@ -129,7 +129,7 @@ Also OSSEC offers a reliable way to use an already developed and thoroughly test
 To even ease more this we will use Wazuh, a fork of OSSEC.
 
 \section{Objectives}
-Quality is valued more than quantity in this project. Therefore anything will be reworked or discarded if it does not fully satisfy the student, Tarlogic or the professor.
+Quality is valued more than quantity in this project. Therefore anything will be reworked or discarded if it does not fully satisfy the student or the directors.
 \linej
 \linej
 The main objective is to improve intrusion detection in IDS. This can be accomplished in several ways:
@@ -143,15 +143,21 @@ In this project the focus is on the configuration, particularly of rules to dete
 It is important to explain the attacks and their detection clearly, in order to make this work useful for anyone else and ease any changes.
 
 \section{Structure of this document}
-%TODO Structure of this document
-This document has TODO chapters:
+This document has 7 chapters:
 \begin{itemize}
-	\item In \textbf{chapter 1} 
-	\item In \textbf{chapter 2} 
-	\item In \textbf{chapter 3} 
-	\item In \textbf{chapter 4} 
-	\item In \textbf{chapter 5} 
-	\item In \textbf{chapter 6} 
-	\item In \textbf{chapter 7} 
+	\item In \textbf{chapter 1} the project is introduced, explaining its motivation and objectives. Some key concepts are also explained in this chapter.
+	\item \textbf{Chapter 2} explains the requirements and limitations of the project.
+	\item In \textbf{chapter 3} there is a detailed explanation of the technologies and tools used in the project, expanding on the concepts from the first chapter.
+	\item In \textbf{chapter 4} there is the management of the project, including: scope, risk, configuration, cost and time management.
+	\item In \textbf{chapter 5} the process of the increments 1 and 2 is detailed. This chapter satisfies multiple essential requirements.
+	\item In \textbf{chapter 6} the process of the increment 3 is detailed. This chapter satisfies multiple essential requirements.
+	\item \textbf{Chapter 7} describes the conclusions of the project and different ways to continue its work.
 \end{itemize}
-
+\linej
+As additions there are several appendixes:
+\begin{itemize}
+	\item \textbf{User manual}: Used to explain the details that are only needed for those who want to use the system.
+	\item \textbf{Programming and configuration code}: In order to explain the details of certain key parts of the project that are deeply related to configuration or scripts.
+\end{itemize}
+\linej
+The glossary and the bibliography are considered essential parts of this document, therefore they are also included next to the other appendixes.

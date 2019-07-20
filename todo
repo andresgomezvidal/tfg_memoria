@@ -1,16 +1,3 @@
-EN APARTADO DE GESTION DEL PROYECTO
-	If it were to be convenient to modify the detection system itself it would be considered, depending on the importance, the progress and the remaining time of the project.
-	\linej
-	\linej
-	The rest of the objectives can be met with each of the increments, that may or may not be done in this project (depending on the progress).
-	Because this project does not have a set of must have objectives they were planned in a modular fashion. Still some of them were marked as essential and if they were not to be met it would mean the failure of the project. More on its section on page \pageref{increments}.
-
-	\linej
-	\linej
-	In this project the requirements will be fulfilled in multiple stages along the project, with increments.
-
-
-
 EN MANUAL DE USUARIO
 	explicar lo que tiene que tener el sistema para poder ejecutar todo eso
 	no hace falta explicar el porqué de nada
@@ -39,13 +26,4 @@ EN MANUAL DE USUARIO
 		https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/enable-controlled-folders-exploit-guard
 			Set-MpPreference -EnableControlledFolderAccess Enabled
 
-
-poner IP en mayus
-quitar comillas
-cursiva solo cuando haga falta
-revisar comentarios y correcciones de la memoria
-varios TODOs en comentarios y texto
-costes
-pasar aspell
-releer
 dejar manual para el final

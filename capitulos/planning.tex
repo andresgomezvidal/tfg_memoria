@@ -3,7 +3,7 @@
 
 
 \subsection{Methodology}
-The methodology of the project sets how the project will be developed over time, defining its lifecycle.
+The methodology of the project sets how the project will be developed over time, defining its life cycle.
 Every methodology has its pros and cons, and a wrong choice or execution can lead to delays and additional costs.
 \linej
 This project is not about software development, therefore the choice for a development methodology should not affect it as much.
@@ -13,28 +13,28 @@ But because these methodologies are not only about writing code, they also inclu
 First it was decided to use a traditional methodology instead of agile because:
 \begin{itemize}
 	\item The documentation is essential for this project.
-	\item It would not benefict much from agile development because there is almost no code.
+	\item It would not benefit much from agile development because there is almost no code.
 	\item The project is low risk.
 	\item The requirements were unlikely to evolve at the beginning of the project.
 	\item There was no need for anyone but the student to know the exact status of the project at any time. E-mails, direct messages, meetings and checking the Git repository could still be used, but there was no need to have a periodic report.
 \end{itemize}
 \linej
 The second choice was to choose a model among Waterfall, Spiral and Iterative and Incremental.
-Probably any of them would have been fine, but Iterative and Incremental was choosen because its simplicty (like Waterfall and unlike Spiral) and because it provided more freedom to make changes than Waterfall.
+Probably any of them would have been fine, but Iterative and Incremental was chosen because its simplicity (like Waterfall and unlike Spiral) and because it provided more freedom to make changes than Waterfall.
 \linej
 \linej
-This lifecycle allows the student to focus on the objectives of the project with minimal overhead.
+This life cycle allows the student to focus on the objectives of the project with minimal overhead.
 It is based on the idea of having a Waterfall model for each increment (with as shared phases as possible).
 The Waterfall model is a linear sequential flow of phases planned from the start, where each phase starts as soon as the previous ends: requirements, design, execution, testing and release.
 \linej
 \linej
-First the project needs an analysis of the requirements, which usually would be followed by the design phase, but in this case there is no point in designing software as simple as this (explained on \ref{design_no_need}).
+First the project needs an analysis of the requirements, which usually would be followed by the design phase, but in this case there is no point in designing software as simple as this.
 This analysis is shared for all the increments and each increment satisfies certain requirements.
 \linej
-The other change from usual with this lifecycle is that the codification is much shorter, while the previous study is much longer.
+In the implementation of this life cycle the codification is much shorter and the preliminary study is much longer than usual.
 \linej
 \linej
-The Incremental model also fits nicely with the idea of researching different interconnected cases as it happens in this project and a possible changes to the scope.
+The Incremental model also fits nicely with the idea of researching different interconnected cases as it happens in this project and possible changes to the scope.
 The draft and the WBS were done with increments in mind, and from the start it was decided to have more increments than it was probably possible to do in the project hours, just in case the estimation from the student was too lenient.
 Therefore the project seeks for the realization of as much increments as possible, always including the essential increments.
 
@@ -123,54 +123,33 @@ This WBS was made before the start at the project, for the draft proposal and do
 		\item \textbf{Requirement management}: Analysis, requirement specification and probably a traceability matrix.
 		\item \textbf{Risk management}: Identification, analysis, classification, planning and supervision of risks.
 		\item \textbf{Time management}: Planning (initial and real), any planning changes and necessary measures.
-		\item \textbf{Configuration management}: Documentation on the management of changes and control version.
+		\item \textbf{Configuration management}: Documentation on the management of changes and version control.
 		\item \textbf{Cost management}: Cost estimation (direct and indirect) of software, hardware and resources.
 	\end{enumerate}
 
 	\item \textbf{Beginning of the project}
 	\begin{enumerate}[label=\alph*]
-		\item \textbf{Study of Wazuh documentation and related tools and technologies}: Is the base for multiple aspects of the project and if it is done correctly it can mean less hours in related work.
+		\item \textbf{Study of Wazuh documentation and related tools and technologies}: It is the base for multiple aspects of the project and if it is done correctly it can mean less hours in related work.
 		\item \textbf{Setup of the work environment}: Installation and basic configuration of the virtual machines of the project, like having a functional Wazuh environment.
 	\end{enumerate}
 
-	\item \textbf{Increment 1}
-	\begin{enumerate}[label=\alph*]
-		\item \textbf{Rules and decoders}: The objective is to be able to detect common attacks in Windows Server (specifically 2016 and 2019), but it should be backwards compatible and depending on the difficulty it could be worth to ensure support for Windows 10 Pro too. This rules are the final product of this increment, which probably will need more time than any other increment, because its heavy study and testing.
-	\end{enumerate}
+	\item \textbf{Increment 1}, \textbf{Rules and decoders}: The objective is to be able to detect common attacks in Windows Server (specifically 2016 and 2019), but it should be backwards compatible and depending on the difficulty it could be worth to ensure support for Windows 10 Pro too. This rules are the final product of this increment, which probably will need more time than any other increment, because of its heavy study and testing.
 
-	\item \textbf{Increment 2}
-	\begin{enumerate}[label=\alph*]
-		\item \textbf{Rules and decoders}: It will need a preliminary study of Sysmon and the ways to use its data to improve detection in certain situations. It is possible that this increment will modify rules and decoders of the previous one.
-	\end{enumerate}
+	\item \textbf{Increment 2}, \textbf{Rules and decoders}: It will need a preliminary study of Sysmon and the ways to use its data to improve detection in certain situations. It is possible that this increment will modify rules and decoders of the previous one.
 
-	\item \textbf{Increment 3}
-	\begin{enumerate}[label=\alph*]
-		\item \textbf{Rules and decoders}: This increment tries to produce rules and decoders to detect ransomware and launch alerts and maybe actions against the attack, like rollback to a previous backup or try to stop the attack from repeating in a short period of time.
-	\end{enumerate}
+	\item \textbf{Increment 3}, \textbf{Rules and decoders}: This increment tries to produce rules and decoders to detect ransomware and launch alerts and maybe actions against the attack, like rollback to a previous backup or try to stop the attack from repeating in a short period of time.
 
-	\item \textbf{Increment 4}
-	\begin{enumerate}[label=\alph*]
-		\item \textbf{Configuration changes}: Adapt Wazuh to the typical requirements from enterprises. This means that an enterprise could choose from a set of templates, with different security profiles.
-	\end{enumerate}
+	\item \textbf{Increment 4}, \textbf{Configuration changes}: Adapt Wazuh to the typical requirements from enterprises. This means that an enterprise could choose from a set of templates, with different security profiles.
 
-	\item \textbf{Increment 5}
-	\begin{enumerate}[label=\alph*]
-		\item \textbf{Rules and decoders}: Most should be focused on detecting changes on the protected files. Part of this increment should be the investigation on normal problems of these technologies and recent innovations and solutions.
-	\end{enumerate}
+	\item \textbf{Increment 5}, \textbf{Rules and decoders}: It should be focused mostly on detecting changes on the protected files. Part of this increment should be the investigation on usual problems of these technologies and recent innovations and solutions.
 
-	\item \textbf{Increment 6}
-	\begin{enumerate}[label=\alph*]
-		\item \textbf{Rules and decoders}: There would be preliminary study to do, but the increment should be about expanding the already done work in the field, probably focusing in services and security technologies like SELinux or AppArmor.
-	\end{enumerate}
+	\item \textbf{Increment 6}, \textbf{Rules and decoders}: There would be preliminary study to do, but the increment should be about expanding the already done work in the field, probably focusing in services and security technologies like SELinux or AppArmor.
 
-	\item \textbf{Increment 7}
-	\begin{enumerate}[label=\alph*]
-		\item \textbf{Improved integration with antivirus and website scanners}: The idea is to improve the detection as much as possible with the help of VirusTotal malware scanners, which is updated consistently and so it would mean a consistently updated detection for a system with Wazuh without the need to write new rules and decoders. Obviously there is a difference in the scope and objectives of these technologies, which can be redundant, but this could be certainly interesting in some cases.
-	\end{enumerate}
+	\item \textbf{Increment 7}, \textbf{Improved integration with antivirus and website scanners}: The idea is to improve the detection as much as possible with the help of VirusTotal malware scanners, which is updated consistently and so it would mean a consistently updated detection for a system with Wazuh without the need to write new rules and decoders. Obviously there is a difference in the scope and objectives of these technologies, which can be redundant, but this could be certainly interesting in some cases.
 
 	\item \textbf{Closing of the project}
 	\begin{enumerate}[label=\alph*]
-		\item \textbf{Pull request to the official ruleset repository}: There is a fundamental need to investigate the correct way to organize the the forked repository for a pull request to an official repository like this. In any case the status of the fork should be checked before and there should be a high amount of commits and use a different branch for each functionality, allowing an easier way to select what to admit or not in the official repository.
+		\item \textbf{Pull request to the official ruleset repository}: There is a fundamental need to investigate the correct way to organize the forked repository for a pull request to an official repository like this. In any case the status of the fork should be checked before and there should be a high amount of commits and use a different branch for each functionality, allowing an easier way to select what to admit or not in the official repository.
 		\item \textbf{Project documentation}: The memory and presentation of the project and whatever other documentation if necessary.
 	\end{enumerate}
 \end{enumerate}
@@ -184,18 +163,8 @@ This WBS was made before the start at the project, for the draft proposal and do
 \subsection{Initial planning}
 
 
-%TODO?
-%holidays in gantt
-%marked in the calendar or adding more days manually
-	%https://tex.stackexchange.com/questions/106419/how-to-colour-the-pgfgantt-canvas-based-on-calendar-dates
-	%https://tex.stackexchange.com/questions/163482/pgfgantt-customization-of-canvas-to-mark-vacations/163521
 
 
-
-
-%Study of attack implies writing tests (attacks)
-
-%TODO: at least set dates for increments
 
 
 
@@ -236,12 +205,12 @@ This WBS was made before the start at the project, for the draft proposal and do
 \newcommand{\Cnormal}{yellow!80}
 
 
-The tasks marked in \colorbox{\Cimportant}{red} are essential to the project, meanwhile the ones marked in \colorbox{\Coptional}{cyan} are considered optional and only will be done if there is enough time left. The tasks marked in \colorbox{\Cnormal}{yellow} are normal, and they are used when there is no need to distinguish between essential and optional.
+The tasks marked in \colorbox{\Cimportant}{red} are essential to the project, meanwhile the ones marked in \colorbox{\Coptional}{cyan} are considered optional and only will be done if there is enough time left. The tasks marked in \colorbox{\Cnormal}{yellow} are used when there is no need to distinguish between essential and optional.
 \linej
 \linej
 The next Gantt diagram shows the initial planning, from the draft proposal (31/10/2018) to the end of the project (20/02/2019).
 \linej
-Furthermore the last two weeks are marked with a grey overlay to mark that there are only about 17 weeks before the original due date of this project (in February). This difference is because the estimation of the tasks was made by the student and so it is not reliable, which means that it could be optimistic or pessimist. Thus the need to either reduce tasks or have more that there were expected to fit.
+Furthermore the last two weeks are marked with a grey overlay to mark that there are only about 17 weeks before the original due date of this project (in February). This difference is because the estimation of the tasks was made by the student and so it is not reliable, which means that it could be optimistic or pessimist. Thus the need to either reduce tasks or have more than there were expected to fit.
 
 
 \begin{figure}[H]
@@ -297,8 +266,7 @@ The rest of the Gantt diagrams are organized in days, for a more detailed planni
 \linej
 It is important to note that these plannings could change during the project, either because controlled measures or any unexpected reason.
 \linej
-The order they are implemented could change too and that is the reason because these diagrams have not a set date for start and end, yet.
-\linej
+The order they are implemented could change too and that is the reason because these diagrams have not a set date for start and end.
 \linej
 In other words, they could be described as the models for the final Gantt diagrams.
 
@@ -781,10 +749,90 @@ In other words, they could be described as the models for the final Gantt diagra
 
 
 \subsection{Real development}
+This part is constituted from the risk supervision and Gantt diagrams.
+They describe the reasons behind the deviation from the original planning and how the project was really implemented.
+
+\subsubsection{Risk supervision}
+%Risk supervision is the process of tracking every risk and applying measures if they come to be.
+Risk supervision describes the risks triggered during the duration of the project and how they were dealt with, ordered by their start date.
+The \textit{New} probability, impact, exposition or measures are omitted if they are the same as their previous values.
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-19} \\ \hline
+		Name & \Rdiecinueve \\ \hline
+		Date of the beginning of the problem & 05/12/2018 \\ \hline
+		Date of the solution of the problem & 10/02/2019 \\ \hline
+		Actions & After a delay of 2 weeks it was clear that the student could not meet the original planning, or at least without rushing and suffering significant quality loss. \linej
+			The project was put on hold and the student notified the tutors, who agreed to the next deadline. \linej
+			The student kept working on the project (researching) from time to time. \\ \hline
+		New probability & Low (before was Medium) \\ \hline
+		New exposition & Medium (before was High) \\ \hline
+		New correction: Transference &
+			Another person took charge of the problem until it disappeared, freeing the student.
+		\\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-10} \\ \hline
+		Name & \Rdiez \\ \hline
+		Date of the beginning of the problem & 26/02/2019 \\ \hline
+		Date of the solution of the problem & 26/02/2019 \\ \hline
+		Actions & A general power failure in Santiago caused a sudden shutdown of the computer the student was working on. \linej
+		Fortunately the only work lost was upgrading the software on the virtual machine hosting the Wazuh server, which was reproduced by restoring the last snapshot and repeating the process.\\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-09} \\ \hline
+		Name & \Rnueve \\ \hline
+		Date of the beginning of the problem & 01/03/2019 \\ \hline
+		Date of the solution of the problem & 01/03/2019 \\ \hline
+		Actions & The Kibana plugin and Wazuh had a mismatch for their versions, resulting in the plugin not working. \linej
+		The plugin and Wazuh were upgraded to their latest versions. \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-19} \\ \hline
+		Name & \Rdiecinueve \\ \hline
+		Date of the beginning of the problem & 05/05/2019 \\ \hline
+		Date of the solution of the problem & 19/05/2019 \\ \hline
+		Actions & The project was put on hold for 2 weeks while the student was taking care of a family member. \\ \hline
+	\end{tabularx}
+\end{table}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|l|X|}
+		\hline
+		\rowcolor{gray!30}
+		Identifier & \textbf{R-04} \\ \hline
+		Name & \Rcuatro \\ \hline
+		Date of the beginning of the problem & 30/05/2019 \\ \hline
+		Date of the solution of the problem & 03/06/2019 \\ \hline
+		Actions & The members of Tarlogic involved with the project were asked about very precise details on dumping the memory of the process \textit{lsass.exe}. \\ \hline
+	\end{tabularx}
+\end{table}
+
+\subsubsection{Gantt diagrams}
 Due to changes on the scope and a 3 month delay due to personal matters of the student there is a big difference with the initial planning.
+This caused the project to be finished in July instead of February as it was initially planned.
+\linej
+At first the rules and decoders developed in the project were supposed to be updated in a pull request to the repository of the Wazuh ruleset at the end of the project.
+But when the end of the project was near it was clear that this did not make sense any more due to these rules being too few and for very specific detections.
 \linej
 \linej
-Increment 2 was mixed into increment 1, due to reasons stated later\ref{increment_explanation} these increments that were planned to be implemented individually were actually done together.
+Increment 2 was mixed into increment 1.
+%Due to reasons stated later\ref{increment_explanation} these increments that were planned to be implemented individually were actually done together.
+These increments that were planned to be implemented individually were actually done together because the second is easier than expected and the first can not be done without the second (more on \ref{increment_explanation}).
 Therefore from now on this document refers to them as a couple of increments to avoid more confusion, but they could also be seen as one.
 
 \newcommand{\PStart}{2018-11-01}
@@ -970,7 +1018,7 @@ Increments 1 and 2 were worked on for most of the project, mainly due to inexper
 The next Gantt shows the work done on them after the project was on hold for 3 months, because before it only research was done.
 After 3 months most of the research was redone to ensure nothing was forgotten.
 \linej
-The tasks initially planned for increment 2 was so small and integrated into already existing tasks for increment 1 that it made no sense to added them to this Gantt.
+The tasks initially planned for increment 2 were so small and integrated into already existing tasks for increment 1 that it made no sense to add them to this Gantt.
 \linej
 \begin{sidewaysfigure}
 	%\advance\leftskip-2cm

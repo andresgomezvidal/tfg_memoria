@@ -1,5 +1,5 @@
 \section{Technologies and tools in detail}
-This section recopilates the main software used in the project for an easier overview.
+This section groups and explains the main software used in the project for an easier overview.
 
 \subsection{For development and configuration}
 \begin{itemize}
@@ -11,7 +11,7 @@ This section recopilates the main software used in the project for an easier ove
 \subsection{For pentesting}
 \begin{itemize}
 	\item PowerShell scripts: Third-party tools written in PowerShell were used to mimic attacks.
-	\item PowerShell and Windows builtins: Some harmless PowerShell commands were used in combination with Windows builtins in order to extract useful data for an attacker.
+	\item PowerShell and Windows built-ins: Some harmless PowerShell commands were used in combination with Windows built-ins in order to extract useful data for an attacker.
 	\item Linux shell programs in GNU/Linux: They were used in order to fully understand how some of the security was implemented in the Windows systems. For example their network share was first tested with the Samba command \textit{smbclient}.
 	\item Metasploit: It was used as framework\cite{metasploit} for getting information and to exploit security vulnerabilities, mimicking an attacker.
 	\item Mimikatz: Mimikatz\cite{mimikatz_github} was one of the most used tools for extracting data and gaining privileges.
@@ -31,11 +31,11 @@ This section recopilates the main software used in the project for an easier ove
 \subsection{For the documentation}
 \begin{itemize}
 	\item Git: It was used to store the memory and manage its changes, through a Github repository\cite{memoria_github}.
-	\item Vim + \LaTeX + Latexmk: Vim was used as the text editor to write all the documentation and most of the ruleset and scripts. This was easier for me than using other editors because I have a fair amount of customization for Vim, in my general purpose dotfiles\cite{andresgomezvidal_gitlab}. \LaTeX was the medium the memory was writen in (including the WBS and Gantt diagrams), with Latexmk for its compilation.
+	\item Vim + \LaTeX + Latexmk: Vim was used as the text editor to write all the documentation and most of the ruleset and scripts. This was easier for me than using other editors because I have a fair amount of customization for Vim, in my general purpose dotfiles\cite{andresgomezvidal_gitlab}. \LaTeX was the medium the memory was written in (including the WBS and Gantt diagrams), with Latexmk for its compilation.
 	\item Draw.io: A web application for general purpose drawing\cite{drawio}. It was used for making diagrams in this project.
 	\item Simplescreenrecorder: It is a GNU/Linux program. It was used to record videos during critical tasks using the virtual machines. These serve just as a way to assure the student these tasks were done exactly as he remembers them, or how to reproduce them.
 	They did not take much disk space (about $\sim$110MB per hour) while still having decent image quality. The recording settings were 15 frames per second and h264 codec with a constant rate factor of 32.
 	\item Linux shell programs: Some simple commands to make sure no minor elements are forgotten. For example that all references and images are used, and that any relevant acronyms are explained in the glossary.
-	\item Aspell: It is a spell checker\cite{aspell}, this is a program for reviewing that words are writen correctly in the specified language. This program has a mode for \LaTeX that ignores its commands without the need of a special dictionary.
+	\item Aspell: It is a spell checker\cite{aspell}, this is a program for reviewing that words are written correctly in the specified language. This program has a mode for \LaTeX that ignores its commands without the need of a special dictionary.
 \end{itemize}
 

@@ -1,10 +1,7 @@
 \chapter{Glossary}
-%TODO añadir terminos importantes o abstractos (no solamente siglas)
-	%payload
-	%signature
 %dar por hecho cosas como AES, TLS, PMBOK, PMI ?
 %quitar del texto normal las explicaciones ?
-	%done="$(awk -F '{' '/\\textbf\{/ {print $2}' glossary.tex  |cut -d '}' -f1 |tr '\n' '|')"; \grep -E '\b[[:upper:]][[:upper:]]+\b'  *.tex |cut -d ':' -f2  | \grep -v '^[[:space:]]*%' |\grep -Eo '\b[[:upper:]][[:upper:]]+\b' | sort -u |grep -vE "UNIVERSITY|SANTIAGO|COMPOSTELA|ESCOLA|TÉCNICA|SUPERIOR|DE|ENXEÑARÍA|TODO|LARGE|STATE|JSON|XML|FAQ|UDP|TCP|IP|ARD|CA|CRD|GNU|GPL|OF|PA|RD|SL|TF|SEC|WBS|KERB|REQUEST|CPU|DIT|HOST|NTDS|OR|PS|RAM|RNF|RNO|RYES|SYSTEM|UNKNOWN|WIN|WMIC|${done:0:-1}"
+	%done="$(awk -F '{' '/\\textbf\{/ {print $2}' glossary.tex  |cut -d '}' -f1 |tr '\n' '|')"; \grep -E '\b[[:upper:]][[:upper:]]+\b'  *.tex |cut -d ':' -f2  | \grep -v '^[[:space:]]*%' |\grep -Eo '\b[[:upper:]][[:upper:]]+\b' | sort -u |grep -vE "UNIVERSITY|SANTIAGO|COMPOSTELA|ESCOLA|TÉCNICA|SUPERIOR|DE|ENXEÑARÍA|TODO|LARGE|STATE|JSON|XML|FAQ|UDP|TCP|IP|ARD|CA|CRD|GNU|GPL|OF|PA|RD|SL|TF|SEC|WBS|KERB|REQUEST|CPU|DIT|HOST|NTDS|OR|PS|RAM|RNF|RNO|RYES|SYSTEM|UNKNOWN|WIN|WMIC|AND|CD|HKEY|HKLM|ID|MS|RR|SQL|TD|${done:0:-1}"
 
 
 \textbf{AD}: Active Directory. The directory domain of Windows systems, though it can be also used by GNU/Linux with Samba.
@@ -88,7 +85,7 @@
 \textbf{Mimikatz}: Program to extract authentication data or generate forged authentication tickets. In this project we use it for extracting the KRBTGT hash and generating Golden Tickets.
 \linej
 \linej
-\textbf{NTFS}: New Technology File System. Main filesystem of Microsoft systems.
+\textbf{NTFS}: New Technology File System. Main file system of Microsoft systems.
 \linej
 \linej
 \textbf{LSA}: Short for \textbf{L}ocal \textbf{S}ecurity \textbf{A}uthority Subsystem Service (LSASS). Process in Microsoft Windows operating systems that is responsible for enforcing the security policy on the system. It verifies users logging on to a Windows computer or server, handles password changes, and creates access tokens.

@@ -21,7 +21,7 @@ if alert_id == '333019':
 elif alert_id == '62103' or alert_id == '62104':
     directory="unknown"
     pid="0"
-    exe=alert_json['description'].split("unwanted software ")[1].split("\"")[0].replace("\\","/")
+    exe=alert_json['rule']['description'].split("unwanted software ")[1].split("\"")[0].replace("\\","/")
     options=1
 else:
     exit(1)

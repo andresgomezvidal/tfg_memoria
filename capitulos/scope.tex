@@ -1,101 +1,113 @@
 \section{Scope management}
 The management of the scope of the project has the necessary processes to guarantee that the objectives are met.
-The scope management allows the project to start focused in what really matters, not losing time in irrelevant details or desirable additions that we can not implementent, by identifying and describing the necessary tasks.
+The scope management allows the project to start focused in what really matters, not losing time in irrelevant details or desirable additions that can not be implemented, by identifying and describing the necessary tasks.
 
 \subsection{Description of the scope}
-This project tries to improve the detection of intrusions with the already existing HIDS Wazuh. This kind of objective can be accomplished by very different approaches. This is because the software can be used in many scenarios, is very related to other software and is in active development.
+This project tries to improve the detection of intrusions with the already existing HIDS Wazuh. This kind of objective can be accomplished by very different approaches. This is because the software can be used in many scenarios, it is very related to other software and it is in active development.
 \linej
-Even though some increments can be considered difficult due to the amount of new technologies and tools there should be no problem to meet the basic objectives.
+Even though some tasks can be considered difficult due to the amount of new technologies and tools there should be no problem to meet the basic objectives.
 This is because we have the \textbf{freedom to adapt the scope at any time} and there is more than enough time for the essential parts of the project.
 \linej
 \linej
-From before the start of the project the interest was not on producing something specifically, but in what we could produce after having some research. This uncertainty has been reduced with planning and research for the pre-project documentation, but is still something to take in mind in the management of the project.
-\linej
-In practice it means that we do not expect all the planning to work and are ready to make adjustements at any time.
+From before the start of the project the was some freedom on how to handle the requirements, as long as the essential ones were fulfilled. This uncertainty has been reduced with planning and research for the pre-project documentation, but is still something to take in mind in the management of the project.
+%\linej
+%Increasing the detail on one requirement because it is interesting results in less time for the rest, resulting in adjustements in the planning.
 
 \subsection{Acceptation criteria}
-In order to the product to be accepted the essential requeriments need to have been accomplished before the time limit of the project.
+In order for the product to be accepted the essential requirements need to have been accomplished before the time limit of the project.
 The rest of the requirements will be implemented if there is enough time left.
+\linej
+In this project the requirements will be fulfilled in multiple stages along the project, with increments.
+Using increments fits the project because the software developed is very simple and it allows a modular management of the requirements.
 
 \subsection{Increments} \label{increments}
 The essential increments to the project are:
 \begin{itemize}
 	\item Increment 1: \IncrementoUno.
-	\item Increment 2: \IncrementoDos \ that are not builtin in a standard system installation, like Sysmon. By itself having more data does not mean more attack detection, but certain attacks could not be identified without them.
+	\item Increment 2: \IncrementoDos \ that are not built-in in a standard system installation, like Sysmon. By itself having more data does not mean more attack detection, but certain attacks could not be identified without them.
 	\item Increment 3: \IncrementoTres.
 \end{itemize}
 \linej
-These were chosen because they seem the most straightforward and Wazuh needs tangible security measures against common threats. From the assumed viewpoint these seems to be were Wazuh lacks the most right now.
+These were chosen because they seem the most straightforward and Wazuh needs tangible security measures against common threats, which seems to be were Wazuh lacks the most right now.
 \linej
 \linej
-The rest of the increments are considered optional and can be removed if there is not enough time left. The order is based on the estimation of the relevance of the increment for Wazuh and our project. This means for example having in mind the time estimation for the increment without stretching.
+The rest of the increments are considered optional and can be removed if there is not enough time left. The order is based on the estimation of the relevance of the increment for Wazuh and our project.
+%This means for example having in mind the time estimation for the increment without stretching.
 \begin{itemize}
-	\item Increment 4: \IncrementoCuatro. This is considered a very important increment because it could be a selling point for some enterprises, that probably do not want the same level of security for all their computers and the time to set it up (or at least from scratch). There is a chance that something like this already exists and can be used instead of manually writing configuration profiles and scripts. For example Wazuh supports integration with OpenScap, an open source security compliance to manage configuration and tools. In any case the investigation at the start of the increment should find it.
-	\item Increment 5: \IncrementoCinco. Tarlogic stated that they would like to have this increment specifically.
-	\item Increment 6: \IncrementoSeis. This could have more or less the same impact as increment 1 for some clients, but Tarlogic was more interested in Windows and Wazuh seems to be more oriented towards GNU/Linux.
-	\item Increment 7: \IncrementoSiete. The problem of this increment is that VirusTotal's public API key has more limited features and has a 4 requests/minute limitation\cite{virustotal_faq}. We asume the use of a public API key because it would fit the profile of a client using Wazuh, which has no charge. Also the exploration on this increment could not really be considered more than a patch to Wazuh, without really improving it, but still it would be an effective workaround for the problems we can not solve right now with only Wazuh.
+	\item Increment 4: \IncrementoCuatro. This is considered a very important increment because it could be a selling point for some enterprises, that probably do not want the same level of security for all their computers and the time to set it up (or at least from scratch). There is a chance that something like this already exists and can be used instead of manually writing configuration profiles and scripts. For example Wazuh supports integration with OpenScap, an open source security compliance to manage configuration and tools.
+		%In any case the investigation at the start of the increment should find it.
+	\item Increment 5: \IncrementoCinco. Tarlogic stated that it would be nice to have it.
+	\item Increment 6: \IncrementoSeis. This could have more or less the same impact as increment 1 for some clients, but Tarlogic was more interested in Windows and Wazuh seems to be more oriented towards GNU/Linux, therefore needing it less.
+	\item Increment 7: \IncrementoSiete. The problem with this increment is that VirusTotal's public API key has more limited features and has a 4 requests/minute limitation\cite{virustotal_faq}. We assume the use of a public API key because it would fit the profile of a client using Wazuh, which has no charge. Also the exploration on this increment could not really be considered more than a patch to Wazuh, without really improving it, but still it would be an effective workaround for the problems we can not solve right now with only Wazuh.
 \end{itemize}
 
 \subsection{Products of the project}
-At the end of the project the next elements will be delivered:
-%TODO Products of the project
+At the end of the project the next elements will be delivered to the client:
 \begin{itemize}
-	\item 
-	\item 
-	\item 
+	\item The memory of the project (this very document).
+	\item The code developed.
+	\item The user manual
 \end{itemize}
+\linej
+These products are included in the repository of the memory hosted on Github\cite{memoria_github}.
 
 \subsection{Exclusions} \label{exclusions} 	%necessary redundancy with introduction?
 As in any project of this kind we had to leave some ideas behind.
-For example an interesting way to to take advantage from IDS is to set up a honeypot (a false server just to be compromised) and learn from the intrusions suffered, improving the defenses (firewall, IPS and IDS) for the real servers.
+For example an interesting way to take advantage from IDS is to set up a honeypot (a false server just to be compromised) and learn from the intrusions suffered, improving the defenses (firewall, IPS and IDS) for the real servers.
 \linej
-There are some honeypot implementations that automate (for example with machine learning) the generation of rules for certain IDSs, but is not yet a trend because there are problems\cite{snort_learning}\cite{honeypot_weka_learning}\cite{honeypot_ossec_trees}\cite{snort_honeypot}:
+There are some honeypot implementations that automate (for example with machine learning) the generation of rules for certain IDSs, but it is not yet a trend because there are several problems\cite{snort_learning}\cite{honeypot_weka_learning}\cite{honeypot_ossec_trees}\cite{snort_honeypot}:
 \begin{itemize}
 	\item Experienced attackers have learned to avoid honeypots, because they are easy to identify due to the low security they have.
 	\item It is not trivial to automate correctly the defense based on the information of the system, because its state can be very complex (for example due to more than one attack at the same time).
 \end{itemize}
 \linej
-This automation would be a great solution to the need to update manually the rules and depending of the case it could even protect against day-zero vulnerabilities. Despite being interesting this was not even included as a possible increment because the complexity of the task.
-If this were to be included probably it would have not ended well, because is something that even experts in cybersecurity have some trouble with at the moment.
+This automation would be a great solution to the need to manually update the rules and depending of the case it could even protect against zero-day vulnerabilities. Despite being interesting this was not even included as a possible increment because of the complexity of the task.
+%If this were to be included probably it would have not ended well, because is something that even experts in cybersecurity have some trouble with at the moment.
 \linej
-There is also the option to use honeypots only to detect attackers with the existing rules, without looking for improving them. Normally they are easy to set up, for example clonning the virtual machine of a server and making it easier to access, removing critical data and monitoring some kind of bait for the attacker. They are not excluding from this project, but they are not explicity set to be in an increment; they will be used if they turn to be useful in some regard.
+There is also the option to use honeypots only to detect attackers with the existing rules, without looking for improving them. Normally they are easy to set up, for example cloning the virtual machine of a server and making it easier to access, removing critical data and monitoring some kind of bait for the attacker. They are not excluded from this project, but they are not explicitly set to be part of an increment; they will be used if they turn out to be useful in some regard.
 \linej
 \linej
-There is always a risk of intrusion disabling the security of the system.
-This is more or less the same problem that cybersecurity has in any scenario and there is no way to guarantee that it will not happen.
+There is always a risk of an intrusion disabling the security of the system and there is no way to guarantee that it will not happen.
+%This is more or less the same problem that cybersecurity has in any scenario
 In this case the attacker would have to somehow not be detected or cut the IDS before it sends the alert but in a way that is not suspicious (for example shutting it down completely would be obvious for a central manager).
-Researching a bit on these malicius techniques is not out of the question, as they are a common occurrence after attacks, but probably there will not be enough time.
-\linej
-Our approach is to trust the IDS and work on improving the detection of known attacks instead of the worst case scenario.
-If there was enough time we could have considered finding a solution for this problem.
-\linej
-\linej
-Exploring a HIDS with behaviour analysis was also considered but rejected because it is more fit for a network approach. Still is a shame there is no enough time to explore IDS based on behavior analysis, because their protection against much zero-day attacks.
+%Researching a bit on these malicious techniques is not out of the question, as they are a common occurrence after attacks, but probably there will not be enough time.
+Our approach is to trust the IDS and work on improving the detection of known attacks instead working in the worst case scenario.
+%If there was enough time we could have considered finding a solution for this problem.
 \linej
 \linej
-We focus on a host approach, leaving aside most of the detection capabilities for the network. This means less detection, a lower detection rate, less options to improve the detection process and later and worse performance in the analysis of network traffic. Having chosen to focus on HIDS the best way to have also a good NIDS process would be the use of a NIDS along with our HIDS.
+Exploring a HIDS with behaviour analysis was also considered but rejected because it is more fit for a network approach.
+Still it is a shame because of their protection against many zero-day attacks.
 \linej
-Wazuh offers this kind of integration with Bro and Suricata and probably it would be possible to extend it to other NIDSs like Snort, but yet again we had to choose and this was not a priority at the moment.
+\linej
+We focus on a host approach, leaving aside most of the detection capabilities for the network. This means less detection, a lower detection rate, less options to improve the detection process and worse performance in the analysis of network traffic. Having chosen to focus on HIDS the best way to have also a good NIDS process would be the use of a NIDS along with our HIDS.
+\linej
+Wazuh offers this kind of integration with Bro and Suricata and probably it would be possible to extend it to other NIDSs like Snort, but this was not a priority for the client.
 \linej
 \linej
 For Windows systems monitoring registry changes could be explored in the same way we study events in this project.
 Wazuh can detect changes in the registry as it does with other files: registering its hashes and checking for changes periodically.
 Windows has audit options for registry, which generate events that allow to monitor it with Wazuh.
 Sysmon also has events for the registry changes: creation, deletion, renaming and value modification.
-Because the lack of time and experience this idea was left behind for most of the project, leaving aside a minor part in the last increment done.
+Because of the lack of time and experience this idea was left behind for most of the project, leaving aside a minor part in the third increment.
 \linej
 \linej
-YARA is very interesting for this kind of project, but it belongs to the Virustotal pack of malware detection tools and so it could be used with Wazuh with a Virustotal API key. The free version only allows a few queries and the option of getting a premium key was not considered. There has been for months an open issue in the Github page of Wazuh for integrating it with YARA (as other IDSs have done before), which has recently evolved to an issue to integrate YARA into Wazuh as a module\cite{yara_module}.
-Unfortunately this was not done before the first increment of the project was completed, so there was no chance to use it in the end.
+YARA is very interesting for this kind of project, because it provides the ability to scan the memory for signatures.
+The problem for using it with Wazuh currently is that it belongs to the Virustotal pack of malware detection tools, so it could be used with Wazuh with a Virustotal API key, but the free version of the API key only allows a few queries (the option of getting a premium key was not considered).
+\linej
+There has been for months an open issue in the Github page of Wazuh for integrating it with YARA (as other IDSs have done before).
+This integration would allow unlimited use of YARA scans.
+The issue has recently evolved to an issue to integrate YARA into Wazuh as a module\cite{yara_module}.
+Unfortunately this was not done before the first increment of the project was completed, so there was no chance to use it in the project.
 \linej
 \linej
-Sigma\cite{sigma} is a project that mantains a Generic Signature Format for SIEM Systems. This means a set of files describing threats and relevant information about them, like signatures and false positives. An automated integration with Sigma would also be possible with a script to convert Sigma rules to OSSEC, which was not even considered because it falls out the scope. It could be been used in some parts of this project as a manual resource to find patterns to look for, but in the end was not necessary.
+Sigma\cite{sigma} is a project that maintains a Generic Signature Format for SIEM Systems. This means a set of files describing threats and relevant information about them, like signatures and false positives. An automated integration with Sigma would also be possible with a script to convert Sigma rules to OSSEC, which was not even considered because it falls out the scope. It could be been used in some parts of this project as a manual resource to find patterns to look for, but in the end was not necessary.
 \linej
 \linej
-Another idea that was left behind was to ensure the protection of the Wazuh agent itself in case of attack. This would cover the detection of processes attempting to stop or or modify the agent program or the data sent to the manager. This can also be applied to other actions like disabling logs and modifying settings or security policies. It is interesting for the project because it would be one of the first and most effective steps that a smart attacker would do to avoid being detected.
+Another idea that was left behind was to assure the protection of the Wazuh agent itself in case of attack. This would cover the detection of processes attempting to stop or modify the agent program or the data sent to the manager. This can also be applied to other actions like disabling logs and modifying settings or security policies. It is interesting for the project because it would be one of the first and most effective steps that a smart attacker would do to avoid being detected.
+This issue was raised in the initial meeting with Tarlogic but was not considered a priority, therefore it was not included in the requirements.
 
 \subsection{Restrictions}
-Leaving aside the time constraint of \projecthours \ hours, the two main factors to decide what improvements to choose for this project are a student without experience in proffesional cybersecurity and that we want some kind of inmediate results from this project.
+Leaving aside the time constraint of $\sim$400 hours, the two main factors to decide what improvements to choose for this project are a student without experience in professional cybersecurity and that we want some kind of immediate results from this project.
 This is why instead of a pure research project (for example machine learning with IDS), we opted for a more traditional and safer approach.
 Because of this most of the increments were optional (due to the high probability of initial scope being too ambitious), but the first increments are considered vital to the project.
 \linej

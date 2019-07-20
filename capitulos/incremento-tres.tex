@@ -1,5 +1,11 @@
 This increment is titled \textit{\IncrementoTres}.
-It includes an introduction to ransomware, study on simplified and real ransomware and measures against it.
+It includes an introduction to ransomware, an study on simplified and real ransomware and detection and measures against it.
+This chapter satisfies the next non-functional requirements: RNF-06 and RNF-09.
+\linej
+\linej
+In order to understand and detect the malware we try to put ourselves in the attacker place, in some cases using scripts and tools that can be considered harmful and illegal.
+This is only a way to accomplish the real objective that is the detection.
+This behaviour is kept to a minimum, it is only done in the machines of this laboratory and no kind of harm is intended outside of this project.
 \linej
 \linej
 In this increment we assume the malware has already breached into the system and our role is to detect and mitigate it, as soon as it begins to hold hostage the system or data.
@@ -62,15 +68,15 @@ A major antimalware company states a 90\% increase in detection for business and
 \end{itemize}
 \linej
 Often ransomware includes remote control software to allow the remote execution of commands.
-They often check if the server (certain ips or domains) can be reached before starting the process, waiting for a possible connection in the future if not.
-Because these domain addresses are always resolving to new host ips, the criminal enterprises can regularly move around the Internet in relative safety, as they will always know their malcode can speak to them.
+They often check if the server (certain IPs or domains) can be reached before starting the process, waiting for a possible connection in the future if not.
+Because these domain addresses are always resolving to new host IPs, the criminal enterprises can regularly move around the Internet in relative safety, as they will always know their malcode can speak to them.
 Keeping this Command and Control (C\&C) server functional and anonymous may be hard and expensive depending on the approach used by the attacker.
 They have evolved to use algorithms to generate a list of thousands of domains dynamically.
 %Particularly DNS scans for new suspicious entries is advised.
 \linej
 The flaw of this approach is that it can trigger behavioural alerts and reduces the scope of the attacks.
 There is no need to initially contact the Command and Control server, even for crypto ransomware because the public RSA key can be downloaded with the malware.
-In some cases the attacker can command the malware to delete itself to avoid leaving evidence for security proffesionals\cite{ransomware_oReilly}\cite{ransomware_digital_extortion}.
+In some cases the attacker can command the malware to delete itself to avoid leaving evidence for security professionals\cite{ransomware_oReilly}\cite{ransomware_digital_extortion}.
 \linej
 \linej
 The fundamental reason why this market exists is because the victims are willing to pay.
@@ -78,7 +84,7 @@ It is hard to know specifics because it is estimated that most of the times thes
 \linej
 \linej
 Unlike many other forms of cyberattacks, ransomware can be quickly and brainlessly deployed with a high probability of profit nowadays.
-It has been a revelant type of malware since its beginning 23 years ago, but in the last years its economy has grown hugely, mainly because\cite{ransomware_digital_extortion}\cite{ransomware_economy}:
+It has been a relevant type of malware since its beginning 23 years ago, but in the last years its economy has grown hugely, mainly because\cite{ransomware_digital_extortion}\cite{ransomware_economy}:
 \begin{itemize}
 	\item Bitcoin and Tor: for pseudo-anonymous activities.
 	\item Proliferation of service providers: anyone can get into the ransomware business because technical knowledge is not needed for every step of the process.
@@ -99,7 +105,7 @@ The requirement for ransoms to be paid over the Tor network has ensured there is
 Due to these innovations, the underground ransomware economy is now an industry that resembles commercial software. It can be divided into sections like: development, support, distribution and even help desks. This market can be divided into tiers\cite{ransomware_economy}:
 \begin{itemize}
 	\item Authors: They can be responsible for the creation of the malware (including frameworks) and training and support on them. In the current state of the market they can just remain as authors, without ever running the malware in other computers. The cost is based on how customized the code is for a particular target.
-	\item RaaS: Ransomware-as-a-Service borrows from the Software-as-a-Service model. RaaS is designed to make ransomware available to even novice criminals. It provides technical and step-by-step information on how to launch the ransomware attack with the purchased software. The most sofisticated have a platform for checking the current status of the attack. In some cases the ransom is split among the members of the supply chain.
+	\item RaaS: Ransomware-as-a-Service borrows from the Software-as-a-Service model. RaaS is designed to make ransomware available to even novice criminals. It provides technical and step-by-step information on how to launch the ransomware attack with the purchased software. The most sophisticated have a platform for checking the current status of the attack. In some cases the ransom is split among the members of the supply chain.
 	\item Distributors: A high profit/risk tier. They can distribute it themselves by spam campaigns, social engineering, targeted hacks or exploit kits. They can also leverage RaaS.
 \end{itemize}
 \linej
@@ -141,7 +147,7 @@ Cybercriminals use this currency to spread infections by phishing attacks, data 
 	\item \textbf{Manufacturing}: Including businesses like automotive, electronics, textile and pharmacy.
 The nature of the chemical and automotive businesses makes certain aspects horrifying, however, cybercriminals' motivation is predominantly financial, as they attack corporations not with the intention of mass murder, but to obtain valuable data and lucrative sensitive information.
 	\item \textbf{Financial services}: The accessibility of payment methods and globally spread banking services whose main purpose is customer convenience will keep the financial industry high on the list. Attackers only need to impersonate or trick the victim in order to gain access to an account.
-	\item \textbf{Goverment agencies}: They hold all types of personal and confidential data. If a goverment agency stops working it can affect many people.
+	\item \textbf{Government agencies}: They hold all types of personal and confidential data. If a government agency stops working it can affect many people.
 	\item \textbf{Transportation}: Usually ransomware attacks set a time limit to pay the ransom, but in transportation real life sets the time limit. A higher effortless pressure results in less advanced malware needs, meaning that transportation businesses could be effectively extorted with locker ransomware or denial of service attacks.
 As in previous cases there is also interest in personal data and financial accounts.
 	\item \textbf{Home users}: Ransomware is one of the best effective malware against personal computing users, who are considerably not experienced in cybersecurity.
@@ -178,7 +184,7 @@ Obviously this key has to be kept secret by the attacker, therefore it is cipher
 Only the people with the private key should be able to decipher the symmetric key, therefore only the attacker can decipher it.
 The public key is either downloaded with the malware or after the installation.
 \linej
-A major disadvantage of symmetric key encryption is that, in some cases, the key can be retrievered from RAM using special software.
+A major disadvantage of symmetric key encryption is that, in some cases, the key can be retrieved from RAM using special software.
 Fortunately the DRAM in most systems is still live for anywhere from a few seconds to a few minutes after power loss, allowing a shutdown to stop the attack and still being able to recover from it.
 However these techniques are unlikely to work with functions that avoid leaving trails in memory\cite{ransomware_oReilly}.
 \linej
@@ -241,7 +247,7 @@ This example assumes the same value for the variables as in the encryption proce
 
 \subsection{Detection of crypto ransomware}
 Next some sources for possible detection of crypto ransomware are examined.
-Each of these options has its pros and cons, there is no restriction for using them toguether (in case one fails).
+Each of these options has its pros and cons, there is no restriction for using them together (in case one fails).
 It is important to keep in mind that the Wazuh server is supposed to manage multiple systems, therefore scalability should be a concern and maybe only one of the solutions could be used in a real network.
 
 \subsubsection{Windows Defender's Controlled Folder Access}
@@ -266,7 +272,7 @@ Sysmon events can be used to monitor changes in folders too, for example monitor
 Unfortunately none of the Sysmon events can detect file deletion, but they can be useful in other ways:
 \begin{itemize}
 	\item Event 2 could detect backdoors, which would change some key file and restore its previous creation time. It is not uncommon for ransomware to install them to extort the system in the future. Instead of relying on this event it is a safer idea to use file integrity monitoring, checking the checksum of each key file for changes.
-	\item Event 9 can be used to detect direct reading of the device, an alternative access method to avoid being detected by traditional file monitoring, like in the case of NinjaCopy \ref{invoke-NinjaCopy}.
+	\item Event 9 can be used to detect direct reading of the device, an alternative access method to avoid being detected by traditional file monitoring, like how NinjaCopy \ref{invoke-NinjaCopy}\ was used previously to avoid existing file system security to extract administrator credentials.
 	\item Event 11 can detect the new files, which could be identified as encrypted files in some cases with active response. Depending on the directory and the Wazuh rules there may be false positives.
 \end{itemize}
 %\linej
@@ -324,8 +330,8 @@ Syscheck has many options, like files to be ignored (which can also be done with
 The most interesting features of Syscheck for this project are\cite{libro_ossec}:
 \begin{itemize}
 	\item Real-time monitoring. It can only be set at folder level, not directly for files, but that can be worked around with ignores in fixed cases or match restrictions in rules.
-	\item Scheduled scan. Interesting from a scalability point of view for checking security settings and looking for rootkits, but not useful for inmediate detection.
-	\item Inmediate scan. The agent can be ordered to do a scan at any time. This is interesting to combine with active response.
+	\item Scheduled scan. Interesting from a scalability point of view for checking security settings and looking for rootkits, but not useful for immediate detection.
+	\item Immediate scan. The agent can be ordered to do a scan at any time. This is interesting to combine with active response.
 	\item The creation and deletion of files can be detected too.
 \end{itemize}
 
@@ -350,7 +356,7 @@ Each of the next tables shows a simplification of the advantages and disadvantag
 			\linej $\bullet$ The logs do not detail the kind of file event (creation, modification or deletion).
 				%During the testing they always reported ``blocked from modifying''.
 			\linej $\bullet$ It is an external program, therefore it can not be totally trusted to work on complex cases.
-			\linej $\bullet$ It is one of the most and first denfensive programs targeted by attackers.
+			\linej $\bullet$ It is one of the most and first defensive programs targeted by attackers.
 			\linej $\bullet$ The whitelisting may need manual adjustment, for example allowing the Wazuh agent.
 			\\ \hline
 	\end{tabularx}
@@ -378,7 +384,7 @@ Each of the next tables shows a simplification of the advantages and disadvantag
 		Advantages & Disadvantages\\ \hline
 			$\bullet$ They can be used to detect any kind of creation, modification and deletion.
 		&
-			$\bullet$ They can be too complex and counterintuitive. Following their flow requires composite rules in Wazuh.
+			$\bullet$ They can be too complex and counter-intuitive. Following their flow requires composite rules in Wazuh.
 			\linej $\bullet$ Lack of critical information in the logs.
 			\linej $\bullet$ Real malware can be hard to tell apart from false positives.
 			\\ \hline
@@ -427,7 +433,7 @@ This project can not afford much time on this task, but it can provide a solutio
 The easiest way for an attacker to do this is to use the Windows registry, therefore enabling or disabling directly the functionality in question.
 \linej
 Access to the registry can be hardened, but in this case it is assumed that not allowing access to registry editing tools is not enough to prevent an skilled attacker from doing so.
-Note that blocking the access with Windows Resource Protection should make them innacesible for both the attacker and these scripts.
+Note that blocking the access with Windows Resource Protection should make them inaccessible for both the attacker and these scripts.
 \linej
 In the end protecting a program is a complex problem that does not only affect Windows Defender (the Wazuh agent is a similar case) and is impossible to fully solve, but measures can be taken nonetheless.
 \linej
@@ -475,7 +481,7 @@ This means that the easiest way to manage them is to:
 \end{itemize}
 \linej
 The rules to accomplish this are very simple \ref{lst:rules_registry}.
-The only detail that can lead to confussion is the use of the \textit{field} tag to filter the event ID instead of using the \textit{if\_group} tag, which is because \textit{if\_sid} with \textit{if\_group} interact as a logical OR, but \textit{if\_sid} with \textit{field} interact as a logical AND.
+The only detail that can lead to confusion is the use of the \textit{field} tag to filter the event ID instead of using the \textit{if\_group} tag, which is because \textit{if\_sid} with \textit{if\_group} interact as a logical OR, but \textit{if\_sid} with \textit{field} interact as a logical AND.
 \linej
 These rules cover the previous cases with the active response configuration \ref{lst:active_response_registry}.
 \linej
@@ -512,7 +518,7 @@ The main problem with this approach is the management is harder than if it were 
 
 \subsubsection{Reducing false positives with decoys}
 In this case the problem with detection methods other than Windows Defender's Controlled Folder Access is there is no guarantee that the reported events are from normal and legitimate operations.
-There are many circumstancial solutions like: maintaining a list of allowed applications or looking for suspicious behaviour (for example many files created and later deleted in a short time).
+There are many circumstantial solutions like: maintaining a list of allowed applications or looking for suspicious behaviour (for example many files created and later deleted in a short time).
 But none of them are guaranteed to always work by default.
 Instead a simpler approach was implemented: use decoys and look for suspicious behaviour.
 Because Windows Defender does not provide the filename decoy filtering can not be used with it.
@@ -572,7 +578,7 @@ Even thought this method has room to improve its efficiency, it should be fast e
 
 \subsection{Backup deletion}
 Backups provide effective mitigation against crypto ransomware attacks in most cases.
-There are many scenarios between distributed backups in servers accross the world and just having local backups.
+There are many scenarios between distributed backups in servers across the world and just having local backups.
 Their ability to overcome ransomware attacks depends on multiple factors like: the exact malware, the distribution of the backup system, the security of the backup system, etc.
 \linej
 In this case we assume the target only has local backups in a dedicated volume that are managed with the Shadow Copy service, which allows files to be copied even when in use.
@@ -590,7 +596,7 @@ A new disk was added to the virtual machine of the SMB server to serve as a Shad
 This and a network disk are the most basic methods for scheduling backups using Shadow Copies, due to Windows restrictions.
 \linej
 \linej
-It is not possible to detect the deletion of Shadow Copies with previously examined file monitoring methods, because they are not in the filesystem of the volume, they are managed directly by the Shadow Copy service as special storage.
+It is not possible to detect the deletion of Shadow Copies with previously examined file monitoring methods, because they are not in the file system of the volume, they are managed directly by the Shadow Copy service as special storage.
 \linej
 The detection of the commands in plain text is trivial and similar to previous examples with Sysmon \ref{lst:vssadmin_sysmon}\ and rules in Wazuh \ref{lst:vssadmin_rules}.
 \linej
@@ -658,16 +664,16 @@ These can be effective against basic automated malware, but a smart attacker can
 	\end{enumerate}
 \end{enumerate}
 \linej
-In this example \ref{lst:active_response_crypto_ransomware_ps1}\ no actions that are hard to reverse later were implemented, simplifiying the active response process but making it less effective, leaving out 2.(c) and 2.(d). 2.(e) was also not included because the lack of time for the reasearch on data retrieval from RAM, but turning off the computer can be done with a simple \textit{Stop-Computer} command.
+In this example \ref{lst:active_response_crypto_ransomware_ps1}\ no actions that are hard to reverse later were implemented, simplifying the active response process but making it less effective, leaving out 2.(c) and 2.(d). 2.(e) was also not included because the lack of time for the research on data retrieval from RAM, but turning off the computer can be done with a simple \textit{Stop-Computer} command.
 \linej
 \linej
 In this case the active response in Wazuh was actually using the integrator module \ref{lst:active_response_crypto_ransomware_ossec} with a custom script \ref{lst:active_response_crypto_ransomware_py}, using previous rules from Syscheck \ref{lst:syscheck_rules}\ and Trid \ref{lst:trid_rules}.
 This actually is a couple of seconds faster without the Trid rules, because then much less processing power is being used in the Trid active response script to determine if the files are encrypted or not.
-Integrator\cite{integrator} was used instead because slighty more efficient and faster because the log of the triggering alert is available directly, instead of having to search the alert log (which can be huge) with a custom command.
+Integrator\cite{integrator} was used instead because slightly more efficient and faster because the log of the triggering alert is available directly, instead of having to search the alert log (which can be huge) with a custom command.
 
 
 \section{Testing with real crypto ransomware}
-The configuration created in this chapter \ref{lst:real_crypto_ransomware_testing}\ was put toguether and slighty modified to test it with a real crypto ransomware software.
+The configuration created in this chapter \ref{lst:real_crypto_ransomware_testing}\ was put together and slightly modified to test it with a real crypto ransomware software.
 The malware chosen was the \textit{cmb} version of Dharma\cite{dharma}, which is called that because it encrypts files with the \textit{cmb} extension.
 \linej
 This version is almost a year old and has been analyzed by multiple parties, but it still works in mid July of 2019 because the Command and Control servers are available due to a recent Dharma campaign.
@@ -690,6 +696,9 @@ The actions of Dharma in order were\cite{dharma}:
 \end{figure}
 \linej
 Five tests were needed in order to make sure of the exact process of the malware and to manage to stop it with active response.
+The previous test was run on the same conditions but it was not able to stop the malware even thought the same alerts were triggered.
+This could be caused by several factors like overload of the server or the agent, race conditions or logic errors.
+\linej
 Next is a summary of the problems, causes and their solutions in this tests:
 \begin{itemize}
 	\item The main problem in this case was that the resource usage in the Windows machine tested was so high that any simple command took much more time than normal.
@@ -700,11 +709,11 @@ The solution was to use an early but reliable malware detection, which was not u
 The detection of the program as malware by Windows Defender was almost instantaneous and its events (62103 and 62104) include the process responsible, making it easy to extract.
 Once the executable is known it is just a matter of executing a trivial command to stop it.
 
-	\item The OSSEC agent was not configured to handle so many events toguether, resulting in a congestion of events to be reported to the manager, which can result in events suffering delays and arriving out of order and in some cases they saturate the manager because it can not process them fast enough.
+	\item The OSSEC agent was not configured to handle so many events together, resulting in a congestion of events to be reported to the manager, which can result in events suffering delays and arriving out of order and in some cases they saturate the manager because it can not process them fast enough.
 \linej
 Wazuh has anti-flooding mechanisms\cite{antiflooding} that can help with this situation, but there is no way to give priority to a type of event over the rest at the moment, making the anti-flooding features only useful for situations where fast and reliable action is not required.
 Of course this would not happen if the agent and the manager were on the same machine, but that would also result in other issues.
-In the end the problem remains unsolved because it is mainly caused by the excesive CPU usage of Dharma.
+In the end the problem remains unsolved because it is mainly caused by the excessive CPU usage of Dharma.
 
 	\item The only measure that worked against the ransomware was to kill it, either by knowing the ID of the process or the name of the executable.
 This was because disabling the Internet adapter is just for stop it from spreading and locking the files was too slow to have any effect.
@@ -731,7 +740,7 @@ The file was allowed to bypass the disk control of Windows Defender, in order to
 		333015 & Many file modifications in a short time.\\ \hline
 		333016 & Many file creations in a short time.\\ \hline
 		333017 & Many file deletions in a short time.\\ \hline
-		333019 & Suspicius mass deletion of tiles in a short time.\\ \hline
+		333019 & Suspicious mass deletion of tiles in a short time.\\ \hline
 		333026 & File added with a suspicious extension.\\ \hline
 		333039 & Mass deletion or attempts. Detected with Windows File Auditing events instead of Syscheck like the others.\\ \hline
 		333110 & Backup deletion with vssadmin.\\ \hline
@@ -759,6 +768,8 @@ Next is an example of Trid reporting an encrypted file as a set of harmless data
 %If the file is being encrypted the result would probably be \textit{unknown}.
 \linej
 This is a good example of how a detection system can fail even when working perfectly in isolated tests, but it also shows how is possible to overcome these kind of problems with the right data.
+Stopping the ransomware with active response seems to work only under certain conditions and the whole chain of events is very easy to disrupt by a program with enough privileges.
+Therefore is not a better option than using local antimalware software.
 
 \section{Mitigation}
 Ransomware does not need any particular weakness or vulnerability to work on a system, but the better protected the system is the harder it is for it to be victim of a ransomware attack.
@@ -770,10 +781,10 @@ Administrators can disable writing to at least certain registry keys using Windo
 	\item Cyber insurance:
 In some cases it may reduce certain costs, like: notifications costs to data breach victims, loses from offline periods, legal defense costs and forensics and investigation costs.
 	\item Using decoy resources:
-They can be used to detect unplanned acceses or changes and to find vulnerable systems (using honeypots).
+They can be used to detect unplanned accesses or changes and to find vulnerable systems (using honeypots).
 	\item Security awareness and education:
 It is important to teach the basics of cybersecurity threats to its targets.
-For example being careful with web browsing and everyday documents like PDFs or Mircrosoft Office documents, all of which can contain malware that runs on access.
+For example being careful with web browsing and everyday documents like PDFs or Microsoft Office documents, all of which can contain malware that runs on access.
 	\item Fundamental security controls:
 They provide the base for the cybersecurity of the system.
 Their vulnerabilities may allow or increase the scope of all kinds of attacks.
@@ -785,7 +796,7 @@ They can mean the difference between compromising just a system or the whole net
 	\item Restrictions to unnecessary services and software:
 They may not be enough to keep the attacker away from using the software, but at least they probably would rise some alerts or slow the process.
 In some cases the attacker may reconsider the target to not be worth the effort.
-Some of the recommended restrictions are about: Tor, powershell, vssadmin, wmic, certain directories and not digitally signed software.
+Some of the recommended restrictions are about: Tor, PowerShell, vssadmin, wmic, certain directories and not digitally signed software.
 	\item Restrictions on the allowed folders to run executables:
 For example if malware manages to overcome the digital signature check it can be stopped if it is executed from a suspicious directory or from none at all.
 This may help even with cases where the user is not aware that he is running a program.
@@ -793,11 +804,11 @@ In Unix-like systems this can be done when mounting devices with the \textit{noe
 	\item Removing unused devices:
 Basic action to prevent possible further infection spreading.
 It should be applied to physical devices like: mapped drives, USB storage devices or memory sticks and smartphones.
-All writeable devices should be removed from a station when not in use.
+All writable devices should be removed from a station when not in use.
 	\item File exchange management:
 Many businesses need file sharing to work on collaboratively.
 Once the process of file sharing becomes a routine, security gets on wobbly feet.
-To keep the filesystem safe, organizations should establish best practices for sharing data and files in a safe and secure manner.
+To keep the file system safe, organizations should establish best practices for sharing data and files in a safe and secure manner.
 An effective way to minimize risks is application of digital signatures.
 	\item Response plan development:
 At a moment of crisis, decision-making can be weak exacerbating the consequences of the infection.

@@ -15,7 +15,7 @@ if alert_id == '333019':
     full_log=alert_json['full_log']
     exe=full_log.split("Process name: '")[1].split("'\n")[0].replace("\\","/")
 elif alert_id == '62103' or alert_id == '62104':
-    exe=alert_json['description'].split("unwanted software ")[1].split("\"")[0].replace("\\","/")
+    exe=alert_json['rule']['description'].split("unwanted software ")[1].split("\"")[0].replace("\\","/")
 else:
     exit(1)
 

@@ -1,18 +1,17 @@
 \section{Risk management}
-Risk management can be summarized as a group of processes which objective is to avoid undesirable or unexpected situations for the duration of the project.
+Risk management can be summarized as a group of processes whose objective is to avoid undesirable or unexpected situations for the duration of the project.
 \linej
 \linej
 The management of the risks of the project has the next steps:
 \begin{itemize}
 	\item \textbf{Risk metrics}: A short clarification of how to estimate the probability, impact and exposition of risks.
 	\item \textbf{Risk identification}: Analysis to identify the risks that can affect the project. This was performed by brainstorming and reviewing the list of identified risks.
-	\item \textbf{Risk analysis and planning}: All the risks are analyzed, setting their properties (probability, impact, indicator, etc). Also prevention and/or correction measures for each risk are planned in case they take place. Prevention are optional and deployed before the risk happens, while correction measures are mandatory and used after a risk triggers. There are three types of measures:
+	\item \textbf{Risk analysis and planning}: All the risks are analyzed, setting their properties (probability, impact, indicator, etc). Also prevention and/or correction measures for each risk are planned in case they take place. Prevention measures are optional and deployed before the risk happens, while correction measures are mandatory and used after a risk triggers. There are three types of measures:
 		\begin{itemize}
 			\item \textit{Avoid}: They attempt to negate the occurrence or progression of the risk. It only makes sense for them to be in prevention.
-			\item \textit{Mitigation}: The impact is reduced. They can be for either prevention or correction. In the case of correction mitigation they are known as contingency too.
+			\item \textit{Mitigation}: The impact is reduced. They can be for either prevention or correction. In the case of correction they are known as contingency too.
 			\item \textit{Transference}: Another entity takes care of the problem. In this project this almost never applies because there are no third-party involved to rely responsibility on, except in very specific cases.
 		\end{itemize}
-	\item \textbf{Risk supervision}: Is the process of tracking every risk and applying their measures if they come to be.
 \end{itemize}
 
 \subsection{Risk metrics}
@@ -47,7 +46,7 @@ To ease their management they are classified into Low, Medium or High, depending
 \end{table}
 
 \linej
-The calculation of the exposition is made just by the next table, based on the values of probability and impact:
+The calculation of the exposition is provided by the next table, based on the values of probability and impact:
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|c|c|c|c|c|}
@@ -62,16 +61,16 @@ The calculation of the exposition is made just by the next table, based on the v
 \end{table}
 
 \subsection{Risk identification}
-The next table shows the final list of identified risks of the project.
+The next table shows the list of identified risks of the project.
 
-\newcommand{\Runo}{Optimist planning, ``best case'', instead of a realistic ``expected case''}
+\newcommand{\Runo}{Optimistic planning, ``best case'', instead of a realistic ``expected case''}
 \newcommand{\Rdos}{Bad requirement specification}
 \newcommand{\Rtres}{Design errors}
 \newcommand{\Rcuatro}{Lack of key information from sources}
-\newcommand{\Rcinco}{Lack of feedback or support from the security consultants of Tarlogic}
+\newcommand{\Rcinco}{Lack of feedback or support from the security consultants from Tarlogic}
 \newcommand{\Rseis}{The learning curve of some technologies is larger than expected}
-\newcommand{\Rsiete}{The unexplained parts of the project take more time than expected}
-\newcommand{\Rocho}{Can not access source material}
+\newcommand{\Rsiete}{The uncertain parts of the project take more time than expected}
+\newcommand{\Rocho}{Source material is not available}
 \newcommand{\Rnueve}{Unexpected changes to any of the software used in the project}
 \newcommand{\Rdiez}{Loss of work}
 \newcommand{\Ronce}{Wrong management of the project's configuration}
@@ -116,7 +115,7 @@ The next table shows the final list of identified risks of the project.
 \newcolumntype{y}{>{\hsize=.15\hsize}X}
 \newcolumntype{z}{>{\hsize=.85\hsize}X}
 \subsection{Risk analysis and planning}
-An analysis on the risks identified previously was made by the student. The next tables list the risks with their basic data, estimations, contingency and prevention measures when possible.
+An analysis on the risks previously identified was made. The next tables list the risks with their basic data, estimations, contingency and prevention measures when possible.
 
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|y|z|}
@@ -223,7 +222,7 @@ An analysis on the risks identified previously was made by the student. The next
 		Exposition &  Medium\\ \hline
 		Indicator & The duration of the study of the attack and the related tools ends being 50\% longer than expected. \\ \hline
 		Correction: Mitigate &
-			Ask the security consultants of Tarlogic for specific information. \linej
+			Ask the security consultants from Tarlogic for specific information. \linej
 			Possibly the need to rework completely some functionality.
 		\\ \hline
 	\end{tabularx}
@@ -236,7 +235,7 @@ An analysis on the risks identified previously was made by the student. The next
 		Identifier & \textbf{R-05} \\ \hline
 		Name & \Rcinco \\ \hline
 		Description &
-			Because I do not know enough of some technical aspects of cybersecurity to solve all the problems in this by myself in time, Tarlogic has promised to help (in a tutoring way) if a problem arises. \linej
+			Because I do not know enough about some technical aspects of cybersecurity to solve all the problems by myself in time, Tarlogic has offered to help (in a tutoring way) if a problem arises. \linej
 			This help could be critical to solve or get around some of the most complex problems, which probably happen to be critical points, needing to be dealt with to continue working on that stage.
 		\\ \hline
 		Negative effects &
@@ -275,7 +274,7 @@ An analysis on the risks identified previously was made by the student. The next
 		Indicator & The duration of the study of the technologies ends being 50\% longer than expected. \\ \hline
 		Correction: Mitigate &
 			Redo planning and possibly change the scope.  \linej
-			Ask the security consultants of Tarlogic for specific help. \linej
+			Ask the security consultants from Tarlogic for specific help. \linej
 			Maybe the need to rework completely some functionality.
 		\\ \hline
 	\end{tabularx}
@@ -333,7 +332,7 @@ An analysis on the risks identified previously was made by the student. The next
 		Correction: Mitigate &
 			Redo planning and possibly change the scope. \linej
 			Possible need to cut out the part of the project that depends on this source. \linej
-			Maybe find another source or wait to the original source to be accessible again.
+			Maybe find another source or wait for the original source to be accessible again.
 		\\ \hline
 	\end{tabularx}
 \end{table}
@@ -347,7 +346,7 @@ An analysis on the risks identified previously was made by the student. The next
 		Description &
 			Changes to base software could affect this project directly or indirectly: programs could fail or not work as expected. \linej
 			This could mean any software changes, from simple syntax to API changes. \linej
-			Is possible that these changes would eliminate the need of planned or already done work. \linej
+			It is possible that these changes would eliminate the need of planned or already done work. \linej
 			In a project that does not work in a bleeding edge environment, like this, this occurrence should be very rare and even if it were to happen it would have to interfere with the part of the software this project uses, which (as this is not bleeding edge) normally would be backwards compatible.
 		\\ \hline
 		Negative effects &
@@ -409,8 +408,8 @@ An analysis on the risks identified previously was made by the student. The next
 		Negative effects &
 			Maybe the failure of the project if the objectives can not be accomplished in the time left. \linej
 			Possibly wrong baselines or identification of the configuration elements. \linej
-			It could be that it takes more time than expected to manage the project. \linej
-			The project suffer delays because the need to redo management work and/or planned tasks.
+			It could take more time than expected to manage the project. \linej
+			The project suffers delays because of the need to redo management work and/or planned tasks.
 		\\ \hline
 		Probability & Medium\\ \hline
 		Impact &  High\\ \hline
@@ -419,8 +418,7 @@ An analysis on the risks identified previously was made by the student. The next
 		Prevention: Avoid &
 			The configuration of the project should be just complex enough (without ambiguity, to ensure a proper management), but not too much complex (which would be hard to follow). \linej
 			Use of familiar and standard tools, like Git. \linej
-			Optionally use an easier to manage life cycle. \linej
-			Study of the configuration management done in previous final degree projects, to get a proper idea of its scope and details.
+			Optionally use an easier to manage life cycle.
 		\\ \hline
 	\end{tabularx}
 \end{table}
@@ -432,7 +430,7 @@ An analysis on the risks identified previously was made by the student. The next
 		Identifier & \textbf{R-12} \\ \hline
 		Name & \Rdoce \\ \hline
 		Description &
-			A task gets delayed and one or more tasks depends on its completion to start, so they get delayed too.
+			A task gets delayed and one or more tasks depend on its completion to start, so they get delayed too.
 		\\ \hline
 		Negative effects &
 			Cascading delays.
@@ -458,8 +456,9 @@ An analysis on the risks identified previously was made by the student. The next
 		Identifier & \textbf{R-13} \\ \hline
 		Name & \Rtrece \\ \hline
 		Description &
-			It could be that the knowledge of the student is too limited or the problem has too much logical or mathematical difficulty.\linej
-			Another possibility is that the event is impossible to detect with the current technologies. If so, this impossibility could be hard to assure too, due to the complexity of nowadays technology.
+			It could be that the knowledge of the student is too limited or the problem is too difficult for this kind of project.\linej
+			Another possibility is that the event is impossible to detect with the current technologies.
+			%If so, this impossibility could be hard to assure too, due to the complexity of nowadays technology.
 		\\ \hline
 		Negative effects &
 			High difficulty to estimate the time needed to detect the event. \linej
@@ -474,7 +473,7 @@ An analysis on the risks identified previously was made by the student. The next
 			Have as much information on the problem as possible, the more detailed the better.
 		\\ \hline
 		Correction: Mitigate &
-			Ask the security consultants of Tarlogic for help. \linej
+			Ask the security consultants from Tarlogic for help. \linej
 			Demonstrate that it is possible to detect it.
 		\\ \hline
 	\end{tabularx}
@@ -487,7 +486,7 @@ An analysis on the risks identified previously was made by the student. The next
 		Identifier & \textbf{R-14} \\ \hline
 		Name & \Rcatorce \\ \hline
 		Description &
-			The final result is does not comply the quality standard set for this project.
+			The final result does not comply with the quality standard set for this project.
 		\\ \hline
 		Negative effects &
 			The incorporation to the official repository gets rejected.\linej
@@ -520,14 +519,14 @@ An analysis on the risks identified previously was made by the student. The next
 		\\ \hline
 		Negative effects &
 			Probably the quality of the project drops. \linej
-			Possibly delays, that could be hard to specify their limit. \linej
+			Possibly delays, that could be hard to estimate. \linej
 			Analysis of the changes needed to improve the quality. \linej
 			In the worst case scenario the project can not continue and fails.
 		\\ \hline
 		Probability & Medium\\ \hline
 		Impact &  High\\ \hline
 		Exposition &  High\\ \hline
-		Indicator & There is an unexpected delay because the functionality is not done but there has not been any important issues that could explain it but there is a clear deterioration of the student health. \\ \hline
+		Indicator & There is a clear deterioration of the student health and an unexpected delay. \\ \hline
 		Prevention: Avoid &
 			Stay healthy by following a regular schedule for work and exercising, that includes multiple rest periods. \linej
 			Optionally maintain a diet.
@@ -553,7 +552,7 @@ An analysis on the risks identified previously was made by the student. The next
 		Probability & Low\\ \hline
 		Impact &  Low\\ \hline
 		Exposition &  Low\\ \hline
-		Indicator & The program takes 30\% more resources that at the beginning of the project.\\ \hline
+		Indicator & The program takes 30\% more resources than expected at the beginning of the project.\\ \hline
 		Prevention: Mitigate &
 			If possible use efficient algorithms and check the efficiency after the testing is done for each increment.
 		\\ \hline
@@ -627,13 +626,15 @@ An analysis on the risks identified previously was made by the student. The next
 		\\ \hline
 		Negative effects &
 			Time loss, resulting in a quality drop and possibly in a smaller scope.\linej
-			It can be hard to specify when the event will end, resulting in uncertainty and the failure of the project in the worst case scenario. Even more if is about a chronic or serious sickness from a family member. \linej
+			It can be hard to specify when the event will end, resulting in uncertainty and the failure of the project in the worst case scenario.
+			%Even more if is about a chronic or serious sickness from a family member.
+			\linej
 			Vital requirements get less resources, making the project loss value.
 		\\ \hline
 		Probability & Medium\\ \hline
 		Impact & High\\ \hline
 		Exposition & High\\ \hline
-		Indicator & The student stops to work on the project for more than 2 planned weeks, to attend personal matters.\\ \hline
+		Indicator & The student stops working on the project for more than 2 planned weeks, to attend personal matters.\\ \hline
 		Prevention: Avoid &
 			Always be organized and try to predict time consuming events.
 		\\ \hline
@@ -645,85 +646,3 @@ An analysis on the risks identified previously was made by the student. The next
 	\end{tabularx}
 \end{table}
 
-\subsection{Risk supervision}
-Next are the risks triggered during the duration of the project and how they were dealt with, ordered by their start date.
-The \textit{New} probability, impact, exposition or measures always are be different from their previous values, else they are omitted.
-%\begin{table}[H]
-%	\begin{tabularx}{\textwidth}{|l|X|}
-%		\hline
-%		\rowcolor{gray!30}
-%		Identifier & \textbf{R-} \\ \hline
-%		Name &  \\ \hline
-%		Date of the beginning of the problem & \\ \hline
-%		Date of the solution of the problem & \\ \hline
-%		Actions & \\ \hline
-%		New probability & \\ \hline
-%		New impact &   \\ \hline
-%		New exposition &  \\ \hline
-%	\end{tabularx}
-%\end{table}
-
-\begin{table}[H]
-	\begin{tabularx}{\textwidth}{|l|X|}
-		\hline
-		\rowcolor{gray!30}
-		Identifier & \textbf{R-19} \\ \hline
-		Name & \Rdiecinueve \\ \hline
-		Date of the beginning of the problem & 05/12/2018 \\ \hline
-		Date of the solution of the problem & 10/02/2019 \\ \hline
-		Actions & After a delay of 2 weeks it was clear that the student could not meet the original planning, or at least without rushing and suffering significant quality loss. \linej
-			The project was put on hold and the student notified the tutors, who agreed to the next deadline. \linej
-			The student kept working on the project (researching) from time to time. \\ \hline
-		New probability & Low (before was Medium) \\ \hline
-		New exposition & Medium (before was High) \\ \hline
-		New correction: Transference &
-			Another person took charge of the problem until it disappeared, freeing the student.
-		\\ \hline
-	\end{tabularx}
-\end{table}
-\begin{table}[H]
-	\begin{tabularx}{\textwidth}{|l|X|}
-		\hline
-		\rowcolor{gray!30}
-		Identifier & \textbf{R-10} \\ \hline
-		Name & \Rdiez \\ \hline
-		Date of the beginning of the problem & 26/02/2019 \\ \hline
-		Date of the solution of the problem & 26/02/2019 \\ \hline
-		Actions & A general power failure in Santiago caused a sudden shutdown of the computer the student was working on. \linej
-		Fortunately the only work lost was upgrading the software on the virtual machine hosting the Wazuh server, which was reproduced by restoring the last snapshot and repeating the process.\\ \hline
-	\end{tabularx}
-\end{table}
-\begin{table}[H]
-	\begin{tabularx}{\textwidth}{|l|X|}
-		\hline
-		\rowcolor{gray!30}
-		Identifier & \textbf{R-09} \\ \hline
-		Name & \Rnueve \\ \hline
-		Date of the beginning of the problem & 01/03/2019 \\ \hline
-		Date of the solution of the problem & 01/03/2019 \\ \hline
-		Actions & The Kibana plugin and Wazuh had a mismatch for their versions, resulting in the plugin not working. \linej
-		The plugin and Wazuh were upgraded to their latest versions. \\ \hline
-	\end{tabularx}
-\end{table}
-\begin{table}[H]
-	\begin{tabularx}{\textwidth}{|l|X|}
-		\hline
-		\rowcolor{gray!30}
-		Identifier & \textbf{R-19} \\ \hline
-		Name & \Rdiecinueve \\ \hline
-		Date of the beginning of the problem & 05/05/2019 \\ \hline
-		Date of the solution of the problem & 19/05/2019 \\ \hline
-		Actions & The project was put on hold for 2 weeks while the student was taking care of a family member. \\ \hline
-	\end{tabularx}
-\end{table}
-\begin{table}[H]
-	\begin{tabularx}{\textwidth}{|l|X|}
-		\hline
-		\rowcolor{gray!30}
-		Identifier & \textbf{R-04} \\ \hline
-		Name & \Rcuatro \\ \hline
-		Date of the beginning of the problem & 30/05/2019 \\ \hline
-		Date of the solution of the problem & 03/06/2019 \\ \hline
-		Actions & The members of Tarlogic involved with the project were asked about details on dumping the memory of the process \textit{lsass.exe}. \\ \hline
-	\end{tabularx}
-\end{table}
