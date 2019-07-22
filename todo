@@ -8,3 +8,32 @@ MANUAL TECNICO (si se hiciera)
 			https://docs.microsoft.com/en-au/windows/security/threat-protection/windows-defender-antivirus/configure-real-time-protection-windows-defender-antivirus
 		https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/enable-controlled-folders-exploit-guard
 			Set-MpPreference -EnableControlledFolderAccess Enabled
+
+cambiar lo de las 11 horas a 11.25 y explicar que son de trabajo presencial (tutorias y evaluación)
+justificar la estimacion de 418 horas
+	deberian de ser 401.25 + 11.25=16.5 * 25=412.5
+	etapas
+		1-11 al 5-12
+			s=$(date -d '1 Nov 2018' '+%s');  e=$(date -d '6 Dec 2018' '+%s');  echo "$(( (e - s) / 86400 )) days"
+			35 days
+			21 horas/semana
+		on hold
+			6-12 a 24-2
+				s=$(date -d '6 Dec 2018' '+%s');  e=$(date -d '25 Feb 2019' '+%s');  echo "$(( (e - s) / 86400 )) days"
+				81 days
+			5-5 a 19-5
+				14 days
+			se desprecia aunque se seguía haciendo algo de vez en cuando
+		25-2 a 4-5
+			s=$(date -d '25 Feb 2019' '+%s');  e=$(date -d '5 May 2019' '+%s');  echo "$(( (e - s) / 86400 )) days"
+			68 days
+			10.5 horas/semana
+		20-5 a 23-7
+			s=$(date -d '20 May 2019' '+%s');  e=$(date -d '24 Jul 2019' '+%s');  echo "$(( (e - s) / 86400 )) days"
+			65 days
+			21 horas/semana
+	horas
+		(35+65)*21/7 +68*11/7 + 11.25
+		418.10
+recalcular costes con las nuevas horas
+Poner en texto que el proyecto empezó el 1 de Noviembre
