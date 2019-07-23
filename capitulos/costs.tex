@@ -18,6 +18,31 @@ Their combined cost is estimated in 20\euro{}.
 The rest of the direct costs are the human and hardware resources.
 
 \subsubsection{Human resources}
+%this needs the xfp package, for some reason the method with \the\numexpr operation_here \relax that works in planning does not here
+\newcommand{\hourBias}{\the\numexpr 20*14*8 \relax}
+\newcommand{\ProjectManagerAnnual}{45448}
+\newcommand{\SeniorEngineerAnnual}{29754}
+\newcommand{\SysAdminAnnual}{24234}
+\newcommand{\JuniorDeveloperAnnual}{16000}
+\newcommand{\ProjectManagerSC}{   \fpeval{trunc(\ProjectManagerAnnual * 0.32 ,2)}}
+\newcommand{\ProjectManagerTotal}{\fpeval{trunc(\ProjectManagerAnnual * 1.32 ,2)}}
+\newcommand{\ProjectManagerHour}{ \fpeval{trunc(\ProjectManagerTotal  / \hourBias ,2)}}
+\newcommand{\SeniorEngineerSC}{\fpeval{trunc(   \SeniorEngineerAnnual * 0.32 ,2)}}
+\newcommand{\SeniorEngineerTotal}{\fpeval{trunc(\SeniorEngineerAnnual * 1.32 ,2)}}
+\newcommand{\SeniorEngineerHour}{\fpeval{trunc( \SeniorEngineerTotal  / \hourBias ,2)}}
+\newcommand{\SysAdminSC}{\fpeval{trunc(   \SysAdminAnnual * 0.32 ,2)}}
+\newcommand{\SysAdminTotal}{\fpeval{trunc(\SysAdminAnnual * 1.32 ,2)}}
+\newcommand{\SysAdminHour}{\fpeval{trunc( \SysAdminTotal  / \hourBias ,2)}}
+\newcommand{\JuniorDeveloperSC}{\fpeval{trunc(   \JuniorDeveloperAnnual * 0.32 ,2)}}
+\newcommand{\JuniorDeveloperTotal}{\fpeval{trunc(\JuniorDeveloperAnnual * 1.32 ,2)}}
+\newcommand{\JuniorDeveloperHour}{\fpeval{trunc( \JuniorDeveloperTotal  / \hourBias ,2)}}
+\newcommand{\TutorHours}{11.25}
+\newcommand{\ProjectManagerRoleHours}{\fpeval{trunc( \TutorHours * 2 ,2)}}
+\newcommand{\ProjectManagerHourTotal}{\fpeval{trunc( \ProjectManagerHour * \TutorHours * 2 ,2)}}
+\newcommand{\SeniorEngineerHourTotal}{\fpeval{trunc( \SeniorEngineerHour * \TutorHours ,2)}}
+\newcommand{\SysAdminHourTotal}{\fpeval{trunc( \SysAdminHour * \TutorHours ,2)}}
+\newcommand{\JuniorDeveloperHourTotal}{\fpeval{trunc( \JuniorDeveloperHour * \projecthours ,2)}}
+\newcommand{\HRTotal}{\fpeval{trunc( \ProjectManagerHourTotal + \SeniorEngineerHourTotal + \SysAdminHourTotal + \JuniorDeveloperHourTotal,2)}}
 The human resources are the student, the director from the University, the director from Tarlogic and two members of Tarlogic that helped the student with issues at several points in the project.
 \linej
 \linej
@@ -28,25 +53,37 @@ The next salary parameters are assumed:
 	\item The job journey is 8 hours of work per day and there are 20 working days per month.
 \end{itemize}
 \linej
-The estimation of the hours that the student worked on the project is \projecthours.
-For any one else the hours are unknown, but is safe to assume a low value, therefore 11 hours is the estimation in each case.
+The estimation of the hours that the student worked on the project comes from:
+\begin{itemize}
+	\item The worked time while the project was on hold is zero.
+	\item In the first weeks of the project the the estimation of hours worked per week is 21. The project started the day 1 of November and was put on hold 35 days later.
+	\item After returning to work on the project on the 25 of February the estimation of hours worked per week is 11, and lasted for 68 days until the project was on hold for two weeks.
+	\item In the last stage of the project the estimation of hours worked per week is 21 again. This lasted 65 days, from the 20 of May until the end of the project.
+\end{itemize}
+\linej
+Therefore the estimation is: $(35+65) \cdot 21/7 + 68 \cdot 11/7 + \TutorHours$ = 418.10 hours.
+\linej
+\linej
+The estimation of the hours that the directors and the involved members of Tarlogic is \TutorHours hours.
+This value is the usual estimation of hours for tutoring and evaluation.
+\linej
 \linej
 The annual brute income for the job titles are taken from the website \textit{Indeed}\cite{indeed}, which calculates the average of hundreds of job offers in the last months.
 In the case of the student the salary was an optimistic value.
 \linej
 The job title assumed for the student is Junior Developer.
 The job title assumed for the directors is Project Manager.
-The Project Manager has 22 hours because this project has 2 directors.
+The Project Manager has \ProjectManagerRoleHours hours because this project has 2 directors.
 \linej
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|X|l|l|l|l|}
 		\hline
 		\rowcolor{gray!30}
-		Role                             & Annual brute &  Social Security &    Total annual & Cost/Hour\\ \hline
-		Project Manager                  & 45448\euro{}&   14543.36\euro{}& 59991.36\euro{}& 26.78\euro{}\\ \hline
-		Senior Engineer in Cybersecurity & 29754\euro{}&    9521.28\euro{}& 39275.28\euro{}& 17.53\euro{}\\ \hline
-		System Administrator             & 24234\euro{}&    7754.88\euro{}& 31988.88\euro{}& 14.28\euro{}\\ \hline
-		Junior Developer                 & 16000\euro{}&       5120\euro{}&    21120\euro{}& 9.42\euro{}\\ \hline
+		Role                             & Brute annual                 & Social Security          &    Total annual             & Cost/Hour\\ \hline
+		Project Manager                  & \ProjectManagerAnnual\euro{} & \ProjectManagerSC\euro{} & \ProjectManagerTotal\euro{} & \ProjectManagerHour\euro{}\\ \hline
+		Senior Engineer in Cybersecurity & \SeniorEngineerAnnual\euro{} & \SeniorEngineerSC\euro{} & \SeniorEngineerTotal\euro{} & \SeniorEngineerHour\euro{}\\ \hline
+		System Administrator             & \SysAdminAnnual\euro{}       & \SysAdminSC\euro{}       & \SysAdminTotal\euro{}       & \SysAdminHour\euro{}\\ \hline
+		Junior Developer                 & \JuniorDeveloperAnnual\euro{}& \JuniorDeveloperSC\euro{}& \JuniorDeveloperTotal\euro{}& \JuniorDeveloperHour\euro{}\\ \hline
 	\end{tabularx}
 	\caption{Annual costs of the human resources}
 \end{table}
@@ -54,16 +91,16 @@ The Project Manager has 22 hours because this project has 2 directors.
 	\begin{tabularx}{\textwidth}{|X|l|l|l|}
 		\hline
 		\rowcolor{gray!30}
-		Role & Hours & Cost/Hour & Total cost\\ \hline
-		Project Manager & 22 & 26.78\euro{}& 589.20\euro{}\\ \hline
-		Senior engineer in cybersecurity & 11 & 17.53\euro{}& 192.86\euro{}\\ \hline
-		System administrator & 11 & 14.28\euro{}& 157.08\euro{}\\ \hline
-		Junior Developer & \projecthours & 9.42\euro{}& 3931.71\euro{}\\ \hline
+		Role                             & Hours                  & Cost/Hour                  & Total cost\\ \hline
+		Project Manager                  & \fpeval{\TutorHours*2} & \ProjectManagerHour\euro{} & \ProjectManagerHourTotal\euro{}\\ \hline
+		Senior engineer in cybersecurity & \TutorHours            & \SeniorEngineerHour\euro{} & \SeniorEngineerHourTotal\euro{}\\ \hline
+		System administrator             & \TutorHours            & \SysAdminHour\euro{}       & \SysAdminHourTotal\euro{}\\ \hline
+		Junior Developer                 & \projecthours          & \JuniorDeveloperHour\euro{}& \JuniorDeveloperHourTotal\euro{}\\ \hline
 	\end{tabularx}
 	\caption{Costs of the human resources for the hours dedicated to the project}
 \end{table}
 \linej
-The total of the last table is 4870.85\euro{}.
+The total of the last table is \HRTotal\euro{}.
 
 \subsubsection{Hardware resources}
 The cost of the hardware is calculated with the amortization and the total price of the item, with the next formula:
@@ -72,7 +109,7 @@ The cost of the hardware is calculated with the amortization and the total price
 	\caption{Formula to calculate the cost of hardware items}
 \end{figure}
 \linej
-In this case is assumed that the duration of project is 5.5 months, due to the time the project was on hold.
+In this case it is assumed that the duration of project is 5.5 months, due to the time the project was on hold.
 The duration of the hardware items is estimated in 3-5 years, so the average is used in this case for all the items.
 \linej
 \linej
@@ -83,7 +120,11 @@ The hardware items are:
 	\item Other peripheral devices: their collective value is estimated in 20\euro{}, therefore resulting in a cost of 2.23\euro{}.
 \end{itemize}
 \linej
-The total of the hardware cost is 162.39\euro{}.
+\newcommand{\HardwareTotal}{162.39}
+\newcommand{\DirectCosts}{\fpeval{trunc( \HRTotal + \HardwareTotal ,2)}}
+\newcommand{\IndirectCosts}{\fpeval{trunc( \DirectCosts * 0.2 ,2)}}
+\newcommand{\CostsTotal}{\fpeval{trunc( \DirectCosts * 1.2 ,2)}}
+The total of the hardware cost is \HardwareTotal\euro{}.
 
 \subsection{Indirect costs}
 The indirect costs of the project mean hidden costs in the resources used.
@@ -92,7 +133,7 @@ For example the cost of the Internet connection, electrical devices, etc.
 According to the General Secretary of the University of Santiago de Compostela the indirect costs in this kind of final degree project should be calculated as an extra 20\% of the direct costs\cite{indirect_costs}.
 \linej
 \linej
-Because the estimation of the direct costs is 5033.24\euro{}, the indirect costs add 1006.64\euro{} over it.
+Because the estimation of the direct costs is \DirectCosts\euro{}, the indirect costs adds \IndirectCosts\euro{} over it.
 
 \subsection{Total costs of the project}
-The total costs is calculated simply by the addition of direct and indirect costs, resulting in 6039.88\euro{}.
+The total costs is calculated simply by the addition of direct and indirect costs, resulting in \CostsTotal\euro{}.

@@ -13,7 +13,7 @@ Some elements may change without causing any differences in behaviour, but the r
 	\item All the features of interest for the client have been configured.
 \end{itemize}
 \linej
-In this case is assumed that the agent is running on a Windows system.
+In this case it is assumed that the agent is running on a Windows system.
 
 \section*{Usage}
 \subsection*{Basic detection of events}
@@ -27,7 +27,7 @@ To use it you only need to introduce the data as it would be received by the Waz
 It is possible to show which rules are tried and which trigger an alert for each event.
 This tools does not need a restart of the wazuh-manager service whenever changes want to be tested because it reads the configuration directly.
 \linej
-But is also worth to mention that some times it can be misleading because it does not work in the same way as the manager.
+But it is also worth to mention that some times it can be misleading because it does not work in the same way as the manager.
 For example the logtest may show that the log matches a certain rule but actually it has matched a previous one silently.
 \linej
 \linej
@@ -88,21 +88,21 @@ After extracting the file from the encrypted ZIP downloaded, change its file ext
 \end{figure}
 
 \section*{Trobleshooting}
-If running the reverse\_tcp payload with Metasploit fails to provide a Meterpreter shell is is very possible that trying again ends working, because the session is not getting created even though the exploit is working.
+If running the reverse\_tcp payload with Metasploit fails to provide a Meterpreter shell is very possible that trying again ends working, because the session is not getting created even though the exploit is working.
 \linej
 \linej
 If the integrator scripts (at least the .py scripts) are modified their changes may affect their execution by Wazuh until the \textit{wazuh-manager} service is restarted again.
 \linej
 \linej
 Processing events can take several minutes even if the agent and manager are not under high load.
-After starting a machine is recommended to pass several minutes before starting to do actual work.
+After starting a machine it is recommended to let several minutes pass before starting to do actual work.
 \linej
 For example real-time monitoring usually takes 3-5 minutes to report that is working in the log file.
 But it can be much more if there have been unregistered changes to the monitored folders.
 \linej
 \linej
-When trying to configure an alert, being sure that the event is being processed by the manager but no alert is being triggered, make sure that there are no rules that may be catching and silecing it with the \textit{no\_log} option or a \textit{level} option too low.
-It is also important to check that there decoders for it.
+If you are sure that the event you want to process is being reaching the manager but no alert is being triggered, make sure that there are no rules that may be catching and silecing it with the \textit{no\_log} option or a \textit{level} option too low. If there are rules silecing the alert you must overwrite them in the custom rules using the \textit{overwrite="yes"} option in the \textit{rule} tag.
+It is also important to check that there are decoders for it.
 Both can be checked in the ruleset in \textit{/var/ossec/ruleset/}.
 \linej
 \linej
