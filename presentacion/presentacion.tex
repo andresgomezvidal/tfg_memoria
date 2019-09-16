@@ -68,7 +68,7 @@
 	\linej
 	\columnbreak
 	\linej
-	\textbf{Tutores:}
+	\textbf{Directores:}
 	\linej
 		Purificación Cariñena Amigo
 	\linej
@@ -108,7 +108,7 @@
 
 	\begin{itemize}
 		\item Detectar posibles intrusiones en sistemas. %Para mitigarlas. Con un IDS (explicar significado IDS). Concretamente usamos la detección con patrones en vez de con comportamiento porque se nos iba del alcance.
-		\item Crear la configuración para detectar ciertas amenazas reales. %de las más importantes actualmente. En vez de crear un IDS de cero usamos uno existente y simplemente añadimos la configuración para poder detectar lo que nos interesa, aumentando su funcionalidad a efectos prácticos. Explicar que la idea inicial incluía desarrollar código para el propio IDS si hubiera tiempo.
+		\item Crear configuración para detectar amenazas reales. %de las más importantes actualmente. En vez de crear un IDS de cero usamos uno existente y simplemente añadimos la configuración para poder detectar lo que nos interesa, aumentando su funcionalidad a efectos prácticos. Explicar que la idea inicial incluía desarrollar código para el propio IDS si hubiera tiempo.
 	\end{itemize}
 \end{frame}
 
@@ -119,8 +119,8 @@
 		%\item IDS empleado en el proyecto. %en vez de crear uno de cero
 		\item Escalable con agentes. %como mínimo hace falta un servidor
 		\item Basado en reglas y alertas. %recopila información con los agentes, que se procesa contra reglas, pudiendo generar alertas
-		\item Compatible con muchos sistemas operativos: Windows, Mac OS, GNU/Linux, etc.
-		\item Integrable con otras herramientas: Docker, Puppet, Ansible, OSQuery, VirusTotal, Suricata, OwlH, Bro, etc.
+		\item Compatible: Windows, Mac OS, GNU/Linux, etc.
+		\item Integrable: Docker, Puppet, Ansible, OSQuery, VirusTotal, Suricata, OwlH, Bro, etc.
 	\end{itemize}
 \end{frame}
 
@@ -156,22 +156,22 @@
 		%La respuesta activa abre muchas posibilidades de intervención automática. Por desgracia actualmente no es casi configurable.
 \end{frame}
 
-\begin{frame}[fragile]
-	\frametitle{Procesamiento de reglas}
+%\begin{frame}[fragile]
+	%\frametitle{Procesamiento de reglas}
 
-	\begin{itemize}
-		\item Atómicas y compuestas.
-		\item Estructura padre-hijo.
-		\item Expresiones regulares y variables.
-		\item Pueden no generar ninguna alerta.
-	\end{itemize}
+	%\begin{itemize}
+		%\item Estructura padre-hijo.
+		%\item Atómicas y compuestas.
+		%\item Expresiones regulares y variables.
+		%\item Pueden no generar ninguna alerta.
+	%\end{itemize}
 
 %Hablar:
 	%Hay 2 tipos de reglas: atómicas y compuestas. Las atómicas son independientes unas de otras y las compuestas necesitan que se cumplan varias atómicas en un intervalo de tiempo.
 	%Las reglas se procesan por un sistema de padre-hijo. Si se cumple el padre se van comprobando los hijos hasta que se cumpla uno. Así sucesivamente hasta el final, sin volver nunca atrás.
 	%Se puede conseguir cierta abstracción con expresiones regulares y variables, pero solamente si se conocen al iniciar el servicio.
 	%Por eso y porque pueden no generar ninguna alerta se pueden crear muchas combinaciones de reglas que son procesadas eficientemente, a coste de que sean más complicadas de crear para el administrador.
-\end{frame}
+%\end{frame}
 
 
 \section{Gestión del proyecto}
@@ -199,7 +199,7 @@
 	\begin{itemize}
 		\item Generación automática de reglas tomando datos de honeypots.
 		\item IDS con análisis por comportamiento.
-		\item IDS con orientación a red.
+		\item IDS con orientación a tráfico de red.
 		\item Extra análisis del registro de Windows.
 		\item Uso de YARA con Wazuh.
 		\item Generación automática de reglas para Wazuh a partir de Sigma.
@@ -254,6 +254,7 @@
 	\frametitle{Metodología: Incrementos}
 
 	\begin{itemize}
+		\item Poco contacto con el cliente.
 		\item Repartición de requisitos.
 		\item Facilidad de adaptación del alcance.
 		\item Simplicidad.
@@ -390,13 +391,10 @@
 		80/RRHH,
 		17/Costes indirectos,
 		3/Hardware
-		%rhh=4897.97
-		%hardware=162.39
-		%indirectos=1012.07
 	}
 \end{tikzpicture}
 \linej
-Total: 6072.43\euro{}
+4897.97\euro{} + 162.39\euro{} + 1012.07\euro{} = 6072.43\euro{}
 \end{center}
 
 \end{frame}
@@ -409,6 +407,17 @@ Total: 6072.43\euro{}
 		\centering
 		\includegraphics[width=.8\textwidth]{figuras/rrhh.png}
 	\end{figure}
+\end{frame}
+
+\section{Modelo de trabajo}
+\begin{frame}[fragile]
+	\frametitle{Modelo de trabajo}
+
+	\begin{enumerate}
+		\item Análisis del ataque. %dejar claro que es solo para tener la mejor defensa posible
+		\item Automatización. %normalmente con varias variantes
+		\item Detección. %la detección sin falsos positivos se considera equivalente a una prueba tradicional correcta
+	\end{enumerate}
 \end{frame}
 
 \section{Tecnologías y herramientas}
@@ -439,32 +448,8 @@ Total: 6072.43\euro{}
 	\end{figure}
 \end{frame}
 
-\section{Modelo de trabajo}
-\begin{frame}[fragile]
-	\frametitle{Modelo de trabajo}
-
-	\begin{enumerate}
-		\item Análisis del ataque. %dejar claro que es solo para tener la mejor defensa posible
-		\item Automatización. %normalmente con varias variantes
-		\item Detección. %la detección sin falsos positivos se considera equivalente a una prueba tradicional correcta
-	\end{enumerate}
-\end{frame}
 
 \section{Incrementos 1 y 2}
-\begin{frame}[fragile]
-	\frametitle{Golden Ticket}
-
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=.8\textwidth]{../figuras/TGT_TGS_PAC.jpg}
-	\end{figure}
-
-	%La imagen es el esquema de autenticación de Kerberos en Windows
-	%Explicar que es el TGT (Ticket Granting Ticket), que sirve para pedir TGSs (tickets para servicios)
-	%Puedes poner el usuario que quieras
-	%Para generarlo solamente hace falta el hash de la contraseña de la cuenta KRBTGT (superadministrador del KDC [Key Distribution Center]), que se usa para cifrar el ticket
-\end{frame}
-
 \begin{frame}[fragile]
 	\frametitle{Golden Ticket}
 
@@ -498,20 +483,6 @@ Total: 6072.43\euro{}
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Silver Ticket}
-
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=.8\textwidth]{../figuras/TGT_TGS_PAC.jpg}
-	\end{figure}
-
-	%Señalar qué es el TGS (paso 5)
-	%pueden hacer falta varios TGS para un servicio
-	%el TGS está cifrado con el hash de la contraseña del usuario ejecutando el servicio
-	%Se detecta de la misma forma que el Golden Ticket
-\end{frame}
-
-\begin{frame}[fragile]
 	\frametitle{Extracción de credenciales}
 
 	\begin{itemize}
@@ -519,20 +490,6 @@ Total: 6072.43\euro{}
 		\item Volcado de memoria.
 	\end{itemize}
 \end{frame}
-
-%\begin{frame}[fragile]
-	%\frametitle{Extracción de credenciales: Detección}
-
-	%\begin{itemize}
-		%\item Programas usados. %está bien comprobarlo, pero no se puede depender de eso
-		%\begin{itemize}
-			%\item Técnicas.
-			%\item DLLs.
-			%\item Patrones de texto.
-		%\end{itemize}
-	%\end{itemize}
-%Básicamente lo mismo de antes
-%\end{frame}
 
 \begin{frame}[fragile]
 	\frametitle{PowerShell}
@@ -588,15 +545,16 @@ Total: 6072.43\euro{}
 	\end{itemize}
 \end{frame}
 
-\section{Conclusiones}
+
+\section{Conclusiones y trabajo futuro}
 \begin{frame}[fragile]
 	\frametitle{Conclusiones}
 
 	\begin{itemize}
-		\item Mejora de seguridad con Wazuh sin necesidad de conocimiento experto. %cualquiera (más o menos) puede hacer reglas simples, y casi nadie puede hacerlas complejas
-		\item Mejor estado de GNU/Linux que Windows para Wazuh. %que necesita muchos workarounds actualmente
+		%\item Mejora de seguridad con Wazuh sin necesidad de conocimiento experto. %cualquiera (más o menos) puede hacer reglas simples, y casi nadie puede hacerlas complejas
 		\item Cumplidos los requisitos esenciales, con mucho detalle. %lo he considerado más productivo que los requisitos deseados u opcionales restantes
-		\item Tanto IDSs como antivirus tienen sus ventajas y desventajas.
+		\item Tanto IDSs como antivirus tienen sus ventajas y desventajas. %por el ransomware y respuesta activa
+		\item Mejor estado de GNU/Linux que Windows para Wazuh. %que necesita muchos workarounds actualmente
 	\end{itemize}
 \end{frame}
 
@@ -636,7 +594,7 @@ Total: 6072.43\euro{}
 	\linej
 	\columnbreak
 	\linej
-	\textbf{Tutores:}
+	\textbf{Directores:}
 	\linej
 		Purificación Cariñena Amigo
 	\linej
